@@ -51,7 +51,7 @@ export function getRateMean(item: Product) {
         totalFiveStars
     } = getTotalCustomerCountPerRate(item);
 
-    let mean = (totalOneStar + totalTwoStars*2 + totalThreeStars*3 + totalFourStars*4 + totalFiveStars*5) / totalCustomers;
+    let mean = (totalOneStar + totalTwoStars * 2 + totalThreeStars * 3 + totalFourStars * 4 + totalFiveStars * 5) / totalCustomers;
 
     return Math.round(mean);
 }
@@ -68,10 +68,10 @@ export function getPercentPerRate(item: Product) {
     } = getTotalCustomerCountPerRate(item);
 
     return {
-        oneStarPercent: Math.round(((totalOneStar) / totalCustomers)*100),
-        twoStarsPercent: Math.round(((totalTwoStars) / totalCustomers)*100),
-        threeStarsPercent: Math.round(((totalThreeStars) / totalCustomers)*100),
-        fourStarsPercent: Math.round(((totalFourStars) / totalCustomers)*100),
-        fiveStarsPercent: Math.round(((totalFiveStars) / totalCustomers)*100),
+        oneStarPercent: Math.round(((totalOneStar) / totalCustomers) * 100),
+        twoStarsPercent: Math.round(((totalTwoStars) / totalCustomers) * 100),
+        threeStarsPercent: Math.round(((totalThreeStars) / totalCustomers) * 100),
+        fourStarsPercent: Math.round(((totalFourStars) / totalCustomers) * 100),
+        fiveStarsPercent: Math.round(((totalFiveStars) / totalCustomers) * 100),
     }
 }

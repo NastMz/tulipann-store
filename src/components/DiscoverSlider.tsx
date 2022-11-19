@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux";
 import {selectArticles} from "../redux/selector";
-import {DiscoverCard} from "./utils/DiscoverCard";
+import {DiscoverCard} from "./DiscoverCard";
 import {SortUtil} from "../utils";
 import {useEffect, useRef, useState} from "react";
 import {BsArrowLeftCircle, BsArrowRightCircle, BsFillCircleFill} from "react-icons/all";

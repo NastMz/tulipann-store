@@ -1,5 +1,5 @@
-import {Product} from "../../models";
-import {getPercentPerRate, getRateMean, getTotalCustomerCount} from "../../utils";
+import {Product} from "../models";
+import {getPercentPerRate, getRateMean, getTotalCustomerCount} from "../utils";
 import {Stars} from "./Stars";
 import {Link} from "react-router-dom";
 import {ChartBar} from "./ChartBar";

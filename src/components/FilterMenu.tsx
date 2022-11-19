@@ -1,4 +1,4 @@
-import {FilterCard} from "./utils/FilterCard";
+import {FilterCard} from "./FilterCard";
 import {forwardRef, Ref} from "react";
 
 interface Option {

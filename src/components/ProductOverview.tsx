@@ -1,4 +1,4 @@
-import {AiFillStar, AiOutlineClose, BiCheck} from "react-icons/all";
+import {AiOutlineClose, BiCheck, TbShieldCheck} from "react-icons/all";
 import {Product} from "../models";
 import {getRateMean, getTotalCustomerCount} from "../utils";
 import {Stars} from "./Stars";
@@ -26,7 +26,8 @@ export const ProductOverview = (props: ProductOverviewProps) => {
                         <span className={"font-medium text-lg"}>${props.product.price}</span>
                         <div className={"h-2/3 w-[1px] content-{''} bg-gray-300"}/>
                         <Stars rate={rate} size={18}/>
-                        <span className={"text-sm text-gray-400 font-medium"}>{getTotalCustomerCount(props.product)} reseñas</span>
+                        <span
+                            className={"text-sm text-gray-400 font-medium"}>{getTotalCustomerCount(props.product)} reseñas</span>
                     </div>
                     <div className={"flex gap-1 items-center py-2"}>
                         {
@@ -55,6 +56,10 @@ export const ProductOverview = (props: ProductOverviewProps) => {
                                 ? '' : 'pointer-events-none bg-gray-300'}`}>
                             Añadir a la bolsa
                         </span>
+                    </div>
+                    <div className={"flex items-center justify-center gap-2"}>
+                        <TbShieldCheck size={30} color={"#D1D5DBFF"}/>
+                        <span className={"text-gray-400 font-medium"}>Calidad garantizada</span>
                     </div>
                 </div>
                 <div className={"overflow-hidden w-full h-full md:w-1/2"}>

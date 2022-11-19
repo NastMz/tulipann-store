@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {BsArrowRightShort} from "react-icons/all";
-import {PromoCard} from "./utils/PromoCard";
+import {PromoCard} from "./PromoCard";
 import hero from "../assets/images/hero.jpg";
 
 export const PromoSection = () => {

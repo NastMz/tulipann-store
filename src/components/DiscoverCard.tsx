@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {forwardRef, Ref} from "react";
-import {routes} from "../../routes/routes";
+import {routes} from "../routes/routes";
 
 interface ArticleCardProps {
     id: number,

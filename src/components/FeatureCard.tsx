@@ -1,4 +1,3 @@
-import {forwardRef, Ref} from "react";
 import {Feature} from "../models";
 
 interface FeatureCardProps {

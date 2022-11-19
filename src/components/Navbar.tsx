@@ -111,7 +111,7 @@ export const Navbar = () => {
     // State for control if the navbar is fixed to top screen
     const [isSticky, setIsSticky] = useState<boolean>(false);
 
-    // Function used for animate the change between options
+    // Function used for reset the state when close the menu
     const resetState = () => {
         setIsShowingNavMenu(false);
         setTimeout(() => {
@@ -121,14 +121,11 @@ export const Navbar = () => {
 
     // Function used to show the nav menu when an option is clicked
     const showNavMenu = (index: number) => {
-        if (isShowingNavMenu && navOption == index) {
+        if (isShowingNavMenu && navOption === index) {
             resetState();
         } else {
-            setIsShowingNavMenu(false);
-            setTimeout(() => {
-                setNavOption(index);
-                setIsShowingNavMenu(true)
-            }, 300);
+            setNavOption(index);
+            setIsShowingNavMenu(true);
         }
     };
 
@@ -160,7 +157,7 @@ export const Navbar = () => {
 
     return (
         <nav
-            className={`hidden md:block ${isSticky ? 'fixed' : 'relative'} top-0 left-0 right-0 border-b-2 border-gray-100 bg-white bg-opacity-90 z-50`}>
+            className={`hidden md:block ${isSticky ? 'fixed shadow-md' : 'relative border-b border-gray-100'} top-0 left-0 right-0 bg-white bg-opacity-90 z-50`}>
             <div
                 className={"flex justify-between items-center h-16 py-2 px-5 font-medium text-sm"}>
                 <div className={"flex gap-8 items-center"}>
@@ -210,7 +207,7 @@ export const Navbar = () => {
             >
                 <NavbarMenu
                     items={navOption > -1 ? data[navOption] : []}
-                    className={"absolute bg-white top-0 left-0 border-t-2 border-gray-100"}
+                    className={"absolute bg-white top-0 left-0 border-t border-gray-100"}
                     ref={navbarMenuRef}
                 />
             </div>

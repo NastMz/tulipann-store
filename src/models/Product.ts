@@ -1,19 +1,6 @@
 import {Commentary} from "./Commentary";
 import {Color} from "./Color";
-
-interface Option {
-    id: number,
-    name: string,
-    title: string,
-    description: string,
-    image: string
-}
-
-interface ProductSpecs {
-    summary: string,
-    options: Option[]
-}
-
+import {ProductSpecs} from "./ProductSpecs";
 
 
 export interface Product {
