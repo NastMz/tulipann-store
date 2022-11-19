@@ -1,7 +1,7 @@
 import {AiFillStar, AiOutlineClose, BiCheck} from "react-icons/all";
 import {Product} from "../models";
 import {getRateMean, getTotalCustomerCount} from "../utils";
-import {Stars} from "./utils/Stars";
+import {Stars} from "./Stars";
 
 interface ProductOverviewProps {
     product: Product

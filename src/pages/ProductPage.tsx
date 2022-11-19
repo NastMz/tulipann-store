@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectProducts} from "../redux/selector";
-import {ProductOverview, Reviews} from "../components";
+import {ProductFeatures, ProductOverview, Reviews} from "../components";
 import {routes} from "../routes/routes";
 
 export const ProductPage = () => {
@@ -17,6 +17,7 @@ export const ProductPage = () => {
     return (
         <div>
             <ProductOverview product={product}/>
+            <ProductFeatures specs={product.specs}/>
             <Reviews product={product}/>
         </div>
     )
