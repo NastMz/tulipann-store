@@ -1,8 +1,8 @@
 import {Color} from "../models";
 import {Link} from "react-router-dom";
 import {routes} from "../routes/routes";
-import {AiFillStar, AiOutlineClose, BiCheck} from "react-icons/all";
-import {Stars} from "./utils/Stars";
+import {AiOutlineClose, BiCheck, TbShieldCheck} from "react-icons/all";
+import {Stars} from "./Stars";
 
 interface ProductQuickviewProps {
     id: number,
@@ -37,11 +37,21 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                     className={"absolute top-4 md:top-6 right-4 md:right-6 cursor-pointer"}
                     onClick={() => props.closeProductPreview()}
                 />
-                <div className={"overflow-hidden w-full h-full md:w-1/3 md:h-2/3"}>
-                    <img src={props.img} alt="" className={`h-full w-full object-cover rounded-sm`}/>
+                <div className={"flex flex-col gap-8 md:w-2/5 md:h-4/5"}>
+                    <div className={"overflow-hidden w-full h-full"}>
+                        <img src={props.img} alt="" className={`h-full w-full object-cover rounded-sm`}/>
+                    </div>
+                    <div className={"flex items-center justify-center"}>
+                        <Link
+                            to={`${routes.product.path}/${props.id}`}
+                            className={"text-red-600 font-medium"}
+                        >
+                            Ver detalles completos
+                        </Link>
+                    </div>
                 </div>
-                <div className={"flex-grow flex flex-col gap-2"}>
-                    <div className={"flex -mt-3"}>
+                <div className={"flex flex-col gap-2"}>
+                    <div className={"flex -mt-2"}>
                         <h1 className={"text-xl md:text-4xl font-bold"}>{props.name}</h1>
                     </div>
                     <div className={"mt-2 flex gap-4 items-center"}>
@@ -77,13 +87,9 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                             Añadir a la bolsa
                         </span>
                     </div>
-                    <div className={"flex items-center justify-center"}>
-                        <Link
-                            to={`${routes.product.path}/${props.id}`}
-                            className={"text-red-600 font-medium"}
-                        >
-                            Ver detalles completos
-                        </Link>
+                    <div className={"flex items-center justify-center gap-2"}>
+                        <TbShieldCheck size={30} color={"#D1D5DBFF"}/>
+                        <span className={"text-gray-400 font-medium"}>Calidad garantizada</span>
                     </div>
                 </div>
             </div>
