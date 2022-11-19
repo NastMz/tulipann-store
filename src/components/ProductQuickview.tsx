@@ -38,8 +38,8 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                     onClick={() => props.closeProductPreview()}
                 />
                 <div className={"flex flex-col gap-8 md:w-2/5 md:h-4/5"}>
-                    <div className={"overflow-hidden w-full h-full"}>
-                        <img src={props.img} alt="" className={`h-full w-full object-cover rounded-sm`}/>
+                    <div className={"overflow-hidden w-full h-full rounded-lg"}>
+                        <img src={props.img} alt="" className={`h-full w-full object-cover`}/>
                     </div>
                     <div className={"flex items-center justify-center"}>
                         <Link
@@ -83,7 +83,7 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                     <div className={"flex items-center my-1 md:my-4"}>
                         <span
                             className={`bg-red-500 hover:bg-red-400 text-center p-3 text-white font-medium cursor-pointer flex-grow rounded-lg ${props.stock > 0
-                                ? '' : 'pointer-events-none bg-gray-300'}`}>
+                                ? '' : 'pointer-events-none bg-gray-200'}`}>
                             Añadir a la bolsa
                         </span>
                     </div>

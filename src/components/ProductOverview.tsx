@@ -53,17 +53,17 @@ export const ProductOverview = (props: ProductOverviewProps) => {
                     <div className={"flex items-center mt-4"}>
                         <span
                             className={`bg-red-500 hover:bg-red-400 text-center p-3 text-white font-medium cursor-pointer flex-grow rounded-lg ${props.product.stock > 0
-                                ? '' : 'pointer-events-none bg-gray-300'}`}>
+                                ? '' : 'pointer-events-none bg-gray-200'}`}>
                             Añadir a la bolsa
                         </span>
                     </div>
-                    <div className={"flex items-center justify-center gap-2"}>
+                    <div className={"flex items-center justify-center gap-2 mt-2"}>
                         <TbShieldCheck size={30} color={"#D1D5DBFF"}/>
                         <span className={"text-gray-400 font-medium"}>Calidad garantizada</span>
                     </div>
                 </div>
-                <div className={"overflow-hidden w-full h-full md:w-1/2"}>
-                    <img src={props.product.img} alt="" className={`h-full w-full object-cover rounded-sm`}/>
+                <div className={"overflow-hidden w-full h-full md:w-1/2 rounded-lg"}>
+                    <img src={props.product.img} alt="" className={`h-full w-full object-cover`}/>
                 </div>
             </div>
         </div>

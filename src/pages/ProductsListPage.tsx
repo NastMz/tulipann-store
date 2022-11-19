@@ -6,6 +6,7 @@ import ReactPaginate from "react-paginate";
 import {useParams} from "react-router-dom";
 import {Product} from "../models";
 import {getRateMean, nameOf, SortUtil} from "../utils";
+import {routes} from "../routes/routes";
 
 // Function to sort the product array by sort option
 function sorBy(option: number, array: Product[]) {
@@ -59,6 +60,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
     useEffect(() => {
         if (typeof categoryId === "string") {
             setActiveFilters([...activeFilters, parseInt(categoryId)]);
+            window.history.replaceState(null, routes.catalog.title, routes.catalog.path)
         }
     }, [])
 

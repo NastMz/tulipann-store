@@ -1,5 +1,5 @@
 import './App.css';
-import {NotFound, ProductPage, ProductsListPage, StoreFront} from "./pages";
+import {Login, NotFound, ProductPage, ProductsListPage, Register, StoreFront} from "./pages";
 import {Route, Routes} from "react-router-dom";
 import {Main} from "./templates";
 import {getArticles, getCategories, getProducts} from "./api/api";
@@ -55,6 +55,19 @@ function App() {
                 element={<Main
                     page={<ProductPage/>}
                     title={routes.product.title}
+                />}
+            />
+            <Route
+                path={`${routes.login.path}`}
+                element={<Main
+                    page={<Login/>}
+                    title={routes.login.title}
+                />}
+            /><Route
+                path={`${routes.register.path}`}
+                element={<Main
+                    page={<Register/>}
+                    title={routes.register.title}
                 />}
             />
         </Routes>

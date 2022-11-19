@@ -9,10 +9,18 @@ export const routes = {
     },
     product: {
         path: '/product',
-        title: ' | Tulipann Store'
+        title: 'Tulipann Store'
     },
     discover: {
         path: '/discover',
         title: 'Descubre | Tulipann Store'
+    },
+    login: {
+        path: '/login',
+        title: 'Iniciar sesión | Tulipann Store'
+    },
+    register: {
+        path: '/register',
+        title: 'Registrarse | Tulipann Store'
     }
 }

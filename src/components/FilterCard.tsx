@@ -40,7 +40,7 @@ export const FilterCard = (props: FilterCardProps) => {
                             />
                             <label
                                 htmlFor={`${option.id}`}
-                                className="ml-3 min-w-0 flex-1 text-gray-500"
+                                className="ml-2 min-w-0 flex-1 text-gray-500"
                             >
                                 {option.name}
                             </label>
