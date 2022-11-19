@@ -1,4 +1,4 @@
-import {ProductCard} from "./utils/ProductCard";
+import {ProductCard} from "./ProductCard";
 import {Product} from "../models";
 import {getRateMean, getTotalCustomerCount} from "../utils";
 
@@ -10,7 +10,7 @@ interface ItemsGridProps {
 
 export const ProductList = (props: ItemsGridProps) => {
     return (
-        <div className={`grid gap-14 ${props.className}`}>
+        <div className={`grid place-items-center gap-14 ${props.className}`}>
             {props.items.map((item) => (
                 <ProductCard
                     id={item.id}

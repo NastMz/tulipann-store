@@ -1,5 +1,5 @@
 import {Footer, Navbar} from "../components";
-import {WhatsAppFloatIcon} from "../components/utils/WhatsAppFloatIcon";
+import {WhatsAppFloatIcon} from "../components/WhatsAppFloatIcon";
 
 interface MainProps {
     page: JSX.Element,

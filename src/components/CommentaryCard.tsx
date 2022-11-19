@@ -1,5 +1,5 @@
 import {FaUserCircle} from "react-icons/all";
-import {Commentary} from "../../models";
+import {Commentary} from "../models";
 import {Stars} from "./Stars";
 
 interface CommentaryCardProps {

@@ -1,4 +1,4 @@
-import {NavCard} from "./utils/NavCard";
+import {NavCard} from "./NavCard";
 import {forwardRef, Ref} from "react";
 
 interface NavItem {

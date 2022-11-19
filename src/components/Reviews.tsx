@@ -1,6 +1,6 @@
 import {Product} from "../models";
-import {CommentaryCard} from "./utils/CommentaryCard";
-import {RateChart} from "./utils/RateChart";
+import {CommentaryCard} from "./CommentaryCard";
+import {RateChart} from "./RateChart";
 
 interface ReviewsProps {
     product: Product
@@ -8,7 +8,7 @@ interface ReviewsProps {
 
 export const Reviews = (props: ReviewsProps) => {
     return (
-        <div className={"flex gap-20"}>
+        <div className={"flex gap-20 px-6"}>
             <RateChart
                 product={props.product}
                 className={""}
@@ -16,7 +16,7 @@ export const Reviews = (props: ReviewsProps) => {
             <div className={"w-full"}>
                 {
                     props.product.feedback.map((commentary) => (
-                        <CommentaryCard commentary={commentary}/>
+                        <CommentaryCard commentary={commentary} key={commentary.id}/>
                     ))
                 }
             </div>

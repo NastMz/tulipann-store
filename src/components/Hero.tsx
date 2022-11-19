@@ -1,6 +1,6 @@
 import hero from "../assets/images/hero.jpg";
 import {scrollToSection} from "../utils";
-import {PromoCard} from "./utils/PromoCard";
+import {PromoCard} from "./PromoCard";
 
 export const Hero = () => {
     return (

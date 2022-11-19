@@ -1,5 +1,5 @@
 import {BsArrowRightShort} from "react-icons/all";
-import {CategoryCard} from "./utils/CategoryCard";
+import {CategoryCard} from "./CategoryCard";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectCategories} from "../redux/selector";
