@@ -23,8 +23,8 @@ export const ProductCard = (props: ProductCardProps) => {
             onMouseLeave={() => setIsHover(false)}
             onClick={() => props.showPreview(props.id)}
         >
-            <div className={"flex-1 overflow-hidden"}>
-                <img src={props.img} alt="" className={`h-full w-full object-cover rounded-sm`}/>
+            <div className={"flex-1 overflow-hidden rounded-lg"}>
+                <img src={props.img} alt="" className={`h-full w-full object-cover`}/>
             </div>
             <div className="flex-2 flex flex-col gap-2">
                 <h1 className={`font-medium`}>{props.name}</h1>

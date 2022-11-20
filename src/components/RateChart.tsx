@@ -15,7 +15,7 @@ export const RateChart = (props: RateChartProps) => {
     const reviewsPercents = getPercentPerRate(props.product);
 
     return (
-        <div className={`flex flex-col gap-4 p-6 ${props.className}`}>
+        <div className={`h-fit flex flex-col gap-4 p-6 ${props.className}`}>
             <h2 className={"text-2xl font-bold"}>
                 Reseñas de clientes
             </h2>
