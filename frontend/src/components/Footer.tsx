@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import {BsFacebook, BsInstagram, BsTwitter, BsWhatsapp} from "react-icons/all";
+import Logo from "../assets/images/LogoTulipannV2.svg";
 
 export const Footer = () => {
     return (
@@ -8,8 +9,8 @@ export const Footer = () => {
                 className="flex flex-col md:flex-row gap-8 md:gap-12 lg:gap-20 text-sm mx-0 md:mx-10 p-6 text-gray-500 border-b-2 border-t-2 border-gray-100">
                 <div
                     className={"flex-2 flex flex-col gap-4 md:gap-6 items-center md:items-start justify-start max-w-sm"}>
-                    <div className={"text-2xl"}>
-                        LOGO
+                    <div className={"h-12"}>
+                        <img src={Logo} alt={Logo} className={"w-full h-full object-fill"}/>
                     </div>
                     <p className={"text-center md:text-left"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                         Ab, maiores?</p>

@@ -1,4 +1,4 @@
-import {CategoryPreview, DiscoverSlider, Hero, PromoSection} from "../components";
+import {CategoryPreview, DiscoverSection, Hero, PromoSection} from "../components";
 
 
 export const StoreFront = () => {
@@ -6,7 +6,7 @@ export const StoreFront = () => {
         <>
             <Hero/>
             <CategoryPreview/>
-            <DiscoverSlider articlesToDisplay={6}/>
+            <DiscoverSection/>
             <PromoSection/>
         </>
     )

@@ -18,16 +18,16 @@ export const Hero = () => {
                     <span className={"text-sm"}>Ver categorias</span>
                 </div>
             </div>
-            <div className={"hidden md:block col-start-2 h-full -z-10"}>
-                <div className={"grid grid-cols-3 h-full pt-6 gap-4 absolute top-0 overflow-hidden"}>
+            <div className={"hidden md:block col-start-2 h-full"}>
+                <div className={"grid grid-cols-3 h-full gap-4 absolute -mt-5 overflow-hidden"}>
                     <div className={"flex flex-col gap-4 h-full items-center py-14"}>
                         <PromoCard img={hero} aspectRatio={"[2/3]"}/>
                         <PromoCard img={hero} aspectRatio={"[2/3]"}/>
                     </div>
                     <div className={"flex flex-col gap-4 h-full items-center"}>
-                        <PromoCard img={hero} aspectRatio={"[2/3]"}/>
-                        <PromoCard img={hero} aspectRatio={"[2/3]"}/>
-                        <PromoCard img={hero} aspectRatio={"[2/3]"}/>
+                        <PromoCard img={hero} aspectRatio={"[1/2]"}/>
+                        <PromoCard img={hero} aspectRatio={"[1/2]"}/>
+                        <PromoCard img={hero} aspectRatio={"[1/2]"}/>
                     </div>
                     <div className={"flex flex-col gap-4 h-full items-center py-14"}>
                         <PromoCard img={hero} aspectRatio={"[2/3]"}/>

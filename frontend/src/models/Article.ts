@@ -4,5 +4,7 @@ export interface Article {
     summary: string,
     content: string,
     banner: string,
-    date: string
+    date: string,
+    author: string,
+    tags: string[],
 }

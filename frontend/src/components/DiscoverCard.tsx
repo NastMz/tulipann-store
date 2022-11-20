@@ -1,31 +1,51 @@
 import {Link} from "react-router-dom";
-import {forwardRef, Ref} from "react";
 import {routes} from "../routes/routes";
+import {FaUserCircle} from "react-icons/all";
 
-interface ArticleCardProps {
+interface DiscoverCardProps {
     id: number,
     title: string,
     summary: string,
     banner: string,
     date: string,
+    tags: string[],
+    author: string,
     className?: string
 }
 
-export const DiscoverCard = forwardRef((props: ArticleCardProps, ref: Ref<any>) => {
+export const DiscoverCard = (props: DiscoverCardProps) => {
     return (
-        <div ref={ref} className={`h-full overflow-hidden relative ${props.className}`}>
-            <div className={"h-full w-full"}>
-                <img src={props.banner} alt="" className={`h-full w-full object-cover`}/>
+        <Link
+            to={`${routes.discover.path}/${props.id}`}
+            className={`w-full overflow-hidden rounded-lg flex flex-col shadow-lg ${props.className} hover:scale-110`}>
+            <div className={"h-1/3 w-full"}>
+                <img src={props.banner} alt={props.banner} className={`h-full w-full object-cover`}/>
             </div>
-            <div
-                className={"absolute h-full w-full bg-black bg-opacity-30 top-0 text-white text-center flex flex-col justify-center items-center gap-2 md:gap-4 px-12 md:px-80"}>
-                <h1 className={"font-bold"}>{props.title}</h1>
-                <p className={"text-sm"}>{props.summary}</p>
-                <Link to={`${routes.discover.path}/${props.id}`}
-                      className={"py-2 px-4 bg-white rounded-lg w-36 mt-3 text-center cursor-pointer hover:bg-gray-100 text-sm text-black"}>
-                    Leer más
-                </Link>
+            <div className={"h-full px-6 pt-6 pb-4 flex flex-col justify-between"}>
+                <div className={"flex flex-col gap-2"}>
+                    <div className={"flex gap-2"}>
+                        {
+                            props.tags.map((tag) => (
+                                <span className={"text-sm text-red-500"}>
+                            {tag}
+                            </span>
+                            ))
+                        }
+                    </div>
+                    <h1 className={"font-bold mb-1 text-lg"}>{props.title}</h1>
+                    <p>{props.summary}</p>
+                </div>
+                <div className={"flex gap-2 items-center mt-6"}>
+                    <FaUserCircle
+                        size={30}
+                        color={'text-gray-400'}
+                    />
+                    <div className={"flex flex-col text-sm"}>
+                        <span className={"font-medium"}>{props.author}</span>
+                        <span className={"text-gray-400"}>{props.date}</span>
+                    </div>
+                </div>
             </div>
-        </div>
+        </Link>
     )
-})
+}

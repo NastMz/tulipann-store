@@ -3,6 +3,8 @@ import {Link} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import hero from "../assets/images/hero.jpg";
 import {NavbarMenu} from "./NavbarMenu";
+import Logo from "../assets/images/LogoTulipannV2.svg";
+import {routes} from "../routes/routes";
 
 export const Navbar = () => {
 
@@ -161,9 +163,9 @@ export const Navbar = () => {
             <div
                 className={"flex justify-between items-center h-16 py-2 px-5 font-medium text-sm"}>
                 <div className={"flex gap-8 items-center"}>
-                    <div className={"text-2xl"}>
-                        LOGO
-                    </div>
+                    <Link to={routes.home.path} className={"w-44"}>
+                        <img src={Logo} alt={Logo} className={"h-full w-full object-fill"}/>
+                    </Link>
                     <div className={""}>
                         <ul className={"flex lg:gap-8 md:gap-2 justify-center items-center"} ref={navbarRef}>
                             {data.map((item: any, index: number) => (
@@ -203,11 +205,11 @@ export const Navbar = () => {
                 </div>
             </div>
             <div
-                className={`relative w-full transition-[height] ease-in-out ${isShowingNavMenu ? "h-80" : "h-0"} duration-300 overflow-hidden shadow-xl`}
+                className={`absolute w-full transition-[height] ease-in-out ${isShowingNavMenu ? "h-80" : "h-0"} duration-300 overflow-hidden shadow-xl z-10`}
             >
                 <NavbarMenu
                     items={navOption > -1 ? data[navOption] : []}
-                    className={"absolute bg-white top-0 left-0 border-t border-gray-100"}
+                    className={"bg-white top-0 left-0 border-t border-gray-100"}
                     ref={navbarMenuRef}
                 />
             </div>

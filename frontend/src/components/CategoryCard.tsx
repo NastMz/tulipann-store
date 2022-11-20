@@ -18,7 +18,7 @@ export const CategoryCard = (props: CategoryCardProps) => {
               onMouseEnter={() => setIsHover(true)}
               onMouseLeave={() => setIsHover(false)}>
             <div className={"h-full w-full"}>
-                <img src={props.img} alt="" className={`h-full w-full object-cover ${isHover ? 'scale-110' : ''}`}/>
+                <img src={props.img} alt={props.img} className={`h-full w-full object-cover ${isHover ? 'scale-110' : ''}`}/>
             </div>
             <div
                 className={"absolute h-full w-full bg-black bg-opacity-20 top-0 text-white flex flex-col justify-end items-start p-5"}>

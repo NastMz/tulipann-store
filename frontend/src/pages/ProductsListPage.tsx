@@ -1,4 +1,4 @@
-import {FilterBar, FilterMenu, ListBanner, ProductList, ProductQuickview, SortMenu} from "../components";
+import {FilterBar, FilterMenu, TitleBanner, ProductList, ProductQuickview, SortMenu} from "../components";
 import {useSelector} from "react-redux";
 import {selectCategories, selectProducts} from "../redux/selector";
 import {useEffect, useRef, useState} from "react";
@@ -208,9 +208,10 @@ export const ProductsListPage = (props: ProductsPageProps) => {
 
     return (
         <>
-            <ListBanner
+            <TitleBanner
                 title={"Lorem"}
                 subtitle={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci dicta error iure maxime quae, quia sunt. Ea nobis quia saepe."}
+                className={"pt-16 pb-8 md:pt-28 md:pb-16 "}
             />
             <div className={"relative"}>
                 <FilterBar

@@ -2,6 +2,7 @@ import {Link} from "react-router-dom";
 import {routes} from "../routes/routes";
 import {useFormik} from "formik";
 import * as Yup from "yup";
+import Logo from "../assets/images/LogoTulipann.svg";
 
 export const Login = () => {
     // Formik logics
@@ -27,8 +28,8 @@ export const Login = () => {
     return (
         <div className={"flex flex-col gap-8 justify-start items-center h-screen bg-gray-50 p-8"}>
             <div className={"flex flex-col items-center justify-center text-center gap-4"}>
-                <div className={"text-3xl"}>
-                    LOGO
+                <div className={"h-24"}>
+                    <img src={Logo} alt={Logo} className={"w-full h-full object-fill"}/>
                 </div>
                 <div>
                     <h1 className={"text-3xl font-bold"}>Inicia sesión con tu cuenta</h1>
