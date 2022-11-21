@@ -1,0 +1,8 @@
+Caja verde o negra sencilla: $55.000
+Con logotipo: $60.000
+Con sistema de candado: $70.000
+
+Descripción: Caja militar para herramientas con cierre hermético y candado
+Largo: 30cm
+Alto: 20cm
+Ancho: 15cm
