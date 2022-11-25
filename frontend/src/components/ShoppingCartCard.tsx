@@ -1,0 +1,52 @@
+import {AiOutlineMinusCircle, AiOutlinePlusCircle} from "react-icons/all";
+
+interface ShoppingCartCardProps {
+    id: number,
+    name: string,
+    color?: string,
+    price: number,
+    image: string,
+    count: number,
+    increaseFunction: Function,
+    decreaseFunction: Function,
+    removeProductFromCart: Function,
+    className?: string
+}
+
+export const ShoppingCartCard = (props: ShoppingCartCardProps) => {
+    return (
+        <div className={`relative grid grid-cols-3 gap-4 py-4 h-fit w-full ${props.className}`}>
+            <div className={"h-full w-full overflow-hidden rounded-lg border border-gray-100"}>
+                <img src={props.image} alt={props.image} className={`h-full min-w-full object-cover`}/>
+            </div>
+            <div className={"col-span-2 flex flex-col gap-1"}>
+                <div>
+                    <p className={"font-medium truncate"}>{props.name}</p>
+                    <span className={"text-sm"}>{props.color}</span>
+                </div>
+                <span className={"text-sm"}>${props.price}</span>
+                <div className={"flex gap-3 items-center justify-end"}>
+                    <AiOutlineMinusCircle
+                        size={20}
+                        className={`text-gray-400 ${props.count > 1 ? 'hover:text-red-500 cursor-pointer' : ' text-gray-200 pointer-events-none'}`}
+                        onClick={() => props.decreaseFunction(props.id)}
+                    />
+                    <span>{props.count}</span>
+                    <AiOutlinePlusCircle
+                        size={20}
+                        className={`text-gray-400 hover:text-red-500 cursor-pointer`}
+                        onClick={() => props.increaseFunction(props.id)}
+                    />
+                </div>
+                <div className={"flex justify-end"}>
+                    <div
+                        className={"w-fit border border-red-500 text-red-500 text-sm px-2 rounded-md cursor-pointer hover:bg-red-500 hover:text-white font-medium"}
+                        onClick={() => props.removeProductFromCart(props.id)}
+                    >
+                        Eliminar
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}

@@ -5,6 +5,7 @@ import hero from "../assets/images/hero.jpg";
 import {NavbarMenu} from "./NavbarMenu";
 import Logo from "../assets/images/LogoTulipannV2.svg";
 import {routes} from "../routes/routes";
+import {ShoppingCart} from "./ShoppingCart";
 
 export const Navbar = () => {
 
@@ -104,7 +105,7 @@ export const Navbar = () => {
     const navbarRef = useRef<any>(null);
     const navbarMenuRef = useRef<any>(null);
 
-    // State for show or hide de nav menu
+    // State for show or hide the nav menu
     const [isShowingNavMenu, setIsShowingNavMenu] = useState<boolean>(false);
 
     // State for know the actual selected nav option
@@ -114,7 +115,7 @@ export const Navbar = () => {
     const [isSticky, setIsSticky] = useState<boolean>(false);
 
     // Function used for reset the state when close the menu
-    const resetState = () => {
+    const resetNavMenuState = () => {
         setIsShowingNavMenu(false);
         setTimeout(() => {
             setNavOption(-1);
@@ -122,30 +123,30 @@ export const Navbar = () => {
     };
 
     // Function used to show the nav menu when an option is clicked
-    const showNavMenu = (index: number) => {
+    const toggleNavMenu = (index: number) => {
         if (isShowingNavMenu && navOption === index) {
-            resetState();
+            resetNavMenuState();
         } else {
             setNavOption(index);
             setIsShowingNavMenu(true);
         }
     };
 
-    // Function used to show or hide the navbar menu when the same option is clicked
-    const toggleMenu = (e: MouseEvent) => {
+    // Function used to show or hide the navbar menu the user click outside
+    const hideMenu = (e: MouseEvent) => {
         if (navbarMenuRef.current && !navbarMenuRef.current.contains(e.target) && navbarRef.current && !navbarRef.current.contains(e.target)) {
-            resetState();
+            resetNavMenuState();
         }
     }
 
     // Add or remove the event listener to hide the navbar menu when the user click outside
     useEffect(() => {
         if (isShowingNavMenu) {
-            document.addEventListener('mousedown', toggleMenu);
+            document.addEventListener('mousedown', hideMenu);
         } else {
-            document.removeEventListener('mousedown', toggleMenu);
+            document.removeEventListener('mousedown', hideMenu);
         }
-    }, [isShowingNavMenu, navOption]);
+    }, [isShowingNavMenu]);
 
 
     // Event listener to set fixed position to navbar
@@ -157,25 +158,32 @@ export const Navbar = () => {
         }
     });
 
+
     return (
         <nav
-            className={`hidden md:block ${isSticky ? 'fixed shadow-md' : 'relative border-b border-gray-100'} top-0 left-0 right-0 bg-white bg-opacity-90 z-50`}>
+            className={`${isSticky ? 'fixed shadow-md' : 'relative border-b border-gray-100'} top-0 left-0 right-0 bg-white bg-opacity-90 z-50`}>
+
+            {/*Navbar*/}
             <div
-                className={"flex justify-between items-center h-16 py-2 px-5 font-medium text-sm"}>
+                className={"flex justify-between items-center h-16 px-5 font-medium text-sm"}>
                 <div className={"flex gap-8 items-center"}>
+
+                    {/*LOGO*/}
                     <Link to={routes.home.path} className={"w-44"}>
                         <img src={Logo} alt={Logo} className={"h-full w-full object-fill"}/>
                     </Link>
-                    <div className={""}>
-                        <ul className={"flex lg:gap-8 md:gap-2 justify-center items-center"} ref={navbarRef}>
+
+                    {/*Navbar options*/}
+                    <div className={""} ref={navbarRef}>
+                        <ul className={"flex lg:gap-8 md:gap-2 justify-center items-center"}>
                             {data.map((item: any, index: number) => (
-                                <li
+                                <div
                                     className={`cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${navOption === index ? 'text-red-600 border-b-2 border-red-600' : ''}`}
-                                    onClick={() => showNavMenu(index)}
+                                    onClick={() => toggleNavMenu(index)}
                                     key={Math.random()}
                                 >
                                     Opcion
-                                </li>
+                                </div>
                             ))}
                         </ul>
                     </div>
@@ -183,34 +191,40 @@ export const Navbar = () => {
                 </div>
                 <div>
                     <div className={"flex lg:gap-12 md:gap-6 items-center"}>
-                        <ul className={"flex gap-2 items-center"}>
-                            <li className={""}>
+
+                        {/*Login Menu*/}
+                        <div className={"flex gap-2 items-center"}>
+                            <div className={""}>
                                 <Link to={"/login"} className={"hover:text-red-600"}>Iniciar sesión</Link>
-                            </li>
+                            </div>
                             <span className={"text-base text-gray-200 font-light"}>|</span>
-                            <li className={""}>
+                            <div className={""}>
                                 <Link to={"/register"} className={"hover:text-red-600"}>Crear cuenta</Link>
-                            </li>
-                        </ul>
-                        <ul className={"flex gap-6 items-center text-gray-500"}>
-                            <li className={"cursor-pointer hover:text-red-600"}>
+                            </div>
+                        </div>
+
+                        <div className={"flex gap-6 items-center text-gray-500 h-full"}>
+
+                            {/*Search Btn*/}
+                            <div className={"cursor-pointer hover:text-red-600"}>
                                 <BiSearch size={25}/>
-                            </li>
-                            <li className={"flex gap-2 items-center cursor-pointer hover:text-red-600"}>
-                                <BiShoppingBag size={25}/>
-                                <span className={"text-lg"}>0</span>
-                            </li>
-                        </ul>
+                            </div>
+
+                            <ShoppingCart/>
+
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/*Navbar Menu*/}
             <div
-                className={`absolute w-full transition-[height] ease-in-out ${isShowingNavMenu ? "h-80" : "h-0"} duration-300 overflow-hidden shadow-xl z-10`}
+                className={`bg-white absolute w-full transition-all ease-in-out ${isShowingNavMenu ? "h-80" : "h-0"} duration-300 overflow-hidden shadow-xl z-10`}
+                ref={navbarMenuRef}
             >
                 <NavbarMenu
                     items={navOption > -1 ? data[navOption] : []}
-                    className={"bg-white top-0 left-0 border-t border-gray-100"}
-                    ref={navbarMenuRef}
+                    className={"top-0 left-0 border-t border-gray-100"}
                 />
             </div>
         </nav>

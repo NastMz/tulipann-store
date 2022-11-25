@@ -2,6 +2,10 @@ import {AiOutlineClose, BiCheck, TbShieldCheck} from "react-icons/all";
 import {Product} from "../models";
 import {getRateMean, getTotalCustomerCount} from "../utils";
 import {Stars} from "./Stars";
+import {addProductToCart} from "../redux/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {selectProducts} from "../redux/selector";
+import {store} from "../redux/store";
 
 interface ProductOverviewProps {
     product: Product
@@ -10,6 +14,14 @@ interface ProductOverviewProps {
 export const ProductOverview = (props: ProductOverviewProps) => {
 
     const rate = getRateMean(props.product);
+
+    const dispatch = useDispatch();
+    const products = useSelector(selectProducts);
+
+    const addToCart = (id: number) => {
+        let product = products.filter((product) => product.id === id)[0];
+        dispatch(addProductToCart(product));
+    }
 
     return (
         <div
@@ -53,8 +65,14 @@ export const ProductOverview = (props: ProductOverviewProps) => {
                     <div className={"flex items-center mt-4"}>
                         <span
                             className={`bg-red-500 hover:bg-red-400 text-center p-3 text-white font-medium cursor-pointer flex-grow rounded-lg ${props.product.stock > 0
-                                ? '' : 'pointer-events-none bg-gray-200'}`}>
-                            Añadir a la bolsa
+                                ? '' : 'pointer-events-none bg-gray-300'} ${store.getState().cart.list.filter(product => product.id === props.product.id).length === 0 ? '' : 'pointer-events-none bg-gray-300'}`}
+                            onClick={() => addToCart(props.product.id)}
+                        >
+                            {
+                                store.getState().cart.list.filter(product => product.id === props.product.id).length === 0
+                                    ? 'Añadir a la bolsa'
+                                    : 'Ya está en la bolsa'
+                            }
                         </span>
                     </div>
                     <div className={"flex items-center justify-center gap-2 mt-2"}>

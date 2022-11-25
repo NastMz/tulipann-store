@@ -3,6 +3,12 @@ import {Link} from "react-router-dom";
 import {routes} from "../routes/routes";
 import {AiOutlineClose, BiCheck, TbShieldCheck} from "react-icons/all";
 import {Stars} from "./Stars";
+import {useDispatch, useSelector} from "react-redux";
+import {addProductToCart} from "../redux/actions";
+import {selectProducts} from "../redux/selector";
+import {store} from "../redux/store";
+import {saveCartState} from "../utils";
+import {throttle} from 'lodash';
 
 interface ProductQuickviewProps {
     id: number,
@@ -20,6 +26,26 @@ interface ProductQuickviewProps {
 }
 
 export const ProductQuickview = (props: ProductQuickviewProps) => {
+
+    const dispatch = useDispatch();
+    const products = useSelector(selectProducts);
+
+    const addToCart = (id: number) => {
+        props.closeProductPreview();
+        let product = products.filter((product) => product.id === id)[0];
+        dispatch(addProductToCart(product));
+    }
+
+    store.subscribe(throttle(() => {
+        let state = store.getState().cart.list.map((product) => {
+            return {
+                id: product.id,
+                count: product.count
+            }
+        });
+        saveCartState(state);
+    }, 1000));
+
     return (
         <div
             className={`fixed inset-0 z-50 h-screen w-full flex justify-center items-center ${props.isOpen ? '' : 'pointer-events-none'}`}
@@ -33,8 +59,7 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                 className={`bg-white overflow-hidden w-5/6 md:w-2/3 h-5/6 md:h-2/3 rounded-sm flex flex-col md:flex-row p-12 md:p-8 2xl:p-20 gap-4 md:gap-10 2xl:gap-24 shadow-xl relative ${props.isOpen ? '' : 'pointer-events-none'} ${props.cardClassName}`}>
                 <AiOutlineClose
                     size={25}
-                    color={"#94a3b8"}
-                    className={"absolute top-4 md:top-6 right-4 md:right-6 cursor-pointer"}
+                    className={"absolute top-4 md:top-6 right-4 md:right-6 cursor-pointer ext-gray-400 hover:text-red-500"}
                     onClick={() => props.closeProductPreview()}
                 />
                 <div className={"flex flex-col gap-8 md:w-2/5 md:h-4/5"}>
@@ -83,8 +108,14 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                     <div className={"flex items-center my-1 md:my-4"}>
                         <span
                             className={`bg-red-500 hover:bg-red-400 text-center p-3 text-white font-medium cursor-pointer flex-grow rounded-lg ${props.stock > 0
-                                ? '' : 'pointer-events-none bg-gray-200'}`}>
-                            Añadir a la bolsa
+                                ? '' : 'pointer-events-none bg-gray-300'} ${store.getState().cart.list.filter(product => product.id === props.id).length === 0 ? '' : 'pointer-events-none bg-gray-300'}`}
+                            onClick={() => addToCart(props.id)}
+                        >
+                            {
+                                store.getState().cart.list.filter(product => product.id === props.id).length === 0
+                                    ? 'Añadir a la bolsa'
+                                : 'Ya está en la bolsa'
+                            }
                         </span>
                     </div>
                     <div className={"flex items-center justify-center gap-2"}>
