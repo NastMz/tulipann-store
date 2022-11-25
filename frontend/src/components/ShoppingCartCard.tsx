@@ -18,14 +18,14 @@ interface ShoppingCartCardProps {
 export const ShoppingCartCard = (props: ShoppingCartCardProps) => {
 
     return (
-        <div className={`relative grid grid-cols-3 gap-4 py-4 h-fit w-full ${props.className}`}>
+        <div className={`relative grid grid-cols-3 gap-4 py-4 h-fit w-full ${props.className} text-black`}>
             <div className={"h-full w-full overflow-hidden rounded-lg"}>
                 <img src={props.image} alt={props.image} className={`h-full min-w-full object-cover`}/>
             </div>
             <div className={"col-span-2 flex flex-col justify-between w-full"}>
                 <div className={"flex justify-between items-start gap-2 w-full"}>
                     <div className={"w-full"}>
-                        <Link to={`${routes.product.path}/${props.id} w-full`}>
+                        <Link to={`${routes.product.path}/${props.id}`} className={"w-full"}>
                             <p className={"truncate text-xl w-full"}>{props.name}</p>
                         </Link>
                         <span className={"text-sm"}>{props.color}</span>

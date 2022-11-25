@@ -21,7 +21,7 @@ interface FilterMenuProps {
 export const FilterMenu = forwardRef((props: FilterMenuProps, ref: Ref<any>) => {
     return (
         <form
-            className={`min-h-fit w-fit bg-white md:shadow-none shadow-2xl py-8 -mt-12 ${props.className}`}
+            className={`min-h-fit min-w-fit bg-white md:shadow-none shadow-2xl py-8 -mt-12 ${props.className}`}
             ref={ref}
         >
             {

@@ -1,4 +1,4 @@
-import {FilterBar, FilterMenu, TitleBanner, ProductList, ProductQuickview, SortMenu} from "../components";
+import {FilterBar, FilterMenu, ProductList, ProductQuickview, SortMenu, TitleBanner} from "../components";
 import {useSelector} from "react-redux";
 import {selectCategories, selectProducts} from "../redux/selector";
 import {useEffect, useRef, useState} from "react";
@@ -7,6 +7,7 @@ import {useParams} from "react-router-dom";
 import {Product} from "../models";
 import {getRateMean, nameOf, SortUtil} from "../utils";
 import {routes} from "../routes/routes";
+import {AnimatePresence, motion} from "framer-motion";
 
 // Function to sort the product array by sort option
 function sorBy(option: number, array: Product[]) {
@@ -207,7 +208,11 @@ export const ProductsListPage = (props: ProductsPageProps) => {
     };
 
     return (
-        <>
+        <motion.div
+            initial={{width: 0}}
+            animate={{width: '100%'}}
+            exit={{width: window.innerWidth, transition: {duration: 0.3}}}
+        >
             <TitleBanner
                 title={"Lorem"}
                 subtitle={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci dicta error iure maxime quae, quia sunt. Ea nobis quia saepe."}
@@ -221,20 +226,45 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                     toggleMenuFilter={toggleFilterMenu}
                     ref={ref}
                     toggleSortMenu={toggleSortMenu}/>
-                <SortMenu
-                    options={sortOptions}
-                    sortItemsFunction={sortItemsBy}
-                    className={`absolute z-10 right-6 top-14 overflow-y-hidden transform origin-top-right transition-transform ease-in-out ${isShowingSortMenu ? "scale-100" : "scale-0"} duration-300`}
-                    ref={sortMenuRef}
-                />
+                <AnimatePresence>
+                    {
+                        isShowingSortMenu && (
+                            <motion.div
+                                initial={{scale: 0}}
+                                animate={{scale: 1}}
+                                exit={{scale: 0, transition: {duration: 0.3}}}
+                                className={`absolute h-fit z-10 right-6 top-14 overflow-hidden min-w-fit py-2 border bg-white border-gray-200 rounded-md shadow-2xl transform origin-top-right`}
+                            >
+                                <SortMenu
+                                    options={sortOptions}
+                                    sortItemsFunction={sortItemsBy}
+                                    ref={sortMenuRef}
+                                    key={Math.random()}
+                                />
+                            </motion.div>
+                        )
+                    }
+                </AnimatePresence>
             </div>
             <div className={"flex relative min-h-[50vh] md:min-h-screen"}>
-                <FilterMenu
-                    filters={filters}
-                    updateFilters={updateFilters}
-                    className={`overflow-y-auto transition-[width] ease-in-out ${isShowingFilterMenu ? "w-96 px-8" : "w-0 px-0"} duration-300 overflow-x-hidden`}
-                    ref={filterMenuRef}
-                />
+                <AnimatePresence>
+                    {
+                        isShowingFilterMenu && (
+                            <motion.div
+                                initial={{translate: '-100%'}}
+                                animate={{translate: 0,}}
+                                exit={{translate: '-100%', transition: {duration: 0.3}}}
+                            >
+                                <FilterMenu
+                                    filters={filters}
+                                    updateFilters={updateFilters}
+                                    className={`overflow-y-auto px-8 overflow-x-hidden`}
+                                    ref={filterMenuRef}
+                                />
+                            </motion.div>
+                        )
+                    }
+                </AnimatePresence>
                 <div className={"flex flex-col gap-12 px-24 md:px-16 w-full"}>
                     <ProductList
                         items={showItems}
@@ -270,10 +300,10 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                 rate={productInQuickview.rate ?? getRateMean(productInQuickview)}
                 description={productInQuickview.description}
                 colors={productInQuickview.colors ?? null}
-                cardClassName={`overflow-hidden transition-transform ease-in-out ${isShowingProductQuickview ? "scale-100" : "scale-0"} duration-300`}
+                cardClassName={`overflow-hidden`}
                 isOpen={isShowingProductQuickview}
                 closeProductPreview={closeProductPreview}
             />
-        </>
+        </motion.div>
     )
 }

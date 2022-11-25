@@ -24,7 +24,7 @@ export const FilterCard = (props: FilterCardProps) => {
     }
 
     return (
-        <div className={`py-4 min-h-fit border-t border-gray-200 ${props.className}`}>
+        <div className={`py-4 min-h-fit w-full border-t border-gray-200 ${props.className}`}>
             <h3 className="font-medium">{props.title}</h3>
             <ul className="py-3 font-medium text-gray-900">
                 {props.options.map((option) => (
@@ -40,7 +40,7 @@ export const FilterCard = (props: FilterCardProps) => {
                             />
                             <label
                                 htmlFor={`${option.id}`}
-                                className="ml-2 min-w-0 flex-1 text-gray-500"
+                                className="ml-2 min-w-0 flex-1 text-gray-500 truncate"
                             >
                                 {option.name}
                             </label>

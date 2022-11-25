@@ -8,6 +8,7 @@ interface MainProps {
 
 export const Main = (props: MainProps) => {
     document.title = props.title;
+
     return (
         <div className={"min-h-screen"}>
             <Navbar/>

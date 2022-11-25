@@ -4,6 +4,7 @@ import {selectProducts} from "../redux/selector";
 import {ProductFeatures, ProductOverview, Reviews} from "../components";
 import {routes} from "../routes/routes";
 import {useEffect} from "react";
+import {motion} from "framer-motion";
 
 export const ProductPage = () => {
 
@@ -25,11 +26,17 @@ export const ProductPage = () => {
 
     if (product.length > 0) {
         return (
-            <div>
-                <ProductOverview product={product[0]}/>
-                <ProductFeatures specs={product[0].specs}/>
-                <Reviews product={product[0]}/>
-            </div>
+            <motion.div
+                initial={{translate: '100%'}}
+                animate={{ translate: 0, }}
+                exit={{ translate: '-100%', transition: {duration: 0.3}}}
+            >
+                <div>
+                    <ProductOverview product={product[0]}/>
+                    <ProductFeatures specs={product[0].specs}/>
+                    <Reviews product={product[0]}/>
+                </div>
+            </motion.div>
         )
     } else {
         return (

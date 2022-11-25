@@ -28,7 +28,7 @@ export const SearchCard = (props: ShoppingCartCardProps) => {
                 <div className={"col-span-2 flex flex-col gap-1 w-full"}>
                     <div className={"flex flex-col items-start gap-1 w-full"}>
                         <span className={"text-sm text-red-500"}>{props.tag}</span>
-                        <p className={"truncate text-lg w-full"}>{props.name}</p>
+                        <p className={"truncate text-lg w-full text-black"}>{props.name}</p>
                         {
                             props.rate && <Stars rate={props.rate} size={20}/>
                         }

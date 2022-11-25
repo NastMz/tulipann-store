@@ -6,6 +6,7 @@ import Logo from "../assets/images/LogoTulipannV2.svg";
 import {routes} from "../routes/routes";
 import {ShoppingCart} from "./ShoppingCart";
 import {SearchBar} from "./SearchBar";
+import {AnimatePresence, motion} from "framer-motion";
 
 export const Navbar = () => {
 
@@ -161,7 +162,7 @@ export const Navbar = () => {
 
     return (
         <nav
-            className={`${isSticky ? 'fixed shadow-md' : 'relative border-b border-gray-100'} top-0 left-0 right-0 bg-white bg-opacity-90 z-50`}>
+            className={`${isSticky ? 'fixed shadow-md' : 'relative border-b border-gray-100'} top-0 left-0 right-0 bg-white bg-opacity-90 z-40`}>
 
             {/*Navbar*/}
             <div
@@ -215,15 +216,26 @@ export const Navbar = () => {
             </div>
 
             {/*Navbar Menu*/}
-            <div
-                className={`bg-white absolute w-full transition-all ease-in-out ${isShowingNavMenu ? "h-80" : "h-0"} duration-300 overflow-hidden shadow-xl z-10`}
-                ref={navbarMenuRef}
-            >
-                <NavbarMenu
-                    items={navOption > -1 ? data[navOption] : []}
-                    className={"top-0 left-0 border-t border-gray-100"}
-                />
-            </div>
+            <AnimatePresence>
+                {
+                    isShowingNavMenu && (
+                        <motion.div
+                            initial={{height: 0}}
+                            animate={{height: 'fit-content',}}
+                            exit={{height: 0, transition: {duration: 0.3}}}
+                            className={`bg-white absolute w-full overflow-hidden shadow-xl z-10`}
+                            ref={navbarMenuRef}
+                        >
+
+                            <NavbarMenu
+                                items={navOption > -1 ? data[navOption] : []}
+                                className={"top-0 left-0 border-t border-gray-100"}
+                                key={navOption}
+                            />
+                        </motion.div>
+                    )
+                }
+            </AnimatePresence>
         </nav>
     )
 }

@@ -15,7 +15,7 @@ interface SortMenuProps {
 export const SortMenu = forwardRef((props: SortMenuProps, ref: Ref<any>) => {
     return (
         <div
-            className={`h-fit w-fit py-2 border bg-white border-gray-200 rounded-md shadow-2xl ${props.className}`}
+            className={`${props.className}`}
             ref={ref}
         >
             <ul>
