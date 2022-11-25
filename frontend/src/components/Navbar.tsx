@@ -1,4 +1,4 @@
-import {BiSearch, BiShoppingBag} from "react-icons/all";
+import {BiSearch} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import hero from "../assets/images/hero.jpg";
