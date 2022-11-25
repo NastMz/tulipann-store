@@ -56,7 +56,7 @@ export const Footer = () => {
                 <span className={"flex gap-2 items-center"}>© 2022 Tulipann Store. Todos los derechos reservados</span>
                 <span className={"text-sm"}>Desarrollado por <a href="https://nastmz.github.io/portfolio"
                                                                 target={"_blank"} className={"text-red-400"}>Kevin Martinez</a> y <a
-                    href="#" target={"_blank"} className={"text-red-400"}>Mateo Granada</a></span>
+                    href="https://www.linkedin.com/in/joshep-mateo-granada-quinchia-41b379207/" target={"_blank"} className={"text-red-400"}>Mateo Granada</a></span>
             </div>
         </>
     )

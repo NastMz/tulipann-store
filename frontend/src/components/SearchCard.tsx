@@ -21,7 +21,7 @@ export const SearchCard = (props: ShoppingCartCardProps) => {
             className={`w-full max-h-14 ${props.className}`}
             onClick={() => props.closeSearchBar()}
         >
-            <div className={`relative grid grid-cols-3 gap-4 p-2 h-full w-full border-t border-b border-gray-100`}>
+            <div className={`relative grid grid-cols-3 gap-4 p-4 h-full w-full border-t border-b border-gray-100`}>
                 <div className={"h-full w-full overflow-hidden rounded-lg"}>
                     <img src={props.image} alt={props.image} className={`h-full min-w-full object-cover`}/>
                 </div>

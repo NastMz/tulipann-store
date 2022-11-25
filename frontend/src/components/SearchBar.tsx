@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import {selectArticles, selectProducts} from "../redux/selector";
 import {SearchCard} from "./SearchCard";
 import {routes} from "../routes/routes";
+import {Product, Article} from '../models';
 
 export const SearchBar = () => {
 
@@ -17,8 +18,8 @@ export const SearchBar = () => {
     const ref = useRef<any>(null);
 
     const openSearchBar = () => {
-        ref.current.focus();
-        setIsOpen(true)
+        setIsOpen(true);
+        setTimeout(() => ref.current.focus(), 10);
     };
 
     const closeSearchBar = () => {
@@ -76,6 +77,7 @@ export const SearchBar = () => {
                             ref={ref}
                             value={searchInput}
                             onInput={e => setSearchInput(e.currentTarget.value)}
+                            onFocus={(e) => e.persist()}
                         />
                         <div className="absolute h-full right-5 top-0 flex justify-center items-center">
                             <BiSearch size={25} className={"text-slate-400"}/>
@@ -86,15 +88,15 @@ export const SearchBar = () => {
                             searchItems.length > 0
                                 ? <div className={"max-h-72 overflow-y-scroll"}>
                                     {
-                                        searchItems.map((item: any) => (
+                                        searchItems.map((item: Product | Article) => (
                                             <SearchCard
                                                 id={item.id}
-                                                name={item.name || item.title}
-                                                image={item.img || item.banner}
-                                                rate={item.rate || undefined}
-                                                summary={item.summary || undefined}
-                                                path={item.banner ? routes.discover.path : routes.product.path}
-                                                tag={item.banner ? 'Articulo' : 'Producto'}
+                                                name={"name" in item ? item.name : item.title}
+                                                image={"images" in item ? item.images[0] : item.banner}
+                                                rate={"rate" in item ? item.rate : undefined}
+                                                summary={"summary" in item ? item.summary  : undefined}
+                                                path={"banner" in item ? routes.discover.path : routes.product.path}
+                                                tag={"banner" in item ? 'Articulo' : 'Producto'}
                                                 closeSearchBar={closeSearchBar}
                                                 key={Math.random()}
                                             />

@@ -110,7 +110,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                                                 id={product.id}
                                                 name={product.name}
                                                 price={product.price}
-                                                image={product.img}
+                                                image={product.images[0]}
                                                 count={product.count}
                                                 increaseFunction={increaseProductCount}
                                                 decreaseFunction={decreaseProductCount}
