@@ -6,6 +6,7 @@ import {addProductToCart} from "../redux/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {selectProducts} from "../redux/selector";
 import {store} from "../redux/store";
+import {ProductImageSelector} from "./ProductImageSelector";
 
 interface ProductOverviewProps {
     product: Product
@@ -80,9 +81,10 @@ export const ProductOverview = (props: ProductOverviewProps) => {
                         <span className={"text-gray-400 font-medium"}>Calidad garantizada</span>
                     </div>
                 </div>
-                <div className={"overflow-hidden w-full h-full md:w-1/2 rounded-lg"}>
-                    <img src={props.product.img} alt="" className={`h-full w-full object-cover`}/>
-                </div>
+                <ProductImageSelector
+                    images={props.product.images}
+                    className={"w-full h-96 md:w-1/2"}
+                />
             </div>
         </div>
     )

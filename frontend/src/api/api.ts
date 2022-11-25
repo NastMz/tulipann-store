@@ -4,9 +4,6 @@ import category2 from "../assets/images/category2.jpg";
 import category3 from "../assets/images/category3.jpg";
 import {getRateMean} from "../utils";
 
-const apiUrl = "#";
-
-
 const products: Array<Product> = [
     {
         "id": 70286,
@@ -14,7 +11,7 @@ const products: Array<Product> = [
         "price": 109,
         "description": "turpis. In condimentum. Donec at arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae Donec",
         "stock": 70,
-        "img": category1,
+        "images": [category1, category2, category3],
         "category": 73498,
         "supplier": 79274,
         "feedback": [
@@ -122,7 +119,7 @@ const products: Array<Product> = [
         "price": 43,
         "description": "velit. Sed malesuada augue ut lacus. Nulla tincidunt, neque vitae semper",
         "stock": 58,
-        "img": category1,
+        "images": [category1, category2, category3],
         "category": 39125,
         "supplier": 3493,
         "feedback": [
@@ -230,7 +227,7 @@ const products: Array<Product> = [
         "price": 31,
         "description": "ligula. Donec luctus aliquet odio. Etiam ligula tortor, dictum eu,",
         "stock": 28,
-        "img": category3,
+        "images": [category3, category1, category2],
         "category": 68668,
         "supplier": 42684,
         "feedback": [
@@ -338,7 +335,7 @@ const products: Array<Product> = [
         "price": 109,
         "description": "nec, imperdiet nec, leo. Morbi neque tellus, imperdiet non, vestibulum nec, euismod in, dolor. Fusce feugiat. Lorem ipsum dolor sit",
         "stock": 73,
-        "img": category1,
+        "images": [category1, category2, category3],
         "category": 79590,
         "supplier": 85121,
         "feedback": [
@@ -453,7 +450,7 @@ const products: Array<Product> = [
         "price": 101,
         "description": "mattis ornare, lectus ante dictum mi, ac mattis velit justo nec ante. Maecenas mi felis, adipiscing fringilla,",
         "stock": 56,
-        "img": category2,
+        "images": [category2, category1, category3],
         "category": 56041,
         "supplier": 63645,
         "feedback": [
@@ -582,7 +579,7 @@ const products: Array<Product> = [
         "price": 89,
         "description": "nulla vulputate dui, nec tempus mauris erat eget ipsum. Suspendisse sagittis. Nullam",
         "stock": 143,
-        "img": category3,
+        "images": [category3, category1, category2],
         "category": 75767,
         "supplier": 20106,
         "feedback": [
@@ -690,7 +687,7 @@ const products: Array<Product> = [
         "price": 74,
         "description": "quis arcu vel quam dignissim pharetra. Nam ac nulla. In tincidunt congue",
         "stock": 111,
-        "img": category2,
+        "images": [category2, category1, category3],
         "category": 53332,
         "supplier": 42086,
         "feedback": [
@@ -798,7 +795,7 @@ const products: Array<Product> = [
         "price": 82,
         "description": "sagittis felis. Donec tempor, est ac mattis semper, dui lectus rutrum urna, nec luctus felis purus",
         "stock": 129,
-        "img": category3,
+        "images": [category3, category1, category2],
         "category": 72257,
         "supplier": 12592,
         "feedback": [
@@ -906,7 +903,7 @@ const products: Array<Product> = [
         "price": 62,
         "description": "vel, convallis in, cursus et, eros. Proin ultrices. Duis volutpat nunc sit amet metus. Aliquam erat volutpat. Nulla facilisis. Suspendisse",
         "stock": 55,
-        "img": category2,
+        "images": [category2, category1, category3],
         "category": 50367,
         "supplier": 37318,
         "feedback": [
@@ -1014,7 +1011,7 @@ const products: Array<Product> = [
         "price": 60,
         "description": "Sed id risus quis diam luctus lobortis. Class aptent taciti sociosqu",
         "stock": 0,
-        "img": category3,
+        "images": [category3, category1, category2],
         "category": 73021,
         "supplier": 78356,
         "feedback": [

@@ -263,7 +263,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
             </div>
             <ProductQuickview
                 id={productInQuickview.id}
-                img={productInQuickview.img}
+                img={productInQuickview.images[0]}
                 name={productInQuickview.name}
                 price={productInQuickview.price}
                 stock={productInQuickview.stock}

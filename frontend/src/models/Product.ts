@@ -10,7 +10,7 @@ export interface Product {
     description: string,
     specs: ProductSpecs,
     stock: number,
-    img: string,
+    images: string[],
     feedback: Commentary[],
     category: number,
     colors?: Color[] | null

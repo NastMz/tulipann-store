@@ -18,7 +18,7 @@ export const ProductList = (props: ItemsGridProps) => {
                         {props.items.map((item) => (
                             <ProductCard
                                 id={item.id}
-                                img={item.img}
+                                img={item.images[0]}
                                 name={item.name}
                                 price={item.price}
                                 rate={item.rate ?? getRateMean(item)}
