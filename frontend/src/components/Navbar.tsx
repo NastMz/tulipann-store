@@ -1,4 +1,3 @@
-import {BiSearch} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import hero from "../assets/images/hero.jpg";
@@ -6,6 +5,7 @@ import {NavbarMenu} from "./NavbarMenu";
 import Logo from "../assets/images/LogoTulipannV2.svg";
 import {routes} from "../routes/routes";
 import {ShoppingCart} from "./ShoppingCart";
+import {SearchBar} from "./SearchBar";
 
 export const Navbar = () => {
 
@@ -205,10 +205,7 @@ export const Navbar = () => {
 
                         <div className={"flex gap-6 items-center text-gray-500 h-full"}>
 
-                            {/*Search Btn*/}
-                            <div className={"cursor-pointer hover:text-red-600"}>
-                                <BiSearch size={25}/>
-                            </div>
+                            <SearchBar/>
 
                             <ShoppingCart/>
 

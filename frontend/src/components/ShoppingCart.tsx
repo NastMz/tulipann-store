@@ -129,8 +129,9 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                                 </div>
                         }
                     </div>
-                    <div className={"flex justify-end px-4 pt-4"}>
-                        <p className={"font-medium"}>Subtotal: <span className={"font-normal"}>${subtotal}</span></p>
+                    <div className={"flex justify-between px-4 pt-4 font-medium text-lg"}>
+                        <span className={""}>Subtotal</span>
+                        <span className={""}>${subtotal}</span>
                     </div>
                     <div
                         className={`mx-auto my-4 w-fit bg-red-500 text-white px-10 py-2 rounded-md cursor-pointer hover:bg-red-400 font-medium ${cart.length > 0
