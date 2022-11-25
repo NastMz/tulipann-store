@@ -10,10 +10,10 @@
 
 /* Chrome, Edge and Safari */
 *::-webkit-scrollbar {
-    width: 7px;
+    width: 5px;
 }
 *::-webkit-scrollbar-track {
-    border-radius: 3px;
+    border-radius: 2px;
     background-color: #f7f8fa;
 }
 

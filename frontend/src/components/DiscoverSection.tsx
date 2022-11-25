@@ -36,6 +36,7 @@ export const DiscoverSection = () => {
                             date={article.date}
                             author={article.author}
                             tags={article.tags}
+                            key={Math.random()}
                         />
                     ))
                 }

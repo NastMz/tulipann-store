@@ -23,7 +23,7 @@ export const ChartBar = (props: ChartBarProps) => {
                     }}
                 />
             </div>
-            <span>{props.percent}%</span>
+            <span className={'text-gray-400'}>{props.percent}%</span>
         </div>
     )
 }

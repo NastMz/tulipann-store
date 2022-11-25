@@ -14,5 +14,6 @@ export interface Product {
     feedback: Commentary[],
     category: number,
     colors?: Color[] | null
-    supplier?: number
+    supplier?: number,
+    rate?: number
 }

@@ -105,7 +105,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                             cart.length > 0
                                 ? <div className={"flex flex-col"}>
                                     {
-                                        cart.map((product, index) => (
+                                        cart.map((product) => (
                                             <ShoppingCartCard
                                                 id={product.id}
                                                 name={product.name}

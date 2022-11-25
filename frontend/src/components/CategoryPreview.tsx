@@ -9,9 +9,9 @@ import {routes} from "../routes/routes";
 export const CategoryPreview = () => {
     const categories = useSelector(selectCategories);
     return (
-        <section className={"px-8 h-96 mt-8 md:h-[80vh] md:mt-28 mb-48 md:mb-36"} id={"category"}>
+        <section className={"px-8 h-96 mt-8 md:h-[80vh] md:mt-20 mb-48 md:mb-36"} id={"category"}>
             <div className={"flex py-4 md:py-2 flex-col md:flex-row justify-between items-center gap-3"}>
-                <h3 className={"font-bold"}>Explora las categorias</h3>
+                <h3 className={"font-bold text-xl"}>Explora las categorias</h3>
                 <Link to={`${routes.catalog.path}`}
                       className={"font-medium text-sm text-red-600 flex justify-end items-center"}>
                     <span>Ver todas las categorias</span> <BsArrowRightShort size={20}/>

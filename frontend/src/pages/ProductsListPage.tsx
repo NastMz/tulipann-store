@@ -10,7 +10,7 @@ import {routes} from "../routes/routes";
 
 // Function to sort the product array by sort option
 function sorBy(option: number, array: Product[]) {
-    const names: any = ["name", "reviews", "rate", "price"];
+    const names: any = ["name", "feedback", "rate", "price"];
     if (1 < option && option < 5) {
         SortUtil.sortByProperty(array, nameOf<Product>(names[option - 1]), 'DESC');
     } else if (option === 5) {
@@ -161,7 +161,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
     };
 
     // Toggle filter menu visible status
-    const showFilterMenu = () => {
+    const toggleFilterMenu = () => {
         setIsShowingFilterMenu(!isShowingFilterMenu);
     };
 
@@ -174,23 +174,23 @@ export const ProductsListPage = (props: ProductsPageProps) => {
     };
 
     // Hide sort menu on click in other component
-    const toggleSortMenu = (e: MouseEvent) => {
+    const hideSortMenu = (e: MouseEvent) => {
         if (sortMenuRef.current && !sortMenuRef.current.contains(e.target) && ref.current.sortBtnRef.current && !ref.current.sortBtnRef.current.contains(e.target)) {
             setIsShowingSortMenu(false);
         }
     };
 
-    // Activate or deactivate hide filter menu event listener
+    // Activate or deactivate hide sort menu event listener
     useEffect(() => {
         if (isShowingSortMenu) {
-            document.addEventListener('mousedown', toggleSortMenu);
+            document.addEventListener('mousedown', hideSortMenu);
         } else {
-            document.removeEventListener('mousedown', toggleSortMenu);
+            document.removeEventListener('mousedown', hideSortMenu);
         }
     }, [isShowingSortMenu]);
 
-    // Toggle filter menu visible status
-    const showSortMenu = () => {
+    // Toggle sort menu visible status
+    const toggleSortMenu = () => {
         setIsShowingSortMenu(!isShowingSortMenu);
     };
 
@@ -211,19 +211,19 @@ export const ProductsListPage = (props: ProductsPageProps) => {
             <TitleBanner
                 title={"Lorem"}
                 subtitle={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci dicta error iure maxime quae, quia sunt. Ea nobis quia saepe."}
-                className={"pt-16 pb-8 md:pt-28 md:pb-16 "}
+                className={"p-8 md:pb-16 "}
             />
             <div className={"relative"}>
                 <FilterBar
                     filters={filters}
                     filtersCount={activeFilters.length}
                     clearFilters={clearFilters}
-                    toggleMenuFilter={showFilterMenu}
+                    toggleMenuFilter={toggleFilterMenu}
                     ref={ref}
-                    toggleSortMenu={showSortMenu}/>
+                    toggleSortMenu={toggleSortMenu}/>
                 <SortMenu
                     options={sortOptions}
-                    sortItemsBy={sortItemsBy}
+                    sortItemsFunction={sortItemsBy}
                     className={`absolute z-10 right-6 top-14 overflow-y-hidden transform origin-top-right transition-transform ease-in-out ${isShowingSortMenu ? "scale-100" : "scale-0"} duration-300`}
                     ref={sortMenuRef}
                 />
@@ -257,7 +257,6 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                         breakLinkClassName={"text-sm text-gray-300"}
                         previousClassName={"flex-1"}
                         nextClassName={"flex-1 flex justify-end"}
-                        disabledLinkClassName={"text-gray-300 hover:border-gray-200 cursor-default"}
                         renderOnZeroPageCount={undefined}
                     />
                 </div>
@@ -268,7 +267,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                 name={productInQuickview.name}
                 price={productInQuickview.price}
                 stock={productInQuickview.stock}
-                rate={getRateMean(productInQuickview)}
+                rate={productInQuickview.rate ?? getRateMean(productInQuickview)}
                 description={productInQuickview.description}
                 colors={productInQuickview.colors ?? null}
                 cardClassName={`overflow-hidden transition-transform ease-in-out ${isShowingProductQuickview ? "scale-100" : "scale-0"} duration-300`}

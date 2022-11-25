@@ -2,6 +2,7 @@ import {Article, Category, Product} from "../models";
 import category1 from "../assets/images/category1.jpg";
 import category2 from "../assets/images/category2.jpg";
 import category3 from "../assets/images/category3.jpg";
+import {getRateMean} from "../utils";
 
 const apiUrl = "#";
 
@@ -1274,7 +1275,12 @@ const articles: Array<Article> = [
 ];
 
 function getProducts() {
-    return products;
+    return products.map((product) => {
+        return {
+            ...product,
+            rate: getRateMean(product)
+        }
+    });
 }
 
 function getCategories() {

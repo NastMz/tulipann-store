@@ -17,7 +17,8 @@ export const DiscoverCard = (props: DiscoverCardProps) => {
     return (
         <Link
             to={`${routes.discover.path}/${props.id}`}
-            className={`w-full overflow-hidden rounded-lg flex flex-col shadow-lg ${props.className} hover:scale-110`}>
+            className={`w-full overflow-hidden rounded-lg flex flex-col shadow-lg ${props.className} hover:scale-110`}
+        >
             <div className={"h-1/3 w-full"}>
                 <img src={props.banner} alt={props.banner} className={`h-full w-full object-cover`}/>
             </div>
