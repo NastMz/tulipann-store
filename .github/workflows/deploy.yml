@@ -14,7 +14,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Enter to folder
-        run: cd /frontend
+        run: cd $GITHUB_ACTION_PATH/frontend
         shell: bash
       - name: Install nodejs
         uses: actions/setup-node@v3
