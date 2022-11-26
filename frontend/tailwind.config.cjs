@@ -11,7 +11,7 @@ module.exports = {
                 'width': 'width',
                 'spacing': 'margin, padding',
             },
-        },
+        }
     },
     plugins: [require('@tailwindcss/forms')],
 }
