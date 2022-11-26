@@ -11,8 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cloning repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
+          ref: web
           fetch-depth: 0
 
       - name: Push to dokku
