@@ -39,7 +39,7 @@ jobs:
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
-          REPO: "ssh://dokku@tulipannstore.com:22:web"
+          REPO: dokku@tulipannstore.com:web
           BRANCH: master
           FOLDER: frontend/dist
           SSH_PRIVATE_KEY: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
