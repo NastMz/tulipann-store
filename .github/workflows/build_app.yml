@@ -42,4 +42,4 @@ jobs:
           REPO: self
           BRANCH: web
           FOLDER: frontend/dist
-          GITHUB_TOKEN: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
