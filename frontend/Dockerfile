@@ -1,7 +1,11 @@
-FROM nginx:latest
+FROM node:latest as build
 
 WORKDIR /app
+COPY . ./
+RUN npm install && npm ci && npm run build
 
-COPY  /app/dist /usr/share/nginx/html/
+# Stage - Production
+FROM nginx:latest
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
