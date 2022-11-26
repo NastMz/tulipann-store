@@ -14,3 +14,4 @@ export {ProductQuickview} from './ProductQuickview';
 export {ProductOverview} from './ProductOverview';
 export {Reviews} from './Reviews';
 export {ProductFeatures} from './ProductFeatures';
+export {Loader} from './Loader';

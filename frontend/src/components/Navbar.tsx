@@ -176,7 +176,7 @@ export const Navbar = () => {
 
                     {/*Navbar options*/}
                     <div className={""} ref={navbarRef}>
-                        <ul className={"flex lg:gap-8 md:gap-2 justify-center items-center"}>
+                        <div className={"flex lg:gap-8 md:gap-2 justify-center items-center"}>
                             {data.map((item: any, index: number) => (
                                 <div
                                     className={`cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${navOption === index ? 'text-red-600 border-b-2 border-red-600' : ''}`}
@@ -186,7 +186,7 @@ export const Navbar = () => {
                                     Opcion
                                 </div>
                             ))}
-                        </ul>
+                        </div>
                     </div>
 
                 </div>
