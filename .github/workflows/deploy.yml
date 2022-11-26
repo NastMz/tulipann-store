@@ -27,7 +27,7 @@ jobs:
         run: npm build
       - name: Create .static
         run: touch ./dist/.static
-	  shell: bash
+	      shell: bash
 	- name: Push to dokku
         uses: dokku/github-action@master
         with:
