@@ -1,4 +1,4 @@
-export {HeaderBar} from './HeaderBar';
+export {LoginOptions} from './LoginOptions';
 export {Navbar} from './Navbar';
 export {Hero} from './Hero';
 export {CategoryPreview} from './CategoryPreview';
@@ -15,3 +15,4 @@ export {ProductOverview} from './ProductOverview';
 export {Reviews} from './Reviews';
 export {ProductFeatures} from './ProductFeatures';
 export {Loader} from './Loader';
+export {Image} from './Image';

@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {Image} from "./Image";
 
 interface ProductImageSelectorProps {
     images: string[],
@@ -10,11 +11,7 @@ export const ProductImageSelector = (props: ProductImageSelectorProps) => {
     return (
         <div className={`flex flex-col gap-4 ${props.className}`}>
             <div className={"overflow-hidden rounded-lg flex-grow"}>
-                <img
-                    src={activeImage}
-                    alt={activeImage}
-                    className={`h-full w-full object-cover`}
-                />
+                <Image src={activeImage}/>
             </div>
             <div className={"flex gap-2 overflow-x-auto h-1/5"}>
                 {
@@ -23,7 +20,7 @@ export const ProductImageSelector = (props: ProductImageSelectorProps) => {
                             className={`overflow-hidden h-full rounded-lg ${activeImage === image ? 'border-2 border-red-500' : ''}`}
                             onClick={() => setActiveImage(image)}
                         >
-                            <img src={image} alt={image} className={`h-full w-full object-cover`}/>
+                            <Image src={image}/>
                         </div>
                     ))
                 }

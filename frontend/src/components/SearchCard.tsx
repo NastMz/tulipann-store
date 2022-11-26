@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import {Stars} from "./Stars";
+import {Image} from "./Image";
 
 interface ShoppingCartCardProps {
     id: number,
@@ -23,7 +24,7 @@ export const SearchCard = (props: ShoppingCartCardProps) => {
         >
             <div className={`relative grid grid-cols-3 gap-4 p-4 h-full w-full border-t border-b border-gray-100`}>
                 <div className={"h-full w-full overflow-hidden rounded-lg"}>
-                    <img src={props.image} alt={props.image} className={`h-full min-w-full object-cover`}/>
+                    <Image src={props.image}/>
                 </div>
                 <div className={"col-span-2 flex flex-col gap-1 w-full"}>
                     <div className={"flex flex-col items-start gap-1 w-full"}>

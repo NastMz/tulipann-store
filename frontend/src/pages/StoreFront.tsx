@@ -1,5 +1,10 @@
-import {CategoryPreview, DiscoverSection, Hero, PromoSection} from "../components";
 import {motion} from "framer-motion";
+import {lazy} from "react";
+
+const CategoryPreview = lazy(() => import('../components').then(({CategoryPreview}) => ({default: CategoryPreview})));
+const DiscoverSection = lazy(() => import('../components').then(({DiscoverSection}) => ({default: DiscoverSection})));
+const Hero = lazy(() => import('../components').then(({Hero}) => ({default: Hero})));
+const PromoSection = lazy(() => import('../components').then(({PromoSection}) => ({default: PromoSection})));
 
 export const StoreFront = () => {
 

@@ -1,6 +1,7 @@
 import {Feature, ProductSpecs} from "../models";
 import {useRef, useState} from "react";
 import {FeatureCard} from "./FeatureCard";
+import {AnimatePresence} from "framer-motion";
 
 interface ProductFeaturesProps {
     specs: ProductSpecs,
@@ -21,7 +22,7 @@ export const ProductFeatures = (props: ProductFeaturesProps) => {
     };
 
     return (
-        <div className="p-12">
+        <div className="p-12 overflow-hidden h-fit">
             <div className="flex flex-col gap-4 mb-6">
                 <h2 className={"text-2xl font-bold"}>Especificaciones Tecnicas</h2>
                 <p className={"text-gray-500"}>{props.specs.summary}</p>
@@ -40,14 +41,13 @@ export const ProductFeatures = (props: ProductFeaturesProps) => {
                         ))}
                     </ul>
                 </div>
-                <div
-                    className={``}
-                >
-                    <FeatureCard
-                        feature={props.specs.options[featureOption]}
-                        className={""}
-                    />
-                </div>
+                    {
+                        props.specs.options[featureOption] && (
+                            <FeatureCard
+                                feature={props.specs.options[featureOption]}
+                            />
+                        )
+                    }
             </div>
         </div>
     )

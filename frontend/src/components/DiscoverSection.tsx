@@ -13,7 +13,7 @@ export const DiscoverSection = () => {
     SortUtil.sortByProperty(showArticles, "date", "DESC");
 
     // Get only the number of articles that want to display in the slider
-    showArticles = showArticles.slice(0, 4);
+    showArticles = showArticles.slice(0, 3);
 
 
     return (
@@ -25,7 +25,7 @@ export const DiscoverSection = () => {
                 subtitle={"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci dicta error iure maxime quae, quia sunt. Ea nobis quia saepe."}
                 className={"pb-16"}
             />
-            <div className={"grid grid-cols-4 gap-8 px-20"}>
+            <div className={"grid grid-cols-3 gap-8 px-20 place-items-center"}>
                 {
                     showArticles.map((article) => (
                         <DiscoverCard
@@ -37,6 +37,7 @@ export const DiscoverSection = () => {
                             author={article.author}
                             tags={article.tags}
                             key={Math.random()}
+                            className={"w-80"}
                         />
                     ))
                 }

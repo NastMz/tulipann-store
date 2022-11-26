@@ -6,7 +6,7 @@ export const Hero = () => {
     return (
         <section className="flex gap-12 relative h-fit md:h-screen 2xl:h-[800px]">
             <div
-                className={"flex flex-col gap-4 px-12 2xl:px-28 items-center justify-center md:items-start text-center md:text-left w-[80%] h-full -mt-14"}
+                className={"flex flex-col gap-4 px-12 2xl:px-28 items-center justify-center md:items-start text-center md:text-left w-2/3 h-full -mt-14"}
             >
                 <h1 className={"text-2xl md:text-5xl 2xl:text-7xl font-bold"}>Lorem ipsum dolor sit amet.</h1>
                 <p className={"text-gray-500 text-base 2xl:text-2xl"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eum
@@ -19,20 +19,20 @@ export const Hero = () => {
                     <span className={"text-sm lg:text-base"}>Ver categorias</span>
                 </div>
             </div>
-            <div className={"hidden md:block h-full w-full"}>
-                <div className={"grid grid-cols-3 h-full w-fit gap-4 absolute -top-5 -right-5 overflow-hidden"}>
-                    <div className={"flex flex-col gap-4 h-full items-center py-14"}>
-                        <PromoCard img={hero} aspectRatio={"[2/3]"}/>
-                        <PromoCard img={hero} aspectRatio={"[2/3]"}/>
+            <div className={"relative h-full w-2/3 -top-5 -right-10 bottom-0  overflow-hidden"}>
+                <div className={"grid grid-cols-3 h-full w-full gap-4"}>
+                    <div className={"grid gap-4 h-full py-14"}>
+                        <PromoCard img={hero} />
+                        <PromoCard img={hero} />
                     </div>
-                    <div className={"flex flex-col gap-4 h-full items-center"}>
-                        <PromoCard img={hero} aspectRatio={"[1/2]"}/>
-                        <PromoCard img={hero} aspectRatio={"[1/2]"}/>
-                        <PromoCard img={hero} aspectRatio={"[1/2]"}/>
+                    <div className={"grid gap-4 h-full relative -bottom-5 top-0"}>
+                        <PromoCard img={hero} />
+                        <PromoCard img={hero} />
+                        <PromoCard img={hero} />
                     </div>
-                    <div className={"flex flex-col gap-4 h-full items-center py-14"}>
-                        <PromoCard img={hero} aspectRatio={"[2/3]"}/>
-                        <PromoCard img={hero} aspectRatio={"[2/3]"}/>
+                    <div className={"grid gap-4 h-full py-14"}>
+                        <PromoCard img={hero} />
+                        <PromoCard img={hero} />
                     </div>
                 </div>
             </div>

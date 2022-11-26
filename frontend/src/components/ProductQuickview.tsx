@@ -10,6 +10,7 @@ import {store} from "../redux/store";
 import {saveCartState} from "../utils";
 import {throttle} from 'lodash';
 import {AnimatePresence, motion} from "framer-motion";
+import {Image} from "./Image";
 
 interface ProductQuickviewProps {
     id: number,
@@ -62,16 +63,16 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                             initial={{scale: 0}}
                             animate={{scale: 1}}
                             exit={{scale: 0, transition: {duration: 0.3}}}
-                            className={`bg-white overflow-hidden w-5/6 md:w-2/3 h-5/6 md:h-2/3 rounded-sm flex flex-col md:flex-row p-12 md:p-8 2xl:p-20 gap-4 md:gap-10 2xl:gap-24 shadow-xl relative ${props.isOpen ? '' : 'pointer-events-none'} ${props.cardClassName}`}
+                            className={`bg-white overflow-hidden w-5/6 md:w-2/3 h-fit md:h-2/3 rounded-sm flex flex-col md:flex-row p-12 md:p-8 2xl:p-20 gap-4 md:gap-10 2xl:gap-24 shadow-xl relative ${props.isOpen ? '' : 'pointer-events-none'} ${props.cardClassName}`}
                         >
                             <AiOutlineClose
                                 size={25}
                                 className={"absolute top-4 md:top-6 right-4 md:right-6 cursor-pointer ext-gray-400 hover:text-red-500"}
                                 onClick={() => props.closeProductPreview()}
                             />
-                            <div className={"flex flex-col gap-8 md:w-2/5 md:h-4/5"}>
+                            <div className={"flex flex-col gap-8 w-full h-1/2 md:w-2/3 md:h-4/5"}>
                                 <div className={"overflow-hidden w-full h-full rounded-lg"}>
-                                    <img src={props.img} alt="" className={`h-full w-full object-cover`}/>
+                                    <Image src={props.img} />
                                 </div>
                                 <div className={"flex items-center justify-center"}>
                                     <Link
@@ -82,7 +83,7 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                                     </Link>
                                 </div>
                             </div>
-                            <div className={"flex flex-col gap-2"}>
+                            <div className={"flex flex-col gap-2 w-full md:w-2/3"}>
                                 <div className={"flex -mt-2"}>
                                     <h1 className={"text-xl md:text-4xl font-bold"}>{props.name}</h1>
                                 </div>

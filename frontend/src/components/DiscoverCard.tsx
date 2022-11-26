@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import {routes} from "../routes/routes";
 import {FaUserCircle} from "react-icons/all";
+import {Image} from './Image';
 
 interface DiscoverCardProps {
     id: number,
@@ -20,7 +21,7 @@ export const DiscoverCard = (props: DiscoverCardProps) => {
             className={`w-full overflow-hidden rounded-lg flex flex-col shadow-lg ${props.className} hover:scale-110`}
         >
             <div className={"h-1/3 w-full"}>
-                <img src={props.banner} alt={props.banner} className={`h-full w-full object-cover`}/>
+                <Image src={props.banner}/>
             </div>
             <div className={"h-full px-6 pt-6 pb-4 flex flex-col justify-between"}>
                 <div className={"flex flex-col gap-2"}>

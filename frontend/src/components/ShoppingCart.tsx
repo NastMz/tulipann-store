@@ -83,14 +83,14 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
     return (
         <div className={"relative h-full "}>
             {/*Shopping Cart BTN*/}
-            <li
+            <div
                 className={"flex gap-2 items-center cursor-pointer hover:text-red-600"}
                 onClick={() => toggleCart()}
                 ref={cartBtnRef}
             >
                 <BiShoppingBag size={25}/>
                 <span className={"text-lg text-black"}>{productsCartCount}</span>
-            </li>
+            </div>
 
             {/*Shopping Cart*/}
             <div

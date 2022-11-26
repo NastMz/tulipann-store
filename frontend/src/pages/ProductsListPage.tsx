@@ -1,7 +1,6 @@
-import {FilterBar, FilterMenu, ProductList, ProductQuickview, SortMenu, TitleBanner} from "../components";
 import {useSelector} from "react-redux";
 import {selectCategories, selectProducts} from "../redux/selector";
-import {useEffect, useRef, useState} from "react";
+import {lazy, useEffect, useRef, useState} from "react";
 import ReactPaginate from "react-paginate";
 import {useParams} from "react-router-dom";
 import {Product} from "../models";
@@ -9,19 +8,12 @@ import {getRateMean, nameOf, SortUtil} from "../utils";
 import {routes} from "../routes/routes";
 import {AnimatePresence, motion} from "framer-motion";
 
-// Function to sort the product array by sort option
-function sorBy(option: number, array: Product[]) {
-    const names: any = ["name", "feedback", "rate", "price"];
-    if (1 < option && option < 5) {
-        SortUtil.sortByProperty(array, nameOf<Product>(names[option - 1]), 'DESC');
-    } else if (option === 5) {
-        SortUtil.sortByProperty(array, nameOf<Product>(names[3]), 'ASC');
-    } else if (option === 1) {
-        SortUtil.sortByProperty(array, nameOf<Product>(names[0]), 'ASC');
-    }
-    return array;
-}
-
+const FilterBar = lazy(() => import('../components').then(({FilterBar}) => ({default: FilterBar})));
+const FilterMenu = lazy(() => import('../components').then(({FilterMenu}) => ({default: FilterMenu})));
+const ProductList = lazy(() => import('../components').then(({ProductList}) => ({default: ProductList})));
+const ProductQuickview = lazy(() => import('../components').then(({ProductQuickview}) => ({default: ProductQuickview})));
+const SortMenu = lazy(() => import('../components').then(({SortMenu}) => ({default: SortMenu})));
+const TitleBanner = lazy(() => import('../components').then(({TitleBanner}) => ({default: TitleBanner})));
 
 interface ProductsPageProps {
     itemsPerPage: number
@@ -209,9 +201,9 @@ export const ProductsListPage = (props: ProductsPageProps) => {
 
     return (
         <motion.div
-            initial={{width: 0}}
-            animate={{width: '100%'}}
-            exit={{width: window.innerWidth, transition: {duration: 0.3}}}
+            initial={{translate: '100%'}}
+            animate={{ translate: 0, }}
+            exit={{ translate: '-100%', transition: {duration: 0.3}}}
         >
             <TitleBanner
                 title={"Lorem"}
@@ -306,4 +298,17 @@ export const ProductsListPage = (props: ProductsPageProps) => {
             />
         </motion.div>
     )
+}
+
+// Function to sort the product array by sort option
+function sorBy(option: number, array: Product[]) {
+    const names: any = ["name", "feedback", "rate", "price"];
+    if (1 < option && option < 5) {
+        SortUtil.sortByProperty(array, nameOf<Product>(names[option - 1]), 'DESC');
+    } else if (option === 5) {
+        SortUtil.sortByProperty(array, nameOf<Product>(names[3]), 'ASC');
+    } else if (option === 1) {
+        SortUtil.sortByProperty(array, nameOf<Product>(names[0]), 'ASC');
+    }
+    return array;
 }

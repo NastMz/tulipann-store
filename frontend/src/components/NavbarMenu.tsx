@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import {NavCard} from "./NavCard";
 
 interface NavItem {
@@ -14,11 +13,6 @@ interface NavbarMenuProps {
 
 export const NavbarMenu = (props: NavbarMenuProps) => {
     return (
-        <motion.div
-            initial={{translate: '100%'}}
-            animate={{ translate: 0, }}
-            exit={{ translate: '-100%', transition: {duration: 0.3}}}
-        >
         <div
             className={`grid grid-cols-4 gap-12 w-full px-8 py-6 ${props.className}`}
         >
@@ -33,6 +27,5 @@ export const NavbarMenu = (props: NavbarMenuProps) => {
                 ))
             }
         </div>
-        </motion.div>
     )
 }

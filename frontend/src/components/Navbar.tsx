@@ -7,6 +7,7 @@ import {routes} from "../routes/routes";
 import {ShoppingCart} from "./ShoppingCart";
 import {SearchBar} from "./SearchBar";
 import {AnimatePresence, motion} from "framer-motion";
+import {Image} from "./Image";
 
 export const Navbar = () => {
 
@@ -171,7 +172,7 @@ export const Navbar = () => {
 
                     {/*LOGO*/}
                     <Link to={routes.home.path} className={"w-44"}>
-                        <img src={Logo} alt={Logo} className={"h-full w-full object-fill"}/>
+                        <Image src={Logo}/>
                     </Link>
 
                     {/*Navbar options*/}
@@ -190,33 +191,30 @@ export const Navbar = () => {
                     </div>
 
                 </div>
-                <div>
-                    <div className={"flex lg:gap-12 md:gap-6 items-center"}>
+                <div className={"flex lg:gap-12 md:gap-6 items-center"}>
 
-                        {/*Login Menu*/}
-                        <div className={"flex gap-2 items-center"}>
-                            <div className={""}>
-                                <Link to={"/login"} className={"hover:text-red-600"}>Iniciar sesión</Link>
-                            </div>
-                            <span className={"text-base text-gray-200 font-light"}>|</span>
-                            <div className={""}>
-                                <Link to={"/register"} className={"hover:text-red-600"}>Crear cuenta</Link>
-                            </div>
+                    {/*Login Menu*/}
+                    <div className={"flex gap-2 items-center"}>
+                        <div className={""}>
+                            <Link to={"/login"} className={"hover:text-red-600"}>Iniciar sesión</Link>
                         </div>
-
-                        <div className={"flex gap-6 items-center text-gray-500 h-full"}>
-
-                            <SearchBar/>
-
-                            <ShoppingCart/>
-
+                        <span className={"text-base text-gray-200 font-light"}>|</span>
+                        <div className={""}>
+                            <Link to={"/register"} className={"hover:text-red-600"}>Crear cuenta</Link>
                         </div>
+                    </div>
+
+                    <div className={"flex gap-6 items-center text-gray-500 h-full"}>
+
+                        <SearchBar/>
+
+                        <ShoppingCart/>
+
                     </div>
                 </div>
             </div>
 
             {/*Navbar Menu*/}
-            <AnimatePresence>
                 {
                     isShowingNavMenu && (
                         <motion.div
@@ -230,12 +228,10 @@ export const Navbar = () => {
                             <NavbarMenu
                                 items={navOption > -1 ? data[navOption] : []}
                                 className={"top-0 left-0 border-t border-gray-100"}
-                                key={navOption}
                             />
                         </motion.div>
                     )
                 }
-            </AnimatePresence>
         </nav>
     )
 }

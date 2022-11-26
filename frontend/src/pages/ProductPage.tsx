@@ -1,10 +1,13 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectProducts} from "../redux/selector";
-import {ProductFeatures, ProductOverview, Reviews} from "../components";
 import {routes} from "../routes/routes";
-import {useEffect} from "react";
+import {lazy, useEffect} from "react";
 import {motion} from "framer-motion";
+
+const ProductFeatures = lazy(() => import('../components').then(({ProductFeatures}) => ({default: ProductFeatures})));
+const ProductOverview = lazy(() => import('../components').then(({ProductOverview}) => ({default: ProductOverview})));
+const Reviews = lazy(() => import('../components').then(({Reviews}) => ({default: Reviews})));
 
 export const ProductPage = () => {
 

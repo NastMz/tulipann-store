@@ -16,15 +16,15 @@ export const PromoSection = () => {
                     <span>Ver más</span> <BsArrowRightShort size={20}/>
                 </Link>
             </div>
-            <div className={"col-start-2 pr-4 md:pr-12 overflow-hidden absolute -top-6 md:-top-12 bottom-0 right-0"}>
-                <div className={"grid grid-cols-2 h-full gap-4 relative"}>
-                    <div className={"flex flex-col gap-4 pt-8 md:pt-16"}>
-                        <PromoCard img={hero} aspectRatio={"[3/2]"} className={"h-32 md:h-60"}/>
-                        <PromoCard img={hero} aspectRatio={"[3/2]"} className={"h-32 md:h-60"}/>
+            <div className={"col-start-2 pr-4 md:pr-12 overflow-hidden absolute -top-6 md:-top-12 right-0 bottom-0"}>
+                <div className={"grid grid-cols-2 h-full gap-4"}>
+                    <div className={"grid gap-4 relative -bottom-20"}>
+                        <PromoCard img={hero}  />
+                        <PromoCard img={hero}  />
                     </div>
-                    <div className={"flex flex-col gap-4 h-full"}>
-                        <PromoCard img={hero} aspectRatio={"[3/2]"} className={"h-32 md:h-60"}/>
-                        <PromoCard img={hero} aspectRatio={"[3/2]"} className={"h-32 md:h-60"}/>
+                    <div className={"grid gap-4 h-full relative -bottom-5"}>
+                        <PromoCard img={hero}  />
+                        <PromoCard img={hero} />
                     </div>
                 </div>
             </div>

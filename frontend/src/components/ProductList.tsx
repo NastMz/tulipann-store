@@ -6,7 +6,7 @@ import {BsBoxSeam} from "react-icons/all";
 interface ItemsGridProps {
     items: Product[],
     className?: string,
-    showPreview: Function
+    showPreview: Function,
 }
 
 export const ProductList = (props: ItemsGridProps) => {

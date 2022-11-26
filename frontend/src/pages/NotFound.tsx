@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import {BsArrowRightShort} from "react-icons/all";
 import {Link} from "react-router-dom";
 import Logo from "../assets/images/LogoTulipann.svg";
+import {Image} from "../components";
 
 export const NotFound = () => {
     return (
@@ -12,7 +13,7 @@ export const NotFound = () => {
         >
             <div className={"flex flex-col gap-6 items-center justify-center text-center p-40"}>
                 <div className={"h-24"}>
-                    <img src={Logo} alt={Logo} className={"w-full h-full object-fill"}/>
+                   <Image src={Logo}/>
                 </div>
                 <div className={"flex flex-col gap-6"}>
                     <div className={"flex flex-col gap-1"}>

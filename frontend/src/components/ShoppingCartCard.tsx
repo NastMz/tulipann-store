@@ -1,6 +1,7 @@
 import {AiOutlineMinusCircle, AiOutlinePlusCircle} from "react-icons/all";
 import {Link} from "react-router-dom";
 import {routes} from "../routes/routes";
+import {Image} from "./Image";
 
 interface ShoppingCartCardProps {
     id: number,
@@ -20,7 +21,7 @@ export const ShoppingCartCard = (props: ShoppingCartCardProps) => {
     return (
         <div className={`relative grid grid-cols-3 gap-4 py-4 h-fit w-full ${props.className} text-black`}>
             <div className={"h-full w-full overflow-hidden rounded-lg"}>
-                <img src={props.image} alt={props.image} className={`h-full min-w-full object-cover`}/>
+                <Image src={props.image}/>
             </div>
             <div className={"col-span-2 flex flex-col justify-between w-full"}>
                 <div className={"flex justify-between items-start gap-2 w-full"}>
