@@ -1,7 +1,7 @@
 FROM nginx:latest
 
-WORKDIR ./
+WORKDIR /app
 
-COPY  ./dist /usr/share/nginx/html
+COPY  /app/dist /usr/share/nginx/html/
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
