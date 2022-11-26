@@ -43,3 +43,5 @@ jobs:
           BRANCH: master
           FOLDER: frontend/dist
           SSH_PRIVATE_KEY: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
+          KNOWN_HOSTS_FILE: resources/known_hosts
+          MESSAGE: "Deploy new app version"
