@@ -1,9 +1,9 @@
-name: "deploy"
+name: "build_app"
 
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   deploy:
@@ -39,9 +39,7 @@ jobs:
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
-          REPO: dokku@tulipannstore.com:web
-          BRANCH: master
+          REPO: self
+          BRANCH: web
           FOLDER: frontend/dist
-          SSH_PRIVATE_KEY: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
-          KNOWN_HOSTS_FILE: resources/known_hosts
-          MESSAGE: "Deploy new app version"
+          GITHUB_TOKEN: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
