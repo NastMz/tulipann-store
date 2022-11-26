@@ -21,9 +21,6 @@ jobs:
       - name: Install npm packages
         run: npm install
         working-directory: ./frontend
-      - name: Config build
-        run: npm ci
-        working-directory: ./frontend
       - name: Build project
         run: npm run build
         working-directory: ./frontend
