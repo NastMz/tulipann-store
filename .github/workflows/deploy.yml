@@ -1,4 +1,4 @@
-name: 'deploy'
+name: "deploy"
 
 on:
   push:
@@ -19,17 +19,18 @@ jobs:
       - name: Install nodejs
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: "16"
           check-latest: true
       - name: Config build
         run: npm ci
       - name: Build project
         run: npm build
       - name: Create .static
-        run: touch ./dist/.static
-	      shell: bash
-	- name: Push to dokku
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: "./dist/.static"
+      - name: Push to dokku
         uses: dokku/github-action@master
         with:
-          git_remote_url: 'ssh://dokku@tulipannstore.com:web'
+          git_remote_url: "ssh://dokku@tulipannstore.com:web"
           ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
