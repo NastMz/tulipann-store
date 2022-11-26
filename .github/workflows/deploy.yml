@@ -27,9 +27,6 @@ jobs:
       - name: Build project
         run: npm run build
         working-directory: ./frontend
-      - name: Create .static
-        run: touch .static
-        working-directory: ./frontend/dist
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
