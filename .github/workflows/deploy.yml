@@ -16,6 +16,9 @@ jobs:
       - name: Enter to folder
         run: cd frontend
         shell: bash
+      - name: Enter to folder
+        run: ls -l
+        shell: bash
       - name: Install nodejs
         uses: actions/setup-node@v3
         with:
