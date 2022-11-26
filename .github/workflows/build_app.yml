@@ -1,4 +1,4 @@
-name: "build_app"
+name: App Build
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
         run: touch .env
         working-directory: ./frontend/dist
       - name: Edit .env
-        run: echo "export BUILDPACK_URL=https://github.com/dokku/buildpack-nginx.git" > text.txt
+        run: echo "export BUILDPACK_URL=https://github.com/dokku/buildpack-nginx.git" > .env
         working-directory: ./frontend/dist
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
