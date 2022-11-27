@@ -5,6 +5,9 @@ on:
     workflows: ["App Build"]
     types:
       - completed
+  push:
+    branches:
+      - develop
 
 jobs:
   deploy:
@@ -17,7 +20,11 @@ jobs:
           fetch-depth: 0
 
       - name: List files
-        run: ls -a
+        run: |
+          git config user.name 'Kevin Martinez'
+          git config user.email 'ksmartinez2307@gmail.com'
+          git add .
+          git commit -m "Update"
 
       - name: Push to dokku
         uses: dokku/github-action@master
