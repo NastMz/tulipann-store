@@ -10,29 +10,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cloning repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - name: Install nodejs
         uses: actions/setup-node@v3
         with:
           node-version: "16"
           check-latest: true
+
       - name: Install npm packages
         run: npm install
         working-directory: ./frontend
+
       - name: Build project
         run: npm run build
         working-directory: ./frontend
+
       - name: Create .static
         run: touch .static
+        shell: bash
         working-directory: ./frontend/dist
-      - name: Create .env
-        run: touch .env
-        working-directory: ./frontend/dist
-      - name: Edit .env
-        run: echo "BUILDPACK_URL=https://github.com/dokku/heroku-buildpack-nginx" > .env
-        working-directory: ./frontend/dist
+        
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:

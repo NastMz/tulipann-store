@@ -7,9 +7,9 @@ import {Image} from "../components";
 export const NotFound = () => {
     return (
         <motion.div
-            initial={{translate: '100%'}}
-            animate={{ translate: 0, }}
-            exit={{ translate: '-100%', transition: {duration: 0.3}}}
+            initial={{width: 0}}
+            animate={{width: '100%'}}
+            exit={{width: window.innerWidth, transition: {duration: 0.3}}}
         >
             <div className={"flex flex-col gap-6 items-center justify-center text-center p-40"}>
                 <div className={"h-24"}>

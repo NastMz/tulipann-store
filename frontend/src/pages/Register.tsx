@@ -37,9 +37,9 @@ export const Register = () => {
 
     return (
         <motion.div
-            initial={{translate: '100%'}}
-            animate={{ translate: 0, }}
-            exit={{ translate: '-100%', transition: {duration: 0.3}}}
+            initial={{width: 0}}
+            animate={{width: '100%'}}
+            exit={{width: window.innerWidth, transition: {duration: 0.3}}}
         >
             <div className={"flex flex-col gap-8 justify-start items-center min-h-screen bg-gray-50 pb-10 p-8"}>
                 <div className={"flex flex-col items-center justify-center text-center gap-4"}>

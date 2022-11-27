@@ -38,16 +38,6 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
         dispatch(addProductToCart(product));
     }
 
-    store.subscribe(throttle(() => {
-        let state = store.getState().cart.list.map((product) => {
-            return {
-                id: product.id,
-                count: product.count
-            }
-        });
-        saveCartState(state);
-    }, 1000));
-
     return (
         <div
             className={`fixed inset-0 h-screen w-full z-50 flex justify-center items-center ${props.isOpen ? '' : 'pointer-events-none'}`}
