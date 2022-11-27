@@ -3,7 +3,7 @@ name: App Build
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   deploy:
@@ -28,22 +28,38 @@ jobs:
         run: npm run build
         working-directory: ./frontend
 
-      - name: Create .static
-        run: touch .static
-        working-directory: ./frontend/dist
+      - name: Prepare project folder
+        run: mkdir /web/app
+        working-directory: ./frontend
 
-      - name: Create .env
-        run: touch .env
-        working-directory: ./frontend/dist
+      - name: Move files to project folder
+        run: cp -a /dist/. /web/app
+        working-directory: ./frontend
 
-      - name: Edit .env
-        run: echo "BUILDPACK_URL=https://github.com/dokku/heroku-buildpack-nginx" > .env
-        working-directory: ./frontend/dist
+      - name: Prepare nginx config
+        run: mkdir .nginx
+        working-directory: ./frontend/web
+
+      - name: Create nginx.conf
+        run: touch nginx.conf
+        working-directory: ./frontend/web/.nginx
+
+      - name: Edit nginx.conf
+        run: echo -e "server { \n listen 80; \n\n location / {\n  root /usr/share/nginx/html;\n  index index.html index.htm;\n  try_files $uri $uri/ /index.html =404;\n}\n\n include /etc/nginx/extra-conf.d/*.conf;\n}" > nginx.conf
+        working-directory: ./frontend/web/.nginx
+
+      - name: Create Dockerfile
+        run: touch Dockerfile
+        working-directory: ./frontend/web
+
+      - name: Edit Dockerfile
+        run: echo -e "FROM nginx:latest\n\n## Remove default nginx index page\nRUN rm -rf /usr/share/nginx/html/*\n\n# Copy the app\nCOPY /app/ /usr/share/nginx/html\n\n# Copy the config\nCOPY /.nginx/nginx.conf /etc/nginx/conf.d/default.conf\n\nEXPOSE 80\n\nENTRYPOINT ['nginx', '-g', 'daemon off;']" > Dockerfile
+        working-directory: ./frontend/web
 
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
           BRANCH: web
-          FOLDER: frontend/dist
+          FOLDER: frontend/web
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
