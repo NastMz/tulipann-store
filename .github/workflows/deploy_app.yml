@@ -19,13 +19,9 @@ jobs:
           fetch-depth: 0
           ref: web
 
-      - name: List files
-        run: ls -a
-
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
-          ci_branch_name: web
           git_push_flags: "--force -vvv"
           git_remote_url: "ssh://dokku@tulipannstore.com:22/web"
           ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
