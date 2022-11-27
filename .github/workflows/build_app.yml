@@ -57,7 +57,7 @@ jobs:
         working-directory: ./frontend/web
 
       - name: Edit Dockerfile
-        run: echo -e "FROM nginx:latest\n\n## Remove default nginx index page\nRUN rm -rf /usr/share/nginx/html/*\n\n# Copy the app\nCOPY /app/ /usr/share/nginx/html\n\n# Copy the config\nCOPY /.nginx/nginx.conf /etc/nginx/conf.d/default.conf\n\nEXPOSE 80\n\nENTRYPOINT ['nginx', '-g', 'daemon off;']" > Dockerfile
+        run: echo -e "FROM nginx:latest\n\n## Remove default nginx index page\nRUN rm -rf /usr/share/nginx/html/*\n\n# Copy the app\nCOPY /app/ /usr/share/nginx/html\n\n# Copy the config\nCOPY /.nginx/nginx.conf /etc/nginx/conf.d/default.conf\n\nEXPOSE 80\n\nENTRYPOINT [\"nginx\", \"-g\", \"daemon off;\"]" > Dockerfile
         working-directory: ./frontend/web
 
       - name: Deploy
