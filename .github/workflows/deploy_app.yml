@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: web
+          fetch-depth: 0
 
       - name: List files
         run: ls -a
