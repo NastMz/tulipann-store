@@ -16,3 +16,6 @@ export {Reviews} from './Reviews';
 export {ProductFeatures} from './ProductFeatures';
 export {Loader} from './Loader';
 export {Image} from './Image';
+export {CheckoutResume} from './CheckoutResume';
+export {CheckoutForm} from './CheckoutForm';
+export {OrderSummaryCard} from './OrderSummaryCard';

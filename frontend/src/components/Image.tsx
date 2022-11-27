@@ -4,6 +4,7 @@ import placeholder from '../assets/images/placeholder.png';
 
 interface ImageProps {
     src: string,
+    objectFit?: boolean
     className?: string,
 }
 
@@ -14,7 +15,7 @@ export const Image = (props: ImageProps) => {
           alt={props.src}
           width={'100%'}
           height={'100%'}
-          className={`h-full w-full object-cover ${props.className}`}
+          className={`h-full w-full ${props.objectFit ? '' : 'object-cover'} ${props.className}`}
           effect={'blur'}
           placeholderSrc={placeholder}
       />

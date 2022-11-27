@@ -28,16 +28,6 @@ export const shoppingCartSlice = createSlice({
                         count: 1
                     },
                 ]
-            } else {
-                state.list = state.list.map((product) => {
-                    if (product.id === action.payload.id) {
-                        return {
-                            ...product,
-                            count: product.count + 1
-                        }
-                    }
-                    return product;
-                });
             }
             state.subtotal = 0;
             state.list.forEach((product) => state.subtotal += product.count * product.price);

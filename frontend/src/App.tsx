@@ -1,16 +1,17 @@
 import './App.css';
 import {Route, Routes, useLocation} from "react-router-dom";
 import {Main} from "./templates";
-import {getArticles, getCategories, getProducts} from "./api/api";
-import {useDispatch} from "react-redux";
 import {loadCartState, saveCartState, ScrollToTop} from "./utils";
-import {addArticle, addCategory, addProduct, addProductToCart} from "./redux/actions";
 import {routes} from "./routes/routes";
 import {AnimatePresence} from "framer-motion";
-import React, {lazy, Suspense} from 'react';
+import React, {lazy, Suspense, useMemo} from 'react';
 import {Loader} from "./components";
+import {useDispatch} from "react-redux";
+import {getArticles, getCategories, getProducts} from "./api/api";
+import {addArticle, addCategory, addProduct, addProductToCart} from "./redux/actions";
 import {store} from "./redux/store";
 import {throttle} from "lodash";
+import {OrderSummary} from "./pages";
 
 const Login = lazy(() => import('./pages/index').then(({Login}) => ({default: Login})));
 const NotFound = lazy(() => import('./pages/index').then(({NotFound}) => ({default: NotFound})));
@@ -18,6 +19,7 @@ const ProductPage = lazy(() => import('./pages/index').then(({ProductPage}) => (
 const ProductsListPage = lazy(() => import('./pages/index').then(({ProductsListPage}) => ({default: ProductsListPage})));
 const Register = lazy(() => import('./pages/index').then(({Register}) => ({default: Register})));
 const StoreFront = lazy(() => import('./pages/index').then(({StoreFront}) => ({default: StoreFront})));
+const Checkout = lazy(() => import('./pages/index').then(({Checkout}) => ({default: Checkout})));
 
 function App() {
 
@@ -27,22 +29,20 @@ function App() {
     const products = getProducts();
     const categories = getCategories();
     const articles = getArticles();
-    let cart = loadCartState();
+    const cart = loadCartState();
 
-    products.forEach((product) => dispatch(addProduct(product)));
-    categories.forEach((category) => dispatch(addCategory(category)));
-    articles.forEach((article) => dispatch(addArticle(article)));
+    useMemo(()=> {
+        products.forEach((product) => dispatch(addProduct(product)));
+        categories.forEach((category) => dispatch(addCategory(category)));
+        articles.forEach((article) => dispatch(addArticle(article)));
 
-    if (cart.length > 0) {
-        cart.forEach((product) => {
-            let p = {...products.filter((prod) => prod.id === product.id)[0], count: product.count};
-            dispatch(addProductToCart(p));
-        });
-    }
-
-    // FRAMER MOTION LOGIC
-
-    const location = useLocation();
+        if (cart.length > 0) {
+            cart.forEach((product) => {
+                let p = {...products.filter((prod) => prod.id === product.id)[0], count: product.count};
+                dispatch(addProductToCart(p));
+            });
+        }
+    }, [products, categories, articles, cart])
 
     store.subscribe(throttle(() => {
         let state = store.getState().cart.list.map((product) => {
@@ -53,6 +53,10 @@ function App() {
         });
         saveCartState(state);
     }, 1000));
+
+    // FRAMER MOTION LOGIC
+
+    const location = useLocation();
 
     return (<>
             <ScrollToTop/>
@@ -119,6 +123,24 @@ function App() {
                                 <Main
                                     page={<Register/>}
                                     title={routes.register.title}
+                                />
+                            }
+                        />
+                        <Route
+                            path={`${routes.checkout.path}`}
+                            element={
+                                <Main
+                                    page={<Checkout/>}
+                                    title={routes.checkout.title}
+                                />
+                            }
+                        />
+                        <Route
+                            path={`${routes.order.path}`}
+                            element={
+                                <Main
+                                    page={<OrderSummary/>}
+                                    title={routes.order.title}
                                 />
                             }
                         />
