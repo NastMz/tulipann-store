@@ -29,10 +29,12 @@ jobs:
         working-directory: ./frontend
 
       - name: Prepare project folder
-        run: |
-          mkdir web
-          mkdir /web/app
+        run: mkdir web
         working-directory: ./frontend
+
+      - name: Prepare project folder
+        run: mkdir app
+        working-directory: ./frontend/web
 
       - name: Move files to project folder
         run: cp -a /dist/. /web/app
