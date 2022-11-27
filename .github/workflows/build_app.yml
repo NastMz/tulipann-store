@@ -29,7 +29,9 @@ jobs:
         working-directory: ./frontend
 
       - name: Prepare project folder
-        run: mkdir /web/app
+        run: |
+          mkdir web
+          mkdir /web/app
         working-directory: ./frontend
 
       - name: Move files to project folder
