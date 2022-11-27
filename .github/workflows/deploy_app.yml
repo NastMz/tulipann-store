@@ -5,9 +5,6 @@ on:
     workflows: ["App Build"]
     types:
       - completed
-  push:
-    branches:
-      - develop
 
 jobs:
   deploy:
