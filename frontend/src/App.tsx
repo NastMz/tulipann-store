@@ -3,12 +3,14 @@ import {Route, Routes, useLocation} from "react-router-dom";
 import {Main} from "./templates";
 import {getArticles, getCategories, getProducts} from "./api/api";
 import {useDispatch} from "react-redux";
-import {loadCartState, ScrollToTop} from "./utils";
+import {loadCartState, saveCartState, ScrollToTop} from "./utils";
 import {addArticle, addCategory, addProduct, addProductToCart} from "./redux/actions";
 import {routes} from "./routes/routes";
 import {AnimatePresence} from "framer-motion";
 import React, {lazy, Suspense} from 'react';
 import {Loader} from "./components";
+import {store} from "./redux/store";
+import {throttle} from "lodash";
 
 const Login = lazy(() => import('./pages/index').then(({Login}) => ({default: Login})));
 const NotFound = lazy(() => import('./pages/index').then(({NotFound}) => ({default: NotFound})));
@@ -41,6 +43,16 @@ function App() {
     // FRAMER MOTION LOGIC
 
     const location = useLocation();
+
+    store.subscribe(throttle(() => {
+        let state = store.getState().cart.list.map((product) => {
+            return {
+                id: product.id,
+                count: product.count
+            }
+        });
+        saveCartState(state);
+    }, 1000));
 
     return (<>
             <ScrollToTop/>

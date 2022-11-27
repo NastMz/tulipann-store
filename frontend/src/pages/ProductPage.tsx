@@ -30,9 +30,9 @@ export const ProductPage = () => {
     if (product.length > 0) {
         return (
             <motion.div
-                initial={{translate: '100%'}}
-                animate={{ translate: 0, }}
-                exit={{ translate: '-100%', transition: {duration: 0.3}}}
+                initial={{width: 0}}
+                animate={{width: '100%'}}
+                exit={{width: window.innerWidth, transition: {duration: 0.3}}}
             >
                 <div>
                     <ProductOverview product={product[0]}/>
