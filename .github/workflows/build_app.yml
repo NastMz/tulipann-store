@@ -37,7 +37,7 @@ jobs:
         working-directory: ./frontend/web
 
       - name: Move files to project folder
-        run: cp -a /dist/. /web/app
+        run: cp -a ./dist/. ./web/app
         working-directory: ./frontend
 
       - name: Prepare nginx config
