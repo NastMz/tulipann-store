@@ -1,10 +1,13 @@
 name: App Deploy
 
 on:
-  workflow_run:
-    workflows: ["App Build"]
-    types:
-      - completed
+  #workflow_run:
+  #workflows: ["App Build"]
+  #types:
+  #- completed
+  push:
+    branches:
+      - develop
 
 jobs:
   deploy:
@@ -14,6 +17,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
+      - name: List files
+        run: ls -a
 
       - name: Push to dokku
         uses: dokku/github-action@master
