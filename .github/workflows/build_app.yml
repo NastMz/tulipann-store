@@ -3,7 +3,7 @@ name: App Build
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   deploy:
@@ -32,6 +32,12 @@ jobs:
         working-directory: ./frontend/dist
       - name: Edit .env
         run: echo "BUILDPACK_URL=https://github.com/dokku/heroku-buildpack-nginx" > .env
+        working-directory: ./frontend/dist
+      - name: Create .buildpacks
+        run: touch .buildpacks
+        working-directory: ./frontend/dist
+      - name: Edit .buildpacks
+        run: echo "https://github.com/dokku/heroku-buildpack-nginx" > .buildpacks
         working-directory: ./frontend/dist
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
