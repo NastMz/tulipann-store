@@ -2,7 +2,7 @@ import {CheckoutForm, CheckoutResume} from "../components";
 import {routes} from "../routes/routes";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import { motion } from "framer-motion";
+import {motion} from "framer-motion";
 import {useDispatch} from "react-redux";
 import {cleanCart} from "../redux/actions";
 

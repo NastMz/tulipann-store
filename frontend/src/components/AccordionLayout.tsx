@@ -1,4 +1,3 @@
-import {BsPlus} from "react-icons/all";
 import {ReactNode} from "react";
 
 interface AccordionLayoutProps {
@@ -12,9 +11,12 @@ interface AccordionLayoutProps {
 export const AccordionLayout = (props: AccordionLayoutProps) => {
     return (
         <>
-            <div className={`flex w-full justify-between p-2 border-b ${props.activeIndex === props.index || props.activeIndex < props.index ? 'pointer-events-none' : 'cursor-pointer'}`} onClick={() => props.setActiveIndex(props.index)}>
+            <div
+                className={`flex w-full justify-between p-2 border-b ${props.activeIndex === props.index || props.activeIndex < props.index ? 'pointer-events-none' : 'cursor-pointer'}`}
+                onClick={() => props.setActiveIndex(props.index)}>
                 <div className='flex'>
-                    <div className={`font-medium text-xl ${props.activeIndex === props.index ? '' : 'text-gray-400'} ${props.activeIndex < props.index ? '' : 'hover:text-black'}`}>{props.title}</div>
+                    <div
+                        className={`font-medium text-xl ${props.activeIndex === props.index ? '' : 'text-gray-400'} ${props.activeIndex < props.index ? '' : 'hover:text-black'}`}>{props.title}</div>
                 </div>
             </div>
             {(props.activeIndex === props.index) &&

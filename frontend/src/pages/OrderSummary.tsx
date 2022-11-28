@@ -27,7 +27,7 @@ export const OrderSummary = () => {
                 exit={{width: 0, transition: {duration: 0.3}}}
                 className={"min-h-screen h-fit flex overflow-hidden w-full"}
             >
-                <div className={"flex-grow w-1/3 bg-gradient-to-b from-red-500 to-red-700"}/>
+                <div className={"flex-grow w-1/3 bg-gradient-to-bl from-red-500 to-red-800"}/>
                 <div className={"w-2/3 px-16 py-8"}>
                     <div className={"mb-8 flex flex-col"}>
                         <span className={"text-sm font-medium text-red-500"}>Pago exitoso</span>

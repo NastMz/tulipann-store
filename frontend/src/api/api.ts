@@ -1,7 +1,5 @@
 import {Article, Category, Product} from "../models";
-import category1 from "../assets/images/category1.jpg";
-import category2 from "../assets/images/category2.jpg";
-import category3 from "../assets/images/category3.jpg";
+import {Images} from '../utils';
 import {getRateMean} from "../utils";
 
 const products: Array<Product> = [
@@ -11,7 +9,7 @@ const products: Array<Product> = [
         "price": 109,
         "description": "turpis. In condimentum. Donec at arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae Donec",
         "stock": 70,
-        "images": [category1, category2, category3],
+        "images": [Images.category1, Images.category2, Images.category3],
         "category": 73498,
         "supplier": 79274,
         "feedback": [
@@ -94,21 +92,21 @@ const products: Array<Product> = [
                     "name": "Nulla",
                     "title": "vel est tempor bibendum. Donec felis orci, adipiscing non,",
                     "description": "vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor",
-                    "image": category1
+                    "image": Images.category1
                 },
                 {
                     "id": 54449,
                     "name": "a, scelerisque sed,",
                     "title": "mollis. Duis sit",
                     "description": "in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,",
-                    "image": category2
+                    "image": Images.category2
                 },
                 {
                     "id": 84565,
                     "name": "nascetur ridiculus mus.",
                     "title": "erat semper rutrum. Fusce dolor",
                     "description": "nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat",
-                    "image": category3
+                    "image": Images.category3
                 },
             ]
         }
@@ -119,7 +117,7 @@ const products: Array<Product> = [
         "price": 43,
         "description": "velit. Sed malesuada augue ut lacus. Nulla tincidunt, neque vitae semper",
         "stock": 58,
-        "images": [category1, category2, category3],
+        "images": [Images.category1, Images.category2, Images.category3],
         "category": 39125,
         "supplier": 3493,
         "feedback": [
@@ -202,21 +200,21 @@ const products: Array<Product> = [
                     "name": "Nulla",
                     "title": "vel est tempor bibendum. Donec felis orci, adipiscing non,",
                     "description": "vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor",
-                    "image": category1
+                    "image": Images.category1
                 },
                 {
                     "id": 54449,
                     "name": "a, scelerisque sed,",
                     "title": "mollis. Duis sit",
                     "description": "in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,",
-                    "image": category2
+                    "image": Images.category2
                 },
                 {
                     "id": 84565,
                     "name": "nascetur ridiculus mus.",
                     "title": "erat semper rutrum. Fusce dolor",
                     "description": "nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat",
-                    "image": category3
+                    "image": Images.category3
                 },
             ]
         }
@@ -227,7 +225,7 @@ const products: Array<Product> = [
         "price": 31,
         "description": "ligula. Donec luctus aliquet odio. Etiam ligula tortor, dictum eu,",
         "stock": 28,
-        "images": [category3, category1, category2],
+        "images": [Images.category3, Images.category1, Images.category2],
         "category": 68668,
         "supplier": 42684,
         "feedback": [
@@ -310,21 +308,21 @@ const products: Array<Product> = [
                     "name": "Nulla",
                     "title": "vel est tempor bibendum. Donec felis orci, adipiscing non,",
                     "description": "vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor",
-                    "image": category1
+                    "image": Images.category1
                 },
                 {
                     "id": 54449,
                     "name": "a, scelerisque sed,",
                     "title": "mollis. Duis sit",
                     "description": "in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,",
-                    "image": category2
+                    "image": Images.category2
                 },
                 {
                     "id": 84565,
                     "name": "nascetur ridiculus mus.",
                     "title": "erat semper rutrum. Fusce dolor",
                     "description": "nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat",
-                    "image": category3
+                    "image": Images.category3
                 },
             ]
         }
@@ -335,7 +333,7 @@ const products: Array<Product> = [
         "price": 109,
         "description": "nec, imperdiet nec, leo. Morbi neque tellus, imperdiet non, vestibulum nec, euismod in, dolor. Fusce feugiat. Lorem ipsum dolor sit",
         "stock": 73,
-        "images": [category1, category2, category3],
+        "images": [Images.category1, Images.category2, Images.category3],
         "category": 79590,
         "supplier": 85121,
         "feedback": [
@@ -425,21 +423,21 @@ const products: Array<Product> = [
                     "name": "Nulla",
                     "title": "vel est tempor bibendum. Donec felis orci, adipiscing non,",
                     "description": "vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor",
-                    "image": category1
+                    "image": Images.category1
                 },
                 {
                     "id": 54449,
                     "name": "a, scelerisque sed,",
                     "title": "mollis. Duis sit",
                     "description": "in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,",
-                    "image": category2
+                    "image": Images.category2
                 },
                 {
                     "id": 84565,
                     "name": "nascetur ridiculus mus.",
                     "title": "erat semper rutrum. Fusce dolor",
                     "description": "nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat",
-                    "image": category3
+                    "image": Images.category3
                 },
             ]
         }
@@ -450,7 +448,7 @@ const products: Array<Product> = [
         "price": 101,
         "description": "mattis ornare, lectus ante dictum mi, ac mattis velit justo nec ante. Maecenas mi felis, adipiscing fringilla,",
         "stock": 56,
-        "images": [category2, category1, category3],
+        "images": [Images.category2, Images.category1, Images.category3],
         "category": 56041,
         "supplier": 63645,
         "feedback": [
@@ -554,21 +552,21 @@ const products: Array<Product> = [
                     "name": "Nulla",
                     "title": "vel est tempor bibendum. Donec felis orci, adipiscing non,",
                     "description": "vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor",
-                    "image": category1
+                    "image": Images.category1
                 },
                 {
                     "id": 54449,
                     "name": "a, scelerisque sed,",
                     "title": "mollis. Duis sit",
                     "description": "in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,",
-                    "image": category2
+                    "image": Images.category2
                 },
                 {
                     "id": 84565,
                     "name": "nascetur ridiculus mus.",
                     "title": "erat semper rutrum. Fusce dolor",
                     "description": "nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat",
-                    "image": category3
+                    "image": Images.category3
                 },
             ]
         }
@@ -579,7 +577,7 @@ const products: Array<Product> = [
         "price": 89,
         "description": "nulla vulputate dui, nec tempus mauris erat eget ipsum. Suspendisse sagittis. Nullam",
         "stock": 143,
-        "images": [category3, category1, category2],
+        "images": [Images.category3, Images.category1, Images.category2],
         "category": 75767,
         "supplier": 20106,
         "feedback": [
@@ -662,21 +660,21 @@ const products: Array<Product> = [
                     "name": "Nulla",
                     "title": "vel est tempor bibendum. Donec felis orci, adipiscing non,",
                     "description": "vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor",
-                    "image": category1
+                    "image": Images.category1
                 },
                 {
                     "id": 54449,
                     "name": "a, scelerisque sed,",
                     "title": "mollis. Duis sit",
                     "description": "in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,",
-                    "image": category2
+                    "image": Images.category2
                 },
                 {
                     "id": 84565,
                     "name": "nascetur ridiculus mus.",
                     "title": "erat semper rutrum. Fusce dolor",
                     "description": "nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat",
-                    "image": category3
+                    "image": Images.category3
                 },
             ]
         }
@@ -687,7 +685,7 @@ const products: Array<Product> = [
         "price": 74,
         "description": "quis arcu vel quam dignissim pharetra. Nam ac nulla. In tincidunt congue",
         "stock": 111,
-        "images": [category2, category1, category3],
+        "images": [Images.category2, Images.category1, Images.category3],
         "category": 53332,
         "supplier": 42086,
         "feedback": [
@@ -770,21 +768,21 @@ const products: Array<Product> = [
                     "name": "Nulla",
                     "title": "vel est tempor bibendum. Donec felis orci, adipiscing non,",
                     "description": "vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor",
-                    "image": category1
+                    "image": Images.category1
                 },
                 {
                     "id": 54449,
                     "name": "a, scelerisque sed,",
                     "title": "mollis. Duis sit",
                     "description": "in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,",
-                    "image": category2
+                    "image": Images.category2
                 },
                 {
                     "id": 84565,
                     "name": "nascetur ridiculus mus.",
                     "title": "erat semper rutrum. Fusce dolor",
                     "description": "nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat",
-                    "image": category3
+                    "image": Images.category3
                 },
             ]
         }
@@ -795,7 +793,7 @@ const products: Array<Product> = [
         "price": 82,
         "description": "sagittis felis. Donec tempor, est ac mattis semper, dui lectus rutrum urna, nec luctus felis purus",
         "stock": 129,
-        "images": [category3, category1, category2],
+        "images": [Images.category3, Images.category1, Images.category2],
         "category": 72257,
         "supplier": 12592,
         "feedback": [
@@ -878,21 +876,21 @@ const products: Array<Product> = [
                     "name": "Nulla",
                     "title": "vel est tempor bibendum. Donec felis orci, adipiscing non,",
                     "description": "vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor",
-                    "image": category1
+                    "image": Images.category1
                 },
                 {
                     "id": 54449,
                     "name": "a, scelerisque sed,",
                     "title": "mollis. Duis sit",
                     "description": "in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,",
-                    "image": category2
+                    "image": Images.category2
                 },
                 {
                     "id": 84565,
                     "name": "nascetur ridiculus mus.",
                     "title": "erat semper rutrum. Fusce dolor",
                     "description": "nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat",
-                    "image": category3
+                    "image": Images.category3
                 },
             ]
         }
@@ -903,7 +901,7 @@ const products: Array<Product> = [
         "price": 62,
         "description": "vel, convallis in, cursus et, eros. Proin ultrices. Duis volutpat nunc sit amet metus. Aliquam erat volutpat. Nulla facilisis. Suspendisse",
         "stock": 55,
-        "images": [category2, category1, category3],
+        "images": [Images.category2, Images.category1, Images.category3],
         "category": 50367,
         "supplier": 37318,
         "feedback": [
@@ -986,21 +984,21 @@ const products: Array<Product> = [
                     "name": "Nulla",
                     "title": "vel est tempor bibendum. Donec felis orci, adipiscing non,",
                     "description": "vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor",
-                    "image": category1
+                    "image": Images.category1
                 },
                 {
                     "id": 54449,
                     "name": "a, scelerisque sed,",
                     "title": "mollis. Duis sit",
                     "description": "in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,",
-                    "image": category2
+                    "image": Images.category2
                 },
                 {
                     "id": 84565,
                     "name": "nascetur ridiculus mus.",
                     "title": "erat semper rutrum. Fusce dolor",
                     "description": "nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat",
-                    "image": category3
+                    "image": Images.category3
                 },
             ]
         }
@@ -1011,7 +1009,7 @@ const products: Array<Product> = [
         "price": 60,
         "description": "Sed id risus quis diam luctus lobortis. Class aptent taciti sociosqu",
         "stock": 0,
-        "images": [category3, category1, category2],
+        "images": [Images.category3, Images.category1, Images.category2],
         "category": 73021,
         "supplier": 78356,
         "feedback": [
@@ -1094,21 +1092,21 @@ const products: Array<Product> = [
                     "name": "Nulla",
                     "title": "vel est tempor bibendum. Donec felis orci, adipiscing non,",
                     "description": "vehicula. Pellentesque tincidunt tempus risus. Donec egestas. Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare, libero at auctor",
-                    "image": category1
+                    "image": Images.category1
                 },
                 {
                     "id": 54449,
                     "name": "a, scelerisque sed,",
                     "title": "mollis. Duis sit",
                     "description": "in magna. Phasellus dolor elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet lectus quis massa. Mauris vestibulum, neque sed dictum eleifend,",
-                    "image": category2
+                    "image": Images.category2
                 },
                 {
                     "id": 84565,
                     "name": "nascetur ridiculus mus.",
                     "title": "erat semper rutrum. Fusce dolor",
                     "description": "nunc. In at pede. Cras vulputate velit eu sem. Pellentesque ut ipsum ac mi eleifend egestas. Sed pharetra, felis eget varius ultrices, mauris ipsum porta elit, a feugiat",
-                    "image": category3
+                    "image": Images.category3
                 },
             ]
         }
@@ -1119,52 +1117,52 @@ const categories: Array<Category> = [
     {
         "id": 70286,
         "name": "congue turpis.",
-        "img": category1,
+        "img": Images.category1,
     },
     {
         "id": 72156,
         "name": "tempor, est",
-        "img": category2,
+        "img": Images.category2,
     },
     {
         "id": 73498,
         "name": "malesuada",
-        "img": category3,
+        "img": Images.category3,
     },
     {
         "id": 95855,
         "name": "adipiscing",
-        "img": category1,
+        "img": Images.category1,
     },
     {
         "id": 44131,
         "name": "nulla. Integer vulputate,",
-        "img": category2,
+        "img": Images.category2,
     },
     {
         "id": 55634,
         "name": "nisl. Quisque",
-        "img": category3,
+        "img": Images.category3,
     },
     {
         "id": 32325,
         "name": "litora",
-        "img": category1,
+        "img": Images.category1,
     },
     {
         "id": 44704,
         "name": "Aenean",
-        "img": category2,
+        "img": Images.category2,
     },
     {
         "id": 95952,
         "name": "mattis ornare,",
-        "img": category3,
+        "img": Images.category3,
     },
     {
         "id": 73988,
         "name": "rutrum",
-        "img": category1,
+        "img": Images.category1,
     }
 ];
 
@@ -1177,7 +1175,7 @@ const articles: Array<Article> = [
         "date": "Oct 27, 2022",
         "author": "Florence Miles",
         "tags": ["Articulo"],
-        "banner": category1
+        "banner": Images.category1
     },
     {
         "id": 17391,
@@ -1187,7 +1185,7 @@ const articles: Array<Article> = [
         "date": "Feb 8, 2022",
         "author": "Lareina Reynolds",
         "tags": ["Articulo"],
-        "banner": category1
+        "banner": Images.category1
     },
     {
         "id": 46580,
@@ -1197,7 +1195,7 @@ const articles: Array<Article> = [
         "date": "Apr 21, 2022",
         "author": "Anjolie Bryant",
         "tags": ["Articulo"],
-        "banner": category1
+        "banner": Images.category1
     },
     {
         "id": 7209,
@@ -1207,7 +1205,7 @@ const articles: Array<Article> = [
         "date": "Jan 21, 2023",
         "author": "Baker Pitts",
         "tags": ["Articulo"],
-        "banner": category1
+        "banner": Images.category1
     },
     {
         "id": 30426,
@@ -1217,7 +1215,7 @@ const articles: Array<Article> = [
         "date": "May 18, 2023",
         "author": "Daquan Young",
         "tags": ["Articulo"],
-        "banner": category1
+        "banner": Images.category1
     },
     {
         "id": 70648,
@@ -1227,7 +1225,7 @@ const articles: Array<Article> = [
         "date": "May 2, 2022",
         "author": "Heidi Bradford",
         "tags": ["Articulo"],
-        "banner": category1
+        "banner": Images.category1
     },
     {
         "id": 27883,
@@ -1237,7 +1235,7 @@ const articles: Array<Article> = [
         "date": "Sep 9, 2023",
         "author": "Colorado Boyer",
         "tags": ["Articulo"],
-        "banner": category1
+        "banner": Images.category1
     },
     {
         "id": 22582,
@@ -1247,7 +1245,7 @@ const articles: Array<Article> = [
         "date": "Nov 7, 2023",
         "author": "Cole Tyson",
         "tags": ["Articulo"],
-        "banner": category1
+        "banner": Images.category1
     },
     {
         "id": 65769,
@@ -1257,7 +1255,7 @@ const articles: Array<Article> = [
         "date": "Jul 19, 2022",
         "author": "Eve Rosario",
         "tags": ["Articulo"],
-        "banner": category1
+        "banner": Images.category1
     },
     {
         "id": 49725,
@@ -1267,7 +1265,7 @@ const articles: Array<Article> = [
         "date": "Jan 31, 2022",
         "author": "Jack Parsons",
         "tags": ["Articulo"],
-        "banner": category1
+        "banner": Images.category1
     }
 ];
 
