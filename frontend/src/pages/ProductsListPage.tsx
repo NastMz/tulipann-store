@@ -1,19 +1,13 @@
 import {useSelector} from "react-redux";
 import {selectCategories, selectProducts} from "../redux/selector";
-import {lazy, useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import ReactPaginate from "react-paginate";
 import {useParams} from "react-router-dom";
 import {Product} from "../models";
-import {getRateMean, nameOf, SortUtil} from "../utils";
+import {nameOf, SortUtil} from "../utils";
 import {routes} from "../routes/routes";
 import {AnimatePresence, motion} from "framer-motion";
-
-const FilterBar = lazy(() => import('../components').then(({FilterBar}) => ({default: FilterBar})));
-const FilterMenu = lazy(() => import('../components').then(({FilterMenu}) => ({default: FilterMenu})));
-const ProductList = lazy(() => import('../components').then(({ProductList}) => ({default: ProductList})));
-const ProductQuickview = lazy(() => import('../components').then(({ProductQuickview}) => ({default: ProductQuickview})));
-const SortMenu = lazy(() => import('../components').then(({SortMenu}) => ({default: SortMenu})));
-const TitleBanner = lazy(() => import('../components').then(({TitleBanner}) => ({default: TitleBanner})));
+import {FilterBar, FilterMenu, ProductList, ProductQuickview, SortMenu, TitleBanner} from "../components";
 
 interface ProductsPageProps {
     itemsPerPage: number
@@ -63,7 +57,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
 
     // States for use product quickview
     const [isShowingProductQuickview, setIsShowingProductQuickview] = useState<boolean>(false);
-    const [productInQuickview, setProductInQuickview] = useState<Product>(products[0]);
+    const [productInQuickview, setProductInQuickview] = useState<any>(null);
 
     // Filters options
     const filters = [
@@ -197,6 +191,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
     // Close product preview, this function is used by the child components to update state
     const closeProductPreview = () => {
         setIsShowingProductQuickview(false);
+        setProductInQuickview(null);
     };
 
     return (
@@ -283,19 +278,14 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                     />
                 </div>
             </div>
-            <ProductQuickview
-                id={productInQuickview.id}
-                img={productInQuickview.images[0]}
-                name={productInQuickview.name}
-                price={productInQuickview.price}
-                stock={productInQuickview.stock}
-                rate={productInQuickview.rate ?? getRateMean(productInQuickview)}
-                description={productInQuickview.description}
-                colors={productInQuickview.colors ?? null}
-                cardClassName={`overflow-hidden`}
-                isOpen={isShowingProductQuickview}
-                closeProductPreview={closeProductPreview}
-            />
+            {
+                productInQuickview && <ProductQuickview
+                    product={productInQuickview}
+                    cardClassName={`overflow-hidden`}
+                    isOpen={isShowingProductQuickview}
+                    closeProductPreview={closeProductPreview}
+                />
+            }
         </motion.div>
     )
 }

@@ -15,7 +15,7 @@ export {ProductOverview} from './ProductOverview';
 export {Reviews} from './Reviews';
 export {ProductFeatures} from './ProductFeatures';
 export {Loader} from './Loader';
-export {Image} from './Image';
+export {OptimizedImage} from './OptimizedImage';
 export {CheckoutResume} from './CheckoutResume';
 export {CheckoutForm} from './CheckoutForm';
 export {OrderSummaryCard} from './OrderSummaryCard';

@@ -5,3 +5,4 @@ export type {Commentary} from './Commentary';
 export type {Color} from './Color';
 export type {Feature} from './Feature';
 export type {ProductSpecs} from './ProductSpecs';
+export type {Image} from './Image';

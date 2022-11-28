@@ -1,7 +1,6 @@
 import {Feature, ProductSpecs} from "../models";
 import {useRef, useState} from "react";
 import {FeatureCard} from "./FeatureCard";
-import {AnimatePresence} from "framer-motion";
 
 interface ProductFeaturesProps {
     specs: ProductSpecs,
@@ -41,13 +40,13 @@ export const ProductFeatures = (props: ProductFeaturesProps) => {
                         ))}
                     </ul>
                 </div>
-                    {
-                        props.specs.options[featureOption] && (
-                            <FeatureCard
-                                feature={props.specs.options[featureOption]}
-                            />
-                        )
-                    }
+                {
+                    props.specs.options[featureOption] && (
+                        <FeatureCard
+                            feature={props.specs.options[featureOption]}
+                        />
+                    )
+                }
             </div>
         </div>
     )

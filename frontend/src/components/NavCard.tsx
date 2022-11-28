@@ -1,9 +1,10 @@
 import {Link} from "react-router-dom";
 import {useState} from "react";
-import {Image} from "./Image";
+import {OptimizedImage} from "./OptimizedImage";
+import {Image} from "../models";
 
 interface NavCardProps {
-    img: string,
+    img: Image,
     title: string,
     to: string,
     className?: string
@@ -20,7 +21,7 @@ export const NavCard = (props: NavCardProps) => {
               onMouseLeave={() => setIsHover(false)}
         >
             <div className={"h-52 w-full overflow-hidden rounded-xl"}>
-                <Image src={props.img} className={` ${isHover ? 'scale-110' : ''}`}/>
+                <OptimizedImage image={props.img} className={` ${isHover ? 'scale-110' : ''}`}/>
             </div>
             <div className="">
                 <h1 className={`text-sm font-bold ${isHover ? 'text-red-500' : 'text-black'}`}>{props.title}</h1>

@@ -1,7 +1,8 @@
 import {NavCard} from "./NavCard";
+import {Image} from "../models";
 
 interface NavItem {
-    img: string,
+    img: Image,
     title: string,
     to: string
 }
