@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import {selectArticles, selectProducts} from "../redux/selector";
 import {SearchCard} from "./SearchCard";
 import {routes} from "../routes/routes";
-import {Product, Article} from '../models';
+import {Article, Product} from '../models';
 
 export const SearchBar = () => {
 
@@ -94,7 +94,7 @@ export const SearchBar = () => {
                                                 name={"name" in item ? item.name : item.title}
                                                 image={"images" in item ? item.images[0] : item.banner}
                                                 rate={"rate" in item ? item.rate : undefined}
-                                                summary={"summary" in item ? item.summary  : undefined}
+                                                summary={"summary" in item ? item.summary : undefined}
                                                 path={"banner" in item ? routes.discover.path : routes.product.path}
                                                 tag={"banner" in item ? 'Articulo' : 'Producto'}
                                                 closeSearchBar={closeSearchBar}

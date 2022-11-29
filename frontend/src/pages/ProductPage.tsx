@@ -4,9 +4,8 @@ import {selectProducts} from "../redux/selector";
 import {routes} from "../routes/routes";
 import {lazy} from "react";
 import {motion} from "framer-motion";
+import {ProductFeatures, ProductOverview} from "../components";
 
-const ProductFeatures = lazy(() => import('../components').then(({ProductFeatures}) => ({default: ProductFeatures})));
-const ProductOverview = lazy(() => import('../components').then(({ProductOverview}) => ({default: ProductOverview})));
 const Reviews = lazy(() => import('../components').then(({Reviews}) => ({default: Reviews})));
 
 export const ProductPage = () => {

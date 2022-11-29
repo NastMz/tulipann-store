@@ -1,9 +1,10 @@
 import {Link} from "react-router-dom";
 import {useState} from "react";
-import {Image} from "./Image";
+import {Image} from "../models";
+import {OptimizedImage} from "./OptimizedImage";
 
 interface CategoryCardProps {
-    img: string,
+    img: Image;
     title: string,
     to: string,
     className?: string
@@ -19,7 +20,7 @@ export const CategoryCard = (props: CategoryCardProps) => {
               onMouseEnter={() => setIsHover(true)}
               onMouseLeave={() => setIsHover(false)}>
             <div className={"h-full w-full"}>
-                <Image src={props.img} className={`${isHover ? 'scale-110' : ''}`}/>
+                <OptimizedImage image={props.img} className={`${isHover ? 'scale-110' : ''}`}/>
             </div>
             <div
                 className={"absolute h-full w-full bg-black bg-opacity-20 top-0 text-white flex flex-col justify-end items-start p-5"}>

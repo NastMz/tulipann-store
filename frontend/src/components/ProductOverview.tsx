@@ -7,12 +7,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectProducts} from "../redux/selector";
 import {store} from "../redux/store";
 import {ProductImageSelector} from "./ProductImageSelector";
+import {useEffect, useState} from "react";
 
 interface ProductOverviewProps {
     product: Product
 }
 
 export const ProductOverview = (props: ProductOverviewProps) => {
+
+    const [isInCart, setIsInCart] = useState<boolean>(false);
 
     const rate = getRateMean(props.product);
 
@@ -23,6 +26,20 @@ export const ProductOverview = (props: ProductOverviewProps) => {
         let product = products.filter((product) => product.id === id)[0];
         dispatch(addProductToCart(product));
     }
+
+    const setInCart = () => {
+        if (store.getState().cart.list.filter(product => product.id === props.product.id).length > 0) {
+            setIsInCart(true);
+        }
+    };
+
+    useEffect(() => {
+        setInCart();
+    }, []);
+
+    store.subscribe(() => {
+        setInCart();
+    });
 
     return (
         <div
@@ -66,17 +83,17 @@ export const ProductOverview = (props: ProductOverviewProps) => {
                     <div className={"flex items-center mt-4"}>
                         <span
                             className={`bg-red-500 hover:bg-red-400 text-center p-3 text-white font-medium cursor-pointer flex-grow rounded-lg ${props.product.stock > 0
-                                ? '' : 'pointer-events-none bg-gray-300'} ${store.getState().cart.list.filter(product => product.id === props.product.id).length === 0 ? '' : 'pointer-events-none bg-gray-300'}`}
+                                ? '' : 'pointer-events-none bg-gray-300'} ${isInCart ? 'pointer-events-none bg-gray-200' : ''}`}
                             onClick={() => addToCart(props.product.id)}
                         >
                             {
-                                store.getState().cart.list.filter(product => product.id === props.product.id).length === 0
-                                    ? 'Añadir a la bolsa'
-                                    : 'Ya está en la bolsa'
+                                isInCart
+                                    ? 'Ya está en la bolsa'
+                                    : 'Añadir a la bolsa'
                             }
                         </span>
                     </div>
-                    <div className={"flex items-center justify-center gap-2 mt-2"}>
+                    <div className={"flex items-cen´´ter justify-center gap-2 mt-2"}>
                         <TbShieldCheck size={30} color={"#D1D5DBFF"}/>
                         <span className={"text-gray-400 font-medium"}>Calidad garantizada</span>
                     </div>

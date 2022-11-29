@@ -4,7 +4,6 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import Logo from "../assets/images/LogoTulipann.svg";
 import {motion} from "framer-motion";
-import {Image} from "../components";
 
 export const Register = () => {
     // Formik logics
@@ -44,7 +43,7 @@ export const Register = () => {
             <div className={"flex flex-col gap-8 justify-start items-center min-h-screen bg-gray-50 pb-10 p-8"}>
                 <div className={"flex flex-col items-center justify-center text-center gap-4"}>
                     <div className={"h-24"}>
-                        <Image src={Logo}/>
+                        <img src={Logo} alt={Logo} className={`h-full w-full object-cover`}/>
                     </div>
                     <div>
                         <h1 className={"text-3xl font-bold"}>Vamos a crear tu cuenta</h1>

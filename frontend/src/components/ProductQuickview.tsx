@@ -1,26 +1,18 @@
-import {Color} from "../models";
+import {Product} from "../models";
 import {Link} from "react-router-dom";
 import {routes} from "../routes/routes";
 import {AiOutlineClose, BiCheck, TbShieldCheck} from "react-icons/all";
 import {Stars} from "./Stars";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {addProductToCart} from "../redux/actions";
-import {selectProducts} from "../redux/selector";
 import {store} from "../redux/store";
-import {saveCartState} from "../utils";
-import {throttle} from 'lodash';
 import {AnimatePresence, motion} from "framer-motion";
-import {Image} from "./Image";
+import {OptimizedImage} from "./OptimizedImage";
+import {useEffect, useState} from "react";
+import {getRateMean} from "../utils";
 
 interface ProductQuickviewProps {
-    id: number,
-    img: string,
-    name: string,
-    price: number,
-    stock: number,
-    rate: number,
-    description: string,
-    colors?: Color[] | null,
+    product: Product,
     bgClassName?: string,
     cardClassName?: string,
     isOpen: boolean,
@@ -29,14 +21,25 @@ interface ProductQuickviewProps {
 
 export const ProductQuickview = (props: ProductQuickviewProps) => {
 
-    const dispatch = useDispatch();
-    const products = useSelector(selectProducts);
+    const [isInBag, setIsInBag] = useState<boolean>(false);
 
-    const addToCart = (id: number) => {
+    const dispatch = useDispatch();
+    const rate = getRateMean(props.product);
+
+    const addToCart = (product: Product) => {
         props.closeProductPreview();
-        let product = products.filter((product) => product.id === id)[0];
         dispatch(addProductToCart(product));
     }
+
+    const setInCart = () => {
+        if (store.getState().cart.list.filter(product => product.id === props.product.id).length > 0) {
+            setIsInBag(true);
+        }
+    };
+
+    useEffect(() => {
+        setInCart();
+    }, []);
 
     return (
         <div
@@ -62,11 +65,11 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                             />
                             <div className={"flex flex-col gap-8 w-full h-1/2 md:w-2/3 md:h-4/5"}>
                                 <div className={"overflow-hidden w-full h-full rounded-lg"}>
-                                    <Image src={props.img} />
+                                    <OptimizedImage image={props.product.images[0]}/>
                                 </div>
                                 <div className={"flex items-center justify-center"}>
                                     <Link
-                                        to={`${routes.product.path}/${props.id}`}
+                                        to={`${routes.product.path}/${props.product.id}`}
                                         className={"text-red-600 font-medium"}
                                     >
                                         Ver detalles completos
@@ -75,16 +78,16 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                             </div>
                             <div className={"flex flex-col gap-2 w-full md:w-2/3"}>
                                 <div className={"flex -mt-2"}>
-                                    <h1 className={"text-xl md:text-4xl font-bold"}>{props.name}</h1>
+                                    <h1 className={"text-xl md:text-4xl font-bold"}>{props.product.name}</h1>
                                 </div>
                                 <div className={"mt-2 flex gap-4 items-center"}>
-                                    <span className={"font-medium text-lg"}>${props.price}</span>
+                                    <span className={"font-medium text-lg"}>${props.product.price}</span>
                                     <div className={"h-2/3 w-[1px] content-{''} bg-gray-300"}/>
-                                    <Stars rate={props.rate} size={18}/>
+                                    <Stars rate={rate} size={18}/>
                                 </div>
                                 <div className={"flex gap-1 items-center py-2"}>
                                     {
-                                        props.stock > 0
+                                        props.product.stock > 0
                                             ? (
                                                 <>
                                                     <BiCheck size={20} color={"#4ade80"}/>
@@ -101,18 +104,18 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                                     }
                                 </div>
                                 <p className={"text-sm font-medium flex-grow "}>
-                                    {props.description}
+                                    {props.product.description}
                                 </p>
                                 <div className={"flex items-center my-1 md:my-4"}>
                                     <span
-                                        className={`bg-red-500 hover:bg-red-400 text-center p-3 text-white font-medium cursor-pointer flex-grow rounded-lg ${props.stock > 0
-                                            ? '' : 'pointer-events-none bg-gray-300'} ${store.getState().cart.list.filter(product => product.id === props.id).length === 0 ? '' : 'pointer-events-none bg-gray-300'}`}
-                                        onClick={() => addToCart(props.id)}
+                                        className={`bg-red-500 hover:bg-red-400 text-center p-3 text-white font-medium cursor-pointer flex-grow rounded-lg ${props.product.stock > 0
+                                            ? '' : 'pointer-events-none bg-gray-300'} ${isInBag ? 'pointer-events-none bg-gray-300' : ''}`}
+                                        onClick={() => addToCart(props.product)}
                                     >
                                         {
-                                            store.getState().cart.list.filter(product => product.id === props.id).length === 0
-                                                ? 'Añadir a la bolsa'
-                                                : 'Ya está en la bolsa'
+                                            isInBag
+                                                ? 'Ya está en la bolsa'
+                                                : 'Añadir a la bolsa'
                                         }
                                     </span>
                                 </div>

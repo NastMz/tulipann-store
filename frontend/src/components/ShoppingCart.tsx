@@ -47,7 +47,8 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
     };
 
 
-    {/*Cart Products Logic*/}
+    {/*Cart Products Logic*/
+    }
 
     const dispatch = useDispatch();
 
@@ -115,7 +116,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                                             cart.length > 0
                                                 ? <div className={"flex flex-col divide-y divide-solid divide-gray-200"}>
                                                     {
-                                                        cart.map((product, index) => (
+                                                        cart.map((product) => (
                                                             <ShoppingCartCard
                                                                 id={product.id}
                                                                 name={product.name}

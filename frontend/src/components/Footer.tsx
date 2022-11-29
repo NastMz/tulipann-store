@@ -1,7 +1,6 @@
 import {Link} from "react-router-dom";
 import {BsFacebook, BsInstagram, BsTwitter, BsWhatsapp} from "react-icons/all";
 import Logo from "../assets/images/LogoTulipannV2.svg";
-import {Image} from "./Image";
 
 export const Footer = () => {
     return (
@@ -11,7 +10,7 @@ export const Footer = () => {
                 <div
                     className={"flex-2 flex flex-col gap-4 md:gap-6 items-center md:items-start justify-start max-w-sm"}>
                     <div className={"h-12"}>
-                        <Image src={Logo}/>
+                        <img src={Logo} alt={Logo} className={`h-full w-full object-cover`}/>
                     </div>
                     <p className={"text-center md:text-left"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                         Ab, maiores?</p>
@@ -57,7 +56,8 @@ export const Footer = () => {
                 <span className={"flex gap-2 items-center"}>© 2022 Tulipann Store. Todos los derechos reservados</span>
                 <span className={"text-sm"}>Desarrollado por <a href="https://nastmz.github.io/portfolio"
                                                                 target={"_blank"} className={"text-red-400"}>Kevin Martinez</a> y <a
-                    href="https://www.linkedin.com/in/joshep-mateo-granada-quinchia-41b379207/" target={"_blank"} className={"text-red-400"}>Mateo Granada</a></span>
+                    href="https://www.linkedin.com/in/joshep-mateo-granada-quinchia-41b379207/" target={"_blank"}
+                    className={"text-red-400"}>Mateo Granada</a></span>
             </div>
         </>
     )

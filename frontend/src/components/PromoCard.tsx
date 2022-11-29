@@ -1,7 +1,8 @@
-import {Image} from "./Image";
+import {OptimizedImage} from "./OptimizedImage";
+import {Image} from "../models";
 
 interface PromoCardProps {
-    img: string,
+    img: Image,
     className?: string
 }
 
@@ -9,7 +10,7 @@ export const PromoCard = (props: PromoCardProps) => {
 
     return (
         <div className={`rounded-xl overflow-hidden h-full w-full ${props.className}`}>
-            <Image src={props.img}/>
+            <OptimizedImage image={props.img}/>
         </div>
     )
 }
