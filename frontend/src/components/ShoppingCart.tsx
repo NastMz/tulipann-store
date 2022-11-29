@@ -5,6 +5,8 @@ import {useDispatch} from "react-redux";
 import {decreaseProductCartCount, increaseProductCartCount, removeProductFromCart} from "../redux/actions";
 import {BiShoppingBag} from "react-icons/all";
 import {AnimatePresence, motion} from "framer-motion";
+import {Link} from "react-router-dom";
+import {routes} from "../routes/routes";
 
 interface ShoppingCartProps {
     className?: string
@@ -112,7 +114,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                                     >
                                         {
                                             cart.length > 0
-                                                ? <div className={"flex flex-col"}>
+                                                ? <div className={"flex flex-col divide-y divide-solid divide-gray-200"}>
                                                     {
                                                         cart.map((product) => (
                                                             <ShoppingCartCard
@@ -125,7 +127,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                                                                 decreaseFunction={decreaseProductCount}
                                                                 removeProductFromCart={removeProduct}
                                                                 key={Math.random()}
-                                                                className={`border-t border-b border-gray-200`}
+                                                                className={``}
                                                             />
                                                         ))
                                                     }
@@ -143,10 +145,14 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                                         <span className={""}>Subtotal</span>
                                         <span className={""}>${subtotal}</span>
                                     </div>
-                                    <div
-                                        className={`mx-auto my-4 w-fit bg-red-500 text-white px-10 py-2 rounded-md cursor-pointer hover:bg-red-400 font-medium ${cart.length > 0
-                                            ? '' : 'pointer-events-none bg-gray-300'}`}>
-                                        Ir a Pagar
+                                    <div className={"w-full h-fit my-4 flex justify-center"}>
+                                        <Link
+                                            to={routes.checkout.path}
+                                            className={`mx-auto w-fit bg-red-500 text-white px-10 py-2 rounded-md hover:bg-red-400 font-medium ${cart.length > 0
+                                                ? '' : 'pointer-events-none bg-gray-300'}`}
+                                        >
+                                            Ir a Pagar
+                                        </Link>
                                     </div>
                                 </div>
                             </motion.div>

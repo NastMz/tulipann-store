@@ -16,13 +16,6 @@ jobs:
           ref: web
           fetch-depth: 0
 
-      - name: List filters
-        run: ls -a
-        shell: bash
-
-      - name: View status
-        run: git status
-
       - name: Push to dokku
         uses: dokku/github-action@master
         with:

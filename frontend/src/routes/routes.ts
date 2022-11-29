@@ -22,5 +22,13 @@ export const routes = {
     register: {
         path: '/register',
         title: 'Registrarse | Tulipann Store'
+    },
+    checkout: {
+        path: '/checkout',
+        title: 'Pago | Tulipann Store'
+    },
+    order: {
+        path: '/order',
+        title: 'Resumen del pedido | Tulipann Store'
     }
 }

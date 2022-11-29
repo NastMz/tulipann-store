@@ -1,6 +1,7 @@
 import {Commentary} from "./Commentary";
 import {Color} from "./Color";
 import {ProductSpecs} from "./ProductSpecs";
+import {Image} from "./Image";
 
 
 export interface Product {
@@ -10,7 +11,7 @@ export interface Product {
     description: string,
     specs: ProductSpecs,
     stock: number,
-    images: string[],
+    images: Array<Image>,
     feedback: Commentary[],
     category: number,
     colors?: Color[] | null

@@ -1,13 +1,12 @@
 import {Link} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
-import hero from "../assets/images/hero.jpg";
 import {NavbarMenu} from "./NavbarMenu";
 import Logo from "../assets/images/LogoTulipannV2.svg";
 import {routes} from "../routes/routes";
 import {ShoppingCart} from "./ShoppingCart";
 import {SearchBar} from "./SearchBar";
-import {AnimatePresence, motion} from "framer-motion";
-import {Image} from "./Image";
+import {motion} from "framer-motion";
+import {Images} from "../utils";
 
 export const Navbar = () => {
 
@@ -15,88 +14,88 @@ export const Navbar = () => {
     const data = [
         [
             {
-                img: hero,
+                img: Images.hero,
                 title: "lorem",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "lorem",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "lorem",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "lorem",
                 to: "#"
             },
         ],
         [
             {
-                img: hero,
+                img: Images.hero,
                 title: "ipsum",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "ipsum",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "ipsum",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "ipsum",
                 to: "#"
             },
         ],
         [
             {
-                img: hero,
+                img: Images.hero,
                 title: "dolor",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "dolor",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "dolor",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "dolor",
                 to: "#"
             },
         ],
         [
             {
-                img: hero,
+                img: Images.hero,
                 title: "sit",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "sit",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "sit",
                 to: "#"
             },
             {
-                img: hero,
+                img: Images.hero,
                 title: "sit",
                 to: "#"
             },
@@ -152,13 +151,15 @@ export const Navbar = () => {
 
 
     // Event listener to set fixed position to navbar
-    window.addEventListener("scroll", () => {
-        if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
-            setIsSticky(true);
-        } else {
-            setIsSticky(false);
-        }
-    });
+    useEffect(() => {
+        window.addEventListener("scroll", () => {
+            if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+                setIsSticky(true);
+            } else {
+                setIsSticky(false);
+            }
+        });
+    }, []);
 
 
     return (
@@ -172,7 +173,7 @@ export const Navbar = () => {
 
                     {/*LOGO*/}
                     <Link to={routes.home.path} className={"w-44"}>
-                        <Image src={Logo}/>
+                        <img src={Logo} alt={Logo} className={`h-full w-full object-cover`}/>
                     </Link>
 
                     {/*Navbar options*/}
@@ -215,23 +216,23 @@ export const Navbar = () => {
             </div>
 
             {/*Navbar Menu*/}
-                {
-                    isShowingNavMenu && (
-                        <motion.div
-                            initial={{height: 0}}
-                            animate={{height: 'fit-content',}}
-                            exit={{height: 0, transition: {duration: 0.3}}}
-                            className={`bg-white absolute w-full overflow-hidden shadow-xl z-10`}
-                            ref={navbarMenuRef}
-                        >
+            {
+                isShowingNavMenu && (
+                    <motion.div
+                        initial={{height: 0}}
+                        animate={{height: 'fit-content',}}
+                        exit={{height: 0, transition: {duration: 0.3}}}
+                        className={`bg-white absolute w-full overflow-hidden shadow-xl z-10`}
+                        ref={navbarMenuRef}
+                    >
 
-                            <NavbarMenu
-                                items={navOption > -1 ? data[navOption] : []}
-                                className={"top-0 left-0 border-t border-gray-100"}
-                            />
-                        </motion.div>
-                    )
-                }
+                        <NavbarMenu
+                            items={navOption > -1 ? data[navOption] : []}
+                            className={"top-0 left-0 border-t border-gray-100"}
+                        />
+                    </motion.div>
+                )
+            }
         </nav>
     )
 }

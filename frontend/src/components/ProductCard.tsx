@@ -1,10 +1,11 @@
 import {useState} from "react";
 import {AiFillStar} from "react-icons/all";
-import {Image} from "./Image";
+import {OptimizedImage} from "./OptimizedImage";
+import {Image} from "../models";
 
 interface ProductCardProps {
     id: number,
-    img: string,
+    img: Image,
     name: string,
     price: number,
     rate: number,
@@ -25,7 +26,7 @@ export const ProductCard = (props: ProductCardProps) => {
             onClick={() => props.showPreview(props.id)}
         >
             <div className={"flex-1 overflow-hidden rounded-lg"}>
-                <Image src={props.img}/>
+                <OptimizedImage image={props.img}/>
             </div>
             <div className="flex-2 flex flex-col gap-2">
                 <h1 className={`font-medium`}>{props.name}</h1>

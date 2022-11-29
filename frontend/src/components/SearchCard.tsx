@@ -1,11 +1,12 @@
 import {Link} from "react-router-dom";
 import {Stars} from "./Stars";
-import {Image} from "./Image";
+import {OptimizedImage} from "./OptimizedImage";
+import {Image} from "../models";
 
 interface ShoppingCartCardProps {
     id: number,
     name: string,
-    image: string,
+    image: Image,
     rate?: number,
     summary?: string,
     path: string,
@@ -24,7 +25,7 @@ export const SearchCard = (props: ShoppingCartCardProps) => {
         >
             <div className={`relative grid grid-cols-3 gap-4 p-4 h-full w-full border-t border-b border-gray-100`}>
                 <div className={"h-full w-full overflow-hidden rounded-lg"}>
-                    <Image src={props.image}/>
+                    <OptimizedImage image={props.image}/>
                 </div>
                 <div className={"col-span-2 flex flex-col gap-1 w-full"}>
                     <div className={"flex flex-col items-start gap-1 w-full"}>

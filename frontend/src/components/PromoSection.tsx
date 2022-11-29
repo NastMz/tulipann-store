@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import {BsArrowRightShort} from "react-icons/all";
 import {PromoCard} from "./PromoCard";
-import hero from "../assets/images/hero.jpg";
+import {Images} from "../utils";
 
 export const PromoSection = () => {
     return (
@@ -19,12 +19,12 @@ export const PromoSection = () => {
             <div className={"col-start-2 pr-4 md:pr-12 overflow-hidden absolute -top-6 md:-top-12 right-0 bottom-0"}>
                 <div className={"grid grid-cols-2 h-full gap-4"}>
                     <div className={"grid gap-4 relative -bottom-20"}>
-                        <PromoCard img={hero}  />
-                        <PromoCard img={hero}  />
+                        <PromoCard img={Images.hero}/>
+                        <PromoCard img={Images.hero}/>
                     </div>
                     <div className={"grid gap-4 h-full relative -bottom-5"}>
-                        <PromoCard img={hero}  />
-                        <PromoCard img={hero} />
+                        <PromoCard img={Images.hero}/>
+                        <PromoCard img={Images.hero}/>
                     </div>
                 </div>
             </div>
