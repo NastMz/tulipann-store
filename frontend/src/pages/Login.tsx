@@ -30,7 +30,7 @@ export const Login = () => {
         <motion.div
             initial={{width: 0}}
             animate={{width: '100%'}}
-            exit={{width: 0, transition: {duration: 0.3}}}
+            exit={{width: 0}}
         >
             <div className={"flex flex-col gap-8 justify-start items-center h-screen bg-gray-50 p-8"}>
                 <div className={"flex flex-col items-center justify-center text-center gap-4"}>

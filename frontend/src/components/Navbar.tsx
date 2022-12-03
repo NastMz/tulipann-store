@@ -5,7 +5,7 @@ import Logo from "../assets/images/LogoTulipannV2.svg";
 import {routes} from "../routes/routes";
 import {ShoppingCart} from "./ShoppingCart";
 import {SearchBar} from "./SearchBar";
-import {motion} from "framer-motion";
+import {AnimatePresence, motion} from "framer-motion";
 import {Images} from "../utils";
 
 export const Navbar = () => {
@@ -20,48 +20,43 @@ export const Navbar = () => {
             },
             {
                 img: Images.hero,
-                title: "lorem",
+                title: "lorem2",
                 to: "#"
             },
             {
                 img: Images.hero,
-                title: "lorem",
+                title: "lorem3",
                 to: "#"
             },
             {
                 img: Images.hero,
-                title: "lorem",
-                to: "#"
-            },
-        ],
-        [
-            {
-                img: Images.hero,
-                title: "ipsum",
-                to: "#"
-            },
-            {
-                img: Images.hero,
-                title: "ipsum",
-                to: "#"
-            },
-            {
-                img: Images.hero,
-                title: "ipsum",
-                to: "#"
-            },
-            {
-                img: Images.hero,
-                title: "ipsum",
+                title: "lorem4",
                 to: "#"
             },
         ],
         [
             {
                 img: Images.hero,
-                title: "dolor",
+                title: "ipsum",
                 to: "#"
             },
+            {
+                img: Images.hero,
+                title: "ipsum2",
+                to: "#"
+            },
+            {
+                img: Images.hero,
+                title: "ipsum3",
+                to: "#"
+            },
+            {
+                img: Images.hero,
+                title: "ipsum4",
+                to: "#"
+            },
+        ],
+        [
             {
                 img: Images.hero,
                 title: "dolor",
@@ -69,12 +64,17 @@ export const Navbar = () => {
             },
             {
                 img: Images.hero,
-                title: "dolor",
+                title: "dolor2",
                 to: "#"
             },
             {
                 img: Images.hero,
-                title: "dolor",
+                title: "dolor3",
+                to: "#"
+            },
+            {
+                img: Images.hero,
+                title: "dolor4",
                 to: "#"
             },
         ],
@@ -86,17 +86,17 @@ export const Navbar = () => {
             },
             {
                 img: Images.hero,
-                title: "sit",
+                title: "sit2",
                 to: "#"
             },
             {
                 img: Images.hero,
-                title: "sit",
+                title: "sit3",
                 to: "#"
             },
             {
                 img: Images.hero,
-                title: "sit",
+                title: "sit4",
                 to: "#"
             },
         ]
@@ -183,7 +183,7 @@ export const Navbar = () => {
                                 <div
                                     className={`cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${navOption === index ? 'text-red-600 border-b-2 border-red-600' : ''}`}
                                     onClick={() => toggleNavMenu(index)}
-                                    key={Math.random()}
+                                    key={index}
                                 >
                                     Opcion
                                 </div>
@@ -216,23 +216,34 @@ export const Navbar = () => {
             </div>
 
             {/*Navbar Menu*/}
-            {
-                isShowingNavMenu && (
-                    <motion.div
-                        initial={{height: 0}}
-                        animate={{height: 'fit-content',}}
-                        exit={{height: 0, transition: {duration: 0.3}}}
-                        className={`bg-white absolute w-full overflow-hidden shadow-xl z-10`}
-                        ref={navbarMenuRef}
-                    >
-
-                        <NavbarMenu
-                            items={navOption > -1 ? data[navOption] : []}
-                            className={"top-0 left-0 border-t border-gray-100"}
-                        />
-                    </motion.div>
-                )
-            }
+            <AnimatePresence>
+                {
+                    isShowingNavMenu && (
+                        <motion.div
+                            initial={{height: 0}}
+                            animate={{height: 'fit-content',}}
+                            exit={{height: 0}}
+                            className={`bg-white absolute w-full overflow-hidden shadow-xl z-10`}
+                            ref={navbarMenuRef}
+                        >
+                            <AnimatePresence exitBeforeEnter>
+                                <motion.div
+                                    initial={{opacity: 0}}
+                                    animate={{opacity: 1}}
+                                    exit={{opacity: 0}}
+                                    transition={{duration: 0.2}}
+                                    key={navOption}
+                                >
+                                    <NavbarMenu
+                                        items={navOption > -1 ? data[navOption] : []}
+                                        className={"top-0 left-0 border-t border-gray-100"}
+                                    />
+                                </motion.div>
+                            </AnimatePresence>
+                        </motion.div>
+                    )
+                }
+            </AnimatePresence>
         </nav>
     )
 }

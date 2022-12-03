@@ -1,10 +1,13 @@
 name: App Deploy
 
 on:
-  workflow_run:
-    workflows: ["App Build"]
-    types:
-      - completed
+  # workflow_run:
+  #   workflows: ["App Build"]
+  #   types:
+  #     - completed
+  push:
+    branches:
+      - test
 
 jobs:
   deploy:

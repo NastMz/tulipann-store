@@ -20,8 +20,8 @@ interface ShoppingCartCardProps {
 export const ShoppingCartCard = (props: ShoppingCartCardProps) => {
 
     return (
-        <div className={`relative grid grid-cols-3 gap-4 py-4 w-full ${props.className} text-black`}>
-            <div className={"h-full w-full overflow-hidden rounded-lg"}>
+        <div className={`relative flex gap-6 py-4 w-full ${props.className} text-black`}>
+            <div className={"h-full w-40 overflow-hidden rounded-xl"}>
                 <OptimizedImage image={props.image}/>
             </div>
             <div className={"col-span-2 flex flex-col py-1 justify-between w-full"}>

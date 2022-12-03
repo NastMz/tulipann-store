@@ -23,7 +23,7 @@ export const NavbarMenu = (props: NavbarMenuProps) => {
                         img={item.img}
                         title={item.title}
                         to={item.to}
-                        key={Math.random()}
+                        key={item.title}
                     />
                 ))
             }
