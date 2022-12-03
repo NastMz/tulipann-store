@@ -53,11 +53,15 @@ export const Checkout = () => {
         <motion.div
             initial={{width: 0}}
             animate={{width: '100%'}}
-            exit={{width: 0, transition: {duration: 0.3}}}
-            className={"min-h-screen h-fit grid grid-cols-2 gap-24 px-16 py-8 overflow-hidden"}
+            exit={{width: 0}}
+            className={"h-screen grid grid-cols-2 gap-24 px-16 py-8 mb-12 overflow-hidden"}
         >
-            <CheckoutResume setOrder={setOrder}/>
-            <CheckoutForm setInfo={setOrderInfo} sendOrder={setIsOrdered}/>
+            <CheckoutResume
+                setOrder={setOrder}
+            />
+            <CheckoutForm
+                setInfo={setOrderInfo} sendOrder={setIsOrdered}
+            />
         </motion.div>
     )
 }

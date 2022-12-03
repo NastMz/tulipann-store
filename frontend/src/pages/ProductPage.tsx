@@ -23,7 +23,7 @@ export const ProductPage = () => {
             <motion.div
                 initial={{width: 0}}
                 animate={{width: '100%'}}
-                exit={{width: window.innerWidth, transition: {duration: 0.3}}}
+                exit={{width: window.innerWidth}}
             >
                 <div>
                     <ProductOverview product={product[0]}/>

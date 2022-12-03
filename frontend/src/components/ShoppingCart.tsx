@@ -126,7 +126,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                                                                 increaseFunction={increaseProductCount}
                                                                 decreaseFunction={decreaseProductCount}
                                                                 removeProductFromCart={removeProduct}
-                                                                key={Math.random()}
+                                                                key={product.id}
                                                                 className={``}
                                                             />
                                                         ))

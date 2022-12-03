@@ -1,6 +1,7 @@
 import {Feature, ProductSpecs} from "../models";
 import {useRef, useState} from "react";
 import {FeatureCard} from "./FeatureCard";
+import {AnimatePresence, motion} from "framer-motion";
 
 interface ProductFeaturesProps {
     specs: ProductSpecs,
@@ -13,11 +14,11 @@ export const ProductFeatures = (props: ProductFeaturesProps) => {
     const featuresOptionsRef = useRef<any>(null);
 
     // State for know the actual selected option
-    const [featureOption, setFeatureOption] = useState<number>(0);
+    const [featureOption, setFeatureOption] = useState<any>(props.specs.options[0]);
 
     // Function used to show the feature card when an option is clicked
     const showFeatureCard = (index: number) => {
-        setFeatureOption(index);
+        setFeatureOption(props.specs.options[index]);
     };
 
     return (
@@ -31,22 +32,28 @@ export const ProductFeatures = (props: ProductFeaturesProps) => {
                     <ul className={"flex lg:gap-8 md:gap-2 items-center p-0"} ref={featuresOptionsRef}>
                         {props.specs.options.map((item: Feature, index: number) => (
                             <li
-                                className={`cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${featureOption === index ? 'text-red-600 border-b-2 border-red-600' : ''}`}
+                                className={`cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${featureOption === item ? 'text-red-600 border-b-2 border-red-600' : ''}`}
                                 onClick={() => showFeatureCard(index)}
-                                key={Math.random()}
+                                key={item.title}
                             >
                                 {item.name}
                             </li>
                         ))}
                     </ul>
                 </div>
-                {
-                    props.specs.options[featureOption] && (
+                <AnimatePresence exitBeforeEnter>
+                    <motion.div
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1}}
+                        exit={{opacity: 0}}
+                        key={featureOption.title}
+                        className={'h-80 pt-8'}
+                    >
                         <FeatureCard
-                            feature={props.specs.options[featureOption]}
+                            feature={featureOption}
                         />
-                    )
-                }
+                    </motion.div>
+                </AnimatePresence>
             </div>
         </div>
     )

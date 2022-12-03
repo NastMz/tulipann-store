@@ -29,7 +29,7 @@ export const FilterMenu = forwardRef((props: FilterMenuProps, ref: Ref<any>) => 
                     <FilterCard
                         title={filter.title}
                         options={filter.options}
-                        key={Math.random()}
+                        key={filter.title}
                         updateFilters={props.updateFilters}
                         className={"px-2"}
                     />

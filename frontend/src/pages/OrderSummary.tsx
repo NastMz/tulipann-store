@@ -24,7 +24,7 @@ export const OrderSummary = () => {
             <motion.div
                 initial={{width: 0}}
                 animate={{width: '100%'}}
-                exit={{width: 0, transition: {duration: 0.3}}}
+                exit={{width: 0}}
                 className={"min-h-screen h-fit flex overflow-hidden w-full"}
             >
                 <div className={"flex-grow w-1/3 bg-gradient-to-bl from-red-500 to-red-800"}/>
@@ -41,7 +41,7 @@ export const OrderSummary = () => {
                             <span className={"text-sm font-medium text-red-500"}>00000000000</span>
                         </div>
                         <div
-                            className={"grid px-4 w-full divide-y divide-solid divide-gray-200 h-4/5 overflow-y-scroll border-t border-b border-gray-200 max-h-96"}>
+                            className={"grid w-full divide-y divide-solid divide-gray-200 h-4/5 overflow-y-scroll h-96"}>
                             {
                                 order.products.map((product: any) => (
                                     <OrderSummaryCard
@@ -50,7 +50,7 @@ export const OrderSummary = () => {
                                         price={product.price}
                                         image={product.images[0]}
                                         count={product.count}
-                                        key={Math.random()}
+                                        key={product.id}
                                         className={"h-24"}
                                     />
                                 ))

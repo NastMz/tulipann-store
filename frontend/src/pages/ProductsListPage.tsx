@@ -7,7 +7,8 @@ import {Product} from "../models";
 import {nameOf, SortUtil} from "../utils";
 import {routes} from "../routes/routes";
 import {AnimatePresence, motion} from "framer-motion";
-import {FilterBar, FilterMenu, ProductList, ProductQuickview, SortMenu, TitleBanner} from "../components";
+import {FilterBar, FilterMenu, ProductGrid, ProductQuickview, SortMenu, TitleBanner} from "../components";
+import {BsBoxSeam} from "react-icons/all";
 
 interface ProductsPageProps {
     itemsPerPage: number
@@ -198,7 +199,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
         <motion.div
             initial={{width: 0}}
             animate={{width: '100%'}}
-            exit={{width: window.innerWidth, transition: {duration: 0.3}}}
+            exit={{width: window.innerWidth}}
         >
             <TitleBanner
                 title={"Lorem"}
@@ -219,14 +220,13 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                             <motion.div
                                 initial={{scale: 0}}
                                 animate={{scale: 1}}
-                                exit={{scale: 0, transition: {duration: 0.3}}}
+                                exit={{scale: 0}}
                                 className={`absolute h-fit z-10 right-6 top-14 overflow-hidden min-w-fit py-2 border bg-white border-gray-200 rounded-md shadow-2xl transform origin-top-right`}
                             >
                                 <SortMenu
                                     options={sortOptions}
                                     sortItemsFunction={sortItemsBy}
                                     ref={sortMenuRef}
-                                    key={Math.random()}
                                 />
                             </motion.div>
                         )
@@ -240,7 +240,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                             <motion.div
                                 initial={{translate: '-100%'}}
                                 animate={{translate: 0,}}
-                                exit={{translate: '-100%', transition: {duration: 0.3}}}
+                                exit={{translate: '-100%'}}
                             >
                                 <FilterMenu
                                     filters={filters}
@@ -251,13 +251,19 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                             </motion.div>
                         )
                     }
-                </AnimatePresence>
-                <div className={"flex flex-col gap-12 px-24 md:px-16 w-full"}>
-                    <ProductList
-                        items={showItems}
-                        className={`grid-cols-1 lg:grid-cols-4 2xl:grid-cols-5 ${isShowingFilterMenu ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}
-                        showPreview={showProductPreview}
-                    />
+                </AnimatePresence >
+                <div className={"flex flex-col gap-12 px-16 w-full"}>
+                    {showItems.length > 0
+                        ? <ProductGrid
+                            items={showItems}
+                            className={``}
+                            showPreview={showProductPreview}
+                        />
+                        : <div className={"flex flex-col items-center justify-center gap-6 text-gray-200 h-80"}>
+                            <BsBoxSeam size={90}/>
+                            <span className={"text-2xl"}>No hemos encontrado productos</span>
+                        </div>
+                    }
                     <ReactPaginate
                         forcePage={0}
                         breakLabel="..."

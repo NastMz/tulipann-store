@@ -22,12 +22,13 @@ interface ProductQuickviewProps {
 export const ProductQuickview = (props: ProductQuickviewProps) => {
 
     const [isInBag, setIsInBag] = useState<boolean>(false);
+    const [isClosed, setIsClosed] = useState<boolean>(!props.isOpen);
 
     const dispatch = useDispatch();
     const rate = getRateMean(props.product);
 
     const addToCart = (product: Product) => {
-        props.closeProductPreview();
+        closeOverview();
         dispatch(addProductToCart(product));
     }
 
@@ -37,34 +38,40 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
         }
     };
 
+    const closeOverview = () => {
+        setIsClosed(true);
+        debugger
+        setTimeout(() => props.closeProductPreview(), 300);
+    }
+
     useEffect(() => {
         setInCart();
     }, []);
 
     return (
         <div
-            className={`fixed inset-0 h-screen w-full z-50 flex justify-center items-center ${props.isOpen ? '' : 'pointer-events-none'}`}
+            className={`fixed inset-0 h-screen w-full z-50 flex justify-center items-center p-20 ${props.isOpen ? '' : 'pointer-events-none'}`}
         >
             <div
-                className={`fixed inset-0 bg-black ${props.isOpen ? 'opacity-50' : 'pointer-events-none opacity-0'} ${props.bgClassName}`}
-                onClick={() => props.closeProductPreview()}
+                className={`fixed inset-0 bg-black h-full w-full ${props.isOpen ? 'opacity-50' : 'pointer-events-none opacity-0'} ${props.bgClassName}`}
+                onClick={() => closeOverview()}
             />
             <AnimatePresence>
                 {
-                    props.isOpen && (
+                    !isClosed && (
                         <motion.div
                             initial={{scale: 0}}
                             animate={{scale: 1}}
-                            exit={{scale: 0, transition: {duration: 0.3}}}
-                            className={`bg-white overflow-hidden w-5/6 md:w-2/3 h-fit md:h-2/3 rounded-sm flex flex-col md:flex-row p-12 md:p-8 2xl:p-20 gap-4 md:gap-10 2xl:gap-24 shadow-xl relative ${props.isOpen ? '' : 'pointer-events-none'} ${props.cardClassName}`}
+                            exit={{scale: 0}}
+                            className={`bg-white overflow-hidden min-h-fit max-h-fit  min-w-fit max-w-fit rounded-xl flex flex-col md:flex-row p-12 2xl:p-20 gap-6 md:gap-12 2xl:gap-24 shadow-xl relative ${props.isOpen ? '' : 'pointer-events-none'} ${props.cardClassName}`}
                         >
                             <AiOutlineClose
                                 size={25}
                                 className={"absolute top-4 md:top-6 right-4 md:right-6 cursor-pointer ext-gray-400 hover:text-red-500"}
-                                onClick={() => props.closeProductPreview()}
+                                onClick={() => closeOverview()}
                             />
                             <div className={"flex flex-col gap-8 w-full h-1/2 md:w-2/3 md:h-4/5"}>
-                                <div className={"overflow-hidden w-full h-full rounded-lg"}>
+                                <div className={"overflow-hidden w-full h-full rounded-xl"}>
                                     <OptimizedImage image={props.product.images[0]}/>
                                 </div>
                                 <div className={"flex items-center justify-center"}>

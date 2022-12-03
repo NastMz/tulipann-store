@@ -98,7 +98,7 @@ export const SearchBar = () => {
                                                 path={"banner" in item ? routes.discover.path : routes.product.path}
                                                 tag={"banner" in item ? 'Articulo' : 'Producto'}
                                                 closeSearchBar={closeSearchBar}
-                                                key={Math.random()}
+                                                key={item.id}
                                             />
                                         ))
                                     }

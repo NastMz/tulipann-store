@@ -1,3 +1,4 @@
+import {AnimatePresence, motion} from "framer-motion";
 import {ReactNode} from "react";
 
 interface AccordionLayoutProps {
@@ -16,14 +17,22 @@ export const AccordionLayout = (props: AccordionLayoutProps) => {
                 onClick={() => props.setActiveIndex(props.index)}>
                 <div className='flex'>
                     <div
-                        className={`font-medium text-xl ${props.activeIndex === props.index ? '' : 'text-gray-400'} ${props.activeIndex < props.index ? '' : 'hover:text-black'}`}>{props.title}</div>
+                        className={`font-medium text-xl transition-all duration-300 ${props.activeIndex === props.index ? '' : 'text-gray-400'} ${props.activeIndex < props.index ? '' : 'hover:text-black'}`}>{props.title}</div>
                 </div>
             </div>
-            {(props.activeIndex === props.index) &&
-                <div className="mt-4 mb-6">
-                    {props.children}
-                </div>
-            }
+            <AnimatePresence exitBeforeEnter>
+                {(props.activeIndex === props.index) &&
+                    <motion.div
+                        initial={{height: 0}}
+                        animate={{height: 'fit-content'}}
+                        exit={{height: 0}}
+                        className="mt-4 mb-6 bg-white overflow-hidden"
+                        key={props.activeIndex}
+                    >
+                        {props.children}
+                    </motion.div>
+                }
+            </AnimatePresence>
         </>
     );
 };
