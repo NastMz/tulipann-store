@@ -7,7 +7,7 @@ export {PromoSection} from './PromoSection';
 export {DiscoverSection} from './DiscoverSection';
 export {TitleBanner} from './TitleBanner';
 export {FilterBar} from './FilterBar';
-export {ProductList} from './ProductList';
+export {ProductGrid} from './ProductGrid';
 export {FilterMenu} from './FilterMenu';
 export {SortMenu} from './SortMenu';
 export {ProductQuickview} from './ProductQuickview';

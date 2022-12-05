@@ -58,7 +58,8 @@ function App() {
 
     const location = useLocation();
 
-    return (<>
+    return (
+        <div>
             <ScrollToTop/>
             <AnimatePresence>
                 <Suspense fallback={<Loader/>}>
@@ -147,7 +148,7 @@ function App() {
                     </Routes>
                 </Suspense>
             </AnimatePresence>
-        </>
+        </div>
     )
 }
 

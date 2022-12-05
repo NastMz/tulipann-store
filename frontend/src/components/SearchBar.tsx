@@ -49,7 +49,7 @@ export const SearchBar = () => {
     }
 
     return (
-        <div className={"relative h-full "}>
+        <div className={"flex items-center lg:block relative h-full"}>
             {/*Search Btn*/}
             <div
                 className={"cursor-pointer hover:text-red-600"}
@@ -58,15 +58,15 @@ export const SearchBar = () => {
                 <BiSearch size={25}/>
             </div>
             <div
-                className={`fixed inset-0 z-50 h-screen w-full flex justify-center items-start p-20 ${isOpen ? '' : 'pointer-events-none'}`}
+                className={`fixed inset-0 z-50 h-screen w-full flex justify-center lg:items-start p-8 lg:p-20 ${isOpen ? '' : 'pointer-events-none'}`}
             >
                 <div
-                    className={`fixed inset-0 bg-black ${isOpen ? 'opacity-50' : 'pointer-events-none opacity-0'}`}
+                    className={`fixed inset-0 bg-black h-screen ${isOpen ? 'opacity-50' : 'pointer-events-none opacity-0'}`}
                     onClick={() => closeSearchBar()}
                 />
 
                 <div
-                    className={`bg-white shadow-xl relative overflow-hidden w-1/2 p-1 flex flex-col h-fit rounded-xl ${isOpen ? '' : 'pointer-events-none hidden'}`}>
+                    className={`bg-white shadow-xl relative overflow-hidden w-full lg:w-1/2 p-1 flex flex-col h-fit rounded-xl ${isOpen ? '' : 'pointer-events-none hidden'}`}>
                     <div className="w-full h-10 relative">
                         <input
                             type="text"
@@ -86,7 +86,7 @@ export const SearchBar = () => {
                     <div className={`${searchInput === '' ? 'hidden' : ''}`}>
                         {
                             searchItems.length > 0
-                                ? <div className={"max-h-72 overflow-y-scroll"}>
+                                ? <div className={"max-h-72 overflow-y-auto"}>
                                     {
                                         searchItems.map((item: Product | Article) => (
                                             <SearchCard
@@ -98,7 +98,7 @@ export const SearchBar = () => {
                                                 path={"banner" in item ? routes.discover.path : routes.product.path}
                                                 tag={"banner" in item ? 'Articulo' : 'Producto'}
                                                 closeSearchBar={closeSearchBar}
-                                                key={Math.random()}
+                                                key={item.id}
                                             />
                                         ))
                                     }

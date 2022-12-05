@@ -8,9 +8,9 @@ export const NotFound = () => {
         <motion.div
             initial={{width: 0}}
             animate={{width: '100%'}}
-            exit={{width: window.innerWidth, transition: {duration: 0.3}}}
+            exit={{width: window.innerWidth}}
         >
-            <div className={"flex flex-col gap-6 items-center justify-center text-center p-40"}>
+            <div className={"flex flex-col gap-6 items-center justify-center text-center p-20 lg:p-40"}>
                 <div className={"h-24"}>
                     <img src={Logo} alt={Logo} className={`h-full w-full object-cover`}/>
                 </div>

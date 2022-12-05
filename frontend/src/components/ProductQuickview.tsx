@@ -22,12 +22,13 @@ interface ProductQuickviewProps {
 export const ProductQuickview = (props: ProductQuickviewProps) => {
 
     const [isInBag, setIsInBag] = useState<boolean>(false);
+    const [isClosed, setIsClosed] = useState<boolean>(!props.isOpen);
 
     const dispatch = useDispatch();
     const rate = getRateMean(props.product);
 
     const addToCart = (product: Product) => {
-        props.closeProductPreview();
+        closeQuickview();
         dispatch(addProductToCart(product));
     }
 
@@ -37,37 +38,42 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
         }
     };
 
+    const closeQuickview = () => {
+        setIsClosed(true);
+        setTimeout(() => props.closeProductPreview(), 300);
+    }
+
     useEffect(() => {
         setInCart();
     }, []);
 
     return (
         <div
-            className={`fixed inset-0 h-screen w-full z-50 flex justify-center items-center ${props.isOpen ? '' : 'pointer-events-none'}`}
+            className={`fixed inset-0 h-screen w-full z-50 flex justify-center items-center px-2 lg:p-20 ${props.isOpen ? '' : 'pointer-events-none'}`}
         >
             <div
-                className={`fixed inset-0 bg-black ${props.isOpen ? 'opacity-50' : 'pointer-events-none opacity-0'} ${props.bgClassName}`}
-                onClick={() => props.closeProductPreview()}
+                className={`fixed inset-0 bg-black h-screen w-full ${props.isOpen ? 'opacity-50' : 'pointer-events-none opacity-0'} ${props.bgClassName}`}
+                onClick={() => closeQuickview()}
             />
             <AnimatePresence>
                 {
-                    props.isOpen && (
+                    !isClosed && (
                         <motion.div
                             initial={{scale: 0}}
                             animate={{scale: 1}}
-                            exit={{scale: 0, transition: {duration: 0.3}}}
-                            className={`bg-white overflow-hidden w-5/6 md:w-2/3 h-fit md:h-2/3 rounded-sm flex flex-col md:flex-row p-12 md:p-8 2xl:p-20 gap-4 md:gap-10 2xl:gap-24 shadow-xl relative ${props.isOpen ? '' : 'pointer-events-none'} ${props.cardClassName}`}
+                            exit={{scale: 0}}
+                            className={`bg-white overflow-hidden min-h-fit max-h-fit  min-w-fit max-w-fit rounded-xl flex flex-col md:flex-row px-8 pt-14 pb-8 lg:p-12 2xl:p-20 gap-6 md:gap-12 2xl:gap-24 shadow-xl relative ${props.isOpen ? '' : 'pointer-events-none'} ${props.cardClassName}`}
                         >
                             <AiOutlineClose
                                 size={25}
-                                className={"absolute top-4 md:top-6 right-4 md:right-6 cursor-pointer ext-gray-400 hover:text-red-500"}
-                                onClick={() => props.closeProductPreview()}
+                                className={"absolute top-4 md:top-6 right-4 md:right-6 cursor-pointer text-gray-400 hover:text-red-500"}
+                                onClick={() => closeQuickview()}
                             />
                             <div className={"flex flex-col gap-8 w-full h-1/2 md:w-2/3 md:h-4/5"}>
-                                <div className={"overflow-hidden w-full h-full rounded-lg"}>
+                                <div className={"overflow-hidden w-full h-full rounded-xl"}>
                                     <OptimizedImage image={props.product.images[0]}/>
                                 </div>
-                                <div className={"flex items-center justify-center"}>
+                                <div className={"hidden lg:block flex items-center justify-center"}>
                                     <Link
                                         to={`${routes.product.path}/${props.product.id}`}
                                         className={"text-red-600 font-medium"}
@@ -78,7 +84,7 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                             </div>
                             <div className={"flex flex-col gap-2 w-full md:w-2/3"}>
                                 <div className={"flex -mt-2"}>
-                                    <h1 className={"text-xl md:text-4xl font-bold"}>{props.product.name}</h1>
+                                    <h1 className={"text-2xl md:text-4xl font-bold"}>{props.product.name}</h1>
                                 </div>
                                 <div className={"mt-2 flex gap-4 items-center"}>
                                     <span className={"font-medium text-lg"}>${props.product.price}</span>
@@ -103,12 +109,12 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                                             )
                                     }
                                 </div>
-                                <p className={"text-sm font-medium flex-grow "}>
+                                <p className={"font-medium flex-grow "}>
                                     {props.product.description}
                                 </p>
                                 <div className={"flex items-center my-1 md:my-4"}>
                                     <span
-                                        className={`bg-red-500 hover:bg-red-400 text-center p-3 text-white font-medium cursor-pointer flex-grow rounded-lg ${props.product.stock > 0
+                                        className={`bg-red-500 hover:bg-red-400 text-center p-3 text-white font-medium cursor-pointer flex-grow rounded-lg mt-4 lg:mt-0 ${props.product.stock > 0
                                             ? '' : 'pointer-events-none bg-gray-300'} ${isInBag ? 'pointer-events-none bg-gray-300' : ''}`}
                                         onClick={() => addToCart(props.product)}
                                     >
@@ -122,6 +128,14 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                                 <div className={"flex items-center justify-center gap-2"}>
                                     <TbShieldCheck size={30} color={"#D1D5DBFF"}/>
                                     <span className={"text-gray-400 font-medium"}>Calidad garantizada</span>
+                                </div>
+                                <div className={"block lg:hidden mt-2 flex items-center justify-center"}>
+                                    <Link
+                                        to={`${routes.product.path}/${props.product.id}`}
+                                        className={"text-red-600 font-medium"}
+                                    >
+                                        Ver detalles completos
+                                    </Link>
                                 </div>
                             </div>
                         </motion.div>

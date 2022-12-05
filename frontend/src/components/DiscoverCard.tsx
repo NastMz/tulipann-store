@@ -19,7 +19,7 @@ export const DiscoverCard = (props: DiscoverCardProps) => {
     return (
         <Link
             to={`${routes.discover.path}/${props.id}`}
-            className={`h-fit w-full overflow-hidden rounded-lg flex flex-col shadow-lg ${props.className} hover:scale-110`}
+            className={`h-full w-full overflow-hidden rounded-lg flex flex-col shadow-lg ${props.className} hover:scale-110`}
         >
             <div className={"h-52 w-full"}>
                 <OptimizedImage image={props.banner}/>
@@ -30,13 +30,13 @@ export const DiscoverCard = (props: DiscoverCardProps) => {
                         {
                             props.tags.map((tag) => (
                                 <span className={"text-sm text-red-500"}>
-                            {tag}
-                            </span>
+                                    {tag}
+                                </span>
                             ))
                         }
                     </div>
-                    <h1 className={"font-bold mb-1 text-lg"}>{props.title}</h1>
-                    <p>{props.summary}</p>
+                    <h1 className={"font-bold mb-1 text-xl"}>{props.title}</h1>
+                    <p className={''}>{props.summary}</p>
                 </div>
                 <div className={"flex gap-2 items-center mt-6"}>
                     <FaUserCircle

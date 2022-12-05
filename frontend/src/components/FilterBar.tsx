@@ -34,22 +34,22 @@ export const FilterBar = forwardRef((props: FilterBarProps, ref: any) => {
 
     return (
         <div
-            className={`h-14 w-full flex justify-between items-center border-t-2 border-b-2 border-gray-100 px-4 md:px-6 py-4 mb-12 ${props.className}`}>
-            <div className={"flex gap-6 items-center font-medium text-sm md:text-base"}>
+            className={`h-14 w-full flex justify-between items-center border-t-2 border-b-2 border-gray-100 px-4 md:px-6 mb-12 ${props.className}`}>
+            <div className={"flex gap-6 items-center font-medium text-sm md:text-base h-full"}>
                 <div
-                    className={"flex gap-2 items-center justify-center cursor-pointer h-full"}
+                    className={"flex gap-2 items-center justify-center cursor-pointer h-full py-4"}
                     onClick={() => props.toggleMenuFilter()}
                     ref={filterBarRef}
                 >
                     <HiFilter/>
                     <span>{props.filtersCount} Filtros</span>
                 </div>
-                <span className={"text-gray-400 cursor-pointer h-full"} onClick={() => props.clearFilters()}>
+                <span className={"text-gray-400 cursor-pointer h-full py-4"} onClick={() => props.clearFilters()}>
                         Limpiar filtros
                     </span>
             </div>
             <div
-                className={"relative flex items-center justify-center cursor-pointer text-sm md:text-base h-full"}
+                className={"relative flex items-center justify-center cursor-pointer text-sm md:text-base h-full py-4"}
                 ref={sortBtnRef}
                 onClick={() => props.toggleSortMenu()}
             >

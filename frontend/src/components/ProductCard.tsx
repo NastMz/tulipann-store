@@ -1,7 +1,8 @@
-import {useState} from "react";
 import {AiFillStar} from "react-icons/all";
 import {OptimizedImage} from "./OptimizedImage";
 import {Image} from "../models";
+import {motion} from "framer-motion";
+import {useState} from "react";
 
 interface ProductCardProps {
     id: number,
@@ -16,16 +17,20 @@ interface ProductCardProps {
 
 export const ProductCard = (props: ProductCardProps) => {
 
-    const [isHover, setIsHover] = useState(false);
+    const [isHover, setIsHover] = useState<boolean>(false);
 
     return (
-        <div
-            className={`flex flex-col gap-2 h-96 md:h-80 w-full md:w-48 cursor-pointer text-center ${isHover ? 'scale-110' : ''} ${props.className}`}
+        <motion.div
+            animate={{opacity: 1}}
+            initial={{opacity: 0}}
+            exit={{opacity: 0}}
+            layout
+            onClick={() => props.showPreview(props.id)}
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
-            onClick={() => props.showPreview(props.id)}
         >
-            <div className={"flex-1 overflow-hidden rounded-lg"}>
+            <div className={`flex flex-col gap-4 h-96 w-full cursor-pointer text-center border border-gray-100 rounded-xl pb-4 overflow-hidden ${isHover ? 'scale-110' : ''} ${props.className}`}>
+            <div className={`flex-1 overflow-hidden`}>
                 <OptimizedImage image={props.img}/>
             </div>
             <div className="flex-2 flex flex-col gap-2">
@@ -46,6 +51,7 @@ export const ProductCard = (props: ProductCardProps) => {
                 </div>
                 <span className={`text-lg font-medium`}>${props.price}</span>
             </div>
-        </div>
+            </div>
+        </motion.div>
     )
 }

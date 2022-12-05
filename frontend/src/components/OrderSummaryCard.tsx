@@ -16,11 +16,11 @@ interface OrderSummaryCardProps {
 export const OrderSummaryCard = (props: OrderSummaryCardProps) => {
 
     return (
-        <div className={`relative grid grid-cols-3 gap-4 py-4 w-full ${props.className} text-black`}>
-            <div className={"h-full w-full overflow-hidden rounded-lg"}>
+        <div className={`relative flex gap-4 py-4 w-full ${props.className} text-black`}>
+            <div className={"h-full w-20 lg:w-40 overflow-hidden rounded-xl"}>
                 <OptimizedImage image={props.image}/>
             </div>
-            <div className={"col-span-2 flex flex-col py-1 justify-between w-full"}>
+            <div className={"col-span-2 flex flex-col py-1 justify-between w-full pr-2"}>
                 <div className={"flex justify-between items-start gap-2 w-full"}>
                     <div className={"w-2/3"}>
                         <Link to={`${routes.product.path}/${props.id}`} className={"w-full"}>
