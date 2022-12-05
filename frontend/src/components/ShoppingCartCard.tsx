@@ -24,15 +24,15 @@ export const ShoppingCartCard = (props: ShoppingCartCardProps) => {
             <div className={"h-full w-40 overflow-hidden rounded-xl"}>
                 <OptimizedImage image={props.image}/>
             </div>
-            <div className={"col-span-2 flex flex-col py-1 justify-between w-full"}>
+            <div className={"flex flex-col justify-between w-full"}>
                 <div className={"flex justify-between items-start gap-2 w-full"}>
                     <div className={"w-2/3"}>
                         <Link to={`${routes.product.path}/${props.id}`} className={"w-full"}>
-                            <p className={"truncate text-xl w-full"}>{props.name}</p>
+                            <p className={"truncate text-lg md:text-xl w-full -mt-1"}>{props.name}</p>
                         </Link>
                         <span className={"text-sm"}>{props.color}</span>
                     </div>
-                    <span className={"font-medium text-lg"}>${props.price}</span>
+                    <span className={"font-medium text-md md:text-lg"}>${props.price}</span>
                 </div>
                 <div className={"flex justify-between items-center"}>
                     <div className={"flex gap-3 items-center justify-end"}>

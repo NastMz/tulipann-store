@@ -15,6 +15,8 @@ export const Register = () => {
             password: '',
             phone: '',
             address: '',
+            department: '',
+            city: '',
         },
 
         // Validate form
@@ -25,6 +27,7 @@ export const Register = () => {
             password: Yup.string().min(8, 'La contraseña debe contener minimo 8 caracteres').required('Por favor introduce una contraseña'),
             phone: Yup.string().matches(/\d+/, 'El teléfono solo puede contener números').min(10, 'El teléfono debe contener 10 caracteres').max(15, 'El teléfono no puede exceder los 15 caracteres').required('Por favor introduce un télefono'),
             address: Yup.string().required('Por favor introduce una dirección'),
+            city: Yup.string().required('Por favor introduce una ciudad')
         }),
 
         // Submit form
@@ -40,7 +43,7 @@ export const Register = () => {
             animate={{width: '100%'}}
             exit={{width: window.innerWidth}}
         >
-            <div className={"flex flex-col gap-8 justify-start items-center min-h-screen bg-gray-50 pb-10 p-8"}>
+            <div className={"flex flex-col gap-8 justify-start items-center min-h-screen bg-gray-50 pb-10 p-4 lg:p-8"}>
                 <div className={"flex flex-col items-center justify-center text-center gap-4"}>
                     <div className={"h-24"}>
                         <img src={Logo} alt={Logo} className={`h-full w-full object-cover`}/>
@@ -52,8 +55,8 @@ export const Register = () => {
                     </div>
                 </div>
                 <form onSubmit={formik.handleSubmit} action=""
-                      className={"bg-white py-6 px-8 rounded-lg border border-gray-100 shadow-sm w-1/2"}>
-                    <div className={'grid grid-cols-2 gap-x-8'}>
+                      className={"bg-white py-6 px-8 rounded-lg border border-gray-100 shadow-sm w-full md:w-1/2"}>
+                    <div className={'grid md:grid-cols-2 gap-x-4 lg:gap-x-8'}>
                         {/*Name input field*/}
                         <div className={"pb-4 w-full"}>
                             <label
@@ -175,8 +178,49 @@ export const Register = () => {
                                 className={"text-sm text-red-600 italic"}>{formik.touched.address && formik.errors.address ? formik.errors.address : ''}</span>
                         </div>
                     </div>
-                    <button type={'submit'}
-                            className={"w-full mt-2 bg-red-500 hover:bg-red-400 text-center p-2 text-white font-medium cursor-pointer flex-grow rounded-md"}>
+                    {/*Department input field*/}
+                    <div className={"pb-4 w-full"}>
+                        <label
+                            className={"block text-sm font-medium pb-1"}
+                            htmlFor="department">
+                            Departamento
+                        </label>
+                        <select
+                            id="department"
+                            name="department"
+                            placeholder="Selecciona tu departamento"
+                            className={"border border-slate-300 text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 py-2 px-3 rounded-md shadow-sm placeholder-slate-400 w-full"}
+                            value={formik.values.department}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
+                        <span
+                            className={"text-sm text-red-600 italic"}>{formik.touched.department && formik.errors.department ? formik.errors.department : ''}</span>
+                    </div>
+                    {/*Cty input field*/}
+                    <div className={"pb-4 w-full"}>
+                        <label
+                            className={"block text-sm font-medium pb-1"}
+                            htmlFor="city">
+                            Ciudad
+                        </label>
+                        <input
+                            type="text"
+                            id="city"
+                            name="city"
+                            placeholder="Ingresa tu ciudad"
+                            className={"border border-slate-300 text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 py-2 px-3 rounded-md shadow-sm placeholder-slate-400 w-full"}
+                            value={formik.values.city}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                        />
+                        <span
+                            className={"text-sm text-red-600 italic"}>{formik.touched.city && formik.errors.city ? formik.errors.city : ''}</span>
+                    </div>
+                    <button
+                        type={'submit'}
+                        className={"w-full mt-2 bg-red-500 hover:bg-red-400 text-center p-2 text-white font-medium cursor-pointer flex-grow rounded-md"}
+                    >
                         Registrarse
                     </button>
                 </form>

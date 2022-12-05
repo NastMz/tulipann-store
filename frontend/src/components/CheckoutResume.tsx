@@ -65,9 +65,9 @@ export const CheckoutResume = (props: CheckoutResumeProps) => {
 
     if (store.getState().cart.list.length > 0) {
         return (
-            <div className={`h-full w-full flex gap-4 flex-col ${props.className}`}>
+            <div className={`h-full w-full max-w-full flex gap-4 flex-col ${props.className}`}>
                 <div
-                    className={`h-96 overflow-y-scroll`}
+                    className={`w-full h-fit max-h-96 lg:h-96 overflow-y-auto`}
                 >
                     <div className={"grid px-4 w-full divide-y divide-solid divide-gray-200"}>
                         {
@@ -88,7 +88,7 @@ export const CheckoutResume = (props: CheckoutResumeProps) => {
                         }
                     </div>
                 </div>
-                <div className={"flex-shrink text-sm flex flex-col gap-2 divide-y divide-solid divide-gray-200"}>
+                <div className={"max-w-full flex-shrink text-sm flex flex-col gap-2 divide-y divide-solid divide-gray-200"}>
                     <div className={"flex flex-col gap-2"}>
                         <div className={"flex justify-between px-4 font-medium"}>
                             <span className={"text-gray-500"}>Subtotal</span>

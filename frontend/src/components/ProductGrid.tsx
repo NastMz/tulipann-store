@@ -13,7 +13,7 @@ export const ProductGrid = (props: ItemsGridProps) => {
     return (
         <motion.div
             layout
-            className={`grid gap-12 grid-cols-[repeat(auto-fit,minmax(250px,1fr))] ${props.className}`}
+            className={`grid gap-12 place-items-center grid-cols-[repeat(auto-fit,minmax(250px,1fr))] ${props.className}`}
         >
             <AnimatePresence>
                 {props.items.map((item) => (
@@ -26,7 +26,7 @@ export const ProductGrid = (props: ItemsGridProps) => {
                         reviews={getTotalCustomerCount(item)}
                         key={item.id}
                         showPreview={props.showPreview}
-                        className={'hover:scale-110'}
+                        className={''}
                     />
                 ))}
             </AnimatePresence>

@@ -1,6 +1,6 @@
 import {Feature, ProductSpecs} from "../models";
 import {useRef, useState} from "react";
-import {FeatureCard} from "./FeatureCard";
+import {ProductFeatureCard} from "./ProductFeatureCard";
 import {AnimatePresence, motion} from "framer-motion";
 
 interface ProductFeaturesProps {
@@ -22,39 +22,35 @@ export const ProductFeatures = (props: ProductFeaturesProps) => {
     };
 
     return (
-        <div className="p-12 overflow-hidden h-fit">
+        <div className="px-12 py-0 lg:p-12 overflow-hidden h-fit">
             <div className="flex flex-col gap-4 mb-6">
                 <h2 className={"text-2xl font-bold"}>Especificaciones Tecnicas</h2>
                 <p className={"text-gray-500"}>{props.specs.summary}</p>
             </div>
-            <div>
-                <div className={"border-b border-gray-100"}>
-                    <ul className={"flex lg:gap-8 md:gap-2 items-center p-0"} ref={featuresOptionsRef}>
+                <div className={"border-b border-gray-100 w-full flex lg:gap-8 md:gap-2 items-center pb-1 overflow-x-auto"} ref={featuresOptionsRef}>
                         {props.specs.options.map((item: Feature, index: number) => (
-                            <li
-                                className={`cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${featureOption === item ? 'text-red-600 border-b-2 border-red-600' : ''}`}
+                            <div
+                                className={`min-w-fit cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${featureOption === item ? 'text-red-600 border-b-2 border-red-600' : ''}`}
                                 onClick={() => showFeatureCard(index)}
                                 key={item.title}
                             >
                                 {item.name}
-                            </li>
+                            </div>
                         ))}
-                    </ul>
                 </div>
-                <AnimatePresence exitBeforeEnter>
+                <AnimatePresence mode={'wait'}>
                     <motion.div
                         initial={{opacity: 0}}
                         animate={{opacity: 1}}
                         exit={{opacity: 0}}
                         key={featureOption.title}
-                        className={'h-80 pt-8'}
+                        className={'h-[500px] lg:h-80 pt-8'}
                     >
-                        <FeatureCard
+                        <ProductFeatureCard
                             feature={featureOption}
                         />
                     </motion.div>
                 </AnimatePresence>
-            </div>
         </div>
     )
 }

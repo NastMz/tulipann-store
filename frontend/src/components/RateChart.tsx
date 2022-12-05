@@ -15,7 +15,7 @@ export const RateChart = (props: RateChartProps) => {
     const reviewsPercents = getPercentPerRate(props.product);
 
     return (
-        <div className={`h-fit flex flex-col gap-4 p-6 ${props.className}`}>
+        <div className={`w-full h-fit flex flex-col gap-4 p-6 ${props.className}`}>
             <h2 className={"text-2xl font-bold"}>
                 Reseñas de clientes
             </h2>
@@ -25,7 +25,7 @@ export const RateChart = (props: RateChartProps) => {
                     Basado en {totalReviews} {totalReviews !== 1 ? 'reseñas' : 'reseña'}
                 </span>
             </div>
-            <div className={"flex flex-col gap-1 "}>
+            <div className={"flex flex-col gap-1 w-full"}>
                 <ChartBar stars={5} percent={reviewsPercents.fiveStarsPercent}/>
                 <ChartBar stars={4} percent={reviewsPercents.fourStarsPercent}/>
                 <ChartBar stars={3} percent={reviewsPercents.threeStarsPercent}/>

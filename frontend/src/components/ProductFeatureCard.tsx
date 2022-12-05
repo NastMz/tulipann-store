@@ -7,14 +7,14 @@ interface FeatureCardProps {
 }
 
 
-export const FeatureCard = (props: FeatureCardProps) => {
+export const ProductFeatureCard = (props: FeatureCardProps) => {
     return (
-        <div className={`h-full w-full flex gap-8 ${props.className}`}>
-            <div className={"w-1/2 flex flex-col gap-2"}>
+        <div className={`h-full w-full flex flex-col-reverse lg:flex-row gap-8 mb-12 ${props.className}`}>
+            <div className={"w-full lg:w-1/2 flex flex-col gap-2 pb-2"}>
                 <h4 className="font-medium">{props.feature.title}</h4>
                 <p className="text-gray-500">{props.feature.description}</p>
             </div>
-            <div className={"w-1/2 h-full overflow-hidden rounded-xl"}>
+            <div className={"w-full lg:w-1/2 h-full overflow-hidden rounded-xl"}>
                 <OptimizedImage image={props.feature.image}/>
             </div>
         </div>

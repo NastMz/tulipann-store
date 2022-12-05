@@ -4,6 +4,7 @@ import {Image} from "../models";
 interface NavItem {
     img: Image,
     title: string,
+    subtitle: string,
     to: string
 }
 
@@ -15,13 +16,14 @@ interface NavbarMenuProps {
 export const NavbarMenu = (props: NavbarMenuProps) => {
     return (
         <div
-            className={`grid grid-cols-4 gap-12 w-full px-8 py-6 ${props.className}`}
+            className={`grid lg:grid-cols-4 gap-12 w-full px-8 py-6 ${props.className}`}
         >
             {
                 props.items?.map((item) => (
                     <NavCard
                         img={item.img}
                         title={item.title}
+                        subtitle={item.subtitle}
                         to={item.to}
                         key={item.title}
                     />

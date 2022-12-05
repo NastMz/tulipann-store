@@ -9,6 +9,7 @@ import {routes} from "../routes/routes";
 import {AnimatePresence, motion} from "framer-motion";
 import {FilterBar, FilterMenu, ProductGrid, ProductQuickview, SortMenu, TitleBanner} from "../components";
 import {BsBoxSeam} from "react-icons/all";
+import {FilterMenuMobile} from "../components/FilterMenuMobile";
 
 interface ProductsPageProps {
     itemsPerPage: number
@@ -234,25 +235,39 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                 </AnimatePresence>
             </div>
             <div className={"flex relative min-h-[50vh] md:min-h-screen"}>
-                <AnimatePresence>
-                    {
-                        isShowingFilterMenu && (
-                            <motion.div
-                                initial={{translate: '-100%'}}
-                                animate={{translate: 0,}}
-                                exit={{translate: '-100%'}}
-                            >
-                                <FilterMenu
-                                    filters={filters}
-                                    updateFilters={updateFilters}
-                                    className={`overflow-y-auto px-8 overflow-x-hidden`}
-                                    ref={filterMenuRef}
-                                />
-                            </motion.div>
-                        )
-                    }
-                </AnimatePresence >
-                <div className={"flex flex-col gap-12 px-16 w-full"}>
+                <div className={`hidden lg:block overflow-hidden min-w-fit`}>
+                    <AnimatePresence>
+                        {
+                            isShowingFilterMenu && (
+                                <motion.div
+                                    initial={{width: 0}}
+                                    animate={{width: '300px'}}
+                                    exit={{width: 0}}
+                                >
+                                    <FilterMenu
+                                        filters={filters}
+                                        updateFilters={updateFilters}
+                                        className={`overflow-y-auto px-8`}
+                                        ref={filterMenuRef}
+                                    />
+                                </motion.div>
+                            )
+                        }
+                    </AnimatePresence>
+                </div>
+
+                {/*Mobile filter menu*/}
+                <div className={`block lg:hidden overflow-hidden`}>
+                    <FilterMenuMobile
+                        filters={filters}
+                        updateFilters={updateFilters}
+                        isActive={isShowingFilterMenu}
+                        setActive={setIsShowingFilterMenu}
+                    />
+                </div>
+
+                {/*Products grid*/}
+                <div className={"flex flex-col gap-12 px-8 md:px-16 w-full"}>
                     {showItems.length > 0
                         ? <ProductGrid
                             items={showItems}

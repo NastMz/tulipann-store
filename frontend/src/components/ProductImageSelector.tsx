@@ -11,8 +11,8 @@ interface ProductImageSelectorProps {
 export const ProductImageSelector = (props: ProductImageSelectorProps) => {
     const [activeImage, setActiveImage] = useState<Image>(props.images[0]);
     return (
-        <div className={`flex flex-col gap-4 ${props.className}`}>
-            <div className={"overflow-hidden rounded-xl h-full"}>
+        <div className={`w-full flex flex-col gap-4 ${props.className}`}>
+            <div className={"overflow-hidden rounded-xl h-full w-full"}>
                 <AnimatePresence>
                     <motion.div
                         initial={{opacity: 0}}
@@ -25,7 +25,7 @@ export const ProductImageSelector = (props: ProductImageSelectorProps) => {
                     </motion.div>
                 </AnimatePresence>
             </div>
-            <div className={"flex gap-2 overflow-x-auto h-[80px]"}>
+            <div className={"flex gap-2 overflow-x-auto h-[80px] w-full"}>
                 {
                     props.images.map((image) => (
                         <div

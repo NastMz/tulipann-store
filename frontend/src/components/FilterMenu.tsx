@@ -1,5 +1,6 @@
 import {FilterCard} from "./FilterCard";
-import {forwardRef, Ref} from "react";
+import {forwardRef, Ref, useState} from "react";
+import {AccordionLayout} from "./AccordionLayout";
 
 interface Option {
     id: number,
@@ -19,9 +20,17 @@ interface FilterMenuProps {
 }
 
 export const FilterMenu = forwardRef((props: FilterMenuProps, ref: Ref<any>) => {
+
+    // Form interaction
+    const [activeForm, setActiveForm] = useState<number>(0);
+
+    const setActiveIndex = (index: number) => {
+        setActiveForm(index);
+    }
+
     return (
         <form
-            className={`min-h-fit min-w-fit bg-white md:shadow-none shadow-2xl py-8 -mt-12 ${props.className}`}
+            className={`h-full min-w-fit w-full bg-white py-8 -mt-12 ${props.className}`}
             ref={ref}
         >
             {
@@ -31,6 +40,8 @@ export const FilterMenu = forwardRef((props: FilterMenuProps, ref: Ref<any>) => 
                         options={filter.options}
                         key={filter.title}
                         updateFilters={props.updateFilters}
+                        activeForm={activeForm}
+                        setActiveForm={setActiveIndex}
                         className={"px-2"}
                     />
                 ))

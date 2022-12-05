@@ -17,7 +17,7 @@ export const OrderSummaryCard = (props: OrderSummaryCardProps) => {
 
     return (
         <div className={`relative flex gap-4 py-4 w-full ${props.className} text-black`}>
-            <div className={"h-full w-40 overflow-hidden rounded-xl"}>
+            <div className={"h-full w-20 lg:w-40 overflow-hidden rounded-xl"}>
                 <OptimizedImage image={props.image}/>
             </div>
             <div className={"col-span-2 flex flex-col py-1 justify-between w-full pr-2"}>
