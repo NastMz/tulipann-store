@@ -73,7 +73,7 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                                 <div className={"overflow-hidden w-full h-full rounded-xl"}>
                                     <OptimizedImage image={props.product.images[0]}/>
                                 </div>
-                                <div className={"hidden lg:block flex items-center justify-center"}>
+                                <div className={"hidden lg:flex items-center justify-center"}>
                                     <Link
                                         to={`${routes.product.path}/${props.product.id}`}
                                         className={"text-red-600 font-medium"}
@@ -129,7 +129,7 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                                     <TbShieldCheck size={30} color={"#D1D5DBFF"}/>
                                     <span className={"text-gray-400 font-medium"}>Calidad garantizada</span>
                                 </div>
-                                <div className={"block lg:hidden mt-2 flex items-center justify-center"}>
+                                <div className={"lg:hidden mt-2 flex items-center justify-center"}>
                                     <Link
                                         to={`${routes.product.path}/${props.product.id}`}
                                         className={"text-red-600 font-medium"}

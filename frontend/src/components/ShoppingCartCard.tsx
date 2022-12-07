@@ -20,19 +20,20 @@ interface ShoppingCartCardProps {
 export const ShoppingCartCard = (props: ShoppingCartCardProps) => {
 
     return (
-        <div className={`relative flex gap-6 py-4 w-full ${props.className} text-black`}>
-            <div className={"h-full w-40 overflow-hidden rounded-xl"}>
+        <div className={`relative grid grid-cols-3 gap-6 py-4 w-full ${props.className} text-black`}>
+            <div className={"h-full w-full min-w-[80px] overflow-hidden rounded-xl"}>
                 <OptimizedImage image={props.image}/>
             </div>
-            <div className={"flex flex-col justify-between w-full"}>
-                <div className={"flex justify-between items-start gap-2 w-full"}>
-                    <div className={"w-2/3"}>
-                        <Link to={`${routes.product.path}/${props.id}`} className={"w-full"}>
-                            <p className={"truncate text-lg md:text-xl w-full -mt-1"}>{props.name}</p>
+            <div className={"flex flex-col py-1 justify-between col-span-2"}>
+                <div className={"flex justify-between items-start gap-4 w-full"}>
+                    <div className={"truncate"}>
+                        <Link to={`${routes.product.path}/${props.id}`} className={"w-full truncate"}>
+                            <p className={"truncate text-xl w-full"}>{props.name}</p>
                         </Link>
-                        <span className={"text-sm"}>{props.color}</span>
                     </div>
-                    <span className={"font-medium text-md md:text-lg"}>${props.price}</span>
+                    <div>
+                    <span className={"font-medium text-lg float-right"}>${props.price}</span>
+                    </div>
                 </div>
                 <div className={"flex justify-between items-center"}>
                     <div className={"flex gap-3 items-center justify-end"}>

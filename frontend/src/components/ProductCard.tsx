@@ -28,8 +28,9 @@ export const ProductCard = (props: ProductCardProps) => {
             onClick={() => props.showPreview(props.id)}
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
+            className={'max-w-[250px]'}
         >
-            <div className={`flex flex-col gap-4 h-96 w-full cursor-pointer text-center border border-gray-100 rounded-xl pb-4 overflow-hidden ${isHover ? 'scale-110' : ''} ${props.className}`}>
+            <div className={`flex flex-col gap-4 h-full w-full cursor-pointer text-center border border-gray-100 rounded-xl pb-4 overflow-hidden ${isHover ? 'scale-110' : ''} ${props.className}`}>
             <div className={`flex-1 overflow-hidden`}>
                 <OptimizedImage image={props.img}/>
             </div>

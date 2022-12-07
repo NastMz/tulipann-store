@@ -17,6 +17,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
 
     // Ref for cart
     const cartRef = useRef<any>(null);
+    const cartMobileRef = useRef<any>(null);
     const cartBtnRef = useRef<any>(null);
 
     // State for show or hide the cart
@@ -28,7 +29,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
 
     // Hide cart on click in other component
     const hideCart = (e: MouseEvent) => {
-        if (cartRef.current && !cartRef.current.contains(e.target) && cartBtnRef.current && !cartBtnRef.current.contains(e.target)) {
+        if (cartMobileRef.current && !cartMobileRef.current.contains(e.target) && cartRef.current && !cartRef.current.contains(e.target) && cartBtnRef.current && !cartBtnRef.current.contains(e.target)) {
             setIsShowingCart(false);
         }
     };
@@ -165,7 +166,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
 
             {/*Mobile Shopping Cart*/}
             <div
-                ref={cartRef}
+                ref={cartMobileRef}
                 className={'block lg:hidden h-screen'}
             >
                 <ShoppingCartMobile
