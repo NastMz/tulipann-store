@@ -116,6 +116,8 @@ export const CheckoutForm = (props: CheckoutFormProps) => {
                     index={0}
                     activeIndex={activeForm}
                     setActiveIndex={setActiveIndex}
+                    className={`${activeForm === 0 || activeForm < 0 ? 'pointer-events-none' : 'cursor-pointer'}`}
+                    titleClass={`${activeForm === 0 ? '' : 'text-gray-400'} ${activeForm < 0 ? '' : 'hover:text-black'}`}
                 >
                     <form onSubmit={contactFormik.handleSubmit}>
                         {/*Email input field*/}
@@ -170,6 +172,8 @@ export const CheckoutForm = (props: CheckoutFormProps) => {
                     index={1}
                     activeIndex={activeForm}
                     setActiveIndex={setActiveIndex}
+                    className={`${activeForm === 1 || activeForm < 1 ? 'pointer-events-none' : 'cursor-pointer'}`}
+                    titleClass={`${activeForm === 1 ? '' : 'text-gray-400'} ${activeForm < 1 ? '' : 'hover:text-black'}`}
                 >
                     <form onSubmit={paymentFormik.handleSubmit}>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam blanditiis consequatur
@@ -191,6 +195,8 @@ export const CheckoutForm = (props: CheckoutFormProps) => {
                     index={2}
                     activeIndex={activeForm}
                     setActiveIndex={setActiveIndex}
+                    className={`${activeForm === 2 || activeForm < 2 ? 'pointer-events-none' : 'cursor-pointer'}`}
+                    titleClass={`${activeForm === 2 ? '' : 'text-gray-400'} ${activeForm < 2 ? '' : 'hover:text-black'}`}
                 >
                     <form onSubmit={addressFormik.handleSubmit}>
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam blanditiis consequatur

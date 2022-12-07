@@ -46,7 +46,7 @@ export const ProductOverview = (props: ProductOverviewProps) => {
             className={``}
         >
             <div
-                className={`bg-white w-full h-fit flex p-12 gap-10`}
+                className={`bg-white w-full h-fit flex flex-col-reverse lg:flex-row p-12 gap-10`}
             >
                 <div className={"flex-grow flex flex-col gap-2"}>
                     <div className={"flex"}>
@@ -100,7 +100,7 @@ export const ProductOverview = (props: ProductOverviewProps) => {
                 </div>
                 <ProductImageSelector
                     images={props.product.images}
-                    className={"w-full h-96 md:w-1/2"}
+                    className={"w-full h-96 lg:w-1/2"}
                 />
             </div>
         </div>

@@ -6,6 +6,7 @@ import {Image} from "../models";
 interface NavCardProps {
     img: Image,
     title: string,
+    subtitle: string,
     to: string,
     className?: string
 }
@@ -25,7 +26,7 @@ export const NavCard = (props: NavCardProps) => {
             </div>
             <div className="">
                 <h1 className={`text-sm font-bold ${isHover ? 'text-red-500' : 'text-black'}`}>{props.title}</h1>
-                <span className={`text-sm ${isHover ? 'text-red-300' : 'text-gray-500'}`}>Comprar ahora</span>
+                <span className={`text-sm ${isHover ? 'text-red-300' : 'text-gray-500'}`}>{props.subtitle}</span>
             </div>
         </Link>
     )
