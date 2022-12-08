@@ -7,6 +7,7 @@ import {BiShoppingBag} from "react-icons/all";
 import {AnimatePresence, motion} from "framer-motion";
 import {Link} from "react-router-dom";
 import {routes} from "../routes/routes";
+import {ShoppingCartMobile} from "./ShoppingCartMobile";
 
 interface ShoppingCartProps {
     className?: string
@@ -16,6 +17,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
 
     // Ref for cart
     const cartRef = useRef<any>(null);
+    const cartMobileRef = useRef<any>(null);
     const cartBtnRef = useRef<any>(null);
 
     // State for show or hide the cart
@@ -27,7 +29,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
 
     // Hide cart on click in other component
     const hideCart = (e: MouseEvent) => {
-        if (cartRef.current && !cartRef.current.contains(e.target) && cartBtnRef.current && !cartBtnRef.current.contains(e.target)) {
+        if (cartMobileRef.current && !cartMobileRef.current.contains(e.target) && cartRef.current && !cartRef.current.contains(e.target) && cartBtnRef.current && !cartBtnRef.current.contains(e.target)) {
             setIsShowingCart(false);
         }
     };
@@ -83,20 +85,21 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
     });
 
     return (
-        <div className={"relative h-full "}>
+        <div className={"flex items-center lg:block relative h-full"}>
             {/*Shopping Cart BTN*/}
             <div
-                className={"flex gap-2 items-center cursor-pointer hover:text-red-600"}
+                className={"flex gap-1 lg:gap-2 items-center justify-center cursor-pointer hover:text-red-600"}
                 onClick={() => toggleCart()}
                 ref={cartBtnRef}
             >
-                <BiShoppingBag size={25}/>
-                <span className={"text-lg text-black"}>{productsCartCount}</span>
+                <BiShoppingBag className={'text-2xl lg:text-xl'}/>
+                <span className={"text-lg lg:text-xl text-black"}>{productsCartCount}</span>
             </div>
 
             {/*Shopping Cart*/}
             <div
                 ref={cartRef}
+                className={"hidden lg:block"}
             >
                 <AnimatePresence>
                     {
@@ -104,13 +107,13 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                             <motion.div
                                 initial={{scale: 0}}
                                 animate={{scale: 1}}
-                                exit={{scale: 0, transition: {duration: 0.3}}}
+                                exit={{scale: 0}}
                                 className={`text-black absolute z-10 right-0 top-11 overflow-y-hidden transform origin-top-right border bg-white border-gray-200 rounded-xl shadow-xl`}
                             >
-                                <div className={`px-2 w-96 h-fit${props.className}`}>
+                                <div className={`px-2 w-96 h-fi t${props.className}`}>
                                     <h4 className="px-5 py-3 font-medium text-lg">Bolsa</h4>
                                     <div
-                                        className={`px-5 h-80 overflow-y-scroll`}
+                                        className={`px-5 h-80 overflow-y-auto`}
                                     >
                                         {
                                             cart.length > 0
@@ -159,6 +162,22 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                         )
                     }
                 </AnimatePresence>
+            </div>
+
+            {/*Mobile Shopping Cart*/}
+            <div
+                ref={cartMobileRef}
+                className={'block lg:hidden h-screen'}
+            >
+                <ShoppingCartMobile
+                    isShowingCart={isShowingCart}
+                    toggleCart={toggleCart}
+                    subtotal={subtotal}
+                    cart={cart}
+                    increaseProductCount={increaseProductCount}
+                    decreaseProductCount={decreaseProductCount}
+                    removeProduct={removeProduct}
+                />
             </div>
         </div>
     )

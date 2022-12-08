@@ -8,14 +8,14 @@ interface ChartBarProps {
 export const ChartBar = (props: ChartBarProps) => {
 
     return (
-        <div className="flex gap-2 items-center text-sm">
+        <div className="flex gap-2 items-center text-sm w-full">
             <span className={"font-medium"}>{props.stars}</span>
             <AiFillStar
                 color={"#fbbf24"}
                 key={Math.random()}
                 size={18}
             />
-            <div className="w-64 h-3 bg-gray-100 rounded-lg content-[' ']">
+            <div className="flex-grow h-3 bg-gray-100 rounded-lg content-[' ']">
                 <div
                     className={`h-3 rounded-lg content-[' '] bg-yellow-400`}
                     style={{
@@ -23,7 +23,7 @@ export const ChartBar = (props: ChartBarProps) => {
                     }}
                 />
             </div>
-            <span className={'text-gray-400'}>{props.percent}%</span>
+            <span className={'text-gray-400 whitespace-pre-wrap'}>{props.percent < 10 ? '  ' + props.percent : props.percent}%</span>
         </div>
     )
 }

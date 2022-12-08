@@ -27,8 +27,8 @@ export const OrderSummary = () => {
                 exit={{width: 0}}
                 className={"min-h-screen h-fit flex overflow-hidden w-full"}
             >
-                <div className={"flex-grow w-1/3 bg-gradient-to-bl from-red-500 to-red-800"}/>
-                <div className={"w-2/3 px-16 py-8"}>
+                <div className={"hidden md:block flex-grow w-1/3 bg-gradient-to-bl from-red-500 to-red-800"}/>
+                <div className={"w-full md:w-2/3 px-6 lg:px-16 py-8"}>
                     <div className={"mb-8 flex flex-col"}>
                         <span className={"text-sm font-medium text-red-500"}>Pago exitoso</span>
                         <h2 className={"text-5xl font-bold"}>Gracias por ordenar</h2>
@@ -41,7 +41,7 @@ export const OrderSummary = () => {
                             <span className={"text-sm font-medium text-red-500"}>00000000000</span>
                         </div>
                         <div
-                            className={"grid w-full divide-y divide-solid divide-gray-200 h-4/5 overflow-y-scroll h-96"}>
+                            className={"grid w-full divide-y divide-solid divide-gray-200 h-4/5 overflow-y-auto h-96"}>
                             {
                                 order.products.map((product: any) => (
                                     <OrderSummaryCard

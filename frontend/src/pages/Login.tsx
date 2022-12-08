@@ -32,7 +32,7 @@ export const Login = () => {
             animate={{width: '100%'}}
             exit={{width: 0}}
         >
-            <div className={"flex flex-col gap-8 justify-start items-center h-screen bg-gray-50 p-8"}>
+            <div className={"flex flex-col gap-8 justify-start items-center h-screen bg-gray-50 p-4 md:p-8"}>
                 <div className={"flex flex-col items-center justify-center text-center gap-4"}>
                     <div className={"h-24"}>
                         <img src={Logo} alt={Logo} className={`h-full w-full object-cover`}/>
@@ -44,7 +44,7 @@ export const Login = () => {
                     </div>
                 </div>
                 <form onSubmit={formik.handleSubmit} action=""
-                      className={"bg-white py-6 px-8 rounded-lg border border-gray-100 shadow-sm w-96"}>
+                      className={"bg-white py-6 px-8 rounded-lg border border-gray-100 shadow-sm w-full md:w-96"}>
                     {/*Email input field*/}
                     <div className={"pb-4"}>
                         <label

@@ -8,12 +8,12 @@ interface ReviewsProps {
 
 export const Reviews = (props: ReviewsProps) => {
     return (
-        <div className={"flex gap-16 px-6 h-[30rem] mb-12"}>
+        <div className={"flex flex-col lg:flex-row gap-16 px-6 h-fit mb-12"}>
             <RateChart
                 product={props.product}
                 className={""}
             />
-            <div className={"w-full overflow-y-scroll px-4"}>
+            <div className={"h-96 w-full overflow-y-auto px-4"}>
                 {
                     props.product.feedback.map((commentary, index) => (
                         <CommentaryCard
