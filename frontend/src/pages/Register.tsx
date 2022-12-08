@@ -1,9 +1,11 @@
 import {Link} from "react-router-dom";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import Logo from "../assets/images/LogoTulipann.svg";
-import {motion} from "framer-motion";
+import {AnimatePresence, motion} from "framer-motion";
+import {VscEye, VscEyeClosed} from "react-icons/all";
+import {useState} from "react";
 
 export const Register = () => {
     // Formik logics
@@ -36,6 +38,9 @@ export const Register = () => {
         },
     });
 
+    const [shown, setShown] = useState<boolean>(false);
+
+    const switchShown = () => setShown(!shown);
 
     return (
         <motion.div
@@ -124,16 +129,33 @@ export const Register = () => {
                                 htmlFor="password">
                                 Contraseña
                             </label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Ingresa tu contraseña"
-                                className={"border border-slate-300 text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 py-2 px-3 rounded-md shadow-sm placeholder-slate-400 w-full"}
-                                value={formik.values.password}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                            />
+                            <div className="w-full h-fit relative">
+                                <input
+                                    type={shown ? 'text' : 'password'}
+                                    id="password"
+                                    name="password"
+                                    placeholder="Ingresa tu contraseña"
+                                    className={"border border-slate-300 text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 py-2 px-3 rounded-md shadow-sm placeholder-slate-400 w-full"}
+                                    value={formik.values.password}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                />
+                                <AnimatePresence>
+                                    <motion.div
+                                        initial={{opacity: 0, scale: 0.5}}
+                                        animate={{opacity: 1, scale: 1}}
+                                        exit={{opacity: 0, scale: 0.5}}
+                                        className="absolute h-full right-3 top-0 flex justify-center items-center cursor-pointer"
+                                        onClick={() => switchShown()}
+                                        key={shown ? '1' : '2'}
+                                    >
+                                        {shown
+                                            ? <VscEyeClosed size={20} className={"text-slate-400"}/>
+                                            : <VscEye size={20} className={"text-slate-400"}/>
+                                        }
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
                             <span
                                 className={"text-sm text-red-600 italic"}>{formik.touched.password && formik.errors.password ? formik.errors.password : ''}</span>
                         </div>
