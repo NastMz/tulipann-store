@@ -2,16 +2,15 @@ import './App.css';
 import {Route, Routes, useLocation} from "react-router-dom";
 import {Main} from "./templates";
 import {loadCartState, saveCartState, ScrollToTop} from "./utils";
-import {routes} from "./routes/routes";
+import {routes} from "./config";
 import {AnimatePresence} from "framer-motion";
 import React, {lazy, Suspense, useMemo} from 'react';
 import {Loader} from "./components";
 import {useDispatch} from "react-redux";
-import {getArticles, getCategories, getProducts} from "./api/api";
-import {addArticle, addCategory, addProduct, addProductToCart} from "./redux/actions";
+import {getArticles, getCategories, getProducts, getSubcategories} from "./api/api";
+import {addArticle, addCategory, addProduct, addProductToCart, addSubcategory} from "./redux/actions";
 import {store} from "./redux/store";
 import {throttle} from "lodash";
-import {OrderSummary} from "./pages";
 
 const Login = lazy(() => import('./pages/index').then(({Login}) => ({default: Login})));
 const NotFound = lazy(() => import('./pages/index').then(({NotFound}) => ({default: NotFound})));
@@ -20,6 +19,7 @@ const ProductsListPage = lazy(() => import('./pages/index').then(({ProductsListP
 const Register = lazy(() => import('./pages/index').then(({Register}) => ({default: Register})));
 const StoreFront = lazy(() => import('./pages/index').then(({StoreFront}) => ({default: StoreFront})));
 const Checkout = lazy(() => import('./pages/index').then(({Checkout}) => ({default: Checkout})));
+const OrderSummary = lazy(() => import('./pages/index').then(({OrderSummary}) => ({default: OrderSummary})));
 
 function App() {
 
@@ -28,12 +28,14 @@ function App() {
 
     const products = getProducts();
     const categories = getCategories();
+    const subcategories = getSubcategories();
     const articles = getArticles();
     const cart = loadCartState();
 
     useMemo(()=> {
         products.forEach((product) => dispatch(addProduct(product)));
         categories.forEach((category) => dispatch(addCategory(category)));
+        subcategories.forEach((subcategory) => dispatch(addSubcategory(subcategory)));
         articles.forEach((article) => dispatch(addArticle(article)));
 
         if (cart.length > 0) {

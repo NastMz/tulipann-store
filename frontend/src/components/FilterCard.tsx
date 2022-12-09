@@ -1,4 +1,4 @@
-import {ChangeEvent} from "react"
+import {ChangeEvent, useState} from "react"
 import {AccordionLayout} from "./AccordionLayout";
 
 interface Option {
@@ -8,32 +8,36 @@ interface Option {
 }
 
 interface FilterCardProps {
+    index: number,
     title: string,
     options: Array<Option>,
     updateFilters: Function,
     activeForm: number,
     setActiveForm: Function,
-    className?: string
+    className?: string,
+    activeIndexes: Array<number>,
+    setActiveIndexes: Function
 }
 
 export const FilterCard = (props: FilterCardProps) => {
-
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>, id: number) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>, filter: Option) => {
         if (e.target.checked) {
-            props.updateFilters(id, 'add');
+            props.updateFilters(filter, 'add');
         } else {
-            props.updateFilters(id, 'remove');
+            props.updateFilters(filter, 'remove');
+
         }
     }
 
     return (
         <AccordionLayout
             title={props.title}
-            index={0}
+            index={props.index}
             activeIndex={props.activeForm}
             setActiveIndex={props.setActiveForm}
             className={`cursor-pointer ${props.className}`}
             showIcon={true}
+            independentCards={{activeIndexes: props.activeIndexes, setActiveIndexes: props.setActiveIndexes}}
         >
             {props.options.map((option) => (
                 <div key={option.id} className={'px-2'}>
@@ -44,7 +48,7 @@ export const FilterCard = (props: FilterCardProps) => {
                             type="checkbox"
                             defaultChecked={option.isChecked}
                             className="h-4 w-4 rounded border-gray-300 text-red-500 focus:ring-red-500"
-                            onChange={(e) => handleInputChange(e, option.id)}
+                            onChange={(e) => handleInputChange(e, option)}
                         />
                         <label
                             htmlFor={`${option.id}`}

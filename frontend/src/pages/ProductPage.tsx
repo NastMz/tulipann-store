@@ -1,7 +1,7 @@
 import {Navigate, useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectProducts} from "../redux/selector";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 import {lazy} from "react";
 import {motion} from "framer-motion";
 import {ProductFeatures, ProductOverview} from "../components";

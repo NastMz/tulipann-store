@@ -1,6 +1,5 @@
-import {Article, Category, Product} from "../models";
-import {Images} from '../utils';
-import {getRateMean} from "../utils";
+import {Article, Category, Product, Subcategory} from "../models";
+import {Images, getRateMean} from '../utils';
 
 const products: Array<Product> = [
     {
@@ -11,7 +10,7 @@ const products: Array<Product> = [
         "stock": 70,
         "images": [Images.category1, Images.category2, Images.category3],
         "category": 73498,
-        "supplier": 79274,
+        "subcategories": [5608],
         "feedback": [
             {
                 "id": 71771,
@@ -119,7 +118,7 @@ const products: Array<Product> = [
         "stock": 58,
         "images": [Images.category1, Images.category2, Images.category3],
         "category": 39125,
-        "supplier": 3493,
+        "subcategories": [5608, 52438, 25702, 25897, 23623],
         "feedback": [
             {
                 "id": 71771,
@@ -227,7 +226,7 @@ const products: Array<Product> = [
         "stock": 28,
         "images": [Images.category3, Images.category1, Images.category2],
         "category": 68668,
-        "supplier": 42684,
+        "subcategories": [5608, 52438, 25702, 25897, 23623],
         "feedback": [
             {
                 "id": 71771,
@@ -335,7 +334,7 @@ const products: Array<Product> = [
         "stock": 73,
         "images": [Images.category1, Images.category2, Images.category3],
         "category": 79590,
-        "supplier": 85121,
+        "subcategories": [5608, 52438, 25702, 25897, 23623],
         "feedback": [
             {
                 "id": 71771,
@@ -450,7 +449,7 @@ const products: Array<Product> = [
         "stock": 56,
         "images": [Images.category2, Images.category1, Images.category3],
         "category": 56041,
-        "supplier": 63645,
+        "subcategories": [5608, 52438, 25702, 25897, 23623],
         "feedback": [
             {
                 "id": 71771,
@@ -579,7 +578,7 @@ const products: Array<Product> = [
         "stock": 143,
         "images": [Images.category3, Images.category1, Images.category2],
         "category": 75767,
-        "supplier": 20106,
+        "subcategories": [5608, 52438, 25702, 25897, 23623],
         "feedback": [
             {
                 "id": 71771,
@@ -687,7 +686,7 @@ const products: Array<Product> = [
         "stock": 111,
         "images": [Images.category2, Images.category1, Images.category3],
         "category": 53332,
-        "supplier": 42086,
+        "subcategories": [5608, 52438, 25702, 25897, 23623],
         "feedback": [
             {
                 "id": 71771,
@@ -795,7 +794,7 @@ const products: Array<Product> = [
         "stock": 129,
         "images": [Images.category3, Images.category1, Images.category2],
         "category": 72257,
-        "supplier": 12592,
+        "subcategories": [5608, 52438, 25702, 25897, 23623],
         "feedback": [
             {
                 "id": 71771,
@@ -903,7 +902,7 @@ const products: Array<Product> = [
         "stock": 55,
         "images": [Images.category2, Images.category1, Images.category3],
         "category": 50367,
-        "supplier": 37318,
+        "subcategories": [5608, 52438, 25702, 25897, 23623],
         "feedback": [
             {
                 "id": 71771,
@@ -1011,7 +1010,7 @@ const products: Array<Product> = [
         "stock": 0,
         "images": [Images.category3, Images.category1, Images.category2],
         "category": 73021,
-        "supplier": 78356,
+        "subcategories": [5608, 52438, 25702, 25897, 23623],
         "feedback": [
             {
                 "id": 71771,
@@ -1269,6 +1268,34 @@ const articles: Array<Article> = [
     }
 ];
 
+const subcategories: Array<Subcategory> = [
+    {
+        "id": 5608,
+        "name": "egestas.",
+        "categoryId": 73498,
+    },
+    {
+        "id": 52438,
+        "name": "nec",
+        "categoryId": 95952,
+    },
+    {
+        "id": 25702,
+        "name": "blandit at,",
+        "categoryId": 32325,
+    },
+    {
+        "id": 25897,
+        "name": "magna.",
+        "categoryId": 73498,
+    },
+    {
+        "id": 23623,
+        "name": "nulla",
+        "categoryId": 73498,
+    }
+];
+
 function getProducts() {
     return products.map((product) => {
         return {
@@ -1282,8 +1309,12 @@ function getCategories() {
     return categories;
 }
 
+function getSubcategories() {
+    return subcategories;
+}
+
 function getArticles() {
     return articles;
 }
 
-export {getProducts, getCategories, getArticles};
+export {getProducts, getCategories, getArticles, getSubcategories};

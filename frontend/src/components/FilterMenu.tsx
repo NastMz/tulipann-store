@@ -1,6 +1,5 @@
 import {FilterCard} from "./FilterCard";
 import {forwardRef, Ref, useState} from "react";
-import {AccordionLayout} from "./AccordionLayout";
 
 interface Option {
     id: number,
@@ -24,6 +23,8 @@ export const FilterMenu = forwardRef((props: FilterMenuProps, ref: Ref<any>) => 
     // Form interaction
     const [activeForm, setActiveForm] = useState<number>(0);
 
+    const [activeIndexes, setActiveIndexes] = useState<Array<number>>([0, 1]);
+
     const setActiveIndex = (index: number) => {
         setActiveForm(index);
     }
@@ -34,15 +35,18 @@ export const FilterMenu = forwardRef((props: FilterMenuProps, ref: Ref<any>) => 
             ref={ref}
         >
             {
-                props.filters.map((filter) => (
-                    <FilterCard
+                props.filters.map((filter, index) => (
+                    filter.options.length > 0 && <FilterCard
+                        index={index}
                         title={filter.title}
                         options={filter.options}
-                        key={filter.title}
+                        key={filter.title.concat(String(filter.options.length))}
                         updateFilters={props.updateFilters}
                         activeForm={activeForm}
                         setActiveForm={setActiveIndex}
                         className={"px-2"}
+                        activeIndexes={activeIndexes}
+                        setActiveIndexes={setActiveIndexes}
                     />
                 ))
             }

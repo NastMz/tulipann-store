@@ -1,19 +1,7 @@
 import {HiFilter, MdKeyboardArrowDown} from "react-icons/all";
 import {forwardRef, useEffect, useState} from "react";
 
-interface Option {
-    id: number,
-    name: string,
-    isChecked: boolean
-}
-
-interface Filter {
-    title: string,
-    options: Option[]
-}
-
 interface FilterBarProps {
-    filters: Array<Filter>,
     filtersCount: number,
     clearFilters: Function,
     toggleMenuFilter: Function,

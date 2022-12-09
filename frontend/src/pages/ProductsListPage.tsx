@@ -1,15 +1,28 @@
 import {useSelector} from "react-redux";
-import {selectCategories, selectProducts} from "../redux/selector";
+import {selectCategories, selectProducts, selectSubcategories} from "../redux/selector";
 import {useEffect, useRef, useState} from "react";
 import ReactPaginate from "react-paginate";
 import {useParams} from "react-router-dom";
 import {Product} from "../models";
 import {nameOf, SortUtil} from "../utils";
-import {routes} from "../routes/routes";
+import {routes, sortOptions} from "../config";
 import {AnimatePresence, motion} from "framer-motion";
 import {FilterBar, FilterMenu, ProductGrid, ProductQuickview, SortMenu, TitleBanner} from "../components";
 import {BsBoxSeam} from "react-icons/all";
 import {FilterMenuMobile} from "../components/FilterMenuMobile";
+
+interface SortOption {
+    id: number,
+    name: string,
+    property: keyof Product,
+    order: "ASC" | "DESC",
+}
+
+interface FilterOption {
+    id: number,
+    name: string,
+    isChecked: boolean
+}
 
 interface ProductsPageProps {
     itemsPerPage: number
@@ -31,122 +44,87 @@ export const ProductsListPage = (props: ProductsPageProps) => {
     const ref = useRef({filterBarRef, sortBtnRef});
 
 
-    // States for use filter menu
-    const [isShowingFilterMenu, setIsShowingFilterMenu] = useState<boolean>(false);
-    const [activeFilters, setActiveFilters] = useState<Array<number>>([]);
-
-    // States for use sort menu
-    const [isShowingSortMenu, setIsShowingSortMenu] = useState<boolean>(false);
-    const [activeSortOption, setActiveSortOption] = useState<number>(1);
-
-    // State for products to show
-    const [showItems, setShowItems] = useState<Array<Product>>([]);
-
-    // State for pagination
-    const [itemOffset, setItemOffset] = useState(0);
-
-    // Active the filter from the url param if exist
-    useEffect(() => {
-        if (typeof categoryId === "string") {
-            setActiveFilters([...activeFilters, parseInt(categoryId)]);
-            window.history.replaceState(null, routes.catalog.title, routes.catalog.path)
-        }
-    }, [])
-
     // Items from global state
-    const categories = useSelector(selectCategories);
     const products = useSelector(selectProducts);
 
     // States for use product quickview
     const [isShowingProductQuickview, setIsShowingProductQuickview] = useState<boolean>(false);
     const [productInQuickview, setProductInQuickview] = useState<any>(null);
 
-    // Filters options
-    const filters = [
-        {
-            title: "Categorias",
-            options: categories.map((category) => {
-                return {
-                    id: category.id,
-                    name: category.name,
-                    isChecked: activeFilters.includes(category.id)
-                }
-            }),
-        },
-    ]
 
-    // Sort Options
-    const sortOptions = [
-        {
-            id: 1,
-            name: "Alfabético",
-            isActive: activeSortOption === 1
-        },
-        {
-            id: 2,
-            name: "Más Popular",
-            isActive: activeSortOption === 2
-        },
-        {
-            id: 3,
-            name: "Mejor Calificación",
-            isActive: activeSortOption === 3
-        },
-        {
-            id: 4,
-            name: "Precio: Mayor a Menor",
-            isActive: activeSortOption === 4
-        },
-        {
-            id: 5,
-            name: "Precio: Menor a Mayor",
-            isActive: activeSortOption === 5
-        }
-    ]
+    //////////////////////// FILTERS ////////////////////////
 
-    // PAGINATION
+    // States for use filter menu
+    const [isShowingFilterMenu, setIsShowingFilterMenu] = useState<boolean>(false);
+    const [activeFilters, setActiveFilters] = useState<Array<FilterOption>>([]);
 
-    // Pagination limit
-    const endOffset = itemOffset + props.itemsPerPage;
+    const categories = useSelector(selectCategories);
+    const subcategories = useSelector(selectSubcategories);
 
-    // Items to show in actual page
-    const currentItems = sorBy(activeSortOption, products.slice(itemOffset, endOffset));
+    function getFilters() {
+        return [
+            {
+                title: "Categorias",
+                options: categories.map((category) => {
+                    return {
+                        id: category.id,
+                        name: category.name,
+                        isChecked: activeFilters.some(f => f.id === category.id)
+                    }
+                }),
+            },
+            {
+                title: "Subcategorias",
+                options: subcategories.filter((subcategory) => categories.some(c => activeFilters.some(f => f.id === c.id) && subcategory.categoryId === c.id)).map((category) => {
+                    return {
+                        id: category.id,
+                        name: category.name,
+                        isChecked: activeFilters.some(f => f.id === category.id)
+                    }
+                }),
+            },
+        ];
+    }
 
-    // Set items to show if any filter or sort option is active
+    const [filters, setFilters] = useState<Array<any>>(getFilters());
+
+    // Active the filter from the url param if exist
     useEffect(() => {
-        let items = currentItems.filter(item => activeFilters.includes(item.category));
-
-        if (items.length > 0 || activeFilters.length > 0) {
-            items = sorBy(activeSortOption, items);
-            setShowItems(items);
-        } else {
-            setShowItems(currentItems);
+        if (typeof categoryId === "string") {
+            let f;
+            filters.forEach((filter) => {
+                if (filter.options.some((o: FilterOption) => o.id === parseInt(categoryId))) {
+                    f = filter.options.filter((item: FilterOption) => item.id === parseInt(categoryId))[0];
+                }
+            })
+            if (f !== undefined) {
+                setActiveFilters([...activeFilters, f]);
+            }
+            window.history.replaceState(null, routes.catalog.title, routes.catalog.path);
         }
-    }, [activeFilters, activeSortOption])
-
-    // Number of pages for pagination
-    const pageCount = Math.ceil(showItems.length / props.itemsPerPage);
-
-    // Change active page
-    const handlePageClick = (event: { selected: number; }) => {
-        const newOffset = (event.selected * props.itemsPerPage) % products.length;
-        setItemOffset(newOffset);
-    };
-
-    // FILTERS
+    }, []);
 
     // Activate or deactivate a filter, this function is used by the child components to update state
-    const updateFilters = (id: number, option: 'add' | 'remove') => {
+    const updateFilters = (filter: FilterOption, option: 'add' | 'remove') => {
         if (option === 'add') {
-            setActiveFilters([...activeFilters.filter((filter) => filter !== id), id]);
+            setActiveFilters([...activeFilters.filter((f) => f.id !== filter.id), filter]);
         } else if (option === 'remove') {
-            setActiveFilters([...activeFilters.filter((filter) => filter !== id)]);
+            let active = activeFilters.filter((f) => f.id !== filter.id);
+
+            subcategories.forEach((s)=>{
+                if (s.categoryId === filter.id) {
+                    active = active.filter((f) => f.id !== s.id);
+                }
+            });
+
+            setActiveFilters(active);
         }
     };
 
     // Deactivate all filters, this function is used by the child components to update state
     const clearFilters = () => {
         setActiveFilters([]);
+        setIsShowingFilterMenu(false);
     };
 
     // Toggle filter menu visible status
@@ -154,11 +132,16 @@ export const ProductsListPage = (props: ProductsPageProps) => {
         setIsShowingFilterMenu(!isShowingFilterMenu);
     };
 
-    // SORT
+
+    //////////////////////// SORT ////////////////////////
+
+    // States for use sort menu
+    const [isShowingSortMenu, setIsShowingSortMenu] = useState<boolean>(false);
+    const [activeSortOption, setActiveSortOption] = useState<SortOption>(sortOptions[0]);
 
     // Change active sort option, this function is used by the child components to update state
-    const sortItemsBy = (id: number) => {
-        setActiveSortOption(id);
+    const sortItemsBy = (option: SortOption) => {
+        setActiveSortOption(option);
         setIsShowingSortMenu(false);
     };
 
@@ -183,6 +166,9 @@ export const ProductsListPage = (props: ProductsPageProps) => {
         setIsShowingSortMenu(!isShowingSortMenu);
     };
 
+
+    //////////////////////// PRODUCT QUICKVIEW ////////////////////////
+
     // Show product preview, this function is used by the child components to update state
     const showProductPreview = (id: number) => {
         let product = products.filter((product) => product.id === id)[0];
@@ -194,6 +180,47 @@ export const ProductsListPage = (props: ProductsPageProps) => {
     const closeProductPreview = () => {
         setIsShowingProductQuickview(false);
         setProductInQuickview(null);
+    };
+
+
+    //////////////////////// PAGINATION ////////////////////////
+
+    // State for products showing in the grid
+    const [showItems, setShowItems] = useState<Array<Product>>([]);
+
+    // State for pagination
+    const [itemOffset, setItemOffset] = useState(0);
+
+    // Pagination limit
+    const endOffset = itemOffset + props.itemsPerPage;
+
+    // Items to show in actual page
+    const currentItems = products.slice(itemOffset, endOffset);
+    SortUtil.sortByProperty(currentItems, nameOf<Product>(activeSortOption.property), activeSortOption.order);
+
+    // Set items to show if any filter or sort option is active
+    useEffect(() => {
+        let items: Product[];
+
+        items = currentItems.filter(item => activeFilters.every(filter => filter.id === item.category || item.subcategories.some(subcategory => subcategory === filter.id)));
+
+        if (items.length > 0 || activeFilters.length > 0) {
+            SortUtil.sortByProperty(items, nameOf<Product>(activeSortOption.property), activeSortOption.order);
+            setShowItems(items);
+        } else {
+            setShowItems(currentItems);
+        }
+
+        setFilters(getFilters());
+    }, [activeFilters, activeSortOption])
+
+    // Number of pages for pagination
+    const pageCount = Math.ceil(showItems.length / props.itemsPerPage);
+
+    // Change active page
+    const handlePageClick = (event: { selected: number; }) => {
+        const newOffset = (event.selected * props.itemsPerPage) % products.length;
+        setItemOffset(newOffset);
     };
 
     return (
@@ -209,12 +236,12 @@ export const ProductsListPage = (props: ProductsPageProps) => {
             />
             <div className={"relative"}>
                 <FilterBar
-                    filters={filters}
                     filtersCount={activeFilters.length}
                     clearFilters={clearFilters}
                     toggleMenuFilter={toggleFilterMenu}
                     ref={ref}
-                    toggleSortMenu={toggleSortMenu}/>
+                    toggleSortMenu={toggleSortMenu}
+                />
                 <AnimatePresence>
                     {
                         isShowingSortMenu && (
@@ -226,7 +253,8 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                             >
                                 <SortMenu
                                     options={sortOptions}
-                                    sortItemsFunction={sortItemsBy}
+                                    activeSortOption={activeSortOption}
+                                    sortItemsBy={sortItemsBy}
                                     ref={sortMenuRef}
                                 />
                             </motion.div>
@@ -309,17 +337,4 @@ export const ProductsListPage = (props: ProductsPageProps) => {
             }
         </motion.div>
     )
-}
-
-// Function to sort the product array by sort option
-function sorBy(option: number, array: Product[]) {
-    const names: any = ["name", "feedback", "rate", "price"];
-    if (1 < option && option < 5) {
-        SortUtil.sortByProperty(array, nameOf<Product>(names[option - 1]), 'DESC');
-    } else if (option === 5) {
-        SortUtil.sortByProperty(array, nameOf<Product>(names[3]), 'ASC');
-    } else if (option === 1) {
-        SortUtil.sortByProperty(array, nameOf<Product>(names[0]), 'ASC');
-    }
-    return array;
 }
