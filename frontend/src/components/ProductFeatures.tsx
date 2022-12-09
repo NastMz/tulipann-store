@@ -27,30 +27,31 @@ export const ProductFeatures = (props: ProductFeaturesProps) => {
                 <h2 className={"text-2xl font-bold"}>Especificaciones Tecnicas</h2>
                 <p className={"text-gray-500"}>{props.specs.summary}</p>
             </div>
-                <div className={"border-b border-gray-100 w-full flex lg:gap-8 md:gap-2 items-center pb-1 overflow-x-auto"} ref={featuresOptionsRef}>
-                        {props.specs.options.map((item: Feature, index: number) => (
-                            <div
-                                className={`min-w-fit cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${featureOption === item ? 'text-red-600 border-b-2 border-red-600' : ''}`}
-                                onClick={() => showFeatureCard(index)}
-                                key={item.title}
-                            >
-                                {item.name}
-                            </div>
-                        ))}
-                </div>
-                <AnimatePresence mode={'wait'}>
-                    <motion.div
-                        initial={{opacity: 0}}
-                        animate={{opacity: 1}}
-                        exit={{opacity: 0}}
-                        key={featureOption.title}
-                        className={'h-[500px] lg:h-80 pt-8'}
+            <div className={"border-b border-gray-100 w-full flex lg:gap-8 md:gap-2 items-center pb-1 overflow-x-auto"}
+                 ref={featuresOptionsRef}>
+                {props.specs.options.map((item: Feature, index: number) => (
+                    <div
+                        className={`min-w-fit cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${featureOption === item ? 'text-red-600 border-b-2 border-red-600' : ''}`}
+                        onClick={() => showFeatureCard(index)}
+                        key={item.title}
                     >
-                        <ProductFeatureCard
-                            feature={featureOption}
-                        />
-                    </motion.div>
-                </AnimatePresence>
+                        {item.name}
+                    </div>
+                ))}
+            </div>
+            <AnimatePresence mode={'wait'}>
+                <motion.div
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    exit={{opacity: 0}}
+                    key={featureOption.title}
+                    className={'h-[500px] lg:h-80 pt-8'}
+                >
+                    <ProductFeatureCard
+                        feature={featureOption}
+                    />
+                </motion.div>
+            </AnimatePresence>
         </div>
     )
 }

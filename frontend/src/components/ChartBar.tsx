@@ -23,7 +23,8 @@ export const ChartBar = (props: ChartBarProps) => {
                     }}
                 />
             </div>
-            <span className={'text-gray-400 whitespace-pre-wrap'}>{props.percent < 10 ? '  ' + props.percent : props.percent}%</span>
+            <span
+                className={'text-gray-400 whitespace-pre-wrap'}>{props.percent < 10 ? '  ' + props.percent : props.percent}%</span>
         </div>
     )
 }

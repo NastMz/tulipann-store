@@ -1,6 +1,6 @@
 import {motion} from "framer-motion"
 import {Link, Navigate, useLocation} from "react-router-dom";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 import {OrderSummaryCard} from "../components";
 import {BsArrowRightShort, FaCcVisa} from "react-icons/all";
 import {useEffect} from "react";
@@ -82,6 +82,7 @@ export const OrderSummary = () => {
                             <span className={"font-medium"}>Dirección de entrega</span>
                             <div className={"text-gray-400 flex flex-col"}>
                                 <span>Jhon Doe</span>
+                                <span>{info.email}</span>
                                 <span>Av. Siempre Viva 123</span>
                                 <span>Springfield</span>
                             </div>

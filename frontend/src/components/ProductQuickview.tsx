@@ -1,6 +1,6 @@
 import {Product} from "../models";
 import {Link} from "react-router-dom";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 import {AiOutlineClose, BiCheck, TbShieldCheck} from "react-icons/all";
 import {Stars} from "./Stars";
 import {useDispatch} from "react-redux";

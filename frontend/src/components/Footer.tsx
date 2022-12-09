@@ -13,7 +13,8 @@ export const Footer = () => {
                     <div className={"h-12"}>
                         <img src={Logo} alt={Logo} className={`h-full w-full object-cover`}/>
                     </div>
-                    <p className={"text-center lg:text-left w-2/3 lg:w-full"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    <p className={"text-center lg:text-left w-2/3 lg:w-full"}>Lorem ipsum dolor sit amet, consectetur
+                        adipisicing elit.
                         Ab, maiores?</p>
                     <div className={"flex gap-6"}>
                         <BsFacebook size={20}/>

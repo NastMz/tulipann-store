@@ -7,7 +7,8 @@ export const PromoSection = () => {
     return (
         <section
             className="bg-red-500 flex gap-10 md:gap-20 lg:gap-40 relative h-44 md:h-96 md:pt-20 mt-20 md:mt-36 overflow-x-clip">
-            <div className={"flex flex-col gap-2 md:gap-4 px-6 md:px-12 pb-8 md:pb-20 items-start justify-end text-white"}>
+            <div
+                className={"flex flex-col gap-2 md:gap-4 px-6 md:px-12 pb-8 md:pb-20 items-start justify-end text-white"}>
                 <div>
                     <h2 className={"text-lg md:text-5xl font-bold"}>Lorem ipsum.</h2>
                     <h2 className={"text-lg md:text-5xl font-bold"}>Lorem ipsum.</h2>

@@ -1,5 +1,5 @@
 import {CheckoutForm, CheckoutResume} from "../components";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 import {Navigate, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {motion} from "framer-motion";

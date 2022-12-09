@@ -13,7 +13,7 @@ export const ProductImageSelector = (props: ProductImageSelectorProps) => {
     return (
         <div className={`w-full flex flex-col gap-4 ${props.className}`}>
             <div className={"overflow-hidden rounded-xl h-full w-full"}>
-                <AnimatePresence>
+                <AnimatePresence mode={'wait'}>
                     <motion.div
                         initial={{opacity: 0}}
                         animate={{opacity: 1}}

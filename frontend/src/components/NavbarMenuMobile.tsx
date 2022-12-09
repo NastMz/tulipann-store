@@ -59,17 +59,17 @@ export const NavbarMenuMobile = (props: NavbarMenuMobileProps) => {
                                 <div className={'h-full overflow-y-scroll pb-12'}>
                                     {/*Nav menu options*/}
                                     <div className={'px-8'}>
-                                    <div className={"w-full flex lg:gap-8 gap-2 items-center pb-1 overflow-x-auto"}>
-                                        {props.items.map((item: any, index: number) => (
-                                            <div
-                                                className={`min-w-fit cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${navOption === index ? 'text-red-600 border-b-2 border-red-600' : ''}`}
-                                                onClick={() => setNavOption(index)}
-                                                key={item.name}
-                                            >
-                                                {item.name}
-                                            </div>
-                                        ))}
-                                    </div>
+                                        <div className={"w-full flex lg:gap-8 gap-2 items-center pb-1 overflow-x-auto"}>
+                                            {props.items.map((item: any, index: number) => (
+                                                <div
+                                                    className={`min-w-fit cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${navOption === index ? 'text-red-600 border-b-2 border-red-600' : ''}`}
+                                                    onClick={() => setNavOption(index)}
+                                                    key={item.name}
+                                                >
+                                                    {item.name}
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
 
                                     {/*Nav menu*/}
@@ -98,7 +98,8 @@ export const NavbarMenuMobile = (props: NavbarMenuMobileProps) => {
                                     </AnimatePresence>
 
                                     {/*Login Menu*/}
-                                    <div className={"flex flex-col gap-4 items-center text-xl pt-4 border-t border-gray-200 px-8"}>
+                                    <div
+                                        className={"flex flex-col gap-4 items-center text-xl pt-4 border-t border-gray-200 px-8"}>
                                         <div className={"text-left w-full"}>
                                             <Link to={"/login"} className={"hover:text-red-600"}>Iniciar sesión</Link>
                                         </div>

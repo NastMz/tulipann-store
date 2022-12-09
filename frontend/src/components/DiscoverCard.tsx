@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 import {FaUserCircle} from "react-icons/all";
 import {OptimizedImage} from './OptimizedImage';
 import {Image} from "../models";
@@ -21,11 +21,11 @@ export const DiscoverCard = (props: DiscoverCardProps) => {
             to={`${routes.discover.path}/${props.id}`}
             className={`h-full w-full overflow-hidden rounded-lg flex flex-col shadow-lg ${props.className} hover:scale-110`}
         >
-            <div className={"h-52 w-full"}>
+            <div className={"h-1/3 w-full"}>
                 <OptimizedImage image={props.banner}/>
             </div>
             <div className={"h-full px-6 pt-6 pb-4 flex flex-col justify-between"}>
-                <div className={"flex flex-col gap-2"}>
+                <div className={"flex-grow flex flex-col gap-2"}>
                     <div className={"flex gap-2"}>
                         {
                             props.tags.map((tag) => (
@@ -35,10 +35,10 @@ export const DiscoverCard = (props: DiscoverCardProps) => {
                             ))
                         }
                     </div>
-                    <h1 className={"font-bold mb-1 text-xl"}>{props.title}</h1>
-                    <p className={''}>{props.summary}</p>
+                    <h1 className={"font-bold mb-1 text-lg"}>{props.title}</h1>
+                    <p className={'line-clamp-3'}>{props.summary}</p>
                 </div>
-                <div className={"flex gap-2 items-center mt-6"}>
+                <div className={"flex-shrink flex gap-2 items-center mt-6"}>
                     <FaUserCircle
                         size={30}
                         color={'text-gray-400'}

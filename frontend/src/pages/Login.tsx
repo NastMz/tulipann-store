@@ -103,34 +103,34 @@ export const Login = () => {
                                     }
                                 </motion.div>
                             </AnimatePresence>
+                        </div>
+                        <span
+                            className={"text-sm text-red-600 italic"}>{formik.touched.password && formik.errors.password ? formik.errors.password : ''}</span>
                     </div>
-                    <span
-                        className={"text-sm text-red-600 italic"}>{formik.touched.password && formik.errors.password ? formik.errors.password : ''}</span>
+                    {/*Remember me*/}
+                    <div className={"pt-2 pb-5 text-sm flex justify-between items-center"}>
+                        <div className="flex items-center">
+                            <input
+                                id={'remember-me'}
+                                name={`remember-me`}
+                                type="checkbox"
+                                className="h-4 w-4 rounded border-gray-300 text-red-500 focus:ring-red-500"
+                            />
+                            <label
+                                htmlFor={`remember`}
+                                className="ml-2 min-w-0 flex-1 font-medium"
+                            >
+                                Recordarme
+                            </label>
+                        </div>
+                        <Link to={"#"} className={"text-red-500 font-medium"}>Olvidaste tu contraseña?</Link>
+                    </div>
+                    <button type={'submit'}
+                            className={"w-full my-1 md:my-4 bg-red-500 hover:bg-red-400 text-center p-2 text-white font-medium cursor-pointer flex-grow rounded-md"}>
+                        Iniciar sesión
+                    </button>
+                </form>
             </div>
-            {/*Remember me*/}
-            <div className={"pt-2 pb-5 text-sm flex justify-between items-center"}>
-                <div className="flex items-center">
-                    <input
-                        id={'remember-me'}
-                        name={`remember-me`}
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-red-500 focus:ring-red-500"
-                    />
-                    <label
-                        htmlFor={`remember`}
-                        className="ml-2 min-w-0 flex-1 font-medium"
-                    >
-                        Recordarme
-                    </label>
-                </div>
-                <Link to={"#"} className={"text-red-500 font-medium"}>Olvidaste tu contraseña?</Link>
-            </div>
-            <button type={'submit'}
-                    className={"w-full my-1 md:my-4 bg-red-500 hover:bg-red-400 text-center p-2 text-white font-medium cursor-pointer flex-grow rounded-md"}>
-                Iniciar sesión
-            </button>
-        </form>
-</div>
-</motion.div>
-)
+        </motion.div>
+    )
 }

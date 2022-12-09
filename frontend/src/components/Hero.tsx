@@ -19,7 +19,8 @@ export const Hero = () => {
                     <span className={"font-medium"}>Ver categorias</span>
                 </div>
             </div>
-            <div className={"relative h-full w-full lg:p-0 md:w-2/3 -top-10 md:-right-10 -right-6 bottom-0 overflow-hidden"}>
+            <div
+                className={"relative h-full w-full lg:p-0 md:w-2/3 -top-10 md:-right-10 -right-6 bottom-0 overflow-hidden"}>
                 <div className={"flex h-full w-full gap-4"}>
                     <div className={"flex flex-col gap-4 h-fit md:py-14"}>
                         <div

@@ -1,6 +1,6 @@
 import {AiOutlineMinusCircle, AiOutlinePlusCircle} from "react-icons/all";
 import {Link} from "react-router-dom";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 import {OptimizedImage} from "./OptimizedImage";
 import {Image} from "../models";
 
@@ -32,7 +32,7 @@ export const ShoppingCartCard = (props: ShoppingCartCardProps) => {
                         </Link>
                     </div>
                     <div>
-                    <span className={"font-medium text-lg float-right"}>${props.price}</span>
+                        <span className={"font-medium text-lg float-right"}>${props.price}</span>
                     </div>
                 </div>
                 <div className={"flex justify-between items-center"}>

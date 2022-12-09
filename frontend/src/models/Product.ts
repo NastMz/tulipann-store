@@ -1,5 +1,4 @@
 import {Commentary} from "./Commentary";
-import {Color} from "./Color";
 import {ProductSpecs} from "./ProductSpecs";
 import {Image} from "./Image";
 
@@ -14,7 +13,6 @@ export interface Product {
     images: Array<Image>,
     feedback: Commentary[],
     category: number,
-    colors?: Color[] | null
-    supplier?: number,
+    subcategories: Array<number>,
     rate?: number
 }

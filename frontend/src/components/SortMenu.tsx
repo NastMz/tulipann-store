@@ -1,14 +1,17 @@
 import {forwardRef, Ref} from "react";
+import {Product} from "../models";
 
 interface Option {
     id: number,
     name: string,
-    isActive: boolean
+    property: keyof Product,
+    order: "ASC" | "DESC",
 }
 
 interface SortMenuProps {
     options: Option[]
-    sortItemsFunction: Function,
+    sortItemsBy: Function,
+    activeSortOption: Option,
     className?: string
 }
 
@@ -22,8 +25,8 @@ export const SortMenu = forwardRef((props: SortMenuProps, ref: Ref<any>) => {
                 {
                     props.options.map((option: Option) => (
                         <li
-                            className={`${option.isActive ? 'text-black' : 'text-gray-400'} hover:bg-gray-200 cursor-pointer py-2 px-4`}
-                            onClick={() => props.sortItemsFunction(option.id)}
+                            className={`${option.id === props.activeSortOption.id ? 'text-black' : 'text-gray-400'} hover:bg-gray-200 cursor-pointer py-2 px-4`}
+                            onClick={() => props.sortItemsBy(option)}
                             key={option.id}
                         >
                             {option.name}

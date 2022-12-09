@@ -3,7 +3,7 @@ import {CategoryCard} from "./CategoryCard";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {selectCategories} from "../redux/selector";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 
 
 export const CategoryPreview = () => {

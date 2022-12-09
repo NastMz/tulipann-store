@@ -2,134 +2,13 @@ import {Link} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {NavbarMenu} from "./NavbarMenu";
 import Logo from "../assets/images/LogoTulipannV2.svg";
-import {routes} from "../routes/routes";
+import {navbarOptions, routes} from "../config";
 import {ShoppingCart} from "./ShoppingCart";
 import {SearchBar} from "./SearchBar";
 import {AnimatePresence, motion} from "framer-motion";
-import {Images} from "../utils";
 import {NavbarMenuMobile} from "./NavbarMenuMobile";
 
 export const Navbar = () => {
-
-    // Options of the navbar
-    const data = [
-        {
-            name: 'Opcion',
-            options: [
-                {
-                    img: Images.hero,
-                    title: "lorem",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "lorem2",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "lorem3",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "lorem4",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-            ]
-        },
-        {
-            name: 'Opcion',
-            options: [
-                {
-                    img: Images.hero,
-                    title: "ipsum",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "ipsum2",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "ipsum3",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "ipsum4",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-            ]
-        },
-        {
-            name: 'Opcion',
-            options: [
-                {
-                    img: Images.hero,
-                    title: "dolor",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "dolor2",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "dolor3",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "dolor4",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-            ]
-        },
-        {
-            name: 'Opcion',
-            options: [
-                {
-                    img: Images.hero,
-                    title: "sit",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "sit2",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "sit3",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-                {
-                    img: Images.hero,
-                    title: "sit4",
-                    subtitle: 'Comprar ahora',
-                    to: "#"
-                },
-            ]
-        }
-    ];
 
     // Refs used to control the navbar interaction
     const navbarRef = useRef<any>(null);
@@ -210,7 +89,7 @@ export const Navbar = () => {
                         {/*Navbar options*/}
                         <div className={""} ref={navbarRef}>
                             <div className={"flex lg:gap-8 md:gap-2 justify-center items-center"}>
-                                {data.map((item: any, index: number) => (
+                                {navbarOptions.map((item: any, index: number) => (
                                     <div
                                         className={`cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2 ${navOption === index ? 'text-red-600 border-b-2 border-red-600' : ''}`}
                                         onClick={() => toggleNavMenu(index)}
@@ -266,7 +145,7 @@ export const Navbar = () => {
                                         key={navOption}
                                     >
                                         <NavbarMenu
-                                            items={navOption > -1 ? data[navOption].options : []}
+                                            items={navOption > -1 ? navbarOptions[navOption].options : []}
                                             className={"top-0 left-0 border-t border-gray-100"}
                                         />
                                     </motion.div>
@@ -283,7 +162,7 @@ export const Navbar = () => {
                 >
                     <div className={"flex justify-between items-center gap-3 h-full"}>
                         <NavbarMenuMobile
-                            items={data}
+                            items={navbarOptions}
                         />
                         {/*LOGO*/}
                         <Link to={routes.home.path} className={"h-8"}>

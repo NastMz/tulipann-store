@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import {decreaseProductCartCount, increaseProductCartCount, removeProductFromCart} from "../redux/actions";
 import {ShoppingCartCard} from "./ShoppingCartCard";
 import {Navigate} from "react-router-dom";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 
 interface CheckoutResumeProps {
     setOrder: Function,
@@ -88,7 +88,8 @@ export const CheckoutResume = (props: CheckoutResumeProps) => {
                         }
                     </div>
                 </div>
-                <div className={"max-w-full flex-shrink text-sm flex flex-col gap-2 divide-y divide-solid divide-gray-200"}>
+                <div
+                    className={"max-w-full flex-shrink text-sm flex flex-col gap-2 divide-y divide-solid divide-gray-200"}>
                     <div className={"flex flex-col gap-2"}>
                         <div className={"flex justify-between px-4 font-medium"}>
                             <span className={"text-gray-500"}>Subtotal</span>

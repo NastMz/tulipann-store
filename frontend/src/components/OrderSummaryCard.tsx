@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 import {OptimizedImage} from "./OptimizedImage";
 import {Image} from "../models";
 

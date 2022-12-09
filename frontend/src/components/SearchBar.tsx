@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import {useSelector} from "react-redux";
 import {selectArticles, selectProducts} from "../redux/selector";
 import {SearchCard} from "./SearchCard";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 import {Article, Product} from '../models';
 
 export const SearchBar = () => {

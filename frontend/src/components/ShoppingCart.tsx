@@ -6,7 +6,7 @@ import {decreaseProductCartCount, increaseProductCartCount, removeProductFromCar
 import {BiShoppingBag} from "react-icons/all";
 import {AnimatePresence, motion} from "framer-motion";
 import {Link} from "react-router-dom";
-import {routes} from "../routes/routes";
+import {routes} from "../config";
 import {ShoppingCartMobile} from "./ShoppingCartMobile";
 
 interface ShoppingCartProps {

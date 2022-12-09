@@ -1,4 +1,4 @@
-import {ChangeEvent, useState} from "react"
+import {ChangeEvent} from "react"
 import {AccordionLayout} from "./AccordionLayout";
 
 interface Option {
