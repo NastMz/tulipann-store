@@ -1,0 +1,225 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>tulipan-store</title><meta name="description" content="Documentation for tulipan-store"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container">
+<div class="table-cell" id="tsd-search" data-base=".">
+<div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M15.7824 13.833L12.6666 10.7177C12.5259 10.5771 12.3353 10.499 12.1353 10.499H11.6259C12.4884 9.39596 13.001 8.00859 13.001 6.49937C13.001 2.90909 10.0914 0 6.50048 0C2.90959 0 0 2.90909 0 6.49937C0 10.0896 2.90959 12.9987 6.50048 12.9987C8.00996 12.9987 9.39756 12.4863 10.5008 11.6239V12.1332C10.5008 12.3332 10.5789 12.5238 10.7195 12.6644L13.8354 15.7797C14.1292 16.0734 14.6042 16.0734 14.8948 15.7797L15.7793 14.8954C16.0731 14.6017 16.0731 14.1267 15.7824 13.833ZM6.50048 10.499C4.29094 10.499 2.50018 8.71165 2.50018 6.49937C2.50018 4.29021 4.28781 2.49976 6.50048 2.49976C8.71001 2.49976 10.5008 4.28708 10.5008 6.49937C10.5008 8.70852 8.71314 10.499 6.50048 10.499Z" fill="var(--color-text)"></path></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
+<div class="field">
+<div id="tsd-toolbar-links"></div></div>
+<ul class="results">
+<li class="state loading">Preparing search index...</li>
+<li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">tulipan-store</a></div>
+<div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="7" width="14" height="2" fill="var(--color-text)"></rect><rect x="1" y="11" width="14" height="2" fill="var(--color-text)"></rect></svg></a></div></div></header>
+<div class="container container-main">
+<div class="col-8 col-content">
+<div class="tsd-page-title">
+<h2>tulipan-store</h2></div>
+<div class="tsd-panel tsd-typography">
+<a href="#tulipann-store" id="tulipann-store" style="color: inherit; text-decoration: none;">
+  <h1>Tulipann Store</h1>
+</a>
+<p>Welcome to the Tulipann Store repository! This repository contains the code for an ecommerce platform, including the frontend, dashboard, and API.</p>
+
+<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+  <h2>Table of Contents</h2>
+</a>
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#frontend">Frontend</a></li>
+<li><a href="#dashboard">Dashboard</a></li>
+<li><a href="#api">API</a></li>
+<li><a href="#file-structure">File Structure</a><ul>
+<li><a href="#frontend-1">Frontend</a></li>
+<li><a href="#dashboard-1">Dashboard</a></li>
+<li><a href="#api-1">API</a></li>
+</ul>
+</li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#starting-the-projects">Starting the Projects</a></li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#sending-requests-to-the-api">Sending Requests to the API</a></li>
+</ul>
+
+<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+  <h2>Features</h2>
+</a>
+<ul>
+<li>Responsive design</li>
+<li>TypeScript support</li>
+<li>TailwindCSS for styling</li>
+<li>Vite for fast development</li>
+<li>Django Rest Framework for the API</li>
+</ul>
+
+<a href="#frontend" id="frontend" style="color: inherit; text-decoration: none;">
+  <h2>Frontend</h2>
+</a>
+<p>The frontend is a single-page application built with React, TypeScript, and TailwindCSS. It is powered by the <a href="https://vitejs.com/">Vite</a> build tool.</p>
+
+<a href="#dashboard" id="dashboard" style="color: inherit; text-decoration: none;">
+  <h2>Dashboard</h2>
+</a>
+<p>The dashboard is a React-based application that provides a user interface for managing the ecommerce platform. It is also built with TypeScript and TailwindCSS, and uses Vite as the build tool.</p>
+
+<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+  <h2>API</h2>
+</a>
+<p>The API is built with Django Rest Framework and provides a RESTful interface for the frontend and dashboard to interact with the ecommerce platform&#39;s data.</p>
+
+<a href="#file-structure" id="file-structure" style="color: inherit; text-decoration: none;">
+  <h2>File Structure</h2>
+</a>
+<p>Each project has a similar file structure, with a few differences depending on the specifics of the project.</p>
+
+<a href="#frontend-1" id="frontend-1" style="color: inherit; text-decoration: none;">
+  <h3>Frontend</h3>
+</a>
+<p>The frontend project has the following file structure:</p>
+<pre><code class="language-markdown"><span class="hl-0">frontend/</span><br/><span class="hl-0">├── src/</span><br/><span class="hl-0">│ ├── components/ # directory containing reusable UI components</span><br/><span class="hl-0">│ ├── pages/ # directory containing top-level pages</span><br/><span class="hl-0">│ ├── services/ # directory containing utility functions and API clients</span><br/><span class="hl-0">│ ├── </span><span class="hl-1">`App.tsx`</span><span class="hl-0"> # root component of the application</span><br/><span class="hl-0">│ ├── </span><span class="hl-1">`index.tsx`</span><span class="hl-0"> # entry point for the application</span><br/><span class="hl-0">│ ├── </span><span class="hl-1">`router.tsx`</span><span class="hl-0"> # routing configuration for the application</span><br/><span class="hl-0">│ └── </span><span class="hl-1">`types.ts`</span><span class="hl-0"> # shared type definitions for</span>
+</code></pre>
+
+<a href="#dashboard-1" id="dashboard-1" style="color: inherit; text-decoration: none;">
+  <h3>Dashboard</h3>
+</a>
+<p>The dashboard project has the following file structure:</p>
+<pre><code class="language-markdown"><span class="hl-0">dashboard/</span><br/><span class="hl-0">├── src/</span><br/><span class="hl-0">│ ├── components/ # directory containing reusable UI components</span><br/><span class="hl-0">│ ├── pages/ # directory containing top-level pages</span><br/><span class="hl-0">│ ├── services/ # directory containing utility functions and API clients</span><br/><span class="hl-0">│ ├── App.tsx # root component of the application</span><br/><span class="hl-0">│ ├── index.tsx # entry point for the application</span><br/><span class="hl-0">│ ├── router.tsx # routing configuration for the application</span><br/><span class="hl-0">│ └── types.ts # shared type definitions for the application</span><br/><span class="hl-0">├── public/ # directory containing static assets (e.g. images)</span><br/><span class="hl-0">├── .vite.config.js # configuration file for the Vite build tool</span><br/><span class="hl-0">└── package.json # metadata for the project and its dependencies</span>
+</code></pre>
+
+<a href="#api-1" id="api-1" style="color: inherit; text-decoration: none;">
+  <h3>API</h3>
+</a>
+<p>The API project has the following file structure:</p>
+<pre><code class="language-markdown"><span class="hl-0">api/</span><br/><span class="hl-0">│ ├── migrations/ # directory containing database migration files</span><br/><span class="hl-0">│ ├── static/ # directory containing static assets (e.g. images)</span><br/><span class="hl-0">│ ├── templates/ # directory containing HTML templates</span><br/><span class="hl-0">│ ├── apps/ # directory containing Django apps</span><br/><span class="hl-0">│ ├── config/ # directory containing project-level configuration</span><br/><span class="hl-0">│ ├── manage.py # command-line utility for interacting with the Django project</span><br/><span class="hl-0">│ ├── urls.py # URL configuration for the Django project</span><br/><span class="hl-0">│ └── wsgi.py # WSGI configuration for the Django project</span><br/><span class="hl-0">└── requirements.txt # file containing project dependencies</span>
+</code></pre>
+
+<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+  <h2>Getting Started</h2>
+</a>
+<ol>
+<li>Install the dependencies for each project by running <code>npm install</code> or <code>pip install -r requirements.txt</code> in the root directory of the project.</li>
+<li>Follow the <a href="#starting-the-projects">Starting the Projects</a> instructions to start each project.</li>
+<li>Explore the application and make any desired modifications.```</li>
+</ol>
+
+<a href="#starting-the-projects" id="starting-the-projects" style="color: inherit; text-decoration: none;">
+  <h2>Starting the Projects</h2>
+</a>
+<p>To start the projects in this repository, you will need to have Node.js and Python installed on your machine. You will also need to install the dependencies for each project by running <code>npm install</code> or <code>pip install -r requirements.txt</code> in the root directory of the project.</p>
+
+<a href="#frontend-2" id="frontend-2" style="color: inherit; text-decoration: none;">
+  <h3>Frontend</h3>
+</a>
+<p>To start the frontend project, navigate to the <code>frontend</code> directory and run the following command:</p>
+<pre><code class="language-markdown"><span class="hl-2">&gt;</span><span class="hl-0"> cd frontend</span><br/><span class="hl-2">&gt;</span><span class="hl-0"> npm run dev</span>
+</code></pre>
+<p>This will start the development server for the frontend project, and you can view the application in your web browser at <code>http://localhost:3000</code>.</p>
+
+<a href="#dashboard-2" id="dashboard-2" style="color: inherit; text-decoration: none;">
+  <h3>Dashboard</h3>
+</a>
+<p>To start the dashboard project, navigate to the <code>dashboard</code> directory and run the following command:</p>
+<pre><code class="language-markdown"><span class="hl-2">&gt;</span><span class="hl-0"> cd dashboard</span><br/><span class="hl-2">&gt;</span><span class="hl-0"> npm run dev</span>
+</code></pre>
+<p>This will start the development server for the dashboard project, and you can view the application in your web browser at <code>http://localhost:3000</code>.</p>
+
+<a href="#api-2" id="api-2" style="color: inherit; text-decoration: none;">
+  <h3>API</h3>
+</a>
+<p>To start the API project, navigate to the <code>api</code> directory and run the following command:</p>
+<pre><code class="language-markdown"><span class="hl-2">&gt;</span><span class="hl-0"> cd api</span><br/><span class="hl-2">&gt;</span><span class="hl-0"> python manage.py runserver</span>
+</code></pre>
+<p>This will start the development server for the API project, and you can view the API at <code>http://localhost:8000</code>.</p>
+
+<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+  <h2>Documentation</h2>
+</a>
+<p>The frontend and dashboard projects include documentation generated by the <a href="https://tsdocs.org/">TSDocs</a> tool. You can find the documentation in the <code>docs</code> directories of those projects.</p>
+<p>The API&#39;s documentation, which can be found in ....</p>
+
+<a href="#sending-requests-to-the-api" id="sending-requests-to-the-api" style="color: inherit; text-decoration: none;">
+  <h2>Sending Requests to the API</h2>
+</a>
+<p>The API in this ecommerce platform is built with Django Rest Framework and provides a RESTful interface for the frontend and dashboard to interact with the ecommerce platform&#39;s data. You can send requests to the API using any HTTP client, such as cURL or a browser extension like Postman.</p>
+<p>To send a request to the API, you will need to specify the following information:</p>
+<ul>
+<li>The HTTP method (e.g. <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>)</li>
+<li>The endpoint (e.g. <code>/api/products</code>, <code>/api/orders</code>)</li>
+<li>Any necessary request parameters or body data</li>
+<li>An <code>Authorization</code> header with a valid JWT token, if the endpoint requires authentication</li>
+</ul>
+<p>Here is an example of a <code>GET</code> request to retrieve a list of products from the API using cURL:</p>
+<pre><code class="language-markdown"><span class="hl-0">curl -X GET http://localhost:8000/api/products -H &#39;Authorization: Bearer &lt;your-jwt-token&gt;&#39;</span>
+</code></pre>
+<p>This will send a <code>GET</code> request to the <code>/api/products</code> endpoint, with an <code>Authorization</code> header containing a JWT token for authentication. The API will return a list of products in the response.</p>
+<p>You can find more information on the available endpoints and request parameters in the <a href="#documentation">API&#39;s documentation</a>.</p>
+</div></div>
+<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+<div class="tsd-navigation settings">
+<details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility">
+<h4 class="uppercase">Member Visibility</h4><form>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li></ul></form></div>
+<div class="tsd-theme-toggle">
+<h4 class="uppercase">Theme</h4><select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<nav class="tsd-navigation primary">
+<details class="tsd-index-accordion" open><summary class="tsd-accordion-summary">
+<h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4.93896 8.531L12 15.591L19.061 8.531L16.939 6.409L12 11.349L7.06098 6.409L4.93896 8.531Z" fill="var(--color-text)"></path></svg> Modules</h3></summary>
+<div class="tsd-accordion-details">
+<ul>
+<li class="current selected"><a href="modules.html">tulipan-<wbr/>store</a>
+<ul>
+<li class="tsd-kind-module"><a href="modules/_internal_.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-1.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-2.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-3.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-4.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-5.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-6.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-7.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-8.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-9.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-10.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-11.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-12.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-13.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-14.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-15.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-16.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-17.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-18.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-19.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-20.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-21.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-22.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-23.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-24.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-25.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-26.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-27.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-28.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-29.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-30.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-31.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-32.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-33.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-34.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-35.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-36.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-37.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-38.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-39.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-40.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-41.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-42.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-43.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-44.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-45.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-46.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-47.html">&lt;internal&gt;</a></li>
+<li class="tsd-kind-module"><a href="modules/_internal_-48.html">&lt;internal&gt;</a></li></ul></li></ul></div></details></nav></div></div>
+<div class="container tsd-generator">
+<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div>
+<div class="overlay"></div><script src="assets/main.js"></script></body></html>
