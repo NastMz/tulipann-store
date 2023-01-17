@@ -1,5 +1,14 @@
-import {Product} from "../../models";
+import {Product} from "../../models/interfaces";
 
+/**
+*
+* Sort options for a list of products
+* @interface Option
+* @property {number} id - Identifier of the option
+* @property {string} name - Display name of the option
+* @property {keyof Product} property - Property of the Product to be sorted
+* @property {"ASC" | "DESC"} order - Order in which the property will be sorted
+*/
 interface Option {
     id: number,
     name: string,
@@ -7,7 +16,12 @@ interface Option {
     order: "ASC" | "DESC",
 }
 
-// Sort Options
+/**
+
+* Available options to sort a list of products
+* @constant
+* @type {Array<Option>}
+*/
 export const sortOptions: Array<Option> = [
     {
         id: 1,

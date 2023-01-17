@@ -1,12 +1,48 @@
-function padTo2Digits(num: number) {
-    return num.toString().padStart(2, '0');
+import { padStart } from 'lodash';
+
+/**
+ * Pads a number to two digits by adding a leading zero if necessary.
+ *
+ * @param {number} num - The number to pad.
+ * @returns {string} The padded number.
+ */
+function padTo2Digits(num: number): string {
+    return padStart(num.toString(), 2, '0');
 }
 
-export function getDate(date: string) {
-    let days = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
-    let months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'diciembre']
-    let d = new Date(date);
-    let dayName = days[d.getDay()];
-    let fullDate = [padTo2Digits(d.getDate()), months[d.getMonth()], d.getFullYear()].join(' de ');
-    return [dayName, fullDate].join(", ");
+/**
+ * Gets the name of the day and the full date in Spanish for a given date.
+ *
+ * @param {string} date - The date in ISO format.
+ * @returns {string} The name of the day and the full date in Spanish.
+ */
+export function getDate(date: string): string {
+    const days = [
+        'domingo',
+        'lunes',
+        'martes',
+        'miércoles',
+        'jueves',
+        'viernes',
+        'sábado',
+        ];
+    const months = [
+        'enero',
+        'febrero',
+        'marzo',
+        'abril',
+        'mayo',
+        'junio',
+        'julio',
+        'agosto',
+        'septiembre',
+        'octubre',
+        'noviembre',
+        'diciembre',
+        ];
+
+    const d = new Date(date);
+    const dayName = days[d.getDay()];
+    const fullDate = `${padTo2Digits(d.getDate())} de ${months[d.getMonth()]} ${d.getFullYear()}`;
+    return `${dayName}, ${fullDate}`;
 }

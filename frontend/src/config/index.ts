@@ -1,3 +1,4 @@
-export {routes} from './routes/routes';
-export {navbarOptions} from './options/navbarOptions';
-export {sortOptions} from './options/sortOptions';
+import * as Options from './options';
+import * as Paths from './routes';
+
+export {Options, Paths};

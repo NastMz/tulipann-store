@@ -1,121 +1,145 @@
-// Options of the navbar
-import {Images} from "../../utils";
+import {Image} from '../../models/interfaces';
+import {Images} from '../../utils';
+import {routes} from "../routes";
 
-export const navbarOptions = [
+
+const navbarOptionItems = [
     {
-        name: 'Opcion',
+        name: 'Categorias',
+        options: [
+        {
+            img: Images.hero,
+            title: "ipsum",
+            subtitle: 'Comprar ahora',
+            to: "#"
+        },
+        {
+            img: Images.hero,
+            title: "ipsum2",
+            subtitle: 'Comprar ahora',
+            to: "#"
+        },
+        {
+            img: Images.hero,
+            title: "ipsum3",
+            subtitle: 'Comprar ahora',
+            to: "#"
+        },
+        {
+            img: Images.hero,
+            title: "ipsum4",
+            subtitle: 'Comprar ahora',
+            to: "#"
+        },
+    ]
+    },
+    {
+        name: 'Nosotros',
         options: [
             {
-                img: Images.hero,
-                title: "lorem",
-                subtitle: 'Comprar ahora',
-                to: "#"
+                img: Images.about,
+                title: "Acerca de",
+                subtitle: 'Conocenos',
+                to: routes.about.path
             },
             {
-                img: Images.hero,
-                title: "lorem2",
-                subtitle: 'Comprar ahora',
-                to: "#"
+                img: Images.contact,
+                title: "Contacto",
+                subtitle: 'Respondemos tus dudas',
+                to: routes.contact.path
             },
             {
-                img: Images.hero,
-                title: "lorem3",
-                subtitle: 'Comprar ahora',
-                to: "#"
+                img: Images.privacy,
+                title: "Politicas de privacidad",
+                subtitle: 'Conoce las politicas de la tienda',
+                to: routes.privacy.path
             },
             {
-                img: Images.hero,
-                title: "lorem4",
-                subtitle: 'Comprar ahora',
-                to: "#"
+                img: Images.terms,
+                title: "Términos y condiciones",
+                subtitle: 'Comprende los términos y condiciones',
+                to: routes.terms.path
             },
         ]
     },
     {
-        name: 'Opcion',
+        name: 'Ayuda',
         options: [
             {
-                img: Images.hero,
-                title: "ipsum",
-                subtitle: 'Comprar ahora',
-                to: "#"
+                img: Images.faq,
+                title: "Preguntas Frecuentes",
+                subtitle: '¿Tienes dudas? Resuelvelas aqui',
+                to: routes.faq.path
             },
             {
-                img: Images.hero,
-                title: "ipsum2",
-                subtitle: 'Comprar ahora',
-                to: "#"
+                img: Images.payments,
+                title: "Formas de pago",
+                subtitle: 'Conoce como pagar',
+                to: routes.payments.path
             },
             {
-                img: Images.hero,
-                title: "ipsum3",
-                subtitle: 'Comprar ahora',
-                to: "#"
+                img: Images.returns,
+                title: "Devoluciones",
+                subtitle: 'Conoce como devolver un producto',
+                to: routes.return.path
             },
             {
-                img: Images.hero,
-                title: "ipsum4",
-                subtitle: 'Comprar ahora',
-                to: "#"
+                img: Images.warranty,
+                title: "Garantías",
+                subtitle: 'Descubre la garantía de tu producto',
+                to: routes.warranty.path
             },
         ]
     },
-    {
-        name: 'Opcion',
-        options: [
-            {
-                img: Images.hero,
-                title: "dolor",
-                subtitle: 'Comprar ahora',
-                to: "#"
-            },
-            {
-                img: Images.hero,
-                title: "dolor2",
-                subtitle: 'Comprar ahora',
-                to: "#"
-            },
-            {
-                img: Images.hero,
-                title: "dolor3",
-                subtitle: 'Comprar ahora',
-                to: "#"
-            },
-            {
-                img: Images.hero,
-                title: "dolor4",
-                subtitle: 'Comprar ahora',
-                to: "#"
-            },
-        ]
-    },
-    {
-        name: 'Opcion',
-        options: [
-            {
-                img: Images.hero,
-                title: "sit",
-                subtitle: 'Comprar ahora',
-                to: "#"
-            },
-            {
-                img: Images.hero,
-                title: "sit2",
-                subtitle: 'Comprar ahora',
-                to: "#"
-            },
-            {
-                img: Images.hero,
-                title: "sit3",
-                subtitle: 'Comprar ahora',
-                to: "#"
-            },
-            {
-                img: Images.hero,
-                title: "sit4",
-                subtitle: 'Comprar ahora',
-                to: "#"
-            },
-        ]
-    }
 ];
+
+/**
+ * Interface for NavbarOption
+ *
+ * @interface NavbarOption
+ * @property {string} name - Name of the navbar option.
+ * @property {Array<NavbarOptionItem>} options - Array of navbar option items.
+ */
+interface NavbarOption {
+    name: string;
+    options: NavbarOptionItem[];
+}
+
+/**
+ * Interface for NavbarOptionItem
+ *
+ * @interface NavbarOptionItem
+ * @property {Image} img - Image of the navbar option item.
+ * @property {string} title - Title of the navbar option item.
+ * @property {string} subtitle - Subtitle of the navbar option item.
+ * @property {string} to - URL to redirect when the navbar option item is clicked.
+ */
+interface NavbarOptionItem {
+    img: Image;
+    title: string;
+    subtitle: string;
+    to: string;
+}
+
+/**
+ * Generates a list of navbar options.
+ *
+ * @param {string} name - Title for the options list
+ * @param {Array<NavbarOptionItem>} options - List of navbar option items.
+ * @returns {Array<NavbarOption>} List of navbar options.
+ */
+function createNavbarOption(name: string, options: NavbarOptionItem[]): NavbarOption {
+    return {
+        name,
+        options
+    };
+}
+
+/**
+ * Options of the navbar
+ *
+ * @typedef {Array<NavbarOption>} navbarOptions
+ */
+export const navbarOptions = navbarOptionItems.map((option) => {
+    return createNavbarOption(option.name, option.options);
+});

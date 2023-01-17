@@ -1,19 +1,24 @@
-import {useLocation} from "react-router-dom";
-import {useEffect} from "react";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
+/**
+ * Component that scrolls the page to the top on route change.
+ *
+ * @returns {null} The component doesn't render anything.
+ */
 export function ScrollToTop() {
-    const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
-    useEffect(() => {
-        // "document.documentElement.scrollTo" is the magic for React Router Dom v6
-        setTimeout(()=>{
-            document.documentElement.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: "auto"
-            });
-        }, 300)
-    }, [pathname]);
+  useEffect(() => {
+    // Scroll to the top with a delay of 300ms
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "auto",
+      });
+    }, 300);
+  }, [pathname]);
 
-    return null;
+  return null;
 }
