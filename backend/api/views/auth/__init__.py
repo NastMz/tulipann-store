@@ -1,0 +1,4 @@
+from .RegistrationAPIView import RegistrationAPIView
+from .UserSelfUpdateView import UserSelfUpdateView
+from .PasswordResetView import PasswordResetView
+from .PasswordResetConfirmView import PasswordResetConfirmView
