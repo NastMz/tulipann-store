@@ -82,15 +82,22 @@ The API project has the following file structure:
 
 ```markdown
 api/
+│ ├── checkout/       # directory containing the file with the payment confirmation
 │ ├── migrations/     # directory containing database migration files
-│ ├── static/         # directory containing static assets (e.g. images)
+│ ├── models/         # directory containing the files for the creation of the models in the DB
+│ ├── serializers/    # directory containing the files that serialize the data of all models
 │ ├── templates/      # directory containing HTML templates
-│ ├── apps/           # directory containing Django apps
-│ ├── config/         # directory containing project-level configuration
-│ ├── manage.py       # command-line utility for interacting with the Django project
-│ ├── urls.py         # URL configuration for the Django project
-│ └── wsgi.py         # WSGI configuration for the Django project
+│ ├── urls/           # directory containing the files for the configuration of urls in the API
+│ ├── utils/          # directory containing utilities for different parts of the project
+│ ├── views/          # directory containing directories sorted by view 
+│ │ ├── auth/         # directory containing all views for authorization implementation
+│ │ ├── client/       # directory containing all views for client implementation
+│ │ ├── crud/         # directory containing all views for crud implementation
+│ │ └── data/         # directory containing all views for user data implementation
+│ ├── admin.py        # file to register application models with the Django admin panel
+│ └── apps.py         # file used to configure the application
 └── requirements.txt  # file containing project dependencies
+└── manage.py         # command-line utility for interacting with the Django project
 ```
 
 ## Getting Started
