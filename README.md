@@ -47,14 +47,49 @@ The frontend project has the following file structure:
 
 ```markdown
 frontend/
-├── src/
-│ ├── components/ # directory containing reusable UI components
-│ ├── pages/      # directory containing top-level pages
-│ ├── services/   # directory containing utility functions and API clients
-│ ├── App.ts      # root component of the application
-│ ├── index.tsx   # entry point for the application
-│ ├── router.tsx  # routing configuration for the application
-│ └── types.ts    # shared type definitions for
+├── docs/                   # directory containing documentation for the project
+├── public/                 # directory containing public assets
+├── src/                    # main source code directory
+│ ├── api/                  # directory containing code for making API requests
+│ │ ├── client/             # directory containing API client code
+│ │ ├── data/               # directory containing data models and data manipulation functions
+│ │ └── request/            # directory containing code for handling API requests
+│ ├── assets/               # directory containing static assets such as images
+│ │ └── images/             # directory containing image files
+│ ├── components/           # directory containing reusable UI components
+│ │ ├── common/             # directory containing common components used throughout the application
+│ │ ├── layout/             # directory containing layout components
+│ │ ├── pages/              # directory containing top-level pages
+│ │ ├── sections/           # directory containing sections of a page
+│ │ ├── templates/          # directory containing templates for page layout
+│ │ ├── ui/                 # directory containing UI elements such as buttons and forms
+│ │ └── utils/              # directory containing utility functions for components
+│ ├── config/               # directory containing application configuration files
+│ │ ├── options/            # directory containing options for configuring the application
+│ │ └── routes/             # directory containing routing configuration
+│ ├── models/               # directory containing data models
+│ │ └── utils/              # directory containing utility functions for data models
+│ ├── redux/                # directory containing code for the application's state management using the Redux library
+│ │ ├── actions/            # directory containing action creators
+│ │ ├── reducer/            # directory containing reducers
+│ │ ├── selector/           # directory containing selectors
+│ │ └── store/              # directory containing store configuration
+│ ├── utils/                # directory containing utility functions
+│ ├── App.css               # styles for the root component
+│ ├── App.ts                # root component of the application
+│ ├── index.css             # global styles for the application
+│ ├── main.tsx              # entry point for the application
+│ └── vite-env.d.ts         # types for the development server
+├── .env.example            # example environment variables file
+├── .eslintrc.json          # ESLint configuration file
+├── index.html              # HTML template for the application
+├── package-lock.json       # lockfile for installed packages
+├── package.json            # project configuration and dependencies
+├── postcss.config.cjs      # configuration file for PostCSS
+├── tailwind.config.cjs     # configuration file for Tailwind CSS
+├── tsconfig.json           # TypeScript configuration file
+├── tsconfig.node.json      # TypeScript configuration file for Node.js
+└── vite.config.ts          # configuration file for the development server
 ```
 
 ### Dashboard
