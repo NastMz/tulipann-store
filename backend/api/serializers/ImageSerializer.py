@@ -9,7 +9,7 @@ class ImageSerializer(serializers.ModelSerializer):
         images = []
         for image in db_images:
             images.append({
-                'src': image.image_name,
+                'src': image.src,
                 'hash': image.hash
             })
 
@@ -17,16 +17,18 @@ class ImageSerializer(serializers.ModelSerializer):
 
     def serialize_get_crud(image):
         return {
-            'image_id': image.image_id,
-            'image_name': image.image_name,
-            'hash': image.hash,
-            'product': image.product.product_id
+            'id': image.id,
+            'image': {
+                'src': image.src,
+                'hash': image.hash
+            },
+            'productId': image.product.id
         }
 
     class Meta:
         model = Image
         fields = (
-            'image_name',
+            'src',
             'hash',
             'product'
         )

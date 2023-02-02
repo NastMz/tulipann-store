@@ -7,6 +7,7 @@ from api.serializers import CommentarySerializer
 
 class CommentaryViewset(viewsets.GenericViewSet):
     queryset = Product.all_objects.all()
+    serializer_class = CommentarySerializer
     permission_classes = (AllowAny,)
 
     def list(self, *args, **kwargs):

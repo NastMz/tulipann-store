@@ -3,27 +3,48 @@ from ..models import Category
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    """
+    Serializer for Category model
+    """
 
     def serialize_front(category):
+        """
+        Returns serialized representation of a category for frontend usage
+        Args:
+            category (Category): Instance of Category model
+        Returns:
+            dict: serialized representation of a category
+        """
         return {
-            'id': category.category_id,
-            'name': category.category_name,
-            'image': category.image,
-            'hash': category.hash
+            'id': category.id,
+            'name': category.name,
+            'image': {
+                'src': category.image,
+                'hash': category.hash
+            }
         }
 
     def serialize_get_crud(category):
+        """
+        Returns serialized representation of a category for CRUD operations
+        Args:
+            category (Category): Instance of Category model
+        Returns:
+            dict: serialized representation of a category
+        """
         return {
-            'category_id': category.category_id,
-            'category_name': category.category_name,
-            'image': category.image,
-            'hash': category.hash
+            'id': category.id,
+            'name': category.name,
+            'image': {
+                'src': category.image,
+                'hash': category.hash
+            }
         }
 
     class Meta:
         model = Category
         fields = (
-            'category_name',
+            'name',
             'image',
             'hash'
         )

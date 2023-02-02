@@ -20,9 +20,6 @@ from .OrderCrudSerializer import OrderCrudSerializer
 
 from .OrderProductSerializer import *
 
-from .PaymentSerializer import *
-from .PaymentCrudSerializer import PaymentCrudSerializer
-
 from .ProductSerializer import *
 from .ProductCrudSerializer import ProductCrudSerializer
 

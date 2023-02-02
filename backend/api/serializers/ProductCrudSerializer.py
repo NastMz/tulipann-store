@@ -3,7 +3,7 @@ from ..models import Product
 
 
 class ProductCrudSerializer(serializers.ModelSerializer):
-    product_name = serializers.CharField(max_length=50)
+    name = serializers.CharField(max_length=50)
     description = serializers.CharField(max_length=255)
     stock = serializers.IntegerField()
     price = serializers.IntegerField()
@@ -11,7 +11,7 @@ class ProductCrudSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = (
-            'product_name',
+            'name',
             'description',
             'stock',
             'price',
@@ -19,13 +19,13 @@ class ProductCrudSerializer(serializers.ModelSerializer):
         )
 
     def validate(self, args):
-        product_name = args.get('product_name', None)
+        name = args.get('name', None)
         stock = args.get('stock', None)
         price = args.get('price', None)
-        if Product.all_objects.filter(product_name=product_name).exists():
-            raise serializers.ValidationError({'product_name': ('name already exists')})
+        if Product.all_objects.filter(name=name).exists():
+            raise serializers.ValidationError({'name': 'name already exists'})
         if stock < 0 or price < 0:
-            raise serializers.ValidationError({'stock and price': ('Must be greater than zero')})
+            raise serializers.ValidationError({'stock and price': 'Must be greater than zero'})
         return super().validate(args)
 
     def create(self, validated_data):

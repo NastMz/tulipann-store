@@ -8,7 +8,6 @@ from .Feature import Feature
 from .Image import Image
 from .Order import Order
 from .OrderProduct import OrderProduct
-from .PaymentMethod import PaymentMethod
 from .Product import Product
 from .ProductSubcategory import ProductSubcategory
 from .Role import Role

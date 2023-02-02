@@ -4,13 +4,27 @@ from .SoftDeleteManager import SoftDeleteManager
 
 
 class CategoryManager(models.Manager):
+    """
+    Manager for the Category model.
+    """
 
-    def create_category(self, category_name, image, hash):
-        if not category_name and not image:
+    def create_category(self, name, image, hash):
+        """
+        Create a new category.
+
+        Arguments:
+            name (str): Name of the category.
+            image (str): Image of the category.
+            hash (str): Hash of the category.
+
+        Returns:
+            Category: The created category instance.
+        """
+        if not name and not image:
             raise ValueError('You must put a name and image to the category')
-        category_id = f'category{Category.objects.all().count() + 1}'
-        category = self.model(category_id=category_id,
-                              category_name=category_name,
+        id = f'category{Category.objects.all().count() + 1}'
+        category = self.model(id=id,
+                              name=name,
                               image=image,
                               hash=hash)
         category.save(using=self._db)
@@ -18,8 +32,11 @@ class CategoryManager(models.Manager):
 
 
 class Category(SoftDeleteModel):
-    category_id = models.CharField(primary_key=True, max_length=10)
-    category_name = models.CharField(max_length=50)
+    """
+    Model for the category.
+    """
+    id = models.CharField(primary_key=True, max_length=10, db_column='category_id')
+    name = models.CharField(max_length=50, db_column='category_name')
     image = models.CharField(max_length=255)
     hash = models.CharField(max_length=255)
 
@@ -31,4 +48,4 @@ class Category(SoftDeleteModel):
         db_table = 'api_category'
 
     def __str__(self):
-        return self.category_name
+        return self.name

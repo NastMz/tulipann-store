@@ -1,4 +1,6 @@
 from django.core.cache import cache
+from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -6,19 +8,42 @@ from api.models import User
 
 
 class PasswordResetConfirmView(APIView):
+    """
+    Confirm the reset password to user with token.
+    """
     permission_classes = (AllowAny,)
 
-    def post(self, request, *args, **kwargs):
+    @staticmethod
+    @action(methods=['post'], detail=True)
+    def post(request):
+        """
+        Reset password to user with token valid.
+        Args:
+            request: Request from client.
+
+        Returns:
+            (Response): Response with message of success or error.
+        """
+        messages = {}
+
+        if 'new_password' not in request.data:
+            messages['new_password'] = 'This field is required'
+        if 'token' not in request.data:
+            messages['token'] = 'This field is required'
+
+        if messages:
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         token = request.data.get('token')
 
         try:
             # check if the token is valid
-            user_id = check_token(token)
-            if user_id is None:
+            userId = check_token(token)
+            if userId is None:
                 raise Exception("Invalid or expired token")
 
             # check if the user exists
-            user = User.objects.get(user_id=user_id)
+            user = User.objects.get(id=userId)
 
             # allow the user to reset their password
             new_password = request.data.get('new_password')
@@ -32,7 +57,7 @@ class PasswordResetConfirmView(APIView):
 
 
 def check_token(token):
-    user_id = cache.get(token)
-    if user_id is None:
+    userId = cache.get(token)
+    if userId is None:
         return None
-    return user_id
+    return userId

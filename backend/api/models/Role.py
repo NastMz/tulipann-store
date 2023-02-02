@@ -4,20 +4,37 @@ from .SoftDeleteManager import SoftDeleteManager
 
 
 class RoleManager(models.Manager):
+    """
+    Custom manager for the Role model.
+    """
+    def create_role(self, name):
+        """
+        Creates a new role object.
 
-    def create_role(self, role_name):
-        if not role_name:
+        Args:
+            name (str): The name of the role.
+
+        Returns:
+            Role: The created role object.
+
+        Raises:
+            ValueError: If the name is not provided.
+        """
+        if not name:
             raise ValueError('You must put a name for the role')
-        role_id = f'role{Role.objects.all().count() + 1}'
-        role = self.model(role_id=role_id,
-                          role_name=role_name)
+        id = f'role{Role.objects.all().count() + 1}'
+        role = self.model(id=id,
+                          name=name)
         role.save(using=self._db)
         return role
 
 
 class Role(SoftDeleteModel):
-    role_id = models.CharField(primary_key=True, max_length=6)
-    role_name = models.CharField(max_length=20)
+    """
+    Model representing a role within the system.
+    """
+    id = models.CharField(primary_key=True, max_length=6, db_column='role_id')
+    name = models.CharField(max_length=20, db_column='role_name')
 
     objects = RoleManager()
     all_objects = SoftDeleteManager()
@@ -27,4 +44,4 @@ class Role(SoftDeleteModel):
         db_table = 'api_role'
 
     def __str__(self):
-        return self.role_name
+        return self.name

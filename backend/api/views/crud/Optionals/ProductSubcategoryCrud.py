@@ -27,7 +27,7 @@ class ProductSubcategoryRegister(generics.GenericAPIView):
             serializer.save()
             return Response({
                 "RequestId": str(uuid.uuid4()),
-                "Message": "ProductSubcategory created succesfully",
+                "Message": "ProductSubcategory created successfully",
 
                 "ProductSubcategory": serializer.data}, status=status.HTTP_201_CREATED
             )

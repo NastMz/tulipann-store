@@ -7,6 +7,7 @@ from api.serializers import SpecificationSerializer
 
 class SpecificationViewset(viewsets.GenericViewSet):
     queryset = Product.all_objects.all()
+    serializer_class = SpecificationSerializer
     permission_classes = (AllowAny,)
 
     def list(self, *args, **kwargs):

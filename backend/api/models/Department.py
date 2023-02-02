@@ -4,20 +4,38 @@ from .SoftDeleteManager import SoftDeleteManager
 
 
 class DepartmentManager(models.Manager):
+    """
+    Custom manager for the Department model.
+    """
 
-    def create_department(self, department_name):
-        if not department_name:
+    def create_department(self, name):
+        """
+        Create a new department instance and save it to the database.
+
+        Args:
+            name (str): The name of the department.
+
+        Returns:
+            Department: The created department instance.
+
+        Raises:
+            ValueError: If name is not provided.
+        """
+        if not name:
             raise ValueError('You must put a name for the department')
-        department_id = f'department{Department.objects.all().count() + 1}'
-        department = self.model(department_id=department_id,
-                                department_name=department_name)
+        id = f'department{Department.objects.all().count() + 1}'
+        department = self.model(id=id,
+                                name=name)
         department.save(using=self._db)
         return department
 
 
 class Department(SoftDeleteModel):
-    department_id = models.CharField(primary_key=True, max_length=12)
-    department_name = models.CharField(unique=True, max_length=30)
+    """
+    Model representing a department.
+    """
+    id = models.CharField(primary_key=True, max_length=12, db_column='department_id')
+    name = models.CharField(unique=True, max_length=30, db_column='department_name')
 
     objects = DepartmentManager()
     all_objects = SoftDeleteManager()
@@ -27,4 +45,4 @@ class Department(SoftDeleteModel):
         db_table = 'api_department'
 
     def __str__(self):
-        return self.department_name
+        return self.name

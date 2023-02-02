@@ -8,7 +8,7 @@ class ProductSubcategorySerializer(serializers.ModelSerializer):
 
         subcategories = []
         for subcategory in db_subcategories:
-            subcategories.append(subcategory.subcategory.subcategory_id)
+            subcategories.append(subcategory.subcategory.id)
 
         return subcategories
 

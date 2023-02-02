@@ -6,8 +6,24 @@ from .SoftDeleteManager import SoftDeleteManager
 
 
 class ProductSubcategoryManager(models.Manager):
+    """
+    Custom manager for the ProductSubcategory model.
+    """
 
     def create_product_subcategory(self, product, subcategory):
+        """
+        Create a new ProductSubcategory object.
+
+        Args:
+            product (Product): The Product object to be associated with this ProductSubcategory.
+            subcategory (Subcategory): The Subcategory object to be associated with this ProductSubcategory.
+
+        Returns:
+            ProductSubcategory: The created ProductSubcategory object.
+
+        Raises:
+            ValueError: If product or subcategory is not provided.
+        """
         if not subcategory and not product:
             raise ValueError('You must fill in all fields')
         product_subcategory = self.model(product=product,
@@ -17,7 +33,10 @@ class ProductSubcategoryManager(models.Manager):
 
 
 class ProductSubcategory(SoftDeleteModel):
-    product_subcategory_id = models.AutoField(primary_key=True)
+    """
+    Model representing a product's association with a subcategory.
+    """
+    id = models.AutoField(primary_key=True, db_column='product_subcategory_id')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
 
@@ -30,4 +49,4 @@ class ProductSubcategory(SoftDeleteModel):
         unique_together = (('subcategory', 'product'),)
 
     def __str__(self):
-        return f'{self.product.product_name} ({self.subcategory.subcategory_name})'
+        return f'{self.product.name} ({self.subcategory.name})'

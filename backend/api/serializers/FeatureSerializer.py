@@ -9,30 +9,34 @@ class FeatureSerializer(serializers.ModelSerializer):
         features = []
         for feature in db_features:
             features.append({
-                'id': feature.feature_id,
-                'name': feature.feature_name,
+                'id': feature.id,
+                'name': feature.name,
                 'title': feature.title,
                 'description': feature.description.replace("\\n", "\n"),
-                'image': feature.image,
-                'hash': feature.hash,
+                'image': {
+                    'src': feature.image,
+                    'hash': feature.hash
+                }
             })
         return features
 
     def serialize_get_crud(feature):
         return {
-            'feature_id': feature.feature_id,
-            'feature_name': feature.feature_name,
+            'id': feature.id,
+            'name': feature.name,
             'title': feature.title,
             'description': feature.description.replace("\\n", "\n"),
-            'image': feature.image,
-            'hash': feature.hash,
-            'specification': feature.specification.specification_id
+            'image': {
+                    'src': feature.image,
+                    'hash': feature.hash
+            },
+            'specificationId': feature.specification.id
         }
 
     class Meta:
         model = Feature
         fields = (
-            'feature_name',
+            'name',
             'title',
             'description',
             'image',

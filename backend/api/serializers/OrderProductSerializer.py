@@ -11,8 +11,8 @@ class OrderProductSerializer(serializers.ModelSerializer):
         products = []
         for product in db_products:
             products.append({
-                'id': product.product.product_id,
-                'name': product.product.product_name,
+                'id': product.product.id,
+                'name': product.product.name,
                 'quantity': product.quantity
             })
 
@@ -34,9 +34,11 @@ class OrderProductSerializer(serializers.ModelSerializer):
         stock = args['product'].stock
         product = args['product']
         if quantity > stock:
-            raise serializers.ValidationError({'quantity': ('The quantity must not be greater than the stock'),
-                                               'stock': stock})
-        new_stock = Product.all_objects.get(product_id=product.product_id)
+            raise serializers.ValidationError({
+                'productId': product.id,
+                'quantity': 'The quantity must not be greater than the stock',
+                'stock': stock})
+        new_stock = Product.all_objects.get(id=product.id)
         new_stock.stock = stock-quantity
         new_stock.save()
         return super().validate(args)

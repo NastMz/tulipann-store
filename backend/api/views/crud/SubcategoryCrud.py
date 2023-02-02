@@ -1,3 +1,4 @@
+from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -9,9 +10,22 @@ from api.utils.authorization_crud import authorization
 
 
 class SubcategoryList(APIView):
+    """
+    List all subcategories with soft delete filter.
+    """
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, format=None):
+    @staticmethod
+    @action(methods=['get'], detail=False)
+    def get(request):
+        """
+        Get all subcategories with soft delete filter.
+        Args:
+            request: Request from client.
+
+        Returns:
+            (Response): Response with all subcategories.
+        """
         if not authorization(request)['success']:
             return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
         subcategories = Subcategory.all_objects.all()
@@ -21,75 +35,144 @@ class SubcategoryList(APIView):
         return Response(subcategories_serialized)
 
 
-class SubcategoryRegister(generics.GenericAPIView):
+class SubcategoryCreate(generics.GenericAPIView):
+    """
+    Create a new subcategory.
+    """
     serializer_class = SubcategoryCrudSerializer
     permission_classes = (IsAuthenticated,)
 
+    @action(methods=['post'], detail=True)
     def post(self, request):
+        """
+        Create a new subcategory.
+        Args:
+            request: Request from client.
+
+        Returns:
+            (Response): Response with the subcategory created or errors.
+        """
         if not authorization(request)['success']:
             return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
-        if not Category.all_objects.filter(category_id=request.data['category']).exists():
+        if 'categoryId' not in request.data:
+            return Response({"categoryId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        if not Category.all_objects.filter(id=request.data['categoryId']).exists():
             return Response({"Errors": 'This category does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
+        request.data['category'] = request.data['categoryId']
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
             return Response({
                 "RequestId": str(uuid.uuid4()),
-                "Message": "Subcategory created succesfully",
+                "Message": "Subcategory created successfully",
 
-                "Subcategory": serializer.data}, status=status.HTTP_201_CREATED
+                "Subcategory": {
+                    "name": serializer.data['name'],
+                    "categoryId": serializer.data['category']
+                }}, status=status.HTTP_201_CREATED
             )
 
         return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class SubcategoryPut(APIView):
+class SubcategoryDetail(APIView):
+    """
+    Retrieve a subcategory by id.
+    """
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, id=None):
-        if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
-        if not Subcategory.all_objects.filter(subcategory_id=id).exists():
-            return Response({"Errors": 'This subcategory does not exist'}, status=status.HTTP_404_NOT_FOUND)
-        subcategory = Subcategory.all_objects.get(subcategory_id=id)
-        serializer = SubcategorySerializer(subcategory)
-        return Response(serializer.data)
+    @staticmethod
+    @action(methods=['get'], detail=True)
+    def get(request, id):
+        """
+        Get a subcategory by id.
+        Args:
+            request: Request from client.
+            id (str): Id of the subcategory.
 
-    def put(self, request, id=None):
+        Returns:
+            (Response): Response with the subcategory.
+        """
         if not authorization(request)['success']:
             return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
-        if not Subcategory.all_objects.filter(subcategory_id=id).exists():
+        if not Subcategory.all_objects.filter(id=id).exists():
             return Response({"Errors": 'This subcategory does not exist'}, status=status.HTTP_404_NOT_FOUND)
-        if not Category.all_objects.filter(category_id=request.data['category']).exists():
+        subcategory = Subcategory.all_objects.get(id=id)
+        serializer = SubcategorySerializer.serialize_get_crud(subcategory)
+        return Response(serializer)
+
+
+class SubcategoryUpdate(APIView):
+    """
+    Update a subcategory by id.
+    """
+    permission_classes = (IsAuthenticated,)
+
+    @staticmethod
+    @action(methods=['put'], detail=True)
+    def put(request, id=None):
+        """
+        Update a subcategory by id.
+        Args:
+            request: Request from client.
+            id (str): Id of the subcategory.
+
+        Returns:
+            (Response): Response with the subcategory updated or errors.
+        """
+        if not authorization(request)['success']:
+            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+        if not Subcategory.all_objects.filter(id=id).exists():
+            return Response({"Errors": 'This subcategory does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        if 'categoryId' not in request.data:
+            return Response({"categoryId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        if not Category.all_objects.filter(id=request.data['categoryId']).exists():
             return Response({"Errors": 'This category does not exist'}, status=status.HTTP_404_NOT_FOUND)
-        subcategory = Subcategory.all_objects.get(subcategory_id=id)
-        serializer = SubcategorySerializer(subcategory, data=request.data, partial=True)
 
-        if Subcategory.all_objects.filter(subcategory_name=request.data['subcategory_name']).exclude(subcategory_id=id).exists():
-            return Response({'subcategory_name': 'This name is already assigned to another subcategory'})
+        subcategory = Subcategory.all_objects.get(id=id)
+        request.data['category'] = request.data['categoryId']
+        serializer = SubcategorySerializer(subcategory, data=request.data)
+
+        if Subcategory.all_objects.filter(name=request.data['name']).exclude(id=id).exists():
+            return Response({'name': 'This name is already assigned to another subcategory'})
 
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response({
+                "Subcategory updated": {
+                    "name": serializer.data['name'],
+                    "categoryId": serializer.data['category']
+                }
+            })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class SubcategoryDel(APIView):
+class SubcategoryDelete(APIView):
+    """
+    Class to delete a subcategory by id.
+    """
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, id=None):
-        put_class = SubcategoryPut()
-        return put_class.get(request, id)
+    @staticmethod
+    @action(methods=['delete'], detail=True)
+    def delete(request, id):
+        """
+        Delete a subcategory by id.
+        Args:
+            request: Request from client.
+            id: Id of the subcategory.
 
-    def delete(self, request, id=None):
+        Returns:
+            (Response): Response with a message of success or error.
+        """
         if not authorization(request)['success']:
             return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
-        if not Subcategory.all_objects.filter(subcategory_id=id).exists():
+        if not Subcategory.all_objects.filter(id=id).exists():
             return Response({"Errors": 'This subcategory does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-        subcategory = Subcategory.all_objects.get(subcategory_id=id)
+        subcategory = Subcategory.all_objects.get(id=id)
         subcategory.soft_delete()
 
         db_product_subcat = list(ProductSubcategory.all_objects.filter(subcategory=id))
@@ -97,5 +180,3 @@ class SubcategoryDel(APIView):
             product_subcat.soft_delete()
 
         return Response({'Delete': 'Successfully'}, status=status.HTTP_200_OK)
-
-

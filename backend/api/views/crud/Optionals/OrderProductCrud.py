@@ -27,7 +27,7 @@ class OrderProductRegister(generics.GenericAPIView):
             serializer.save()
             return Response({
                 "RequestId": str(uuid.uuid4()),
-                "Message": "OrderProduct created succesfully",
+                "Message": "OrderProduct created successfully",
 
                 "OrderProduct": serializer.data}, status=status.HTTP_201_CREATED
             )

@@ -1,9 +1,8 @@
 from .CategoryCrud import *
-from .UserListView import UserListView
+from .UserList import UserList
 from .ArticleCrud import *
 from .CommentaryCrud import *
 from .RoleCrud import *
-from .PaymentCrud import *
 from .StateCrud import *
 from .SubcategoryCrud import *
 from .TagCrud import *
@@ -12,3 +11,5 @@ from .OrderCrud import *
 from .ImageCrud import *
 from .SpecificationCrud import *
 from .FeatureCrud import *
+from .DepartmentCrud import *
+from .UserList import *

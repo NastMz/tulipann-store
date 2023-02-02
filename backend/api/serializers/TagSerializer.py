@@ -5,12 +5,12 @@ from ..models import Tag
 class TagSerializer(serializers.ModelSerializer):
     def serialize_get_crud(tag):
         return {
-            'tag_id': tag.tag_id,
-            'tag_name': tag.tag_name
+            'id': tag.id,
+            'name': tag.name
         }
     
     class Meta: 
         model = Tag
         fields = (
-            'tag_name',
+            'name',
             )

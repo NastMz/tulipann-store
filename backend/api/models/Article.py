@@ -7,14 +7,33 @@ from .SoftDeleteManager import SoftDeleteManager
 
 
 class ArticleManager(models.Manager):
-
+    """
+    Manager class for the Article model, provides an additional method for creating articles
+    """
     def create_article(self, title, summary, banner, user, content, hash):
+        """
+        Creates an article object with the provided data.
+
+        Args:
+            title (str): The title of the article.
+            summary (str): A summary of the article.
+            banner (str): A banner image URL for the article.
+            user (User): The user who created the article.
+            content (str): The base64 encoded content of the article.
+            hash (str): A hash value for the article.
+
+        Returns:
+            Article: The created article object.
+
+        Raises:
+            ValueError: If title is not provided.
+        """
         if not title:
             raise ValueError('You must fill in all fields')
-        article_id = f'article{Article.objects.all().count() + 1}'
+        id = f'article{Article.objects.all().count() + 1}'
         now = timezone.now()
         binary_data = base64.b64decode(content)
-        article = self.model(article_id=article_id,
+        article = self.model(id=id,
                              title=title,
                              summary=summary,
                              banner=banner,
@@ -27,7 +46,10 @@ class ArticleManager(models.Manager):
 
 
 class Article(SoftDeleteModel):
-    article_id = models.CharField(primary_key=True, max_length=10)
+    """
+    Model representing an Article object.
+    """
+    id = models.CharField(primary_key=True, max_length=10, db_column='article_id')
     title = models.CharField(max_length=255)
     summary = models.CharField(max_length=255)
     content = models.BinaryField()

@@ -27,7 +27,7 @@ class ArticleTagRegister(generics.GenericAPIView):
             serializer.save()
             return Response({
                 "RequestId": str(uuid.uuid4()),
-                "Message": "ArticleTag created succesfully",
+                "Message": "ArticleTag created successfully",
 
                 "ArticleTag": serializer.data}, status=status.HTTP_201_CREATED
             )
