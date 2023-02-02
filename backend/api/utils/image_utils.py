@@ -75,8 +75,6 @@ def optimize_and_save_image(image_data, subfolder, object_name):
     image = BytesIO(image_data)
     # Open the image using Pillow
     img = Pillow.open(image)
-    # Resize the image to reduce its size
-    # img.thumbnail((1024, 1024))
     # Create the subfolder if it doesn't exist
     subfolder_path = base_path + subfolder
     if not os.path.exists(subfolder_path):
