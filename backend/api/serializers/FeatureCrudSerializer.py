@@ -6,7 +6,7 @@ class FeatureCrudSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feature
         fields = (
-            'feature_name',
+            'name',
             'title',
             'description',
             'image',
@@ -15,9 +15,9 @@ class FeatureCrudSerializer(serializers.ModelSerializer):
         )
 
     def validate(self, args):
-        feature_name = args.get('feature_name', None)
+        name = args.get('name', None)
         specification = args.get('specification', None)
-        if Feature.all_objects.filter(feature_name=feature_name, specification=specification).exists():
+        if Feature.all_objects.filter(name=name, specification=specification).exists():
             raise serializers.ValidationError({'Feature': ('Feature already exists')})
         return super().validate(args)
 

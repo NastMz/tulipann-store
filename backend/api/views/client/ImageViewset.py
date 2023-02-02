@@ -7,6 +7,7 @@ from api.serializers import ImageSerializer
 
 class ImageViewset(viewsets.GenericViewSet):
     queryset = Product.all_objects.all()
+    serializer_class = ImageSerializer
     permission_classes = (AllowAny,)
 
     def list(self, *args, **kwargs):

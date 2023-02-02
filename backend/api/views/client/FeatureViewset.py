@@ -7,6 +7,7 @@ from api.serializers import FeatureSerializer
 
 class FeatureViewset(viewsets.GenericViewSet):
     queryset = Specification.all_objects.all()
+    serializer_class = FeatureSerializer
     permission_classes = (AllowAny,)
 
     def list(self, *args, **kwargs):

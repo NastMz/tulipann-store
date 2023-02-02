@@ -7,6 +7,7 @@ from api.serializers import OrderProductSerializer
 
 class OrderProductViewset(viewsets.GenericViewSet):
     queryset = Order.all_objects.all()
+    serializer_class = OrderProductSerializer
     permission_classes = (AllowAny,)
 
     def list(self, *args, **kwargs):

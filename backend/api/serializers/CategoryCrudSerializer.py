@@ -3,22 +3,40 @@ from ..models import Category
 
 
 class CategoryCrudSerializer(serializers.ModelSerializer):
-    category_name = serializers.CharField(max_length=50) 
+    """
+    Serializer class for CRUD operations on the Category model.
+    """
+    name = serializers.CharField(max_length=50)
     image = serializers.CharField(max_length=255)
     hash = serializers.CharField(max_length=255)
 
     class Meta:
         model = Category
         fields = (
-            'category_name',
+            'name',
             'image',
             'hash')
     
     def validate(self, args):
-        category_name = args.get('category_name', None)
-        if Category.all_objects.filter(category_name=category_name).exists():
-            raise serializers.ValidationError({'category_name': ('name already exists')})
+        """
+        This function validate the data passed in the serializer, it checks if the name already exists in the
+        database.
+        Args:
+            args: A dictionary containing the data passed to the serializer
+        Returns:
+            The data if the validation pass, it raises a ValidationError if the name already exists
+        """
+        name = args.get('name', None)
+        if Category.all_objects.filter(name=name).exists():
+            raise serializers.ValidationError({'name': 'name already exists'})
         return super().validate(args)
 
     def create(self, validated_data):
+        """
+        This function creates a new category in the database.
+        Args:
+            validated_data: The data passed to the serializer after pass the validation
+        Returns:
+             The new category created
+        """
         return Category.objects.create_category(**validated_data)

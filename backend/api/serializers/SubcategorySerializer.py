@@ -4,24 +4,24 @@ from ..models import Category, Subcategory
 
 class SubcategorySerializer(serializers.ModelSerializer):
     def serialize_front(subcategory):
-        category = Category.all_objects.get(category_id=subcategory.category.category_id)
+        category = Category.all_objects.get(id=subcategory.category.id)
         return {
-            'id': subcategory.subcategory_id,
-            'name': subcategory.subcategory_name,
-            'category': category.category_id,
+            'id': subcategory.id,
+            'name': subcategory.name,
+            'category': category.id,
         }
 
     def serialize_get_crud(subcategory):
         return {
-            'subcategory_id': subcategory.subcategory_id,
-            'subcategory_name': subcategory.subcategory_name,
-            'category': subcategory.category.category_id
+            'id': subcategory.id,
+            'name': subcategory.name,
+            'categoryId': subcategory.category.id
         }
 
     class Meta: 
         model = Subcategory
         fields = (
-            'subcategory_name',
+            'name',
             'category'
             )
 

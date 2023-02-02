@@ -1,4 +1,6 @@
+import base64
 
+from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -13,24 +15,20 @@ from api.utils.image_utils import optimize_and_save_image, update_images
 
 class ArticleList(APIView):
     """
-    Class for handling the retrieval of a list of all articles.
-
-    Accepts only GET requests.
-
-    Returns:
-        A list of serialized articles.
+    List all articles with soft delete filter.
     """
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
+    @staticmethod
+    @action(methods=['get'], detail=False)
+    def get(request):
         """
-        Handle the GET request.
-
+        Get all articles with soft delete filter.
         Args:
-            request: The request object.
+            request: Request from client.
 
         Returns:
-            A response object containing the serialized list of articles.
+            (Response): Response with all articles.
         """
         if not authorization(request)['success']:
             return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
@@ -41,41 +39,36 @@ class ArticleList(APIView):
         return Response(articles_serialized)
 
 
-class ArticleRegister(generics.GenericAPIView):
+class ArticleCreate(generics.GenericAPIView):
     """
-    Class for handling the registration of a new article and its associated tags.
-
-    Accepts only POST requests.
-
-    Returns:
-        A message indicating success or failure of the registration, along with the serialized article data.
+    Create a new article.
     """
     serializer_class = ArticleCrudSerializer
     permission_classes = (IsAuthenticated,)
 
+    @action(methods=['post'], detail=True)
     def post(self, request):
         """
-        Handle the POST request.
-
+        Create a new article.
         Args:
-            request: The request object.
+            request: Request from client.
 
         Returns:
-            A response object indicating the success or failure of the registration, along with the serialized article data.
+            (Response): Response with the article created or errors.
         """
         if not authorization(request)['success']:
             return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
-        image_name = optimize_and_save_image(image_data=request.data['banner'], subfolder='article',
-                                             object_name='article')
-        request.data['banner'] = image_name
+
+        image_name = optimize_and_save_image(image_data=request.data['banner']['src'], subfolder='article',
+                                            object_name='article')
 
         data_article = {
             "title": request.data['title'],
             "summary": request.data['summary'],
             "banner": image_name,
-            "hash": request.data['hash'],
+            "hash": request.data['banner']['hash'],
             "content": request.data['content'],
-            "user": request.user.user_id
+            "user": request.user.id
         }
 
         serializer = self.get_serializer(data=data_article)
@@ -90,7 +83,7 @@ class ArticleRegister(generics.GenericAPIView):
         tags = request.data['tags']
 
         for tag in tags:
-            if not Tag.all_objects.filter(tag_id=tag['tag_id']).exists():
+            if not Tag.all_objects.filter(id=tag['tagId']).exists():
                 messages['tags'] = 'This tag does not exist'
 
         if messages:
@@ -104,77 +97,98 @@ class ArticleRegister(generics.GenericAPIView):
         for tag in tags:
             data = {
                 'article': new_article,
-                'tag': Tag.all_objects.get(tag_id=tag['tag_id'])
+                'tag': Tag.all_objects.get(id=tag['tagId'])
             }
             if not ArticleTag.all_objects.filter(tag=data['tag'], article=data['article']).exists():
                 article_tag_serializer.create(data)
 
         return Response({
             "RequestId": str(uuid.uuid4()),
-            "Message": "Article created succesfully",
-
-            "Article": serializer.data}, status=status.HTTP_201_CREATED
+            "Message": "Article created successfully",
+            "Article": {
+                "title": new_article.title,
+                "summary": new_article.summary,
+                "banner":  {
+                    'src': new_article.banner,
+                    'hash': new_article.hash
+                },
+                "content": base64.b64encode(new_article.content),
+                "id": new_article.user.id
+            }
+        }, status=status.HTTP_201_CREATED
         )
 
 
-class ArticlePut(APIView):
+class ArticleDetail(APIView):
     """
-    Class for handling the retrieval or update of an article.
-
-    Accepts GET and PUT requests.
-
-    Returns:
-        A serialized article for GET requests, or a response object indicating success or failure for PUT requests.
+    Retrieve an article by id.
     """
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, id=None):
+    @staticmethod
+    @action(methods=['get'], detail=True)
+    def get(request, id):
         """
-        Handle the GET request.
-
+        Get an article by id.
         Args:
-            request: The request object.
-            id: The article id.
+            request: Request from client.
+            id (str): Id of the article.
 
         Returns:
-            A response object containing the serialized article.
+            (Response): Response with the article.
         """
         if not authorization(request)['success']:
             return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
-        if not Article.all_objects.filter(article_id=id):
+        if not Article.all_objects.filter(id=id):
             return Response({"Errors": 'This article does not exist'}, status=status.HTTP_404_NOT_FOUND)
-        article = Article.all_objects.get(article_id=id)
-        serializer = ArticleSerializer(article)
-        return Response(serializer.data)
 
-    def put(self, request, id=None):
+        article = Article.all_objects.get(id=id)
+        serializer = ArticleSerializer.serialize_get_crud(article)
+        return Response(serializer)
+
+
+class ArticleUpdate(APIView):
+    """
+    Update an article by id.
+    """
+    permission_classes = (IsAuthenticated,)
+
+    @staticmethod
+    @action(methods=['put'], detail=True)
+    def put(request, id=None):
         """
-        Handle the PUT request.
-
+        Update an article by id.
         Args:
-            request: The request object.
-            id: The article id.
+            request: Request from client.
+            id (str): Id of the article.
 
         Returns:
-            A response object indicating the success or failure of the update.
+            (Response): Response with the article updated or errors.
         """
         if not authorization(request)['success']:
             return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
-        if not Article.all_objects.filter(article_id=id):
+        if not Article.all_objects.filter(id=id):
             return Response({"Errors": 'This article does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
-        article = Article.all_objects.get(article_id=id)
-        serializer = ArticleSerializer(article, data=request.data, partial=True)
+        article = Article.all_objects.get(id=id)
+        image_name = update_images(request.data['banner']['src'], id, 'article')
 
-        image_name = update_images(request.data['banner'], id, 'article')
-        request.data['banner'] = image_name
+        data_article = {
+            "title": request.data['title'],
+            "summary": request.data['summary'],
+            "banner": image_name,
+            "hash": request.data['banner']['hash'],
+            "content": request.data['content']
+        }
+
+        serializer = ArticleSerializer(article, data=data_article, partial=True)
 
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         messages = {}
 
-        if Article.all_objects.filter(title=request.data['title']).exclude(article_id=id).exists():
+        if Article.all_objects.filter(title=request.data['title']).exclude(id=id).exists():
             messages['title'] = 'This title is already assigned to another article'
 
         if messages:
@@ -182,22 +196,46 @@ class ArticlePut(APIView):
 
         serializer.save()
 
-        return Response(serializer.data)
+        return Response({
+            "RequestId": str(uuid.uuid4()),
+            "Message": "Article updated successfully",
+            "Article updated": {
+                "title": article.title,
+                "summary": article.summary,
+                "banner":  {
+                    'src': article.banner,
+                    'hash': article.hash
+                },
+                "content": base64.b64encode(article.content),
+                "id": article.user.id
+            }
+        }, status=status.HTTP_200_OK
+        )
 
 
-class ArticleDel(APIView):
+class ArticleDelete(APIView):
+    """
+    Class to delete an article and everything related to it by id.
+    """
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, id=None):
-        put_class = ArticlePut()
-        return put_class.get(request, id)
+    @staticmethod
+    @action(methods=['delete'], detail=True)
+    def delete(request, id):
+        """
+        Delete an article and everything related to it by id.
+        Args:
+            request: Request from client.
+            id: Id of the article.
 
-    def delete(self, request, id=None):
+        Returns:
+            (Response): Response with a message of success or error.
+        """
         if not authorization(request)['success']:
             return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
-        if not Article.all_objects.filter(article_id=id):
+        if not Article.all_objects.filter(id=id):
             return Response({"Errors": 'This article does not exist'}, status=status.HTTP_404_NOT_FOUND)
-        article = Article.all_objects.get(article_id=id)
+        article = Article.all_objects.get(id=id)
         article.soft_delete()
 
         db_article_tag = list(ArticleTag.all_objects.filter(article=id))

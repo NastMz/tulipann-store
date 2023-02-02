@@ -8,19 +8,19 @@ class ProductSerializer(serializers.ModelSerializer):
         specs = SpecificationSerializer.SpecificationSerializer.serialize_front(product=product)
         images = ImageSerializer.serialize_front(product=product)
         feedback = CommentarySerializer.serialize_front(product=product)
-        category = Category.all_objects.get(category_id=product.category.category_id)
+        category = Category.all_objects.get(id=product.category.id)
         subcategories = ProductSubcategorySerializer.ProductSubcategorySerializer.serialize_front(product=product)
 
         return {
-            'id': product.product_id,
-            'name': product.product_name,
+            'id': product.id,
+            'name': product.name,
             'price': product.price,
             'description': product.description,
             'specs': specs,
             'stock': product.stock,
             'images': images,
             'feedback': feedback,
-            'category': category.category_id,
+            'category': category.id,
             'subcategories': subcategories
         }
 
@@ -30,7 +30,7 @@ class ProductSerializer(serializers.ModelSerializer):
         subcategories = []
         for subcat in db_subcat:
             subcategories.append({
-                'subcategory_id': subcat.subcategory.subcategory_id
+                'subcategoryId': subcat.subcategory.id
             })
 
         db_spec = Specification.all_objects.get(product=product)
@@ -39,16 +39,18 @@ class ProductSerializer(serializers.ModelSerializer):
         features = []
         for feature in db_features:
             features.append({
-                'feature_id': feature.feature_id,
-                'feature_name': feature.feature_name,
+                'featureId': feature.id,
+                'featureName': feature.name,
                 'title': feature.title,
                 'description': feature.description,
-                'image': feature.image,
-                'hash': feature.hash
+                'image': {
+                    'src': feature.image,
+                    'hash': feature.hash
+                }
             })
 
         specification = {
-                'specification_id': db_spec.specification_id,
+                'specificationId': db_spec.id,
                 'summary': db_spec.summary,
                 'features': features
             }
@@ -58,18 +60,20 @@ class ProductSerializer(serializers.ModelSerializer):
         images = []
         for image in db_images:
             images.append({
-                'image_id': image.image_id,
-                'image_name': image.image_name,
-                'hash': image.hash
+                'imageId': image.id,
+                'image': {
+                    'src': image.src,
+                    'hash': image.hash
+                }
             })
 
         return {
-            'product_id': product.product_id,
-            'product_name': product.product_name,
+            'id': product.id,
+            'name': product.name,
             'description': product.description,
             'stock': product.stock,
             'price': product.price,
-            'category': product.category.category_id,
+            'categoryId': product.category.id,
             'subcategories': subcategories,
             'specification': specification,
             'images': images
@@ -78,7 +82,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = (
-            'product_name',
+            'name',
             'description',
             'stock',
             'price',

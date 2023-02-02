@@ -3,13 +3,13 @@ from ..models import Image
 
 
 class ImageCrudSerializer(serializers.ModelSerializer):
-    image_name = serializers.CharField(max_length=255)
+    src = serializers.CharField(max_length=255)
     hash = serializers.CharField(max_length=255)
 
     class Meta:
         model = Image
         fields = (
-            'image_name',
+            'src',
             'hash',
             'product')
 

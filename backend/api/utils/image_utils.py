@@ -11,10 +11,10 @@ base_path = 'images/'
 
 # Mapping of subfolder names to model classes and field names for object ids and image names
 subfolder_mapping = {
-    'article': (Article, 'article_id', 'banner'),
-    'product': (Product, 'product_id', 'image_name'),
-    'feature': (Feature, 'feature_id', 'image'),
-    'category': (Category, 'category_id', 'image'),
+    'article': (Article, 'id', 'banner'),
+    'product': (Product, 'id', 'src'),
+    'feature': (Feature, 'id', 'image'),
+    'category': (Category, 'id', 'image'),
 }
 
 
@@ -41,7 +41,7 @@ def update_images(image_data, object_id, subfolder):
 
     if subfolder == 'product':
         model_class = Image
-        pk_field = 'image_id'
+        pk_field = 'id'
 
     # Fetch the object
     item = model_class.all_objects.get(**{pk_field: object_id})

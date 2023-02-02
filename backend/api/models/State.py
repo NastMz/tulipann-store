@@ -4,20 +4,36 @@ from .SoftDeleteManager import SoftDeleteManager
 
 
 class StateManager(models.Manager):
+    """
+    This class is a manager for the State model that implements a custom method
+    to create a new state object.
+    """
 
-    def create_state(self, state_name):
-        if not state_name:
+    def create_state(self, name):
+        """
+        This method creates a new state object.
+
+        Args:
+        - name (str): The name of the state to be created.
+
+        Returns:
+        - State: The newly created state object.
+        """
+        if not name:
             raise ValueError('You must put a name for the state')
-        state_id = f'state{State.objects.all().count() + 1}'
-        state = self.model(state_id=state_id,
-                           state_name=state_name)
+        id = f'state{State.objects.all().count() + 1}'
+        state = self.model(id=id,
+                           name=name)
         state.save(using=self._db)
         return state
 
 
 class State(SoftDeleteModel):
-    state_id = models.CharField(primary_key=True, max_length=8)
-    state_name = models.CharField(max_length=20)
+    """
+    This class representing a state order.
+    """
+    id = models.CharField(primary_key=True, max_length=8, db_column='state_id')
+    name = models.CharField(max_length=20, db_column='state_name')
 
     objects = StateManager()
     all_objects = SoftDeleteManager()
@@ -27,4 +43,4 @@ class State(SoftDeleteModel):
         db_table = 'api_state'
 
     def __str__(self):
-        return self.state_name
+        return self.name

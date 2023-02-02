@@ -7,6 +7,7 @@ from api.serializers import UserSerializer
 
 class UserViewset(viewsets.GenericViewSet):
     queryset = User.objects.filter(role='role2')
+    serializer_class = UserSerializer
     permission_classes = (AllowAny,)
 
     def list(self, *args, **kwargs):

@@ -4,45 +4,66 @@ from ..models import ArticleTag, Article
 
 
 class ArticleSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Article model
+    """
     def serialize_front(article):
+        """
+        Returns serialized representation of an article for frontend usage
+        Args:
+            article (Article): Instance of Article model
+        Returns:
+            dict: serialized representation of an article
+        """
         db_tag = list(ArticleTag.all_objects.filter(article=article))
 
         tags = []
         for tag in db_tag:
             tags.append({
-                'name': tag.tag.tag_name
+                'name': tag.tag.name
             })
 
         return {
-            'id': article.article_id,
+            'id': article.id,
             'title': article.title,
             'summary': article.summary,
             'content': base64.b64encode(article.content),
-            'banner': article.banner,
-            'hash': article.hash,
+            'banner': {
+                'src': article.banner,
+                'hash': article.hash
+            },
             'date': article.date,
-            'author': article.user.user_id,
+            'author': article.user.id,
             'tags': tags
         }
 
     def serialize_get_crud(article):
+        """
+        Returns serialized representation of an article for CRUD operations
+        Args:
+            article (Article): Instance of Article model
+        Returns:
+            dict: serialized representation of an article
+        """
         db_tag = list(ArticleTag.all_objects.filter(article=article))
 
         tags = []
         for tag in db_tag:
             tags.append({
-                'tag_id': tag.tag.tag_id,
+                'tagId': tag.tag.id,
             })
 
         return {
-            'article_id': article.article_id,
+            'id': article.id,
             'title': article.title,
             'summary': article.summary,
-            'banner': article.banner,
-            'hash': article.hash,
+            'banner': {
+                'src': article.banner,
+                'hash': article.hash
+            },
             'date': article.date,
             'content': base64.b64encode(article.content),
-            'user': article.user.user_id,
+            'id': article.user.id,
             'tags': tags
         }
 

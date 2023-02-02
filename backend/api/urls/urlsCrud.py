@@ -1,77 +1,108 @@
-from django.urls import path
+from django.urls import path, include
 from api.views.crud import *
 
+"""
+In this file, all the routes to which the admin has access to perform CRUD actions are configured.
+"""
+
 urlpatterns = [
-    path('category/list/', CategoryList.as_view(), name='category_crud'),
-    path('category/add/', CategoryRegister.as_view(), name='category_crud'),
-    path('category/update/<str:id>', CategoryPut.as_view(), name='category_crud'),
-    path('category/delete/<str:id>', CategoryDel.as_view(), name='category_crud'),
+    path('categories/', include([
+        path('', CategoryList.as_view(), name='category_list'),
+        path('create/', CategoryCreate.as_view(), name='category_create'),
+        path('<str:id>/', CategoryDetail.as_view(), name='category_detail'),
+        path('<str:id>/update/', CategoryUpdate.as_view(), name='category_update'),
+        path('<str:id>/delete/', CategoryDelete.as_view(), name='category_delete'),
+    ])),
 
-    path('role/list/', RoleList.as_view(), name='role_crud'),
-    path('role/add/', RoleRegister.as_view(), name='role_crud'),
-    path('role/update/<str:id>', RolePut.as_view(), name='role_crud'),
-    path('role/delete/<str:id>', RoleDel.as_view(), name='role_crud'),
+    path('roles/', include([
+        path('', RoleList.as_view(), name='role_list'),
+        path('create/', RoleCreate.as_view(), name='role_create'),
+        path('<str:id>/', RoleDetail.as_view(), name='role_detail'),
+        path('<str:id>/update/', RoleUpdate.as_view(), name='role_update'),
+        path('<str:id>/delete/', RoleDelete.as_view(), name='role_delete'),
+    ])),
 
-    path('payment/list/', PaymentList.as_view(), name='payment_crud'),
-    path('payment/add/', PaymentRegister.as_view(), name='payment_crud'),
-    path('payment/update/<str:id>', PaymentPut.as_view(), name='payment_crud'),
-    path('payment/delete/<str:id>', PaymentDel.as_view(), name='payment_crud'),
+    path('states/', include([
+        path('', StateList.as_view(), name='state_list'),
+        path('create/', StateCreate.as_view(), name='state_create'),
+        path('<str:id>/', StateDetail.as_view(), name='state_detail'),
+        path('<str:id>/update/', StateUpdate.as_view(), name='state_update'),
+        path('<str:id>/delete/', StateDelete.as_view(), name='state_delete'),
+    ])),
 
-    path('state/list/', StateList.as_view(), name='state_crud'),
-    path('state/add/', StateRegister.as_view(), name='state_crud'),
-    path('state/update/<str:id>', StatePut.as_view(), name='state_crud'),
-    path('state/delete/<str:id>', StateDel.as_view(), name='state_crud'),
+    path('subcategories/', include([
+        path('', SubcategoryList.as_view(), name='subcategory_list'),
+        path('create/', SubcategoryCreate.as_view(), name='subcategory_create'),
+        path('<str:id>/', SubcategoryDetail.as_view(), name='subcategory_detail'),
+        path('<str:id>/update/', SubcategoryUpdate.as_view(), name='subcategory_update'),
+        path('<str:id>/delete/', SubcategoryDelete.as_view(), name='subcategory_delete'),
+    ])),
 
-    path('subcategory/list/', SubcategoryList.as_view(), name='subcategory_crud'),
-    path('subcategory/add/', SubcategoryRegister.as_view(), name='subcategory_crud'),
-    path('subcategory/update/<str:id>', SubcategoryPut.as_view(), name='subcategory_crud'),
-    path('subcategory/delete/<str:id>', SubcategoryDel.as_view(), name='subcategory_crud'),
+    path('tags/', include([
+        path('', TagList.as_view(), name='tag_list'),
+        path('create/', TagCreate.as_view(), name='tag_create'),
+        path('<str:id>/', TagDetail.as_view(), name='tag_detail'),
+        path('<str:id>/update/', TagUpdate.as_view(), name='tag_update'),
+        path('<str:id>/delete/', TagDelete.as_view(), name='tag_delete'),
+    ])),
 
-    path('tag/list/', TagList.as_view(), name='tag_crud'),
-    path('tag/add/', TagRegister.as_view(), name='tag_crud'),
-    path('tag/update/<str:id>', TagPut.as_view(), name='tag_crud'),
-    path('tag/delete/<str:id>', TagDel.as_view(), name='tag_crud'),
+    path('products/', include([
+        path('', ProductList.as_view(), name='product_list'),
+        path('create/', ProductCreate.as_view(), name='product_create'),
+        path('<str:id>/', ProductDetail.as_view(), name='product_detail'),
+        path('<str:id>/update/', ProductUpdate.as_view(), name='product_update'),
+        path('<str:id>/delete/', ProductDelete.as_view(), name='product_delete'),
+    ])),
 
-    path('product/list/', ProductList.as_view(), name='product_crud'),
-    path('product/add/', ProductRegister.as_view(), name='product_crud'),
-    path('product/update/<str:id>', ProductPut.as_view(), name='product_crud'),
-    path('product/delete/<str:id>', ProductDel.as_view(), name='product_crud'),
+    path('users/', include([
+        path('', UserList.as_view(), name='user_list'),
+        path('<str:id>/', UserDetail.as_view(), name='user_detail'),
+    ])),
 
-    path('users/list/', UserListView.as_view(), name='users'),
+    path('articles/', include([
+        path('', ArticleList.as_view(), name='article_list'),
+        path('create/', ArticleCreate.as_view(), name='article_create'),
+        path('<str:id>/', ArticleDetail.as_view(), name='article_detail'),
+        path('<str:id>/update/', ArticleUpdate.as_view(), name='article_update'),
+        path('<str:id>/delete/', ArticleDelete.as_view(), name='article_delete'),
+    ])),
 
-    path('article/list/', ArticleList.as_view(), name='article_crud'),
-    path('article/add/', ArticleRegister.as_view(), name='article_crud'),
-    path('article/update/<str:id>', ArticlePut.as_view(), name='article_crud'),
-    path('article/delete/<str:id>', ArticleDel.as_view(), name='article_crud'),
+    path('commentaries/', include([
+        path('', CommentaryList.as_view(), name='commentary_list'),
+        path('<str:id>/', CommentaryDetail.as_view(), name='commentary_detail'),
+    ])),
 
-    path('commentary/list/', CommentaryList.as_view(), name='commentary_crud'),
+    path('departments/', include([
+        path('', DepartmentList.as_view(), name='department_list'),
+        path('<str:id>/', DepartmentDetail.as_view(), name='department_detail'),
+    ])),
 
-    path('order/list/', OrderList.as_view(), name='order_crud'),
-    path('order/update/<str:id>', OrderPut.as_view(), name='order_crud'),
+    path('orders/', include([
+        path('', OrderList.as_view(), name='order_list'),
+        path('<str:id>/', OrderDetail.as_view(), name='order_detail'),
+        path('<str:id>/update/', OrderUpdate.as_view(), name='order_update'),
+    ])),
 
-    path('image/list/', ImageList.as_view(), name='image_crud'),
-    path('image/add/', ImageRegister.as_view(), name='image_crud'),
-    path('image/update/<str:id>', ImagePut.as_view(), name='image_crud'),
-    path('image/delete/<str:id>', ImageDel.as_view(), name='image_crud'),
+    path('images/', include([
+        path('', ImageList.as_view(), name='image_list'),
+        path('create/', ImageCreate.as_view(), name='image_create'),
+        path('<str:id>/', ImageDetail.as_view(), name='image_detail'),
+        path('<str:id>/update/', ImageUpdate.as_view(), name='image_update'),
+        path('<str:id>/delete/', ImageDelete.as_view(), name='image_delete'),
+    ])),
 
-    path('specification/list/', SpecificationList.as_view(), name='specification_crud'),
-    path('specification/add/', SpecificationRegister.as_view(), name='specification_crud'),
-    path('specification/update/<str:id>', SpecificationPut.as_view(), name='specification_crud'),
+    path('specifications/', include([
+        path('', SpecificationList.as_view(), name='specification_list'),
+        path('create/', SpecificationCreate.as_view(), name='specification_create'),
+        path('<str:id>/', SpecificationDetail.as_view(), name='specification_detail'),
+        path('<str:id>/update/', SpecificationUpdate.as_view(), name='specification_update'),
+    ])),
 
-    path('feature/list/', FeatureList.as_view(), name='feature_crud'),
-    path('feature/add/', FeatureRegister.as_view(), name='feature_crud'),
-    path('feature/update/<str:id>', FeaturePut.as_view(), name='feature_crud'),
-    path('feature/delete/<str:id>', FeatureDel.as_view(), name='feature_crud'),
-
-    # path('order_product/list/', OrderProductList.as_view(), name='orderproduct_crud'),
-    # path('order_product/add/', OrderProductRegister.as_view(), name='orderproduct_crud'),
-    # path('order_product/update/<str:id>', OrderProductPut.as_view(), name='orderproduct_crud'),
-    #
-    # path('product_subcategory/list/', ProductSubcategoryList.as_view(), name='productsubcategory_crud'),
-    # path('product_subcategory/add/', ProductSubcategoryRegister.as_view(), name='productsubcategory_crud'),
-    # path('product_subcategory/update/<str:id>', ProductSubcategoryPut.as_view(), name='productsubcategory_crud'),
-    #
-    # path('department/list/', DepartmentList.as_view(), name='department_crud'),
-    # path('department/add/', DepartmentRegister.as_view(), name='department_crud'),
-    # path('department/update/<str:id>', DepartmentPut.as_view(), name='department_crud'),
+    path('features/', include([
+        path('', FeatureList.as_view(), name='feature_list'),
+        path('create/', FeatureCreate.as_view(), name='feature_create'),
+        path('<str:id>/', FeatureDetail.as_view(), name='feature_detail'),
+        path('<str:id>/update/', FeatureUpdate.as_view(), name='feature_update'),
+        path('<str:id>/delete/', FeatureDelete.as_view(), name='feature_delete'),
+    ])),
 ]

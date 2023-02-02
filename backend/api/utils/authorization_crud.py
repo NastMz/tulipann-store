@@ -15,7 +15,7 @@ def authorization(request):
     """
 
     # Check if the user's role is "Admin"
-    if request.user.role.role_name == "Admin":
+    if request.user.role.name == "Admin":
         response = {
             'success': True,
             'status_code': status.HTTP_200_OK,

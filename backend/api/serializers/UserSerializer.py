@@ -5,18 +5,30 @@ from api.models import *
 class UserSerializer(serializers.ModelSerializer):
     def serialize_front(user):
         return {
-            'first_name': user.first_name,
-            'last_name': user.last_name,
+            'firstName': user.firstName,
+            'lastName': user.lastName,
             'email': user.email,
             'phone': user.phone,
             'city': user.city,
         }
 
+    def serialize_get_crud(user):
+        role = Role.all_objects.get(id=user.role.id)
+        return {
+            'id': user.id,
+            'firstName': user.firstName,
+            'lastName': user.lastName,
+            'email': user.email,
+            'phone': user.phone,
+            'city': user.city,
+            'roleId': role.id
+        }
+
     class Meta:
         model = User
         fields = (
-            'first_name',
-            'last_name',
+            'firstName',
+            'lastName',
             'email',
             'phone',
             'city',
@@ -26,15 +38,29 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=255, write_only=True)
-    
+
+    def serialize_get_self(user):
+        return {
+            'id': user.id,
+            'firstName': user.firstName,
+            'lastName': user.lastName,
+            'email': user.email,
+            'phone': user.phone,
+            'departmentId': user.department.id,
+            'city': user.city,
+            'address': user.address
+        }
+
     class Meta:
         model = User
         fields = (
-            'first_name',
-            'last_name',
+            'id',
+            'firstName',
+            'lastName',
             'email',
             'password',
             'phone',
+            'department',
             'city',
             'address',
         )

@@ -3,16 +3,16 @@ from ..models import Department
 
 
 class DepartmentCrudSerializer(serializers.ModelSerializer):
-    department_name = serializers.CharField(max_length=30)
+    name = serializers.CharField(max_length=30)
 
     class Meta:
         model = Department
-        fields = ('department_name',)
+        fields = ('name',)
     
     def validate(self, args):
-        department_name = args.get('department_name', None)
-        if Department.all_objects.filter(department_name=department_name).exists():
-            raise serializers.ValidationError({'department_name': ('department already exists')})
+        name = args.get('name', None)
+        if Department.all_objects.filter(name=name).exists():
+            raise serializers.ValidationError({'name': 'department already exists'})
         return super().validate(args)
 
     def create(self, validated_data):

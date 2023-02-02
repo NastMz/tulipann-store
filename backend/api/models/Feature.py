@@ -5,21 +5,39 @@ from .SoftDeleteManager import SoftDeleteManager
 
 
 class FeatureManager(models.Manager):
+    """
+    This class is the manager for the Feature model, it handles the create_feature() function
+    which creates a new Feature object and saves it in the database.
+    """
 
-    def create_feature(self, feature_name, **extra_fields):
-        if not feature_name and not extra_fields:
+    def create_feature(self, name, **extra_fields):
+        """
+        This function creates a new Feature object and saves it in the database.
+
+        Args:
+            name (str): The name of the feature.
+            **extra_fields: Additional fields for the Feature object.
+
+        Returns:
+            feature (Feature): The created feature object.
+        """
+        if not name and not extra_fields:
             raise ValueError('You must fill in all fields')
-        feature_id = f'feature{Feature.objects.all().count() + 1}'
-        feature = self.model(feature_id=feature_id,
-                             feature_name=feature_name,
+        id = f'feature{Feature.objects.all().count() + 1}'
+        feature = self.model(id=id,
+                             name=name,
                              **extra_fields)
         feature.save(using=self._db)
         return feature
 
 
 class Feature(SoftDeleteModel):
-    feature_id = models.CharField(primary_key=True, max_length=10)
-    feature_name = models.CharField(max_length=20)
+    """
+    This class defines the Feature model.
+    The Feature model represents a feature of a product.
+    """
+    id = models.CharField(primary_key=True, max_length=10, db_column='feature_id')
+    name = models.CharField(max_length=20, db_column='feature_name')
     title = models.CharField(max_length=20)
     description = models.TextField()
     image = models.CharField(max_length=255)
@@ -34,4 +52,4 @@ class Feature(SoftDeleteModel):
         db_table = 'api_feature'
 
     def __str__(self):
-        return f'{self.feature_name} ({self.specification.summary})'
+        return f'{self.name} ({self.specification.summary})'

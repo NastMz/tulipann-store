@@ -5,7 +5,7 @@ from ..serializers import FeatureSerializer
 
 class SpecificationSerializer(serializers.ModelSerializer):
     def serialize_front(product):
-        db_spec = Specification.all_objects.filter(product_id=product.product_id)
+        db_spec = Specification.all_objects.filter(product=product.id)
 
         specs = []
         features = []
@@ -14,8 +14,8 @@ class SpecificationSerializer(serializers.ModelSerializer):
             specs.append({
                 'summary': spec.summary,
             })
-            if Feature.all_objects.filter(specification=spec.specification_id).exists():
-                features.append(FeatureSerializer.serialize_front(specification=spec.specification_id))
+            if Feature.all_objects.filter(specification=spec.id).exists():
+                features.append(FeatureSerializer.serialize_front(specification=spec.id))
 
         specs = {
             'summary': specs,
@@ -26,9 +26,9 @@ class SpecificationSerializer(serializers.ModelSerializer):
 
     def serialize_get_crud(specification):
         return {
-            'specification_id': specification.specification_id,
+            'id': specification.id,
             'summary': specification.summary,
-            'product': specification.product.product_id
+            'productId': specification.product.id
         }
 
     class Meta:

@@ -1,54 +1,36 @@
-import environ
-import hashlib
-import requests
-import  uuid
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+from rest_framework.decorators import action
 
-from ..utils.payment_utils import get_total_amount
-from api.models import User
-
-# Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
+from api.models import Order, State
 
 
-class PayUPayment:
-    def __init__(self):
-        self.verified = False
+@csrf_exempt
+@action(detail=False, methods=['post'])
+def confirm_payment(request):
+    """
+        Confirm payment function that receives the POST data from a payment gateway
+        and updates the order's state accordingly.
 
-    def create(self, user_id, products):
-        client = User.objects.get(user_id=user_id)
-        amount = get_total_amount(products)
-        request_data = {
-            "apiKey": env('PAYU_API_KEY'),
-            "apiLogin": env('PAYU_API_LOGIN'),
-            "merchantId": env('PAYU_MERCHANT_ID'),
-            "accountId": env('PAYU_ACCOUNT_ID'),
-            "referenceCode": uuid.uuid4().hex,
-            "description": "Payment test description",
-            "signature": self.generate_signature(amount),
-            "currency": env('CURRENCY'),
-            "amount": amount,
-            "buyerEmail": client.email,
-            "telephone": client.phone,
-            "buyerFullName": " ".join([client.first_name, client.last_name]),
-            # "responseUrl": "http://www.test.com/response",
-            # "confirmationUrl": "http://www.test.com/confirmation",
-        }
+        Args:
+            request (HttpRequest): The request object.
 
-        response = requests.post(env('PAYU_TEST_URL'), json=request_data)
+        Returns:
+            HttpResponse: The HTTP response object.
+        """
+    form_dict = dict(request.POST)
 
-        print('hola')
-
-    def generate_signature(self, amount):
-        signature = "~".join([env('PAYU_API_KEY'), env('PAYU_MERCHANT_ID'), str(amount), env('CURRENCY')])
-
-        # Crear un objeto SHA-256
-        hash_object = hashlib.sha256()
-
-        # Pasar la cadena de texto a hash
-        hash_object.update(signature.encode())
-
-        # Obtener la huella digital en formato hexadecimal
-        hex_dig = hash_object.hexdigest()
-
-        return hex_dig
+    if form_dict['state_pol'][0] == '4':
+        # Update the order state to success
+        order = Order.all_objects.get(id=form_dict['extra1'][0])
+        order.state = State.all_objects.get(name='Aprobado')
+        order.details = json.dumps(form_dict)
+        order.save()
+    else:
+        # Update the order state to fail
+        order = Order.all_objects.get(id=form_dict['extra1'][0])
+        order.state = State.all_objects.get(name='Rechazado')
+        order.details = json.dumps(form_dict)
+        order.save()
+    return HttpResponse("ok")

@@ -5,21 +5,37 @@ from .SoftDeleteManager import SoftDeleteManager
 
 
 class SubcategoryManager(models.Manager):
+    """
+    Manager class for the Subcategory model.
+    """
 
-    def create_subcategory(self, subcategory_name, category):
-        if not subcategory_name and not category:
+    def create_subcategory(self, name, category):
+        """
+        Create a new subcategory instance.
+
+        Args:
+            name (str): The name of the subcategory.
+            category (Category): The category that the subcategory belongs to.
+
+        Returns:
+            Subcategory: The created subcategory instance.
+        """
+        if not name and not category:
             raise ValueError('You must fill in all fields')
-        subcategory_id = f'subcategory{Subcategory.objects.all().count() + 1}'
-        subcategory = self.model(subcategory_id=subcategory_id,
-                                 subcategory_name=subcategory_name,
+        id = f'subcategory{Subcategory.objects.all().count() + 1}'
+        subcategory = self.model(id=id,
+                                 name=name,
                                  category=category)
         subcategory.save(using=self._db)
         return subcategory
 
 
 class Subcategory(SoftDeleteModel):
-    subcategory_id = models.CharField(primary_key=True, max_length=14)
-    subcategory_name = models.CharField(max_length=50)
+    """
+    Represent a subcategory of a product
+    """
+    id = models.CharField(primary_key=True, max_length=14, db_column='subcategory_id')
+    name = models.CharField(max_length=50, db_column='subcategory_name')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     objects = SubcategoryManager()
@@ -30,4 +46,4 @@ class Subcategory(SoftDeleteModel):
         db_table = 'api_subcategory'
 
     def __str__(self):
-        return self.subcategory_name
+        return self.name

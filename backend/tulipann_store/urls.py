@@ -14,17 +14,40 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from rest_framework import permissions
+
 from api.utils.image_utils import get_image
 from api.views.auth.PasswordResetConfirmView import check_token
+from api.checkout.Payment import confirm_payment
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="API Doc",
+      default_version='v1',
+      description="Este es un ejemplo de documentación de una API construida con Django REST framework",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
+    re_path('swagger(?P<format>\.json|\.yaml)', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    re_path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    re_path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls.urlsApi')),
     path('api/auth/', include('api.urls.urlsAuth')),
+    path('api/data/', include('api.urls.urlsApi')),
+    path('api/data/', include('api.urls.urlsApiAdd')),
+    path('api/data/', include('api.urls.urlsData')),
     path('api/crud/', include('api.urls.urlsCrud')),
-    path('api/', include('api.urls.urlsApiAdd')),
     path('api/media/<str:subfolder>/<str:image_name>', get_image),
     path('api/auth/token/verify/<str:token>', check_token),
+    path('api/payment/confirmation/', confirm_payment)
 ]
     

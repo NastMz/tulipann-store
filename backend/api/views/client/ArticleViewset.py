@@ -7,6 +7,7 @@ from rest_framework.permissions import AllowAny
 
 class ArticleViewset(viewsets.GenericViewSet):
     queryset = Article.all_objects.all()
+    serializer_class = ArticleSerializer
     permission_classes = (AllowAny,)
 
     def list(self, *args, **kwargs):

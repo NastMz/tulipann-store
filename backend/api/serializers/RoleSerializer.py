@@ -5,13 +5,13 @@ from ..models import Role
 class RoleSerializer(serializers.ModelSerializer):
     def serialize_get_crud(role):
         return {
-            'role_id': role.role_id,
-            'role_name': role.role_name
+            'id': role.id,
+            'name': role.name
         }
 
     class Meta:
         model = Role
         fields = (
-            'role_name',
+            'name',
             )
 
