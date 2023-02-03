@@ -1,5 +1,9 @@
 #!/bin/sh
 
+echo 'Running collecstatic...'
+
+python manage.py collectstatic --no-input --settings=tulipann_store.settings.production
+
 echo 'Make migrations...'
 
 python manage.py makemigrations --settings=tulipann_store.settings.production

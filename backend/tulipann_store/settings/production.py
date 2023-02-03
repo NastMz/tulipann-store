@@ -10,12 +10,13 @@ environ.Env.read_env(os.path.join(Path(__file__).resolve().parent.parent, '.env.
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # tons porque sale eso? xd que cosa? el listado de urls no deberia salirahhh
+DEBUG = True
 
-ALLOWED_HOSTS = ['https://api.tulipannstore.com/', 'https://tulipannstore.com/', 'https://admin.tulipannstore.com/']
+# ALLOWED_HOSTS = ['https://api.tulipannstore.com/', 'https://tulipannstore.com/', 'https://admin.tulipannstore.com/']
+ALLOWED_HOSTS = ['*']
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=100),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': False,
@@ -37,7 +38,12 @@ DATABASES = {
     }
 }
 
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     'https://tulipannstore.com',
     'https://admin.tulipannstore.com',
-]   # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
+]  # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
+
+STATIC_ROOT = Path.joinpath(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
