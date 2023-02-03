@@ -59,8 +59,7 @@ class ArticleCreate(generics.GenericAPIView):
         if not authorization(request)['success']:
             return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
 
-        image_name = optimize_and_save_image(image_data=request.data['banner']['src'], subfolder='article',
-                                            object_name='article')
+        image_name = optimize_and_save_image(image_data=request.data['banner']['src'], object_name='article')
 
         data_article = {
             "title": request.data['title'],

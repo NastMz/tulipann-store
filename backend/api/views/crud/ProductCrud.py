@@ -122,7 +122,7 @@ class ProductCreate(generics.GenericAPIView):
         feature_serializer = FeatureCrudSerializer()
 
         for feature in features:
-            image_feature = optimize_and_save_image(feature['image']['src'], 'feature', 'feature')
+            image_feature = optimize_and_save_image(image_data=feature['image']['src'], object_name='feature')
             data_feature = {
                 'name': feature['featureName'],
                 'title': feature['title'],
@@ -136,7 +136,7 @@ class ProductCreate(generics.GenericAPIView):
         image_serializer = ImageCrudSerializer()
 
         for image in images:
-            image_product = optimize_and_save_image(image['src'], 'product', 'product')
+            image_product = optimize_and_save_image(image_data=image['src'], object_name='product')
             data_image = {
                 'src': image_product,
                 'hash': image['hash'],
