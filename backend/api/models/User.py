@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
 import uuid
+
+from .City import City
 from .Role import Role
 from .Department import Department
 
@@ -93,7 +95,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, max_length=255)
     phone = models.CharField(max_length=30)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    city = models.CharField(max_length=255)
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
     address = models.CharField(max_length=255)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
 

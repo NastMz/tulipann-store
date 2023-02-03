@@ -4,6 +4,7 @@ from .ArticleTag import ArticleTag
 from .Category import Category
 from .Commentary import Commentary
 from .Department import Department
+from .City import City
 from .Feature import Feature
 from .Image import Image
 from .Order import Order

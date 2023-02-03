@@ -6,6 +6,8 @@ from .ArticleTagSerializer import ArticleTagSerializer
 from .CategorySerializer import *
 from .CategoryCrudSerializer import CategoryCrudSerializer
 
+from .CitySerializer import *
+
 from .CommentarySerializer import *
 from .CommentaryCrudSerializer import CommentaryCrudSerializer
 
@@ -47,4 +49,3 @@ from .TagSerializer import *
 from .TagCrudSerializer import TagCrudSerializer
 
 from .DepartmentSerializer import *
-from .DepartmentCrudSerializer import DepartmentCrudSerializer

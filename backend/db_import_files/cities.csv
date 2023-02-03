@@ -1,0 +1,1001 @@
+city_id;city_name;department_id
+city_5001;Medellín;department_5
+city_5002;Abejorral;department_5
+city_5004;Abriaquí;department_5
+city_5021;Alejandría;department_5
+city_503;Amagá;department_5
+city_5031;Amalfi;department_5
+city_5034;Andes;department_5
+city_5036;Angelópolis;department_5
+city_5038;Angostura;department_5
+city_15047;Aquitania;department_15
+city_504;Anorí;department_5
+city_50004;Lejanías;department_50
+city_5051;Arboletes;department_5
+city_5055;Argelia;department_5
+city_5042;Santafé de Antioquia;department_5
+city_5079;Barbosa;department_5
+city_5088;Bello;department_5
+city_5091;Betania;department_5
+city_5093;Betulia;department_5
+city_5101;Ciudad Bolívar;department_5
+city_5107;Briceño;department_5
+city_5113;Buriticá;department_5
+city_512;Cáceres;department_5
+city_5125;Caicedo;department_5
+city_5129;Caldas;department_5
+city_5134;Campamento;department_5
+city_5138;Cañasgordas;department_5
+city_5142;Caracolí;department_5
+city_5145;Caramanta;department_5
+city_5147;Carepa;department_5
+city_515;Carolina;department_5
+city_5154;Caucasia;department_5
+city_5172;Chigorodó;department_5
+city_519;Cisneros;department_5
+city_5197;Cocorná;department_5
+city_5206;Concepción;department_5
+city_5209;Concordia;department_5
+city_5212;Copacabana;department_5
+city_5234;Dabeiba;department_5
+city_5237;Don Matías;department_5
+city_524;Ebéjico;department_5
+city_525;El Bagre;department_5
+city_5264;Entrerrios;department_5
+city_5266;Envigado;department_5
+city_5282;Fredonia;department_5
+city_5306;Giraldo;department_5
+city_5308;Girardota;department_5
+city_531;Gómez Plata;department_5
+city_5315;Guadalupe;department_5
+city_5318;Guarne;department_5
+city_5321;Guatapé;department_5
+city_5347;Heliconia;department_5
+city_5353;Hispania;department_5
+city_536;Itagui;department_5
+city_5361;Ituango;department_5
+city_5086;Belmira;department_5
+city_5368;Jericó;department_5
+city_5376;La Ceja;department_5
+city_538;La Estrella;department_5
+city_539;La Pintada;department_5
+city_54;La Unión;department_5
+city_5411;Liborina;department_5
+city_5044;Anza;department_5
+city_544;Marinilla;department_5
+city_5467;Montebello;department_5
+city_5475;Murindó;department_5
+city_545;Apartadó;department_5
+city_5483;Nariño;department_5
+city_549;Necoclí;department_5
+city_5495;Nechí;department_5
+city_5501;Olaya;department_5
+city_5541;Peñol;department_5
+city_5543;Peque;department_5
+city_5576;Pueblorrico;department_5
+city_5579;Puerto Berrío;department_5
+city_5585;Puerto Nare;department_5
+city_5591;Puerto Triunfo;department_5
+city_5604;Remedios;department_5
+city_5607;Retiro;department_5
+city_5615;Rionegro;department_5
+city_5628;Sabanalarga;department_5
+city_5631;Sabaneta;department_5
+city_5642;Salgar;department_5
+city_5652;San Francisco;department_5
+city_5656;San Jerónimo;department_5
+city_566;San Luis;department_5
+city_5664;San Pedro;department_5
+city_5667;San Rafael;department_5
+city_567;San Roque;department_5
+city_5674;San Vicente;department_5
+city_5679;Santa Bárbara;department_5
+city_569;Santo Domingo;department_5
+city_5697;El Santuario;department_5
+city_5736;Segovia;department_5
+city_5761;Sopetrán;department_5
+city_5789;Támesis;department_5
+city_579;Tarazá;department_5
+city_5792;Tarso;department_5
+city_5809;Titiribí;department_5
+city_5819;Toledo;department_5
+city_5837;Turbo;department_5
+city_5842;Uramita;department_5
+city_5847;Urrao;department_5
+city_5854;Valdivia;department_5
+city_5856;Valparaíso;department_5
+city_5858;Vegachí;department_5
+city_5861;Venecia;department_5
+city_5885;Yalí;department_5
+city_5887;Yarumal;department_5
+city_589;Yolombó;department_5
+city_5893;Yondó;department_5
+city_5895;Zaragoza;department_5
+city_5665;San Pedro de Uraba;department_5
+city_5045;Puerto Concordia;department_50
+city_5686;Santa Rosa de Osos;department_5
+city_5647;San Andrés de Cuerquía;department_5
+city_5873;Vigía del Fuerte;department_5
+city_5658;San José de La Montaña;department_5
+city_5659;San Juan de Urabá;department_5
+city_5148;El Carmen de Viboral;department_5
+city_5649;San Carlos;department_5
+city_8001;Barranquilla;department_8
+city_8078;Baranoa;department_8
+city_8141;Candelaria;department_8
+city_8296;Galapa;department_8
+city_8421;Luruaco;department_8
+city_8433;Malambo;department_8
+city_8436;Manatí;department_8
+city_8549;Piojó;department_8
+city_8558;Polonuevo;department_8
+city_8634;Sabanagrande;department_8
+city_8638;Sabanalarga;department_8
+city_8675;Santa Lucía;department_8
+city_8685;Santo Tomás;department_8
+city_8758;Soledad;department_8
+city_877;Suan;department_8
+city_8832;Tubará;department_8
+city_8849;Usiacurí;department_8
+city_8372;Juan de Acosta;department_8
+city_852;Palmar de Varela;department_8
+city_8137;Campo de La Cruz;department_8
+city_11001;Bogotá DC;department_11
+city_13006;Achí;department_13
+city_13042;Arenal;department_13
+city_13052;Arjona;department_13
+city_13062;Arroyohondo;department_13
+city_1314;Calamar;department_13
+city_1316;Cantagallo;department_13
+city_13188;Cicuco;department_13
+city_13212;Córdoba;department_13
+city_13222;Clemencia;department_13
+city_13248;El Guamo;department_13
+city_1343;Magangué;department_13
+city_13433;Mahates;department_13
+city_1344;Margarita;department_13
+city_13458;Montecristo;department_13
+city_13468;Mompós;department_13
+city_13473;Morales;department_13
+city_1349;Norosí;department_13
+city_13549;Pinillos;department_13
+city_1358;Regidor;department_13
+city_136;Río Viejo;department_13
+city_13647;San Estanislao;department_13
+city_1365;San Fernando;department_13
+city_13657;San Juan Nepomuceno;department_13
+city_13673;Santa Catalina;department_13
+city_13683;Santa Rosa;department_13
+city_13744;Simití;department_13
+city_1376;Soplaviento;department_13
+city_1378;Talaigua Nuevo;department_13
+city_1381;Tiquisio;department_13
+city_13836;Turbaco;department_13
+city_13838;Turbaná;department_13
+city_13873;Villanueva;department_13
+city_13074;Barranco de Loba;department_13
+city_13688;Santa Rosa del Sur;department_13
+city_133;Hatillo de Loba;department_13
+city_13244;El Carmen de Bolívar;department_13
+city_13667;San Martín de Loba;department_13
+city_1303;Altos del Rosario;department_13
+city_13655;San Jacinto del Cauca;department_13
+city_1367;San Pablo de Borbur;department_13
+city_13654;San Jacinto;department_13
+city_15832;Tununguá;department_15
+city_15476;Motavita;department_15
+city_15189;Ciénega;department_15
+city_15001;Tunja;department_15
+city_15022;Almeida;department_15
+city_5059;Armenia;department_5
+city_15051;Arcabuco;department_15
+city_1509;Berbeo;department_15
+city_15092;Betéitiva;department_15
+city_15097;Boavita;department_15
+city_15104;Boyacá;department_15
+city_15106;Briceño;department_15
+city_15109;Buena Vista;department_15
+city_15114;Busbanzá;department_15
+city_15131;Caldas;department_15
+city_15135;Campohermoso;department_15
+city_15162;Cerinza;department_15
+city_15172;Chinavita;department_15
+city_15176;Chiquinquirá;department_15
+city_1518;Chiscas;department_15
+city_15183;Chita;department_15
+city_15185;Chitaraque;department_15
+city_15187;Chivatá;department_15
+city_15204;Cómbita;department_15
+city_15212;Coper;department_15
+city_15215;Corrales;department_15
+city_15218;Covarachía;department_15
+city_15223;Cubará;department_15
+city_15224;Cucaita;department_15
+city_15226;Cuítiva;department_15
+city_15232;Chíquiza;department_15
+city_15236;Chivor;department_15
+city_15238;Duitama;department_15
+city_15244;El Cocuy;department_15
+city_15248;El Espino;department_15
+city_15272;Firavitoba;department_15
+city_15276;Floresta;department_15
+city_15293;Gachantivá;department_15
+city_15296;Gameza;department_15
+city_15299;Garagoa;department_15
+city_15317;Guacamayas;department_15
+city_15322;Guateque;department_15
+city_15325;Guayatá;department_15
+city_15332;Güicán;department_15
+city_15362;Iza;department_15
+city_15367;Jenesano;department_15
+city_15368;Jericó;department_15
+city_15377;Labranzagrande;department_15
+city_1538;La Capilla;department_15
+city_15401;La Victoria;department_15
+city_15425;Macanal;department_15
+city_15442;Maripí;department_15
+city_15455;Miraflores;department_15
+city_15464;Mongua;department_15
+city_15466;Monguí;department_15
+city_15469;Moniquirá;department_15
+city_1548;Muzo;department_15
+city_15491;Nobsa;department_15
+city_15494;Nuevo Colón;department_15
+city_155;Oicatá;department_15
+city_15507;Otanche;department_15
+city_15511;Pachavita;department_15
+city_15514;Páez;department_15
+city_15516;Paipa;department_15
+city_15518;Pajarito;department_15
+city_15522;Panqueba;department_15
+city_15531;Pauna;department_15
+city_15533;Paya;department_15
+city_15542;Pesca;department_15
+city_1555;Pisba;department_15
+city_15572;Puerto Boyacá;department_15
+city_1558;Quípama;department_15
+city_15599;Ramiriquí;department_15
+city_156;Ráquira;department_15
+city_15621;Rondón;department_15
+city_15632;Saboyá;department_15
+city_15638;Sáchica;department_15
+city_15646;Samacá;department_15
+city_1566;San Eduardo;department_15
+city_15673;San Mateo;department_15
+city_15686;Santana;department_15
+city_1569;Santa María;department_15
+city_15696;Santa Sofía;department_15
+city_1572;Sativanorte;department_15
+city_15723;Sativasur;department_15
+city_1574;Siachoque;department_15
+city_15753;Soatá;department_15
+city_15755;Socotá;department_15
+city_15757;Socha;department_15
+city_15759;Sogamoso;department_15
+city_15761;Somondoco;department_15
+city_15762;Sora;department_15
+city_15763;Sotaquirá;department_15
+city_15764;Soracá;department_15
+city_15774;Susacón;department_15
+city_15776;Sutamarchán;department_15
+city_15778;Sutatenza;department_15
+city_1579;Tasco;department_15
+city_15798;Tenza;department_15
+city_15804;Tibaná;department_15
+city_15808;Tinjacá;department_15
+city_1581;Tipacoque;department_15
+city_15814;Toca;department_15
+city_1582;Tópaga;department_15
+city_15822;Tota;department_15
+city_15835;Turmequé;department_15
+city_15839;Tutazá;department_15
+city_15842;Umbita;department_15
+city_15861;Ventaquemada;department_15
+city_15879;Viracachá;department_15
+city_15897;Zetaquira;department_15
+city_15816;Togüí;department_15
+city_15407;Villa de Leyva;department_15
+city_15537;Paz de Río;department_15
+city_15693;Santa Rosa de Viterbo;department_15
+city_15681;San Pablo de Borbur;department_15
+city_15667;San Luis de Gaceno;department_15
+city_15664;San José de Pare;department_15
+city_15676;San Miguel de Sema;department_15
+city_15837;Tuta;department_15
+city_17001;Manizales;department_17
+city_17013;Aguadas;department_17
+city_17042;Anserma;department_17
+city_1705;Aranzazu;department_17
+city_17088;Belalcázar;department_17
+city_17174;Chinchiná;department_17
+city_17272;Filadelfia;department_17
+city_1738;La Dorada;department_17
+city_17388;La Merced;department_17
+city_17433;Manzanares;department_17
+city_17442;Marmato;department_17
+city_17446;Marulanda;department_17
+city_17486;Neira;department_17
+city_17495;Norcasia;department_17
+city_17513;Pácora;department_17
+city_17524;Palestina;department_17
+city_17541;Pensilvania;department_17
+city_17614;Riosucio;department_17
+city_17616;Risaralda;department_17
+city_17653;Salamina;department_17
+city_17662;Samaná;department_17
+city_17665;San José;department_17
+city_17777;Supía;department_17
+city_17867;Victoria;department_17
+city_17873;Villamaría;department_17
+city_17877;Viterbo;department_17
+city_18001;Florencia;department_18
+city_18029;Albania;department_18
+city_18205;Curillo;department_18
+city_18247;El Doncello;department_18
+city_18256;El Paujil;department_18
+city_18479;Morelia;department_18
+city_18592;Puerto Rico;department_18
+city_18756;Solano;department_18
+city_18785;Solita;department_18
+city_1886;Valparaíso;department_18
+city_1861;San José del Fragua;department_18
+city_18094;Belén de Los Andaquies;department_18
+city_1815;Cartagena del Chairá;department_18
+city_19001;Popayán;department_19
+city_19022;Almaguer;department_19
+city_1905;Argelia;department_19
+city_19075;Balboa;department_19
+city_191;Bolívar;department_19
+city_1911;Buenos Aires;department_19
+city_1913;Cajibío;department_19
+city_19137;Caldono;department_19
+city_19142;Caloto;department_19
+city_19212;Corinto;department_19
+city_19256;El Tambo;department_19
+city_1929;Florencia;department_19
+city_193;Guachené;department_19
+city_19318;Guapi;department_19
+city_19355;Inzá;department_19
+city_19364;Jambaló;department_19
+city_19392;La Sierra;department_19
+city_19397;La Vega;department_19
+city_19418;López;department_19
+city_1945;Mercaderes;department_19
+city_19455;Miranda;department_19
+city_19473;Morales;department_19
+city_19513;Padilla;department_19
+city_19532;Patía;department_19
+city_19533;Piamonte;department_19
+city_19548;Piendamó;department_19
+city_19573;Puerto Tejada;department_19
+city_19585;Puracé;department_19
+city_19622;Rosas;department_19
+city_19701;Santa Rosa;department_19
+city_19743;Silvia;department_19
+city_1976;Sotara;department_19
+city_1978;Suárez;department_19
+city_19785;Sucre;department_19
+city_19807;Timbío;department_19
+city_19809;Timbiquí;department_19
+city_19821;Toribio;department_19
+city_19824;Totoró;department_19
+city_19845;Villa Rica;department_19
+city_19698;Santander de Quilichao;department_19
+city_19693;San Sebastián;department_19
+city_20001;Valledupar;department_20
+city_20011;Aguachica;department_20
+city_20013;Agustín Codazzi;department_20
+city_20032;Astrea;department_20
+city_20045;Becerril;department_20
+city_2006;Bosconia;department_20
+city_20175;Chimichagua;department_20
+city_20178;Chiriguaná;department_20
+city_20228;Curumaní;department_20
+city_20238;El Copey;department_20
+city_2025;El Paso;department_20
+city_20295;Gamarra;department_20
+city_2031;González;department_20
+city_20383;La Gloria;department_20
+city_20443;Manaure;department_20
+city_20517;Pailitas;department_20
+city_2055;Pelaya;department_20
+city_2057;Pueblo Bello;department_20
+city_20621;La Paz;department_20
+city_2071;San Alberto;department_20
+city_2075;San Diego;department_20
+city_2077;San Martín;department_20
+city_20787;Tamalameque;department_20
+city_20614;Río de Oro;department_20
+city_204;La Jagua de Ibirico;department_20
+city_23675;San Bernardo del Viento;department_23
+city_23001;Montería;department_23
+city_23068;Ayapel;department_23
+city_23079;Buenavista;department_23
+city_2309;Canalete;department_23
+city_23162;Cereté;department_23
+city_23168;Chimá;department_23
+city_23182;Chinú;department_23
+city_233;Cotorra;department_23
+city_23417;Lorica;department_23
+city_23419;Los Córdobas;department_23
+city_23464;Momil;department_23
+city_235;Moñitos;department_23
+city_23555;Planeta Rica;department_23
+city_2357;Pueblo Nuevo;department_23
+city_23574;Puerto Escondido;department_23
+city_23586;Purísima;department_23
+city_2366;Sahagún;department_23
+city_2367;San Andrés Sotavento;department_23
+city_23672;San Antero;department_23
+city_23686;San Pelayo;department_23
+city_23807;Tierralta;department_23
+city_23815;Tuchín;department_23
+city_23855;Valencia;department_23
+city_23682;San José de Uré;department_23
+city_23189;Ciénaga de Oro;department_23
+city_23678;San Carlos;department_23
+city_25035;Anapoima;department_25
+city_25053;Arbeláez;department_25
+city_25086;Beltrán;department_25
+city_25095;Bituima;department_25
+city_25099;Bojacá;department_25
+city_2512;Cabrera;department_25
+city_25123;Cachipay;department_25
+city_25126;Cajicá;department_25
+city_25148;Caparrapí;department_25
+city_25151;Caqueza;department_25
+city_25168;Chaguaní;department_25
+city_25178;Chipaque;department_25
+city_25181;Choachí;department_25
+city_25183;Chocontá;department_25
+city_252;Cogua;department_25
+city_25214;Cota;department_25
+city_25224;Cucunubá;department_25
+city_25245;El Colegio;department_25
+city_2526;El Rosal;department_25
+city_25279;Fomeque;department_25
+city_25281;Fosca;department_25
+city_25286;Funza;department_25
+city_25288;Fúquene;department_25
+city_25293;Gachala;department_25
+city_25295;Gachancipá;department_25
+city_25297;Gachetá;department_25
+city_25307;Girardot;department_25
+city_25312;Granada;department_25
+city_25317;Guachetá;department_25
+city_2532;Guaduas;department_25
+city_25322;Guasca;department_25
+city_25324;Guataquí;department_25
+city_25326;Guatavita;department_25
+city_25335;Guayabetal;department_25
+city_25339;Gutiérrez;department_25
+city_25368;Jerusalén;department_25
+city_25372;Junín;department_25
+city_25377;La Calera;department_25
+city_25386;La Mesa;department_25
+city_25394;La Palma;department_25
+city_25398;La Peña;department_25
+city_25402;La Vega;department_25
+city_25407;Lenguazaque;department_25
+city_25426;Macheta;department_25
+city_2543;Madrid;department_25
+city_25436;Manta;department_25
+city_25438;Medina;department_25
+city_25473;Mosquera;department_25
+city_25483;Nariño;department_25
+city_25486;Nemocón;department_25
+city_25488;Nilo;department_25
+city_25489;Nimaima;department_25
+city_25491;Nocaima;department_25
+city_25506;Venecia;department_25
+city_25513;Pacho;department_25
+city_25518;Paime;department_25
+city_25524;Pandi;department_25
+city_2553;Paratebueno;department_25
+city_25535;Pasca;department_25
+city_25572;Puerto Salgar;department_25
+city_2558;Pulí;department_25
+city_25592;Quebradanegra;department_25
+city_25594;Quetame;department_25
+city_25596;Quipile;department_25
+city_25599;Apulo;department_25
+city_25612;Ricaurte;department_25
+city_25649;San Bernardo;department_25
+city_25653;San Cayetano;department_25
+city_25658;San Francisco;department_25
+city_25736;Sesquilé;department_25
+city_2574;Sibaté;department_25
+city_25743;Silvania;department_25
+city_25745;Simijaca;department_25
+city_25754;Soacha;department_25
+city_25769;Subachoque;department_25
+city_25772;Suesca;department_25
+city_25777;Supatá;department_25
+city_25779;Susa;department_25
+city_25781;Sutatausa;department_25
+city_25785;Tabio;department_25
+city_25793;Tausa;department_25
+city_25797;Tena;department_25
+city_25799;Tenjo;department_25
+city_25805;Tibacuy;department_25
+city_25807;Tibirita;department_25
+city_25815;Tocaima;department_25
+city_25817;Tocancipá;department_25
+city_25823;Topaipí;department_25
+city_25839;Ubalá;department_25
+city_25841;Ubaque;department_25
+city_25845;Une;department_25
+city_25851;Útica;department_25
+city_25867;Vianí;department_25
+city_25871;Villagómez;department_25
+city_25873;Villapinzón;department_25
+city_25875;Villeta;department_25
+city_25878;Viotá;department_25
+city_25898;Zipacón;department_25
+city_25662;San Juan de Río Seco;department_25
+city_25843;Villa de San Diego de Ubate;department_25
+city_25328;Guayabal de Siquima;department_25
+city_25645;San Antonio del Tequendama;department_25
+city_25001;Agua de Dios;department_25
+city_25154;Carmen de Carupa;department_25
+city_25862;Vergara;department_25
+city_27361;Istmina;department_27
+city_27001;Quibdó;department_27
+city_27006;Acandí;department_27
+city_27025;Alto Baudo;department_27
+city_2705;Atrato;department_27
+city_27073;Bagadó;department_27
+city_27075;Bahía Solano;department_27
+city_27077;Bajo Baudó;department_27
+city_27099;Bojaya;department_27
+city_2716;Cértegui;department_27
+city_27205;Condoto;department_27
+city_27372;Juradó;department_27
+city_27413;Lloró;department_27
+city_27425;Medio Atrato;department_27
+city_2743;Medio Baudó;department_27
+city_2745;Medio San Juan;department_27
+city_27491;Nóvita;department_27
+city_27495;Nuquí;department_27
+city_2758;Río Iro;department_27
+city_276;Río Quito;department_27
+city_27615;Riosucio;department_27
+city_27745;Sipí;department_27
+city_278;Unguía;department_27
+city_2725;El Litoral del San Juan;department_27
+city_27135;El Cantón del San Pablo;department_27
+city_27245;El Carmen de Atrato;department_27
+city_2766;San José del Palmar;department_27
+city_27086;Belén de Bajira;department_27
+city_41001;Neiva;department_41
+city_41006;Acevedo;department_41
+city_41013;Agrado;department_41
+city_41016;Aipe;department_41
+city_4102;Algeciras;department_41
+city_41026;Altamira;department_41
+city_41078;Baraya;department_41
+city_41132;Campoalegre;department_41
+city_41206;Colombia;department_41
+city_41244;Elías;department_41
+city_41298;Garzón;department_41
+city_41306;Gigante;department_41
+city_41319;Guadalupe;department_41
+city_41349;Hobo;department_41
+city_41357;Iquira;department_41
+city_41359;Isnos;department_41
+city_41378;La Argentina;department_41
+city_41396;La Plata;department_41
+city_41483;Nátaga;department_41
+city_41503;Oporapa;department_41
+city_41518;Paicol;department_41
+city_41524;Palermo;department_41
+city_4153;Palestina;department_41
+city_41548;Pital;department_41
+city_41551;Pitalito;department_41
+city_41615;Rivera;department_41
+city_4166;Saladoblanco;department_41
+city_41676;Santa María;department_41
+city_4177;Suaza;department_41
+city_41791;Tarqui;department_41
+city_41797;Tesalia;department_41
+city_41799;Tello;department_41
+city_41801;Teruel;department_41
+city_41807;Timaná;department_41
+city_41872;Villavieja;department_41
+city_41885;Yaguará;department_41
+city_41668;San Agustín;department_41
+city_44001;Riohacha;department_44
+city_44035;Albania;department_44
+city_44078;Barrancas;department_44
+city_4409;Dibula;department_44
+city_44098;Distracción;department_44
+city_4411;El Molino;department_44
+city_44279;Fonseca;department_44
+city_44378;Hatonuevo;department_44
+city_4443;Maicao;department_44
+city_4456;Manaure;department_44
+city_44847;Uribia;department_44
+city_44855;Urumita;department_44
+city_44874;Villanueva;department_44
+city_4442;La Jagua del Pilar;department_44
+city_4465;San Juan del Cesar;department_44
+city_47001;Santa Marta;department_47
+city_4703;Algarrobo;department_47
+city_47053;Aracataca;department_47
+city_47058;Ariguaní;department_47
+city_47161;Cerro San Antonio;department_47
+city_4717;Chivolo;department_47
+city_47205;Concordia;department_47
+city_47245;El Banco;department_47
+city_47258;El Piñon;department_47
+city_47268;El Retén;department_47
+city_47288;Fundación;department_47
+city_47318;Guamal;department_47
+city_4746;Nueva Granada;department_47
+city_47541;Pedraza;department_47
+city_47551;Pivijay;department_47
+city_47555;Plato;department_47
+city_47605;Remolino;department_47
+city_47675;Salamina;department_47
+city_47703;San Zenón;department_47
+city_47707;Santa Ana;department_47
+city_47745;Sitionuevo;department_47
+city_47798;Tenerife;department_47
+city_4796;Zapayán;department_47
+city_4798;Zona Bananera;department_47
+city_47692;San Sebastián de Buenavista;department_47
+city_4766;Sabanas de San Angel;department_47
+city_47545;Pijiño del Carmen;department_47
+city_5037;Uribe;department_50
+city_50001;Villavicencio;department_50
+city_50006;Acacias;department_50
+city_50124;Cabuyaro;department_50
+city_50223;Cubarral;department_50
+city_50226;Cumaral;department_50
+city_50245;El Calvario;department_50
+city_50251;El Castillo;department_50
+city_5027;El Dorado;department_50
+city_50313;Granada;department_50
+city_50318;Guamal;department_50
+city_50325;Mapiripán;department_50
+city_5033;Mesetas;department_50
+city_5035;La Macarena;department_50
+city_50059;Puerto Rico;department_50
+city_5425;Maceo;department_5
+city_50568;Puerto Gaitán;department_50
+city_50573;Puerto López;department_50
+city_50577;Puerto Lleras;department_50
+city_54025;El Tarra;department_54
+city_50606;Restrepo;department_50
+city_50686;San Juanito;department_50
+city_50689;San Martín;department_50
+city_50711;Vista Hermosa;department_50
+city_5011;Barranca de Upía;department_50
+city_50287;Fuente de Oro;department_50
+city_5068;San Carlos de Guaroa;department_50
+city_50683;San Juan de Arama;department_50
+city_52699;Santacruz;department_52
+city_52001;Pasto;department_52
+city_52019;Albán;department_52
+city_52022;Aldana;department_52
+city_52036;Ancuyá;department_52
+city_52079;Barbacoas;department_52
+city_52203;Colón;department_52
+city_52207;Consaca;department_52
+city_5221;Contadero;department_52
+city_52215;Córdoba;department_52
+city_52224;Cuaspud;department_52
+city_52227;Cumbal;department_52
+city_52233;Cumbitara;department_52
+city_5225;El Charco;department_52
+city_52254;El Peñol;department_52
+city_52256;El Rosario;department_52
+city_5226;El Tambo;department_52
+city_52287;Funes;department_52
+city_52317;Guachucal;department_52
+city_5232;Guaitarilla;department_52
+city_52323;Gualmatán;department_52
+city_52352;Iles;department_52
+city_52354;Imués;department_52
+city_52356;Ipiales;department_52
+city_52378;La Cruz;department_52
+city_52381;La Florida;department_52
+city_52385;La Llanada;department_52
+city_5239;La Tola;department_52
+city_52399;La Unión;department_52
+city_52405;Leiva;department_52
+city_52411;Linares;department_52
+city_52418;Los Andes;department_52
+city_52427;Magüí;department_52
+city_52435;Mallama;department_52
+city_52473;Mosquera;department_52
+city_5248;Nariño;department_52
+city_5249;Olaya Herrera;department_52
+city_52506;Ospina;department_52
+city_5252;Francisco Pizarro;department_52
+city_5254;Policarpa;department_52
+city_5256;Potosí;department_52
+city_52565;Providencia;department_52
+city_52573;Puerres;department_52
+city_52585;Pupiales;department_52
+city_52612;Ricaurte;department_52
+city_52621;Roberto Payán;department_52
+city_52678;Samaniego;department_52
+city_52683;Sandoná;department_52
+city_52685;San Bernardo;department_52
+city_52687;San Lorenzo;department_52
+city_52693;San Pablo;department_52
+city_52696;Santa Bárbara;department_52
+city_5272;Sapuyes;department_52
+city_52786;Taminango;department_52
+city_52788;Tangua;department_52
+city_52838;Túquerres;department_52
+city_52885;Yacuanquer;department_52
+city_52694;San Pedro de Cartago;department_52
+city_52258;El Tablón de Gómez;department_52
+city_54743;Silos;department_54
+city_54125;Cácota;department_54
+city_5482;Toledo;department_54
+city_5448;Mutiscua;department_54
+city_54261;El Zulia;department_54
+city_5466;Salazar;department_54
+city_54223;Cucutilla;department_54
+city_54553;Puerto Santander;department_54
+city_54313;Gramalote;department_54
+city_548;Mutatá;department_5
+city_5408;Teorama;department_54
+city_54051;Arboledas;department_54
+city_63001;Armenia;department_63
+city_63111;Buenavista;department_63
+city_6319;Circasia;department_63
+city_63212;Córdoba;department_63
+city_63272;Filandia;department_63
+city_63401;La Tebaida;department_63
+city_6347;Montenegro;department_63
+city_63548;Pijao;department_63
+city_63594;Quimbaya;department_63
+city_6369;Salento;department_63
+city_66001;Pereira;department_66
+city_66045;Apía;department_66
+city_66075;Balboa;department_66
+city_6617;Dosquebradas;department_66
+city_66318;Guática;department_66
+city_66383;La Celia;department_66
+city_664;La Virginia;department_66
+city_6644;Marsella;department_66
+city_66456;Mistrató;department_66
+city_66572;Pueblo Rico;department_66
+city_66594;Quinchía;department_66
+city_66687;Santuario;department_66
+city_66682;Santa Rosa de Cabal;department_66
+city_66088;Belén de Umbría;department_66
+city_68575;Puerto Wilches;department_68
+city_68573;Puerto Parra;department_68
+city_68001;Bucaramanga;department_68
+city_68013;Aguada;department_68
+city_6802;Albania;department_68
+city_68051;Aratoca;department_68
+city_68077;Barbosa;department_68
+city_68079;Barichara;department_68
+city_68081;Barrancabermeja;department_68
+city_68092;Betulia;department_68
+city_68101;Bolívar;department_68
+city_68121;Cabrera;department_68
+city_68132;California;department_68
+city_68152;Carcasí;department_68
+city_6816;Cepitá;department_68
+city_68162;Cerrito;department_68
+city_68167;Charalá;department_68
+city_68169;Charta;department_68
+city_68179;Chipatá;department_68
+city_6819;Cimitarra;department_68
+city_68207;Concepción;department_68
+city_68209;Confines;department_68
+city_68211;Contratación;department_68
+city_68217;Coromoro;department_68
+city_68229;Curití;department_68
+city_68245;El Guacamayo;department_68
+city_68255;El Playón;department_68
+city_68264;Encino;department_68
+city_68266;Enciso;department_68
+city_68271;Florián;department_68
+city_68276;Floridablanca;department_68
+city_68296;Galán;department_68
+city_68298;Gambita;department_68
+city_68307;Girón;department_68
+city_68318;Guaca;department_68
+city_6832;Guadalupe;department_68
+city_68322;Guapotá;department_68
+city_68324;Guavatá;department_68
+city_68327;Güepsa;department_68
+city_68368;Jesús María;department_68
+city_6837;Jordán;department_68
+city_68377;La Belleza;department_68
+city_68385;Landázuri;department_68
+city_68397;La Paz;department_68
+city_68406;Lebríja;department_68
+city_68418;Los Santos;department_68
+city_68425;Macaravita;department_68
+city_68432;Málaga;department_68
+city_68444;Matanza;department_68
+city_68464;Mogotes;department_68
+city_68468;Molagavita;department_68
+city_68498;Ocamonte;department_68
+city_685;Oiba;department_68
+city_68502;Onzaga;department_68
+city_68522;Palmar;department_68
+city_68533;Páramo;department_68
+city_68547;Piedecuesta;department_68
+city_68549;Pinchote;department_68
+city_68572;Puente Nacional;department_68
+city_68615;Rionegro;department_68
+city_68669;San Andrés;department_68
+city_68679;San Gil;department_68
+city_68682;San Joaquín;department_68
+city_68686;San Miguel;department_68
+city_68705;Santa Bárbara;department_68
+city_68745;Simacota;department_68
+city_68755;Socorro;department_68
+city_6877;Suaita;department_68
+city_68773;Sucre;department_68
+city_6878;Suratá;department_68
+city_6882;Tona;department_68
+city_68861;Vélez;department_68
+city_68867;Vetas;department_68
+city_68872;Villanueva;department_68
+city_68895;Zapatoca;department_68
+city_68524;Palmas del Socorro;department_68
+city_68689;San Vicente de Chucurí;department_68
+city_68684;San José de Miranda;department_68
+city_6872;Santa Helena del Opón;department_68
+city_68655;Sabana de Torres;department_68
+city_68235;El Carmen de Chucurí;department_68
+city_68855;Valle de San José;department_68
+city_68673;San Benito;department_68
+city_68344;Hato;department_68
+city_70001;Sincelejo;department_70
+city_7011;Buenavista;department_70
+city_70124;Caimito;department_70
+city_70204;Coloso;department_70
+city_70221;Coveñas;department_70
+city_7023;Chalán;department_70
+city_70233;El Roble;department_70
+city_70235;Galeras;department_70
+city_70265;Guaranda;department_70
+city_704;La Unión;department_70
+city_70418;Los Palmitos;department_70
+city_70429;Majagual;department_70
+city_70473;Morroa;department_70
+city_70508;Ovejas;department_70
+city_70523;Palmito;department_70
+city_70678;San Benito Abad;department_70
+city_70708;San Marcos;department_70
+city_70713;San Onofre;department_70
+city_70717;San Pedro;department_70
+city_70771;Sucre;department_70
+city_70823;Tolú Viejo;department_70
+city_70742;San Luis de Sincé;department_70
+city_70702;San Juan de Betulia;department_70
+city_7082;Santiago de Tolú;department_70
+city_73024;Alpujarra;department_73
+city_73026;Alvarado;department_73
+city_7303;Ambalema;department_73
+city_73055;Armero;department_73
+city_73067;Ataco;department_73
+city_73124;Cajamarca;department_73
+city_73168;Chaparral;department_73
+city_732;Coello;department_73
+city_73217;Coyaima;department_73
+city_73226;Cunday;department_73
+city_73236;Dolores;department_73
+city_73268;Espinal;department_73
+city_7327;Falan;department_73
+city_73275;Flandes;department_73
+city_73283;Fresno;department_73
+city_73319;Guamo;department_73
+city_73347;Herveo;department_73
+city_73349;Honda;department_73
+city_73352;Icononzo;department_73
+city_73443;Mariquita;department_73
+city_73449;Melgar;department_73
+city_73461;Murillo;department_73
+city_73483;Natagaima;department_73
+city_73504;Ortega;department_73
+city_7352;Palocabildo;department_73
+city_73547;Piedras;department_73
+city_73555;Planadas;department_73
+city_73563;Prado;department_73
+city_73585;Purificación;department_73
+city_73616;Rio Blanco;department_73
+city_73622;Roncesvalles;department_73
+city_73624;Rovira;department_73
+city_73671;Saldaña;department_73
+city_73686;Santa Isabel;department_73
+city_73861;Venadillo;department_73
+city_7387;Villahermosa;department_73
+city_73873;Villarrica;department_73
+city_73854;Valle de San Juan;department_73
+city_73148;Carmen de Apicala;department_73
+city_73678;San Luis;department_73
+city_73675;San Antonio;department_73
+city_7625;El Dovio;department_76
+city_76622;Roldanillo;department_76
+city_76054;Argelia;department_76
+city_76736;Sevilla;department_76
+city_76895;Zarzal;department_76
+city_76248;El Cerrito;department_76
+city_76147;Cartago;department_76
+city_76122;Caicedonia;department_76
+city_76246;El Cairo;department_76
+city_764;La Unión;department_76
+city_76606;Restrepo;department_76
+city_76233;Dagua;department_76
+city_76318;Guacarí;department_76
+city_81065;Arauquita;department_81
+city_8122;Cravo Norte;department_81
+city_813;Fortul;department_81
+city_81591;Puerto Rondón;department_81
+city_81736;Saravena;department_81
+city_81794;Tame;department_81
+city_81001;Arauca;department_81
+city_85001;Yopal;department_85
+city_8501;Aguazul;department_85
+city_85015;Chámeza;department_85
+city_85125;Hato Corozal;department_85
+city_85136;La Salina;department_85
+city_85162;Monterrey;department_85
+city_85263;Pore;department_85
+city_85279;Recetor;department_85
+city_853;Sabanalarga;department_85
+city_85315;Sácama;department_85
+city_8541;Tauramena;department_85
+city_8543;Trinidad;department_85
+city_8544;Villanueva;department_85
+city_85325;San Luis de Gaceno;department_85
+city_8525;Paz de Ariporo;department_85
+city_86001;Mocoa;department_86
+city_86219;Colón;department_86
+city_8632;Orito;department_86
+city_86569;Puerto Caicedo;department_86
+city_86571;Puerto Guzmán;department_86
+city_86573;Leguízamo;department_86
+city_86749;Sibundoy;department_86
+city_86755;San Francisco;department_86
+city_86757;San Miguel;department_86
+city_8676;Santiago;department_86
+city_86865;Valle de Guamez;department_86
+city_88564;Providencia;department_88
+city_88001;San Andrés;department_88
+city_91001;Leticia;department_91
+city_91263;El Encanto;department_91
+city_91405;La Chorrera;department_91
+city_91407;La Pedrera;department_91
+city_9143;La Victoria;department_91
+city_91536;Puerto Arica;department_91
+city_9154;Puerto Nariño;department_91
+city_91669;Puerto Santander;department_91
+city_91798;Tarapacá;department_91
+city_9153;Puerto Alegría;department_91
+city_94001;Inírida;department_94
+city_94343;Barranco Minas;department_94
+city_94663;Mapiripana;department_94
+city_94883;San Felipe;department_94
+city_94884;Puerto Colombia;department_94
+city_94885;La Guadalupe;department_94
+city_94886;Cacahual;department_94
+city_94887;Pana Pana;department_94
+city_94888;Morichal;department_94
+city_95015;Calamar;department_95
+city_95001;San José del Guaviare;department_95
+city_952;Miraflores;department_95
+city_95025;El Retorno;department_95
+city_97001;Mitú;department_97
+city_97161;Carurú;department_97
+city_97666;Taraira;department_97
+city_97777;Papunahua;department_97
+city_97889;Yavaraté;department_97
+city_97511;Pacoa;department_97
+city_99001;Puerto Carreño;department_99
+city_99524;La Primavera;department_99
+city_99624;Santa Rosalía;department_99
+city_99773;Cumaribo;department_99

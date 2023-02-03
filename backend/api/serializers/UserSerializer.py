@@ -9,7 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
             'lastName': user.lastName,
             'email': user.email,
             'phone': user.phone,
-            'city': user.city,
+            'cityId': user.city.id,
         }
 
     def serialize_get_crud(user):
@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
             'lastName': user.lastName,
             'email': user.email,
             'phone': user.phone,
-            'city': user.city,
+            'cityId': user.city.id,
             'roleId': role.id
         }
 
@@ -47,7 +47,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             'email': user.email,
             'phone': user.phone,
             'departmentId': user.department.id,
-            'city': user.city,
+            'cityId': user.city.id,
             'address': user.address
         }
 
