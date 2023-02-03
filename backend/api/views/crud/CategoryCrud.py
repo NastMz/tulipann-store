@@ -59,7 +59,7 @@ class CategoryCreate(generics.GenericAPIView):
 
         serializer = self.get_serializer(data=request.data)
 
-        image_name = optimize_and_save_image(image_data=request.data['image']['src'], subfolder='category',
+        image_name = optimize_and_save_image(image_data=request.data['image']['src'],
                                              object_name='category')
 
         request.data['hash'] = request.data['image']['hash']

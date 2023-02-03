@@ -7,18 +7,14 @@ class SpecificationSerializer(serializers.ModelSerializer):
     def serialize_front(product):
         db_spec = Specification.all_objects.filter(product=product.id)
 
-        specs = []
         features = []
 
         for spec in db_spec:
-            specs.append({
-                'summary': spec.summary,
-            })
             if Feature.all_objects.filter(specification=spec.id).exists():
                 features.append(FeatureSerializer.serialize_front(specification=spec.id))
 
         specs = {
-            'summary': specs,
+            'summary': spec.summary,
             'options': features
         }
 

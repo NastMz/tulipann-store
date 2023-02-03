@@ -64,7 +64,7 @@ class FeatureCreate(generics.GenericAPIView):
         request.data['specification'] = request.data['specificationId']
         serializer = self.get_serializer(data=request.data)
 
-        image_name = optimize_and_save_image(request.data['image']['src'], 'feature', 'feature')
+        image_name = optimize_and_save_image(image_data=request.data['image']['src'], object_name='feature')
         request.data['hash'] = request.data['image']['hash']
         request.data['image'] = image_name
 

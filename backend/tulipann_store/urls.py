@@ -13,11 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework import permissions
-
-from api.utils.image_utils import get_image
 from api.views.auth.PasswordResetConfirmView import check_token
 from api.checkout.Payment import confirm_payment
 from drf_yasg.views import get_schema_view
@@ -46,8 +46,7 @@ urlpatterns = [
     path('api/data/', include('api.urls.urlsApiAdd')),
     path('api/data/', include('api.urls.urlsData')),
     path('api/crud/', include('api.urls.urlsCrud')),
-    path('api/media/<str:subfolder>/<str:image_name>', get_image),
     path('api/auth/token/verify/<str:token>', check_token),
     path('api/payment/confirmation/', confirm_payment)
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     

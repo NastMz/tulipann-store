@@ -64,8 +64,7 @@ class ImageCreate(generics.GenericAPIView):
 
         serializer = self.get_serializer(data=request.data)
 
-        image_name = optimize_and_save_image(image_data=request.data['image']['src'], subfolder='product',
-                                             object_name='product')
+        image_name = optimize_and_save_image(image_data=request.data['image']['src'], object_name='product')
         request.data['src'] = image_name
         request.data['hash'] = request.data['image']['hash']
 
