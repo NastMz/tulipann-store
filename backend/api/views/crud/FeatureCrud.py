@@ -34,7 +34,7 @@ class FeatureList(APIView):
         features_serialized = []
         for feature in features:
             features_serialized.append(FeatureSerializer.serialize_get_crud(feature=feature))
-        return Response(features_serialized)
+        return Response({'features': features_serialized})
 
 
 class FeatureCreate(generics.GenericAPIView):

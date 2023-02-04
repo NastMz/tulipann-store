@@ -32,7 +32,7 @@ class CommentaryList(APIView):
         commentaries_serialized = []
         for commentary in commentaries:
             commentaries_serialized.append(CommentarySerializer.serialize_get_crud(commentary=commentary))
-        return Response(commentaries_serialized)
+        return Response({'commentaries': commentaries_serialized})
 
 
 class CommentaryCreate(generics.GenericAPIView):

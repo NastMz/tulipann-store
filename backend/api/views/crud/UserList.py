@@ -31,7 +31,7 @@ class UserList(APIView):
         users_serialized = []
         for user in users:
             users_serialized.append(UserSerializer.serialize_get_crud(user=user))
-        return Response(users_serialized)
+        return Response({'users': users_serialized})
 
 
 class UserDetail(APIView):

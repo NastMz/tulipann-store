@@ -32,7 +32,7 @@ class TagList(APIView):
         tags_serialized = []
         for tag in tags:
             tags_serialized.append(TagSerializer.serialize_get_crud(tag=tag))
-        return Response(tags_serialized)
+        return Response({'tags': tags_serialized})
 
 
 class TagCreate(generics.GenericAPIView):

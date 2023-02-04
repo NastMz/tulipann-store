@@ -32,7 +32,7 @@ class SpecificationList(APIView):
         specifications_serialized = []
         for specification in specifications:
             specifications_serialized.append(SpecificationSerializer.serialize_get_crud(specification=specification))
-        return Response(specifications_serialized)
+        return Response({'specifications': specifications_serialized})
 
 
 class SpecificationCreate(generics.GenericAPIView):

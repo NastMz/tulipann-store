@@ -32,7 +32,7 @@ class SubcategoryList(APIView):
         subcategories_serialized = []
         for subcategory in subcategories:
             subcategories_serialized.append(SubcategorySerializer.serialize_get_crud(subcategory=subcategory))
-        return Response(subcategories_serialized)
+        return Response({'subcategories': subcategories_serialized})
 
 
 class SubcategoryCreate(generics.GenericAPIView):

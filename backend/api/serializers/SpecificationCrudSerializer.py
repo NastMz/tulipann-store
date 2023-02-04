@@ -15,7 +15,7 @@ class SpecificationCrudSerializer(serializers.ModelSerializer):
     def validate(self, args):
         summary = args.get('summary', None)
         if Specification.all_objects.filter(summary=summary).exists():
-            raise serializers.ValidationError({'summary': ('summary already exists')})
+            raise serializers.ValidationError({'summary': 'summary already exists'})
         return super().validate(args)
 
     def create(self, validated_data):
