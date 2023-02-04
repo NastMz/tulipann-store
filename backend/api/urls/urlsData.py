@@ -1,7 +1,8 @@
 from django.urls import path, include
 from api.views.crud import CommentaryCreate, CommentaryUpdate, OrderCreate, CommentaryDelete
 from api.views.data import UserSelfView, UserSelfUpdateView, ArticleView, CategoryView, CommentaryView, FeatureView, \
-    ImageView, OrderProductView, OrderView, ProductView, SpecificationView, SubcategoryView, UserView
+    ImageView, OrderProductView, OrderView, ProductView, SpecificationView, SubcategoryView, UserView, DepartmentList, \
+    DepartmentDetail, CityList, CityDetail
 
 """
 This file configures all the routes that a user has access to see at the top of the page 
@@ -20,6 +21,16 @@ urlpatterns = [
         path('create/', CommentaryCreate.as_view(), name='commentary_create'),
         path('<str:id>/update/', CommentaryUpdate.as_view(), name='commentary_update'),
         path('<str:id>/delete/', CommentaryDelete.as_view(), name='commentary_delete'),
+    ])),
+
+    path('departments/', include([
+        path('', DepartmentList.as_view(), name='department_list'),
+        path('<str:id>/', DepartmentDetail.as_view(), name='department_detail'),
+    ])),
+
+    path('cities/', include([
+        path('', CityList.as_view(), name='city_list'),
+        path('<str:id>/', CityDetail.as_view(), name='city_detail'),
     ])),
 
     path('features/', FeatureView.as_view(), name='features_list'),
