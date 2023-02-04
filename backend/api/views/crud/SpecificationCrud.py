@@ -26,8 +26,12 @@ class SpecificationList(APIView):
         Returns:
             (Response): Response with all specifications.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         specifications = Specification.all_objects.all()
         specifications_serialized = []
         for specification in specifications:
@@ -52,12 +56,19 @@ class SpecificationCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the specification created or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         if 'productId' not in request.data:
-            return Response({"productId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('El producto es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+        
         if not Product.all_objects.filter(id=request.data['productId']).exists():
-            return Response({"Errors": 'This product does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este producto no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         request.data['product'] = request.data['productId']
 
@@ -96,10 +107,16 @@ class SpecificationDetail(APIView):
         Returns:
             (Response): Response with the specification.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Specification.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This specification does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta especificación no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         specification = Specification.all_objects.get(id=id)
         serializer = SpecificationSerializer.serialize_get_crud(specification)
         return Response(serializer)
@@ -123,21 +140,31 @@ class SpecificationUpdate(APIView):
         Returns:
             (Response): Response with the specification updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         if not Specification.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This specification does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta especificación no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+        
         if 'productId' not in request.data:
-            return Response({"productId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('El producto es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+        
         if not Product.all_objects.filter(id=request.data['productId']).exists():
-            return Response({"Errors": 'This product does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este producto no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
 
         specification = Specification.all_objects.get(id=id)
         request.data['product'] = request.data['productId']
         serializer = SpecificationSerializer(specification, data=request.data)
 
         if Specification.all_objects.filter(summary=request.data['summary']).exclude(id=id).exists():
-            return Response({'Errors': 'This specification is already assigned to another product'})
+            messages.append('Esta especificación ya está asignada a otro producto')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         if serializer.is_valid():
             serializer.save()
@@ -147,4 +174,4 @@ class SpecificationUpdate(APIView):
                     "productId": serializer.data['product']
                 }
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

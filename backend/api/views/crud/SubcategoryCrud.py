@@ -26,8 +26,12 @@ class SubcategoryList(APIView):
         Returns:
             (Response): Response with all subcategories.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         subcategories = Subcategory.all_objects.all()
         subcategories_serialized = []
         for subcategory in subcategories:
@@ -52,13 +56,20 @@ class SubcategoryCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the subcategory created or errors.
         """
-        if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
-        if 'categoryId' not in request.data:
-            return Response({"categoryId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
-        if not Category.all_objects.filter(id=request.data['categoryId']).exists():
-            return Response({"Errors": 'This category does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        messages = []
 
+        if not authorization(request)['success']:
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        if 'categoryId' not in request.data:
+            messages.append('La categoría es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not Category.all_objects.filter(id=request.data['categoryId']).exists():
+            messages.append('Esta categoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+        
         request.data['category'] = request.data['categoryId']
         serializer = self.get_serializer(data=request.data)
 
@@ -73,7 +84,7 @@ class SubcategoryCreate(generics.GenericAPIView):
                     "categoryId": serializer.data['category']
                 }}, status=status.HTTP_201_CREATED
             )
-
+        
         return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -95,10 +106,16 @@ class SubcategoryDetail(APIView):
         Returns:
             (Response): Response with the subcategory.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         if not Subcategory.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This subcategory does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta subcategoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)        
+        
         subcategory = Subcategory.all_objects.get(id=id)
         serializer = SubcategorySerializer.serialize_get_crud(subcategory)
         return Response(serializer)
@@ -122,21 +139,31 @@ class SubcategoryUpdate(APIView):
         Returns:
             (Response): Response with the subcategory updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Subcategory.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This subcategory does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta subcategoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if 'categoryId' not in request.data:
-            return Response({"categoryId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('La categoría es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if not Category.all_objects.filter(id=request.data['categoryId']).exists():
-            return Response({"Errors": 'This category does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta categoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         subcategory = Subcategory.all_objects.get(id=id)
         request.data['category'] = request.data['categoryId']
         serializer = SubcategorySerializer(subcategory, data=request.data)
 
         if Subcategory.all_objects.filter(name=request.data['name']).exclude(id=id).exists():
-            return Response({'name': 'This name is already assigned to another subcategory'})
+            messages.append('Este nombre ya está asignado a otra subcategoría')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         if serializer.is_valid():
             serializer.save()
@@ -146,7 +173,8 @@ class SubcategoryUpdate(APIView):
                     "categoryId": serializer.data['category']
                 }
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SubcategoryDelete(APIView):
@@ -167,10 +195,15 @@ class SubcategoryDelete(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Subcategory.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This subcategory does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta subcategoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
 
         subcategory = Subcategory.all_objects.get(id=id)
         subcategory.soft_delete()

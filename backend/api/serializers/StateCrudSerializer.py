@@ -11,8 +11,10 @@ class StateCrudSerializer(serializers.ModelSerializer):
     
     def validate(self, args):
         name = args.get('name', None)
+        messages = []
         if State.all_objects.filter(name=name).exists():
-            raise serializers.ValidationError({'name': 'state already exists'})
+            messages.append('Este estado ya se encuentra registrado')
+            raise serializers.ValidationError(messages)
         return super().validate(args)
 
     def create(self, validated_data):

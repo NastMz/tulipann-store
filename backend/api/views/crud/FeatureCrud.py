@@ -28,8 +28,12 @@ class FeatureList(APIView):
         Returns:
             (Response): Response with all features.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         features = Feature.all_objects.all()
         features_serialized = []
         for feature in features:
@@ -54,12 +58,19 @@ class FeatureCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the feature created or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if 'specificationId' not in request.data:
-            return Response({"specificationId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('La especificación es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if not Specification.all_objects.filter(id=request.data['specificationId']).exists():
-            return Response({"Errors": 'This specification does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta especificación no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         request.data['specification'] = request.data['specificationId']
         serializer = self.get_serializer(data=request.data)
@@ -94,26 +105,32 @@ class FeatureCreate(generics.GenericAPIView):
 
 class FeatureDetail(APIView):
     """
-        Retrieve a subcategory by id.
-        """
+    Retrieve a feature by id.
+    """
     permission_classes = (IsAuthenticated,)
 
     @staticmethod
     @action(methods=['get'], detail=True)
     def get(request, id):
         """
-        Get a subcategory by id.
+        Get a feature by id.
         Args:
             request: Request from client.
-            id (str): Id of the subcategory.
+            id (str): Id of the feature.
 
         Returns:
-            (Response): Response with the subcategory.
+            (Response): Response with the feature.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Feature.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This feature does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta característica no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         feature = Feature.all_objects.get(id=id)
         serializer = FeatureSerializer.serialize_get_crud(feature)
         return Response(serializer)
@@ -137,14 +154,23 @@ class FeatureUpdate(APIView):
         Returns:
             (Response): Response with the feature updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Feature.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This feature does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta característica no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if 'specificationId' not in request.data:
-            return Response({"specificationId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('La especificación es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if not Specification.all_objects.filter(id=request.data['specificationId']).exists():
-            return Response({"Errors": 'This Specification does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta especificación no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         feature = Feature.all_objects.get(id=id)
         request.data['specification'] = request.data['specificationId']
@@ -152,7 +178,8 @@ class FeatureUpdate(APIView):
 
         if Feature.all_objects.filter(name=request.data['name'], specification=request.data['specification']).exclude(
                 id=id).exists():
-            return Response({'name': 'This name is already assigned in this specification'})
+            messages.append('Este nombre ya está asignado en esta especificación')
+            return Response({"Errors": messages})
 
         image_name = update_images(request.data['image']['src'], id, 'feature')
         request.data['hash'] = request.data['image']['hash']
@@ -172,7 +199,8 @@ class FeatureUpdate(APIView):
                 'specificationId': feature.specification.id
             }
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class FeatureDelete(APIView):
@@ -193,10 +221,16 @@ class FeatureDelete(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Feature.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This feature does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta característica no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         feature = Feature.all_objects.get(id=id)
         feature.soft_delete()
         return Response({'Delete': 'Successfully'}, status=status.HTTP_200_OK)

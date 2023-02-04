@@ -7,8 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics
 import uuid
 from api.models import Article, Tag, ArticleTag
-from api.serializers import ArticleSerializer, ArticleCrudSerializer, TagCrudSerializer, ArticleTagSerializer, \
-    TagSerializer
+from api.serializers import ArticleSerializer, ArticleCrudSerializer, ArticleTagSerializer
 from api.utils.authorization_crud import authorization
 from api.utils.image_utils import optimize_and_save_image, update_images
 
@@ -30,8 +29,11 @@ class ArticleList(APIView):
         Returns:
             (Response): Response with all articles.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
         articles = Article.all_objects.all()
         articles_serialized = []
         for article in articles:
@@ -56,8 +58,11 @@ class ArticleCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the article created or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
 
         image_name = optimize_and_save_image(image_data=request.data['banner']['src'], object_name='article')
 
@@ -74,16 +79,15 @@ class ArticleCreate(generics.GenericAPIView):
 
         if not serializer.is_valid():
             return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-        messages = {}
 
         if 'tags' not in request.data:
-            messages['tags'] = 'This field is required'
+            messages.append('Las etiquetas son requeridas')
 
         tags = request.data['tags']
 
         for tag in tags:
             if not Tag.all_objects.filter(id=tag['tagId']).exists():
-                messages['tags'] = 'This tag does not exist'
+                messages.append('La etiqueta '+tag['tagId']+' no existe')
 
         if messages:
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
@@ -136,10 +140,14 @@ class ArticleDetail(APIView):
         Returns:
             (Response): Response with the article.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
         if not Article.all_objects.filter(id=id):
-            return Response({"Errors": 'This article does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este artículo no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
 
         article = Article.all_objects.get(id=id)
         serializer = ArticleSerializer.serialize_get_crud(article)
@@ -164,10 +172,14 @@ class ArticleUpdate(APIView):
         Returns:
             (Response): Response with the article updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
         if not Article.all_objects.filter(id=id):
-            return Response({"Errors": 'This article does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este artículo no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         article = Article.all_objects.get(id=id)
         image_name = update_images(request.data['banner']['src'], id, 'article')
@@ -183,12 +195,10 @@ class ArticleUpdate(APIView):
         serializer = ArticleSerializer(article, data=data_article, partial=True)
 
         if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        messages = {}
+            return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
         if Article.all_objects.filter(title=request.data['title']).exclude(id=id).exists():
-            messages['title'] = 'This title is already assigned to another article'
+            messages.append('Este título ya está asignado en otro artículo')
 
         if messages:
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
@@ -230,10 +240,15 @@ class ArticleDelete(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
         if not Article.all_objects.filter(id=id):
-            return Response({"Errors": 'This article does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este artículo no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         article = Article.all_objects.get(id=id)
         article.soft_delete()
 

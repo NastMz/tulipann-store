@@ -14,8 +14,10 @@ class SpecificationCrudSerializer(serializers.ModelSerializer):
     
     def validate(self, args):
         summary = args.get('summary', None)
+        messages = []
         if Specification.all_objects.filter(summary=summary).exists():
-            raise serializers.ValidationError({'summary': 'summary already exists'})
+            messages.append('Este resumen ya se encuentra registrado')
+            raise serializers.ValidationError(messages)
         return super().validate(args)
 
     def create(self, validated_data):

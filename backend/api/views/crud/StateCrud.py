@@ -26,8 +26,12 @@ class StateList(APIView):
         Returns:
             (Response): Response with all states.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         states = State.all_objects.all()
         states_serialized = []
         for state in states:
@@ -52,8 +56,12 @@ class StateCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the state created or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
@@ -64,7 +72,7 @@ class StateCreate(generics.GenericAPIView):
 
                 "State": serializer.data}, status=status.HTTP_201_CREATED
             )
-
+        
         return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -86,10 +94,16 @@ class StateDetail(APIView):
         Returns:
             (Response): Response with the state.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         if not State.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This state does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este estado no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+        
         state = State.all_objects.get(id=id)
         serializer = StateSerializer.serialize_get_crud(state)
         return Response(serializer)
@@ -113,21 +127,31 @@ class StateUpdate(APIView):
         Returns:
             (Response): Response with the state updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not State.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This state does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este estado no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         name = State.all_objects.get(id=id).name
         if name == 'Pendiente' or name == 'Enviado' or name == 'Finalizado' or name == 'Cancelado':
-            return Response({"Errors": 'Cannot update this state'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('No se puede actualizar este estado')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         state = State.all_objects.get(id=id)
         serializer = StateCrudSerializer(state, data=request.data)
+
         if serializer.is_valid():
             serializer.save()
             return Response({
                 "State updated": serializer.data
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class StateDelete(APIView):
@@ -148,13 +172,22 @@ class StateDelete(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         if not State.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This state does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este estado no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+        
         name = State.all_objects.get(id=id).name
         if name == 'Pendiente' or name == 'Enviado' or name == 'Finalizado' or name == 'Cancelado':
-            return Response({"Errors": 'Cannot delete this state'}, status=status.HTTP_400_BAD_REQUEST)
-        payment = State.all_objects.get(id=id)
-        payment.soft_delete()
+            messages.append('No se puede eliminar este estado')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+        
+        state = State.all_objects.get(id=id)
+        state.soft_delete()
+        
         return Response({'Delete': 'Successfully'}, status=status.HTTP_200_OK)

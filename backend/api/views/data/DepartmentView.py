@@ -49,8 +49,11 @@ class DepartmentDetail(APIView):
         Returns:
             (Response): Response with the department.
         """
+        messages = []
         if not Department.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This department does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este departamento no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         department = Department.all_objects.get(id=id)
         serializer = DepartmentSerializer.serialize_get_crud(department)
         return Response(serializer)

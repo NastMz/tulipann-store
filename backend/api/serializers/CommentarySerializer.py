@@ -60,6 +60,12 @@ class CommentarySerializer(serializers.ModelSerializer):
              Validated data
         """
         rate = args.get('rate', None)
+        messages = []
+
         if rate > 5 or rate < 1:
-            raise serializers.ValidationError({'rate': 'It cannot be greater than 5 or less than 1'})
+            messages.append('La puntuación no puede ser mayor a 5 ni menor a 1')
+
+        if messages:
+            raise serializers.ValidationError(messages)
+
         return super().validate(args)

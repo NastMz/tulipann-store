@@ -35,10 +35,10 @@ class ArticleCrudSerializer(serializers.ModelSerializer):
         Raises:
             serializers.ValidationError: If the title already exists.
         """
-        messages = {}
+        messages = []
 
         if Article.all_objects.filter(title=args['title']).exists():
-            messages['title'] = 'Title already exist'
+            messages.append('Este título ya se encuentra registrado')
 
         if messages:
             raise serializers.ValidationError(messages)

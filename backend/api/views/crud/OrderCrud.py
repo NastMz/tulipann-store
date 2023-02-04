@@ -26,8 +26,12 @@ class OrderList(APIView):
         Returns:
             (Response): Response with all orders.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         orders = Order.all_objects.all()
         orders_serialized = []
         for order in orders:
@@ -52,6 +56,8 @@ class OrderCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the order created or errors.
         """
+        messages = []
+
         data_order = {
             'user': request.user.id,
             'state': State.all_objects.get(name='Pendiente').id
@@ -62,16 +68,14 @@ class OrderCreate(generics.GenericAPIView):
         if not serializer.is_valid():
             return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-        messages = {}
-
         if 'products' not in request.data:
-            messages['products'] = 'This field is required'
+            messages.append('El producto es requerido')
 
         products = request.data['products']
 
         for product in products:
             if not Product.all_objects.filter(id=product['productId']).exists():
-                messages['product'] = 'A product does not exist'
+                messages.append('El producto '+product['productId']+' no existe')
 
         if messages:
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
@@ -123,10 +127,16 @@ class OrderDetail(APIView):
         Returns:
             (Response): Response with the order.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Order.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This order does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta orden no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         order = Order.all_objects.get(id=id)
         serializer = OrderSerializer.serialize_get_crud(order)
         return Response(serializer)
@@ -150,14 +160,23 @@ class OrderUpdate(APIView):
         Returns:
             (Response): Response with the order updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Order.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This order does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta orden no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if 'stateId' not in request.data:
-            return Response({"stateId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('El estado es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if not State.all_objects.filter(id=request.data['stateId']).exists():
-            return Response({"Errors": 'This state does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este estado no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         order = Order.all_objects.get(id=id)
         request.data['state'] = request.data['stateId']
@@ -175,9 +194,10 @@ class OrderUpdate(APIView):
             return Response({"Order updated":
                 {
                     "id": order.id,
-                    "id": order.user.id,
+                    "userId": order.user.id,
                     "stateId": order.state.id,
                     "shipping": order.shipping
                 }
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

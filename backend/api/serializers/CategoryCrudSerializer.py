@@ -26,9 +26,15 @@ class CategoryCrudSerializer(serializers.ModelSerializer):
         Returns:
             The data if the validation pass, it raises a ValidationError if the name already exists
         """
+        messages = []
+
         name = args.get('name', None)
         if Category.all_objects.filter(name=name).exists():
-            raise serializers.ValidationError({'name': 'name already exists'})
+            messages.append('Este nombre ya se encuentra registrado')
+
+        if messages:
+            raise serializers.ValidationError(messages)
+
         return super().validate(args)
 
     def create(self, validated_data):

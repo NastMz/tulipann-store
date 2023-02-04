@@ -73,6 +73,7 @@ class TokenGenerateView(APIView):
         Returns:
             (Response): Response with token for access and token for refresh or error.
         """
+        messages = []
         id_token = request.data.get("id_token")
         payload = validate_id_token(id_token)
         if payload:
@@ -84,4 +85,5 @@ class TokenGenerateView(APIView):
                 "refresh_token": refresh_token
             }, status=status.HTTP_200_OK)
         else:
-            return Response({"error": "Invalid id token"}, status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('Token inválido')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)

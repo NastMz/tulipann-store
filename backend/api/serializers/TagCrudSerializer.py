@@ -11,8 +11,10 @@ class TagCrudSerializer(serializers.ModelSerializer):
     
     def validate(self, args):
         name = args.get('name', None)
+        messages = []
         if Tag.all_objects.filter(name=name).exists():
-            raise serializers.ValidationError({'name': 'tag already exists'})
+            messages.append('Esta etiqueta ya se encuentra registrada')
+            raise serializers.ValidationError(messages)
         return super().validate(args)
 
     def create(self, validated_data):

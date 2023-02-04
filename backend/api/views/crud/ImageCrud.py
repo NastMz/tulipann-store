@@ -27,8 +27,12 @@ class ImageList(APIView):
         Returns:
             (Response): Response with all images.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         images = Image.all_objects.all()
         images_serialized = []
         for image in images:
@@ -53,12 +57,19 @@ class ImageCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the image created or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if 'productId' not in request.data:
-            return Response({"productId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('El producto es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if not Product.all_objects.filter(id=request.data['productId']).exists():
-            return Response({"Errors": 'This product does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este producto no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         request.data['product'] = request.data['productId']
 
@@ -104,10 +115,16 @@ class ImageDetail(APIView):
         Returns:
             (Response): Response with the image.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Image.all_objects.filter(id=id):
-            return Response({"Errors": 'This image does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta imagen no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         image = Image.all_objects.get(id=id)
         serializer = ImageSerializer.serialize_get_crud(image)
         return Response(serializer)
@@ -131,12 +148,19 @@ class ImageUpdate(APIView):
         Returns:
             (Response): Response with the image updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Image.all_objects.filter(id=id):
-            return Response({"Errors": 'This image does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta imagen no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if not Product.all_objects.filter(id=request.data['productId']).exists():
-            return Response({"Errors": 'This product does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este producto no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         image = Image.all_objects.get(id=id)
 
@@ -159,7 +183,8 @@ class ImageUpdate(APIView):
                     "productId": serializer.data['product']
                 }
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ImageDelete(APIView):
@@ -180,10 +205,16 @@ class ImageDelete(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Image.all_objects.filter(id=id):
-            return Response({"Errors": 'This image does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta imagen no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         image = Image.all_objects.get(id=id)
         image.soft_delete()
 

@@ -11,8 +11,10 @@ class RoleCrudSerializer(serializers.ModelSerializer):
     
     def validate(self, args):
         name = args.get('name', None)
+        messages = []
         if Role.all_objects.filter(name=name).exists():
-            raise serializers.ValidationError({'name': 'role already exists'})
+            messages.append('Este rol ya se encuentra registrado')
+            raise serializers.ValidationError(messages)
         return super().validate(args)
 
     def create(self, validated_data):
