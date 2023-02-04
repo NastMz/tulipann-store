@@ -35,7 +35,7 @@ class ProductList(APIView):
         products_serialized = []
         for product in products:
             products_serialized.append(ProductSerializer.serialize_get_crud(product=product))
-        return Response(products_serialized)
+        return Response({'products': products_serialized})
 
 
 class ProductCreate(generics.GenericAPIView):
@@ -87,8 +87,10 @@ class ProductCreate(generics.GenericAPIView):
         images = request.data['images']
 
         for subcategory in subcategories:
-            if Subcategory.all_objects.get(id=subcategory['subcategoryId']).category.id != \
-                    request.data['category']:
+            if not Subcategory.all_objects.filter(id=subcategory['subcategoryId']).exists():
+                return Response({"Errors": 'The '+subcategory['subcategoryId']+' does not exist'},
+                                status=status.HTTP_404_NOT_FOUND)
+            if Subcategory.all_objects.get(id=subcategory['subcategoryId']).category.id != request.data['category']:
                 messages['subcategory'] = 'The entered subcategory does not correspond to the product category '
 
         if messages:

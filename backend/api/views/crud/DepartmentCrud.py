@@ -31,7 +31,7 @@ class DepartmentList(APIView):
         departments_serialized = []
         for department in departments:
             departments_serialized.append(DepartmentSerializer.serialize_get_crud(department=department))
-        return Response(departments_serialized)
+        return Response({'departments': departments_serialized})
 
 
 class DepartmentDetail(APIView):

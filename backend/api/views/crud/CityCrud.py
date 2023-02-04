@@ -58,4 +58,4 @@ class CityDetail(APIView):
             return Response({"Errors": 'This city does not exist'}, status=status.HTTP_404_NOT_FOUND)
         city = City.all_objects.get(id=id)
         serializer = CitySerializer.serialize_get_crud(city)
-        return Response(serializer)
+        return Response({'cities': serializer})

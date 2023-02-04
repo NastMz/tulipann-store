@@ -33,7 +33,7 @@ class ImageList(APIView):
         images_serialized = []
         for image in images:
             images_serialized.append(ImageSerializer.serialize_get_crud(image=image))
-        return Response(images_serialized)
+        return Response({'images': images_serialized})
 
 
 class ImageCreate(generics.GenericAPIView):

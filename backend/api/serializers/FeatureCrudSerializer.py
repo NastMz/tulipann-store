@@ -18,7 +18,7 @@ class FeatureCrudSerializer(serializers.ModelSerializer):
         name = args.get('name', None)
         specification = args.get('specification', None)
         if Feature.all_objects.filter(name=name, specification=specification).exists():
-            raise serializers.ValidationError({'Feature': ('Feature already exists')})
+            raise serializers.ValidationError({'Feature': 'Feature already exists'})
         return super().validate(args)
 
     def create(self, validated_data):

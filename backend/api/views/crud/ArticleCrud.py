@@ -36,7 +36,7 @@ class ArticleList(APIView):
         articles_serialized = []
         for article in articles:
             articles_serialized.append(ArticleSerializer.serialize_get_crud(article=article))
-        return Response(articles_serialized)
+        return Response({'articles': articles_serialized})
 
 
 class ArticleCreate(generics.GenericAPIView):

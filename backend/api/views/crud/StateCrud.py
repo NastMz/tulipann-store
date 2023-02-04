@@ -32,7 +32,7 @@ class StateList(APIView):
         states_serialized = []
         for state in states:
             states_serialized.append(StateSerializer.serialize_get_crud(state=state))
-        return Response(states_serialized)
+        return Response({'states': states_serialized})
 
 
 class StateCreate(generics.GenericAPIView):

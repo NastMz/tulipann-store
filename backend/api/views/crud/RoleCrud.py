@@ -32,7 +32,7 @@ class RoleList(APIView):
         roles_serialized = []
         for role in roles:
             roles_serialized.append(RoleSerializer.serialize_get_crud(role=role))
-        return Response(roles_serialized)
+        return Response({'roles': roles_serialized})
 
 
 class RoleCreate(generics.GenericAPIView):

@@ -34,7 +34,7 @@ class CategoryList(APIView):
         categories_serialized = []
         for category in categories:
             categories_serialized.append(CategorySerializer.serialize_get_crud(category=category))
-        return Response(categories_serialized)
+        return Response({'categories': categories_serialized})
 
 
 class CategoryCreate(generics.GenericAPIView):

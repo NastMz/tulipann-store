@@ -32,7 +32,7 @@ class OrderList(APIView):
         orders_serialized = []
         for order in orders:
             orders_serialized.append(OrderSerializer.serialize_get_crud(order=order))
-        return Response(orders_serialized)
+        return Response({'orders': orders_serialized})
 
 
 class OrderCreate(generics.GenericAPIView):
