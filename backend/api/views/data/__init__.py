@@ -1,6 +1,8 @@
 from .ArticleView import ArticleView
 from .CategoryView import CategoryView
+from .CityView import CityList, CityDetail
 from .CommentaryView import CommentaryView
+from .DepartmentView import DepartmentList, DepartmentDetail
 from .FeatureView import FeatureView
 from .ImageView import ImageView
 from .OrderProductView import OrderProductView
