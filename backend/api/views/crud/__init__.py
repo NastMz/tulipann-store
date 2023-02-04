@@ -1,6 +1,5 @@
 from .ArticleCrud import *
 from .CategoryCrud import *
-from .CityCrud import *
 from .CommentaryCrud import *
 from .RoleCrud import *
 from .StateCrud import *
@@ -11,5 +10,4 @@ from .OrderCrud import *
 from .ImageCrud import *
 from .SpecificationCrud import *
 from .FeatureCrud import *
-from .DepartmentCrud import *
 from .UserList import *
