@@ -29,10 +29,17 @@ class CommentaryCrudSerializer(serializers.ModelSerializer):
         user = args.get('user', None)
         product = args.get('product', None)
         rate = args.get('rate', None)
+        messages = []
+
         if Commentary.all_objects.filter(user=user, product=product).exists():
-            raise serializers.ValidationError({'user': 'The user has already commented on this product'})
+            messages.append('El usuario ya ha comentado este producto')
+
         if rate > 5 or rate < 1:
-            raise serializers.ValidationError({'rate': 'It cannot be greater than 5 or less than 1'})
+            messages.append('La puntuación no puede ser mayor a 5 ni menor a 1')
+
+        if messages:
+            raise serializers.ValidationError(messages)
+
         return super().validate(args)
 
     def create(self, validated_data):

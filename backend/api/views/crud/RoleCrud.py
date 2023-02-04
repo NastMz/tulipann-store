@@ -26,8 +26,12 @@ class RoleList(APIView):
             Returns:
                 (Response): Response with all roles.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         roles = Role.all_objects.all()
         roles_serialized = []
         for role in roles:
@@ -52,8 +56,11 @@ class RoleCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the role created or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
 
         serializer = self.get_serializer(data=request.data)
 
@@ -65,7 +72,7 @@ class RoleCreate(generics.GenericAPIView):
 
                 "Role": serializer.data}, status=status.HTTP_201_CREATED
             )
-
+        
         return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -87,10 +94,15 @@ class RoleDetail(APIView):
         Returns:
             (Response): Response with the role.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         if not Role.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This role does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este rol no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
 
         role = Role.all_objects.get(id=id)
         serializer = RoleSerializer.serialize_get_crud(role)
@@ -116,13 +128,20 @@ class RoleUpdate(APIView):
         Returns:
             (Response): Response with the role updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Role.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This role does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este rol no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         name = Role.all_objects.get(id=id).name
         if name == 'Admin' or name == 'Cliente':
-            return Response({"Errors": 'Cannot update this role'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('No se puede actualizar este rol')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         role = Role.all_objects.get(id=id)
         serializer = RoleSerializer(role, data=request.data, partial=True)
@@ -132,7 +151,8 @@ class RoleUpdate(APIView):
             return Response({
                 "Role updated": serializer.data
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RoleDelete(APIView):
@@ -153,13 +173,20 @@ class RoleDelete(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Role.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This role does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este rol no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         name = Role.all_objects.get(id=id).name
         if name == 'Admin' or name == 'Cliente':
-            return Response({"Errors": 'Cannot delete this role'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('No se puede eliminar este rol')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         role = Role.all_objects.get(id=id)
         role.soft_delete()

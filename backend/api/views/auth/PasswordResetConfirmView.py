@@ -24,12 +24,12 @@ class PasswordResetConfirmView(APIView):
         Returns:
             (Response): Response with message of success or error.
         """
-        messages = {}
+        messages = []
 
         if 'new_password' not in request.data:
-            messages['new_password'] = 'This field is required'
+            messages.append('La nueva contraseña es requerida')
         if 'token' not in request.data:
-            messages['token'] = 'This field is required'
+            messages.append('El token enviado en el correo es requerido')
 
         if messages:
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)

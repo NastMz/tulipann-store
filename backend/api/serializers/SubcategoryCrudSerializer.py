@@ -11,8 +11,10 @@ class SubcategoryCrudSerializer(serializers.ModelSerializer):
     
     def validate(self, args):
         name = args.get('name', None)
+        messages = []
         if Subcategory.all_objects.filter(name=name).exists():
-            raise serializers.ValidationError({'name': 'name already exists'})
+            messages.append('Este nombre ya se encuentra registrado')
+            raise serializers.ValidationError(messages)
         return super().validate(args)
 
     def create(self, validated_data):

@@ -25,8 +25,12 @@ class UserList(APIView):
         Returns:
             (Response): Response with all users.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         users = User.objects.all()
         users_serialized = []
         for user in users:
@@ -52,10 +56,16 @@ class UserDetail(APIView):
         Returns:
             (Response): Response with the user.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not User.objects.filter(id=id).exists():
-            return Response({"Errors": 'This user does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este usuario no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         user = User.objects.get(id=id)
         serializer = UserSerializer.serialize_get_crud(user)
         return Response(serializer)

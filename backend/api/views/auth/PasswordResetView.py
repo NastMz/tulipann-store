@@ -34,10 +34,12 @@ class PasswordResetView(views.APIView):
         Returns:
             (Response): Response with message of steps to follow or error.
         """
+        messages = []
+
         email = request.data['email']
         if not User.objects.filter(email=email).exists():
-            return Response({"error": "The email does not exist in our database."},
-                            status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este correo no existe en nuestra base de datos')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         user = User.objects.get(email=email)
 
@@ -45,7 +47,7 @@ class PasswordResetView(views.APIView):
         reset_token = token_generation(user)
         send_password_reset_email(user, reset_token)
 
-        return Response({"message": "Se ha enviado un correo para restablecer su contraseña."},
+        return Response({"Message": "Se ha enviado un correo para restablecer su contraseña."},
                         status=status.HTTP_200_OK)
 
 

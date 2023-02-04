@@ -35,6 +35,7 @@ class LoginView(APIView):
         Returns:
             (Response): Response with token for access token or error.
         """
+        messages = []
         email = request.data.get("email")
         password = request.data.get("password")
         user = authenticate(username=email, password=password)
@@ -42,4 +43,5 @@ class LoginView(APIView):
             id_token = create_id_token(user)
             return Response({"id_token": id_token}, status=status.HTTP_200_OK)
         else:
-            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('Credenciales inválidas')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)

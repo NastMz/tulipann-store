@@ -29,8 +29,12 @@ class ProductList(APIView):
         Returns:
             (Response): Response with all products.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         products = Product.all_objects.all()
         products_serialized = []
         for product in products:
@@ -55,12 +59,19 @@ class ProductCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the product created or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         if 'categoryId' not in request.data:
-            return Response({"categoryId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('La categoría es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+        
         if not Category.all_objects.filter(id=request.data['categoryId']).exists():
-            return Response({"Errors": 'This category does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta categoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         request.data['category'] = request.data['categoryId']
         serializer = self.get_serializer(data=request.data)
@@ -68,18 +79,20 @@ class ProductCreate(generics.GenericAPIView):
         if not serializer.is_valid():
             return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-        messages = {}
-
         if 'subcategories' not in request.data:
-            messages['subcategories'] = 'This field is required'
+            messages.append('Las subcategorías son requeridas')
+
         if 'specification' not in request.data:
-            messages['specification'] = 'This field is required'
+            messages.append('La especificación es requerida')
+
         if 'features' not in request.data['specification']:
-            messages['features'] = 'This field is required'
+            messages.append('Las características son requeridas')
+
         if 'images' not in request.data:
-            messages['images'] = 'This field is required'
+            messages.append('Las imágenes son requeridas')
+
         if Specification.all_objects.filter(summary=request.data['specification']['summary']).exists():
-            messages['specification'] = 'This specification is already assigned to another product'
+            messages.append('Esta especificación ya está asignada a otro producto')
 
         subcategories = request.data['subcategories']
         specification = request.data['specification']
@@ -88,10 +101,11 @@ class ProductCreate(generics.GenericAPIView):
 
         for subcategory in subcategories:
             if not Subcategory.all_objects.filter(id=subcategory['subcategoryId']).exists():
-                return Response({"Errors": 'The '+subcategory['subcategoryId']+' does not exist'},
-                                status=status.HTTP_404_NOT_FOUND)
+                messages.append('La subcategoría '+subcategory['subcategoryId']+' no existe')
+                return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
             if Subcategory.all_objects.get(id=subcategory['subcategoryId']).category.id != request.data['category']:
-                messages['subcategory'] = 'The entered subcategory does not correspond to the product category '
+                messages.append('La subcategoría ingresada no corresponde a la categoría del producto')
 
         if messages:
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
@@ -179,10 +193,16 @@ class ProductDetail(APIView):
         Returns:
             (Response): Response with the subcategory.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         if not Product.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This product does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este producto no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+        
         product = Product.all_objects.get(id=id)
         serializer = ProductSerializer.serialize_get_crud(product)
         return Response(serializer)
@@ -206,14 +226,23 @@ class ProductUpdate(APIView):
         Returns:
             (Response): Response with the product updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Product.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This product does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este producto no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if 'categoryId' not in request.data:
-            return Response({"categoryId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('La categoría es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if not Category.all_objects.filter(id=request.data['categoryId']).exists():
-            return Response({"Errors": 'This category does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta categoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         product = Product.all_objects.get(id=id)
         product_subcategories = ProductSubcategory.all_objects.filter(product=id)
@@ -223,7 +252,8 @@ class ProductUpdate(APIView):
         for product_subcategory in product_subcategories:
             category_related = Subcategory.all_objects.get(id=product_subcategory.subcategory.id).category
             if category_related.id != request.data['categoryId']:
-                return Response({"Errors": 'The category does not correspond to the subcategories of the product'})
+                messages.append('La categoría no corresponde a las subcategorías del producto')
+                return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer = ProductSerializer(product, data=request.data)
 
@@ -231,8 +261,8 @@ class ProductUpdate(APIView):
             return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
         if Product.all_objects.filter(name=request.data['name']).exclude(id=id).exists():
-            return Response({"name": 'This name is already assigned to another product'},
-                            status=status.HTTP_400_BAD_REQUEST)
+            messages.append('Este nombre ya está asignado a otro producto')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer.save()
 
@@ -265,10 +295,16 @@ class ProductDelete(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Product.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This product does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este producto no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         product = Product.all_objects.get(id=id)
         product.soft_delete()
 

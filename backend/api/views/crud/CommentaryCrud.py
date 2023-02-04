@@ -26,8 +26,12 @@ class CommentaryList(APIView):
         Returns:
             (Response): Response with all commentaries.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         commentaries = Commentary.all_objects.all()
         commentaries_serialized = []
         for commentary in commentaries:
@@ -52,10 +56,16 @@ class CommentaryCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the commentary created or errors.
         """
+        messages = []
+
         if 'productId' not in request.data:
-            return Response({"productId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('El producto es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if not Product.all_objects.filter(id=request.data['productId']).exists():
-            return Response({"Errors": 'This product does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este producto no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         data_commentary = {
             "rate": request.data['rate'],
             "text": request.data['text'],
@@ -98,8 +108,12 @@ class CommentaryDetail(APIView):
         Returns:
             (Response): Response with the commentary.
         """
+        messages = []
+
         if not Commentary.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This commentary does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este comentario no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         commentary = Commentary.all_objects.get(id=id)
         serializer = CommentarySerializer.serialize_get_crud(commentary)
         return Response(serializer)
@@ -123,8 +137,11 @@ class CommentaryUpdate(APIView):
         Returns:
             (Response): Response with the commentary updated or errors.
         """
+        messages = []
+
         if not Commentary.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This commentary does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este comentario no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         commentary = Commentary.all_objects.get(id=id)
         serializer = CommentarySerializer(commentary, data=request.data)
@@ -134,7 +151,8 @@ class CommentaryUpdate(APIView):
             return Response({
                 "Commentary updated": serializer.data
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CommentaryDelete(APIView):
@@ -155,8 +173,12 @@ class CommentaryDelete(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         if not Commentary.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This commentary does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este comentario no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         commentary = Commentary.all_objects.get(id=id)
         commentary.soft_delete()
         return Response({'Delete': 'Successfully'}, status=status.HTTP_200_OK)

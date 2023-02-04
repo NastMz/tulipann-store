@@ -22,10 +22,17 @@ class ProductCrudSerializer(serializers.ModelSerializer):
         name = args.get('name', None)
         stock = args.get('stock', None)
         price = args.get('price', None)
+        messages = []
+
         if Product.all_objects.filter(name=name).exists():
-            raise serializers.ValidationError({'name': 'name already exists'})
+            messages.append('Este nombre ya se encuentra registrado')
+
         if stock < 0 or price < 0:
-            raise serializers.ValidationError({'stock and price': 'Must be greater than zero'})
+            messages.append('El precio y el stock deben ser mayores que cero')
+
+        if messages:
+            raise serializers.ValidationError(messages)
+
         return super().validate(args)
 
     def create(self, validated_data):

@@ -3,6 +3,7 @@ from api.views.crud import CommentaryCreate, CommentaryUpdate, OrderCreate, Comm
 from api.views.data import UserSelfView, UserSelfUpdateView, ArticleView, CategoryView, CommentaryView, FeatureView, \
     ImageView, OrderProductView, OrderView, ProductView, SpecificationView, SubcategoryView, UserView, DepartmentList, \
     DepartmentDetail, CityList, CityDetail
+from api.views.data.CityView import CityDepartment
 
 """
 This file configures all the routes that a user has access to see at the top of the page 
@@ -30,6 +31,7 @@ urlpatterns = [
 
     path('cities/', include([
         path('', CityList.as_view(), name='city_list'),
+        path('department/<str:id>', CityDepartment.as_view(), name='city_department'),
         path('<str:id>/', CityDetail.as_view(), name='city_detail'),
     ])),
 

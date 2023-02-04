@@ -28,8 +28,11 @@ class CategoryList(APIView):
         Returns:
             (Response): Response with all categories.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
         categories = Category.all_objects.all()
         categories_serialized = []
         for category in categories:
@@ -54,8 +57,11 @@ class CategoryCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the category created or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
 
         serializer = self.get_serializer(data=request.data)
 
@@ -102,10 +108,16 @@ class CategoryDetail(APIView):
         Returns:
             (Response): Response with the category.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Category.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This category does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta categoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         category = Category.all_objects.get(id=id)
         serializer = CategorySerializer.serialize_get_crud(category)
         return Response(serializer)
@@ -129,16 +141,22 @@ class CategoryUpdate(APIView):
         Returns:
             (Response): Response with the category updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Category.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This category does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta categoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         category = Category.all_objects.get(id=id)
         serializer = CategorySerializer(category, data=request.data)
 
         if Category.all_objects.filter(name=request.data['name']).exclude(id=id).exists():
-            return Response({'Errors': 'This name is already assigned to another category'})
+            messages.append('Este nombre está asignado a otra categoría')
+            return Response({'Errors': messages})
 
         image_name = update_images(request.data['image']['src'], id, 'category')
         request.data['hash'] = request.data['image']['hash']
@@ -156,7 +174,8 @@ class CategoryUpdate(APIView):
                     }
                 }
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class CategoryDelete(APIView):
@@ -177,10 +196,16 @@ class CategoryDelete(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Category.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This category does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta categoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         category = Category.all_objects.get(id=id)
         category.soft_delete()
         return Response({'Delete': 'Successfully'}, status=status.HTTP_200_OK)

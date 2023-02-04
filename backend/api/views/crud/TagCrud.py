@@ -26,8 +26,12 @@ class TagList(APIView):
         Returns:
             (Response): Response with all tags.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         tags = Tag.all_objects.all()
         tags_serialized = []
         for tag in tags:
@@ -52,8 +56,12 @@ class TagCreate(generics.GenericAPIView):
         Returns:
             (Response): Response with the tag created or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
@@ -64,7 +72,7 @@ class TagCreate(generics.GenericAPIView):
 
                 "Tag": serializer.data}, status=status.HTTP_201_CREATED
             )
-
+        
         return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -86,10 +94,16 @@ class TagDetail(APIView):
         Returns:
             (Response): Response with the tag.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+        
         if not Tag.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This tag does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta etiqueta no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+        
         tag = Tag.all_objects.get(id=id)
         serializer = TagSerializer.serialize_get_crud(tag)
         return Response(serializer)
@@ -113,10 +127,16 @@ class TagUpdate(APIView):
         Returns:
             (Response): Response with the tag updated or errors.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Tag.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This tag does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta etiqueta no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         tag = Tag.all_objects.get(id=id)
         serializer = TagCrudSerializer(tag, data=request.data)
         if serializer.is_valid():
@@ -124,7 +144,8 @@ class TagUpdate(APIView):
             return Response({
                 "Tag updated": serializer.data
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TagDelete(APIView):
@@ -145,10 +166,16 @@ class TagDelete(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
+            messages.append('No está autorizado para realizar esta acción')
+            return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Tag.all_objects.filter(id=id).exists():
-            return Response({"Errors": 'This tag does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta etiqueta no existe')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         tag = Tag.all_objects.get(id=id)
         tag.soft_delete()
 

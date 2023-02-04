@@ -44,21 +44,30 @@ class UserSelfUpdateView(APIView):
         Returns:
             (Response): Response with a message of success or error.
         """
+        messages = []
+
         user = User.objects.get(id=self.request.user.id)
 
         if 'departmentId' not in request.data:
-            return Response({"departmentId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('El departamento es requerido')
+
         if 'cityId' not in request.data:
-            return Response({"cityId": 'This field is required.'}, status=status.HTTP_400_BAD_REQUEST)
+            messages.append('La ciudad es requerida')
+
+        if messages:
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         if not Department.all_objects.filter(id=request.data['departmentId']).exists():
-            return Response({"Errors": 'This department does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Este departamento no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         if not City.all_objects.filter(id=request.data['cityId']).exists():
-            return Response({"Errors": 'This city does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            messages.append('Esta ciudad no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         if not City.all_objects.filter(department=request.data['departmentId'], id=request.data['cityId']).exists():
-            return Response({"Errors": 'This city does not belong to the selected department'},
-                            status=status.HTTP_400_BAD_REQUEST)
+            messages.append('Esta ciudad no pertenece al departamento seleccionado')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         request.data['department'] = request.data['departmentId']
         request.data['city'] = request.data['cityId']
@@ -66,7 +75,7 @@ class UserSelfUpdateView(APIView):
         if 'password' not in request.data:
             serializer = UserUpdateSerializer(user, data=request.data, partial=True)
             if not serializer.is_valid():
-                return Response(serializer.errors)
+                return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
             serializer.save()
             return Response({'Update': 'Successfully'}, status=status.HTTP_200_OK)
 
@@ -82,7 +91,7 @@ class UserSelfUpdateView(APIView):
         user.set_password(request.data['password'])
         serializer = UserUpdateSerializer(user, data=data_user, partial=True)
         if not serializer.is_valid():
-            return Response(serializer.errors)
+            return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         serializer.save()
 
         return Response({'Update': 'Successfully'}, status=status.HTTP_200_OK)

@@ -20,8 +20,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def validate(self, args):
         email = args.get('email', None)
+        messages = []
         if User.objects.filter(email=email).exists():
-            raise serializers.ValidationError({'email': 'email already exists'})
+            messages.append('El correo ya se encuentra registrado')
+            raise serializers.ValidationError(messages)
         return super().validate(args)
 
     def create(self, validated_data):
