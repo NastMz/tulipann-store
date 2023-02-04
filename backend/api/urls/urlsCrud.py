@@ -72,16 +72,6 @@ urlpatterns = [
         path('<str:id>/', CommentaryDetail.as_view(), name='commentary_detail'),
     ])),
 
-    path('departments/', include([
-        path('', DepartmentList.as_view(), name='department_list'),
-        path('<str:id>/', DepartmentDetail.as_view(), name='department_detail'),
-    ])),
-
-    path('cities/', include([
-        path('', CityList.as_view(), name='city_list'),
-        path('<str:id>/', CityDetail.as_view(), name='city_detail'),
-    ])),
-
     path('orders/', include([
         path('', OrderList.as_view(), name='order_list'),
         path('<str:id>/', OrderDetail.as_view(), name='order_detail'),

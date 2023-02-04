@@ -1,18 +1,17 @@
 from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework import status
 from api.models import City
 from api.serializers import CitySerializer
-from api.utils.authorization_crud import authorization
 
 
 class CityList(APIView):
     """
     List all cities with soft delete filter.
     """
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     @staticmethod
     @action(methods=['get'], detail=False)
@@ -25,8 +24,6 @@ class CityList(APIView):
         Returns:
             (Response): Response with all cities.
         """
-        if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
         cities = City.all_objects.all()
         cities_serialized = []
         for city in cities:
@@ -38,7 +35,7 @@ class CityDetail(APIView):
     """
     Retrieve a city by id.
     """
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     @staticmethod
     @action(methods=['get'], detail=True)
@@ -52,8 +49,6 @@ class CityDetail(APIView):
         Returns:
             (Response): Response with the city.
         """
-        if not authorization(request)['success']:
-            return Response(authorization(request), status=status.HTTP_401_UNAUTHORIZED)
         if not City.all_objects.filter(id=id).exists():
             return Response({"Errors": 'This city does not exist'}, status=status.HTTP_404_NOT_FOUND)
         city = City.all_objects.get(id=id)
