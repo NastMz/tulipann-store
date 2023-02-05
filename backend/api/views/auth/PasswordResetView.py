@@ -1,4 +1,7 @@
+import base64
 import datetime
+import time
+
 import environ
 from django.template.loader import render_to_string
 
@@ -10,6 +13,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
 
 from api.models import User
+from api.utils.encrypt_utils import encrypt_token
 from api.utils.email_utils import send_mail
 
 # Initialise environment variables
@@ -36,6 +40,10 @@ class PasswordResetView(views.APIView):
         """
         messages = []
 
+        if 'email' not in request.data:
+            messages.append('El correo es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         email = request.data['email']
         if not User.objects.filter(email=email).exists():
             messages.append('Este correo no existe en nuestra base de datos')
@@ -45,7 +53,14 @@ class PasswordResetView(views.APIView):
 
         # Generate a reset token and send it to the user via email
         reset_token = token_generation(user)
-        send_password_reset_email(user, reset_token)
+
+        # Encrypted token for more security
+        encrypted_token = encrypt_token(reset_token)
+
+        # Encode for base64 to send in email
+        encrypted_token_b64 = base64.b64encode(encrypted_token).decode()
+
+        send_password_reset_email(user, encrypted_token_b64)
 
         return Response({"Message": "Se ha enviado un correo para restablecer su contraseña."},
                         status=status.HTTP_200_OK)
@@ -59,28 +74,28 @@ def token_generation(user):
     Returns:
         str: The token to be sent to the user.
     """
-    expires = datetime.datetime.utcnow() + datetime.timedelta(minutes=20)
+    exp = int(time.time()) + 20 * 60
     payload = {
         'id': str(user.id),
-        'type': 'password_reset'
+        'type': 'password_reset',
+        'exp': exp
     }
     refresh = RefreshToken.for_user(user=user)
     refresh.payload = payload
-    refresh.exp = expires
     return str(refresh)
 
 
-def send_password_reset_email(user, reset_token):
+def send_password_reset_email(user, encrypted_token_b64):
     """
     This function should email the user with a link to reset their password.
     A link should be generated using the reset_token.
     Args:
         user (User): The user to send the email to.
-        reset_token (str): The token to use to generate the reset link.
+        encrypted_token_b64 (str): The base64-encoded encrypted token to use to generate the reset link.
     """
     to_email = user.email
     subject = "Restablecer contraseña - Tulipann Store"
-    reset_link = f"{env('RESTORE_PASSWORD_URL')}/{reset_token}"
+    reset_link = f"{env('RESTORE_PASSWORD_URL')}/{encrypted_token_b64}"
     message = render_to_string('password_reset_email.html', {
         'username': " ".join([user.firstName, user.lastName]),
         'reset_link': reset_link

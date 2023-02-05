@@ -72,12 +72,16 @@ class UserSelfUpdateView(APIView):
         request.data['department'] = request.data['departmentId']
         request.data['city'] = request.data['cityId']
 
-        if 'password' not in request.data:
+        if 'oldPassword' and 'newPassword' not in request.data:
             serializer = UserUpdateSerializer(user, data=request.data, partial=True)
             if not serializer.is_valid():
                 return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
             serializer.save()
             return Response({'Update': 'Successfully'}, status=status.HTTP_200_OK)
+
+        if not user.check_password(request.data['oldPassword']):
+            messages.append('Lo sentimos, la contraseña actual no coincide. Por favor, verifica e intenta de nuevo')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         data_user = {
             "firstName": request.data['firstName'],
@@ -88,7 +92,7 @@ class UserSelfUpdateView(APIView):
             "city": request.data['cityId'],
             "address": request.data['address']
         }
-        user.set_password(request.data['password'])
+        user.set_password(request.data['newPassword'])
         serializer = UserUpdateSerializer(user, data=data_user, partial=True)
         if not serializer.is_valid():
             return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
