@@ -15,7 +15,7 @@ class OrderSerializer(serializers.ModelSerializer):
                 'quantity': product.quantity,
             })
 
-        address = ShippingAddressSerializer.serialize_front(order.address)
+        address = ShippingAddressSerializer.ShippingAddressSerializer.serialize_front(order.address)
 
         return {
             'id': order.id,
@@ -24,6 +24,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'shippingAddress': address,
             'products': products,
             'shippingValue': order.shippingValue,
+            'online': order.online,
             'details': order.details
         }
 
@@ -46,6 +47,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'shippingAddress': address,
             'products': products,
             'shippingValue': order.shippingValue,
+            'online': order.online,
             'details': order.details
         }
 

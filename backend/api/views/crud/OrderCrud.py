@@ -67,6 +67,8 @@ class OrderCreate(generics.GenericAPIView):
             messages.append('La ciudad es requerida')
         if 'products' not in request.data:
             messages.append('El producto es requerido')
+        if 'online' not in request.data:
+            messages.append('El tipo de compra es requerida')
 
         if messages:
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
@@ -91,7 +93,7 @@ class OrderCreate(generics.GenericAPIView):
                 messages.append('El producto ' + product['productId'] + ' no existe')
                 return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
             if Product.all_objects.get(id=product['productId']).category.name == 'Colageno' and Department.all_objects.get(id=request.data['shippingAddress']['departmentId']).name != 'Cundinamarca':
-                messages.append('El producto: ' + Product.all_objects.get(id=product['productId']).name + '\n solo está disponible para envío en el departamento de Cundinamarca')
+                messages.append('El producto: ' + Product.all_objects.get(id=product['productId']).name + '\n Solo está disponible para envío en el departamento de Cundinamarca')
                 return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         data_shipping_addr = {
@@ -112,7 +114,8 @@ class OrderCreate(generics.GenericAPIView):
         data_order = {
             'user': request.user.id,
             'state': State.all_objects.get(name='Pendiente').id,
-            'address': address_serializer.instance.id
+            'address': address_serializer.instance.id,
+            'online': request.data['online']
         }
 
         serializer = self.get_serializer(data=data_order, partial=True)

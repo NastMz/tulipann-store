@@ -11,7 +11,8 @@ class OrderCrudSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'state',
-            'address'
+            'address',
+            'online'
         )
 
     def create(self, validated_data):

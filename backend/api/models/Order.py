@@ -56,6 +56,7 @@ class Order(SoftDeleteModel):
     state = models.ForeignKey(State, on_delete=models.CASCADE)
     address = models.ForeignKey(ShippingAddress, on_delete=models.CASCADE)
     shippingValue = models.PositiveIntegerField(db_column='shipping_value')
+    online = models.BooleanField()
     details = models.JSONField()
 
     objects = OrderManager()
