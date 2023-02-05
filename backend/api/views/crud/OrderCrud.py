@@ -65,6 +65,8 @@ class OrderCreate(generics.GenericAPIView):
             messages.append('El departamento es requerido')
         if 'cityId' not in request.data['shippingAddress']:
             messages.append('La ciudad es requerida')
+        if 'products' not in request.data:
+            messages.append('El producto es requerido')
 
         if messages:
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
@@ -81,6 +83,16 @@ class OrderCreate(generics.GenericAPIView):
                                        id=request.data['shippingAddress']['cityId']).exists():
             messages.append('Esta ciudad no pertenece al departamento seleccionado')
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        products = request.data['products']
+
+        for product in products:
+            if not Product.all_objects.filter(id=product['productId']).exists():
+                messages.append('El producto ' + product['productId'] + ' no existe')
+                return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+            if Product.all_objects.get(id=product['productId']).category.name == 'Colageno' and Department.all_objects.get(id=request.data['shippingAddress']['departmentId']).name != 'Cundinamarca':
+                messages.append('El producto: ' + Product.all_objects.get(id=product['productId']).name + '\n solo está disponible para envío en el departamento de Cundinamarca')
+                return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         data_shipping_addr = {
             "address": request.data['shippingAddress']['address'],
@@ -107,18 +119,6 @@ class OrderCreate(generics.GenericAPIView):
 
         if not serializer.is_valid():
             return Response({"Errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-
-        if 'products' not in request.data:
-            messages.append('El producto es requerido')
-
-        products = request.data['products']
-
-        for product in products:
-            if not Product.all_objects.filter(id=product['productId']).exists():
-                messages.append('El producto '+product['productId']+' no existe')
-
-        if messages:
-            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer.save()
 
@@ -222,7 +222,8 @@ class OrderUpdate(APIView):
         request.data['state'] = request.data['stateId']
         serializer = OrderSerializer(order, data=request.data)
 
-        if request.data['state'] == State.all_objects.get(name='Cancelado').id or request.data['state'] == State.all_objects.get(name='Rechazado').id:
+        if request.data['state'] == State.all_objects.get(name='Cancelado').id or request.data[
+            'state'] == State.all_objects.get(name='Rechazado').id:
             products = OrderProduct.all_objects.filter(order=order)
             for product in products:
                 new_stock = Product.all_objects.get(id=product.product.id)
