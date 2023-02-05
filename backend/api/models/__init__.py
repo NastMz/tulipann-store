@@ -12,6 +12,7 @@ from .OrderProduct import OrderProduct
 from .Product import Product
 from .ProductSubcategory import ProductSubcategory
 from .Role import Role
+from .ShippingAddress import ShippingAddress
 from .Specification import Specification
 from .State import State
 from .Subcategory import Subcategory

@@ -9,7 +9,7 @@ class StateManager(models.Manager):
     to create a new state object.
     """
 
-    def create_state(self, name):
+    def create_state(self, name, percentage):
         """
         This method creates a new state object.
 
@@ -23,7 +23,8 @@ class StateManager(models.Manager):
             raise ValueError('You must put a name for the state')
         id = f'state{State.objects.all().count() + 1}'
         state = self.model(id=id,
-                           name=name)
+                           name=name,
+                           percentage=percentage)
         state.save(using=self._db)
         return state
 
@@ -34,6 +35,7 @@ class State(SoftDeleteModel):
     """
     id = models.CharField(primary_key=True, max_length=8, db_column='state_id')
     name = models.CharField(max_length=20, db_column='state_name')
+    percentage = models.PositiveIntegerField()
 
     objects = StateManager()
     all_objects = SoftDeleteManager()

@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics
 import uuid
-from api.models import Commentary, Product
+from api.models import Commentary, Product, Order, State
 from api.serializers import CommentarySerializer, CommentaryCrudSerializer
 from api.utils.authorization_crud import authorization
 
@@ -66,11 +66,19 @@ class CommentaryCreate(generics.GenericAPIView):
             messages.append('Este producto no existe')
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
+        user_id = request.user.id
+        state_finish_id = State.all_objects.get(name='Finalizado').id
+
+        if not Order.all_objects.filter(user=user_id, state=state_finish_id).exists():
+            messages.append('Desafortunadamente, al no haber adquirido el producto, no está en su alcance emitir una '
+                            'evaluación apropiada y concluyente.')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         data_commentary = {
             "rate": request.data['rate'],
             "text": request.data['text'],
             "product": request.data['productId'],
-            "user": request.user.id
+            "user": user_id
         }
         serializer = self.get_serializer(data=data_commentary)
         if serializer.is_valid():
@@ -83,7 +91,7 @@ class CommentaryCreate(generics.GenericAPIView):
                     "rate": serializer.data['rate'],
                     "text": serializer.data['text'],
                     "productId": serializer.data['product'],
-                    "id": request.user.id
+                    "userId": request.user.id
                 }}, status=status.HTTP_201_CREATED
             )
 

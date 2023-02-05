@@ -1,6 +1,8 @@
 import uuid
 import random
 from django.db import models
+
+from .ShippingAddress import ShippingAddress
 from .User import User
 from .State import State
 from .SoftDeleteModel import SoftDeleteModel
@@ -52,7 +54,8 @@ class Order(SoftDeleteModel):
     id = models.CharField(primary_key=True, editable=False, max_length=255, db_column='order_id')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     state = models.ForeignKey(State, on_delete=models.CASCADE)
-    shipping = models.PositiveIntegerField()
+    address = models.ForeignKey(ShippingAddress, on_delete=models.CASCADE)
+    shippingValue = models.PositiveIntegerField(db_column='shipping_value')
     details = models.JSONField()
 
     objects = OrderManager()

@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics
 import uuid
-from api.models import Order, State, Product, OrderProduct, User
-from api.serializers import OrderSerializer, OrderCrudSerializer, OrderProductSerializer
+from api.models import Order, State, Product, OrderProduct, User, Department, City, ShippingAddress
+from api.serializers import OrderSerializer, OrderCrudSerializer, OrderProductSerializer, ShippingAddressCrudSerializer
 from api.utils.authorization_crud import authorization
 
 
@@ -58,9 +58,49 @@ class OrderCreate(generics.GenericAPIView):
         """
         messages = []
 
+        if 'shippingAddress' not in request.data:
+            messages.append('La dirección de envío es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+        if 'departmentId' not in request.data['shippingAddress']:
+            messages.append('El departamento es requerido')
+        if 'cityId' not in request.data['shippingAddress']:
+            messages.append('La ciudad es requerida')
+
+        if messages:
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not Department.all_objects.filter(id=request.data['shippingAddress']['departmentId']).exists():
+            messages.append('Este departamento no existe')
+        if not City.all_objects.filter(id=request.data['shippingAddress']['cityId']).exists():
+            messages.append('Esta ciudad no existe')
+
+        if messages:
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not City.all_objects.filter(department=request.data['shippingAddress']['departmentId'],
+                                       id=request.data['shippingAddress']['cityId']).exists():
+            messages.append('Esta ciudad no pertenece al departamento seleccionado')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        data_shipping_addr = {
+            "address": request.data['shippingAddress']['address'],
+            "zipCode": request.data['shippingAddress']['zipCode'],
+            "neighborhood": request.data['shippingAddress']['neighborhood'],
+            "department": request.data['shippingAddress']['departmentId'],
+            "city": request.data['shippingAddress']['cityId']
+        }
+
+        address_serializer = ShippingAddressCrudSerializer(data=data_shipping_addr)
+
+        if not address_serializer.is_valid():
+            return Response({"Errors": address_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+        address_serializer.save()
+
         data_order = {
             'user': request.user.id,
-            'state': State.all_objects.get(name='Pendiente').id
+            'state': State.all_objects.get(name='Pendiente').id,
+            'address': address_serializer.instance.id
         }
 
         serializer = self.get_serializer(data=data_order, partial=True)
@@ -103,7 +143,7 @@ class OrderCreate(generics.GenericAPIView):
 
             "Order": {
                 "id": serializer.data['id'],
-                "id": serializer.data['user'],
+                "userId": serializer.data['user'],
                 "stateId": serializer.data['state']
             }
         }, status=status.HTTP_201_CREATED
@@ -196,7 +236,7 @@ class OrderUpdate(APIView):
                     "id": order.id,
                     "userId": order.user.id,
                     "stateId": order.state.id,
-                    "shipping": order.shipping
+                    "shippingValue": order.shippingValue
                 }
             })
 
