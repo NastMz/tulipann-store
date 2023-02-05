@@ -7,13 +7,20 @@ class StateCrudSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = State
-        fields = ('name',)
+        fields = ('name',
+                  'percentage')
     
     def validate(self, args):
         name = args.get('name', None)
+        percentage = args.get('percentage', None)
         messages = []
         if State.all_objects.filter(name=name).exists():
             messages.append('Este estado ya se encuentra registrado')
+
+        if percentage < 0:
+            messages.append('El porcentaje no puede ser menor a cero')
+
+        if messages:
             raise serializers.ValidationError(messages)
         return super().validate(args)
 

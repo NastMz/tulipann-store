@@ -10,7 +10,8 @@ class OrderCrudSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'user',
-            'state'
+            'state',
+            'address'
         )
 
     def create(self, validated_data):

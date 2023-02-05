@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from . import ShippingAddressSerializer
 from ..models import User, State, Order, OrderProduct
 
 
@@ -13,12 +15,15 @@ class OrderSerializer(serializers.ModelSerializer):
                 'quantity': product.quantity,
             })
 
+        address = ShippingAddressSerializer.serialize_front(order.address)
+
         return {
             'id': order.id,
-            'id': order.user.id,
+            'userId': order.user.id,
             'stateId': order.state.id,
+            'shippingAddress': address,
             'products': products,
-            'shipping': order.shipping,
+            'shippingValue': order.shippingValue,
             'details': order.details
         }
 
@@ -32,18 +37,22 @@ class OrderSerializer(serializers.ModelSerializer):
                 'quantity': product.quantity,
             })
 
+        address = ShippingAddressSerializer.ShippingAddressSerializer.serialize_front(order.address)
+
         return {
             'id': order.id,
-            'id': order.user.id,
+            'userId': order.user.id,
             'stateId': order.state.id,
+            'shippingAddress': address,
             'products': products,
-            'shipping': order.shipping,
+            'shippingValue': order.shippingValue,
             'details': order.details
         }
+
 
     class Meta:
         model = Order
         fields = (
             'state',
-            'shipping'
+            'shippingValue'
         )

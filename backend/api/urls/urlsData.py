@@ -2,7 +2,7 @@ from django.urls import path, include
 from api.views.crud import CommentaryCreate, CommentaryUpdate, OrderCreate, CommentaryDelete
 from api.views.data import UserSelfView, UserSelfUpdateView, ArticleView, CategoryView, CommentaryView, FeatureView, \
     ImageView, OrderProductView, OrderView, ProductView, SpecificationView, SubcategoryView, UserView, DepartmentList, \
-    DepartmentDetail, CityList, CityDetail
+    DepartmentDetail, CityList, CityDetail, StateList, StateDetail
 from api.views.data.CityView import CityDepartment
 
 """
@@ -46,6 +46,12 @@ urlpatterns = [
 
     path('products/', ProductView.as_view(), name='products_list'),
     path('specifications/', SpecificationView.as_view(), name='specifications_list'),
+
+    path('states/', include([
+        path('', StateList.as_view(), name='state_list'),
+        path('<str:id>/', StateDetail.as_view(), name='state_detail'),
+    ])),
+
     path('subcategories/', SubcategoryView.as_view(), name='subcategories_list'),
     path('users/', UserView.as_view(), name='users_list'),
 

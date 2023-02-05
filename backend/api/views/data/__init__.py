@@ -9,6 +9,7 @@ from .OrderProductView import OrderProductView
 from .OrderView import OrderView
 from .ProductView import ProductView
 from .SpecificationView import SpecificationView
+from .StateView import StateList, StateDetail
 from .SubcategoryView import SubcategoryView
 from .UserSelf import UserSelfView
 from .UserSelf import UserSelfUpdateView
