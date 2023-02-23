@@ -71,6 +71,18 @@ class ImageCreate(generics.GenericAPIView):
             messages.append('Este producto no existe')
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
+        if 'image' not in request.data:
+            messages.append('La información de la imagen es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'src' not in request.data['image']:
+            messages.append('La imagen es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'hash' not in request.data['image']:
+            messages.append('El hash de la imagen es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         request.data['product'] = request.data['productId']
 
         serializer = self.get_serializer(data=request.data)
@@ -160,6 +172,18 @@ class ImageUpdate(APIView):
 
         if not Product.all_objects.filter(id=request.data['productId']).exists():
             messages.append('Este producto no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'image' not in request.data:
+            messages.append('La información de la imagen es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'src' not in request.data['image']:
+            messages.append('La imagen es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'hash' not in request.data['image']:
+            messages.append('El hash de la imagen es requerido')
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         image = Image.all_objects.get(id=id)

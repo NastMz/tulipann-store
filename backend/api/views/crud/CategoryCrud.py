@@ -63,6 +63,18 @@ class CategoryCreate(generics.GenericAPIView):
             messages.append('No está autorizado para realizar esta acción')
             return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
 
+        if 'image' not in request.data:
+            messages.append('La información de la imagen es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'src' not in request.data['image']:
+            messages.append('La imagen es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'hash' not in request.data['image']:
+            messages.append('El hash de la imagen es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         serializer = self.get_serializer(data=request.data)
 
         image_name = optimize_and_save_image(image_data=request.data['image']['src'],
@@ -149,6 +161,18 @@ class CategoryUpdate(APIView):
 
         if not Category.all_objects.filter(id=id).exists():
             messages.append('Esta categoría no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'image' not in request.data:
+            messages.append('La información de la imagen es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'src' not in request.data['image']:
+            messages.append('La imagen es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'hash' not in request.data['image']:
+            messages.append('El hash de la imagen es requerido')
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         category = Category.all_objects.get(id=id)
