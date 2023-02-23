@@ -1,3 +1,5 @@
+import json
+
 from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -223,10 +225,13 @@ class OrderUpdate(APIView):
 
         order = Order.all_objects.get(id=id)
         request.data['state'] = request.data['stateId']
-        serializer = OrderSerializer(order, data=request.data)
 
-        if request.data['state'] == State.all_objects.get(name='Cancelado').id or request.data[
-            'state'] == State.all_objects.get(name='Rechazado').id:
+        if not Order.all_objects.get(id=id).details is None:
+            request.data['details'] = json.dumps(order.details)
+
+        serializer = OrderSerializer(order, data=request.data, partial=True)
+
+        if request.data['state'] == State.all_objects.get(name='Cancelado').id or request.data['state'] == State.all_objects.get(name='Rechazado').id:
             products = OrderProduct.all_objects.filter(order=order)
             for product in products:
                 new_stock = Product.all_objects.get(id=product.product.id)
