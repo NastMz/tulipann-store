@@ -64,6 +64,18 @@ class ArticleCreate(generics.GenericAPIView):
             messages.append('No está autorizado para realizar esta acción')
             return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
 
+        if 'banner' not in request.data:
+            messages.append('La información del banner es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'src' not in request.data['banner']:
+            messages.append('El banner es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'hash' not in request.data['banner']:
+            messages.append('El hash del banner es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         image_name = optimize_and_save_image(image_data=request.data['banner']['src'], object_name='article')
 
         data_article = {
@@ -177,8 +189,21 @@ class ArticleUpdate(APIView):
         if not authorization(request)['success']:
             messages.append('No está autorizado para realizar esta acción')
             return Response({"Errors": messages}, status=status.HTTP_401_UNAUTHORIZED)
+
         if not Article.all_objects.filter(id=id):
             messages.append('Este artículo no existe')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'banner' not in request.data:
+            messages.append('La información del banner es requerida')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'src' not in request.data['banner']:
+            messages.append('El banner es requerido')
+            return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+        if 'hash' not in request.data['banner']:
+            messages.append('El hash del banner es requerido')
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         article = Article.all_objects.get(id=id)
@@ -200,10 +225,35 @@ class ArticleUpdate(APIView):
         if Article.all_objects.filter(title=request.data['title']).exclude(id=id).exists():
             messages.append('Este título ya está asignado en otro artículo')
 
+        if 'tags' not in request.data:
+            messages.append('Las etiquetas son requeridas')
+
+        tags = request.data['tags']
+
+        for tag in tags:
+            if not Tag.all_objects.filter(id=tag['tagId']).exists():
+                messages.append('La etiqueta '+tag['tagId']+' no existe')
+
         if messages:
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         serializer.save()
+
+        # Update Tags
+        article_tag_serializer = ArticleTagSerializer()
+
+        refresh_article_tag = ArticleTag.all_objects.filter(article=article)
+
+        for artc_tag in refresh_article_tag:
+            artc_tag.delete()
+
+        for tag in tags:
+            data = {
+                'article': article,
+                'tag': Tag.all_objects.get(id=tag['tagId'])
+            }
+            if not ArticleTag.all_objects.filter(tag=data['tag'], article=data['article']).exists():
+                article_tag_serializer.create(data)
 
         return Response({
             "RequestId": str(uuid.uuid4()),
