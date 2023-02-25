@@ -4,9 +4,14 @@
  * @module store/selectors
  * @exports {function} selectProducts - Selector to get the list of products from the store.
  * @exports {function} selectCategories - Selector to get the list of categories from the store.
- * @exports {function} selectSubcategories - Selector to get the list of subcategoriesIds from the store.
+ * @exports {function} selectSubcategories - Selector to get the list of subcategories from the store.
  * @exports {function} selectArticles - Selector to get the list of articles from the store.
  * @exports {function} selectCart - Selector to get the list of items in the cart from the store.
+ * @exports {function} selectUser - Selector to get the user from the store.
+ * @exports {function} selectOrders - Selector to get the list of orders from the store.
+ * @exports {function} selectDepartments - Selector to get the list of departments from the store.
+ * @exports {function} selectCities - Selector to get the list of cities from the store.
+ * @exports {function} selectOrderStatus - Selector to get the list of order statuses from the store.
  */
 
 export { selectProducts } from './productSelector';
@@ -14,3 +19,8 @@ export { selectCategories } from './categorySelector';
 export { selectSubcategories } from './subcategorySelector';
 export { selectArticles } from './articleSelector';
 export { selectCart } from './shoppingCartSelector';
+export { selectUser } from './userSelector';
+export { selectOrders } from './orderSelector';
+export {selectDepartments} from './departmentSelector';
+export {selectCities} from './citySelector';
+export {selectOrderStatus} from './orderStatusSelector';

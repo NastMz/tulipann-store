@@ -4,14 +4,19 @@ import {
     categorySlice,
     productSlice,
     shoppingCartSlice,
-    subcategorySlice
+    subcategorySlice,
+    userSlice,
+    orderSlice,
+    departmentSlice,
+    citySlice,
+    orderStatusSlice
 } from "../reducer";
 
 /**
 * Store object for the Redux store.
 *
 * This store is configured using the configureStore function from the @reduxjs/toolkit package,
-* and includes the reducers for products, categories, subcategoriesIds, articles and the shopping cart.
+* and includes the reducers for user, products, categories, subcategories, articles, orders and the shopping cart.
 *
 * @constant
 * @type {ToolkitStore}
@@ -23,5 +28,10 @@ export const store = configureStore({
         subcategories: subcategorySlice.reducer,
         articles: articleSlice.reducer,
         cart: shoppingCartSlice.reducer,
+        user: userSlice.reducer,
+        orders: orderSlice.reducer,
+        departments: departmentSlice.reducer,
+        cities: citySlice.reducer,
+        orderStatus: orderStatusSlice.reducer
     },
 });

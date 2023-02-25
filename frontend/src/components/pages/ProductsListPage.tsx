@@ -96,7 +96,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
 
     function getFilters() {
         return [
-            {
+            categories.length > 0 && {
                 title: "Categorias",
                 options: categories.map((category) => {
                     return {
@@ -106,9 +106,10 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                     }
                 }),
             },
-            {
+            subcategories.length > 0 && {
                 title: "Subcategorias",
-                options: subcategories.filter((subcategory) => categories.some(c => activeFilters.some(f => f.id === c.id) && subcategory.categoryId === c.id)).map((category) => {
+                // Filter subcategories by active categories
+                options: subcategories.filter((subcategory) => categories.some(c => activeFilters.some(f => f.id === c.id) && subcategory.category === c.id)).map((category) => {
                     return {
                         id: category.id,
                         name: category.name,
@@ -145,7 +146,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
             let active = activeFilters.filter((f) => f.id !== filter.id);
 
             subcategories.forEach((s)=>{
-                if (s.categoryId === filter.id) {
+                if (s.category === filter.id) {
                     active = active.filter((f) => f.id !== s.id);
                 }
             });
@@ -233,7 +234,19 @@ export const ProductsListPage = (props: ProductsPageProps) => {
 
     // Set items to show if any filter or sort option is active
     useEffect(() => {
-        const items = currentItems.filter(item => activeFilters.every(filter => filter.id === item.categoryId || item.subcategoriesIds.some(subcategory => subcategory === filter.id)));
+
+        // Filter items by active filters
+        const items = currentItems.filter(item => {
+            return (
+                // If the item has the same category or subcategory as the active filter
+                activeFilters.every(filter => {
+                    return (
+                        filter.id === item.category ||
+                        (item.subcategories && item.subcategories.some(subcategory => subcategory === filter.id))
+                    );
+                })
+            );
+        });
 
         if (items.length > 0 || activeFilters.length > 0) {
             sortByProperty(items, nameOf<Product>(activeSortOption.property), activeSortOption.order);
@@ -281,7 +294,7 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                                 initial={{scale: 0}}
                                 animate={{scale: 1}}
                                 exit={{scale: 0}}
-                                className={`absolute h-fit z-10 right-6 top-14 overflow-hidden min-w-fit py-2 border bg-white border-gray-200 rounded-md shadow-2xl transform origin-top-right`}
+                                className={`absolute h-fit z-20 right-6 top-14 overflow-hidden min-w-fit py-2 border bg-white border-gray-200 rounded-md shadow-2xl transform origin-top-right`}
                             >
                                 <SortMenu
                                     options={sortOptions}
@@ -327,12 +340,13 @@ export const ProductsListPage = (props: ProductsPageProps) => {
                 </div>
 
                 {/*Products grid*/}
-                <div className={"flex flex-col gap-12 px-8 md:px-16 w-full pb-20"}>
+                <div className={"flex flex-col gap-12 px-8 md:px-16 w-full pb-20 relative"}>
                     {showItems.length > 0
-                        ? <ProductGrid
+                        ?
+                            <ProductGrid
                             products={showItems}
                             className={``}
-                            openProductQuickview={showProductPreview}
+                            onProductClick={showProductPreview}
                         />
                         : <div className={"flex flex-col items-center justify-center gap-6 text-gray-200 h-80"}>
                             <BsBoxSeam size={90}/>

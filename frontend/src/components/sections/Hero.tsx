@@ -1,6 +1,13 @@
 import {Images, scrollToSection} from "../../utils";
 import {PromoCard} from "./PromoCard";
 
+/**
+ * Hero component.
+ *
+ * This component displays the hero section of the home page.
+ *
+ * @returns {ReactNode} The rendered component.
+ */
 export const Hero = () => {
     return (
         <section className="flex flex-col md:flex-row relative h-[800px] text-left overflow-hidden">
@@ -27,35 +34,35 @@ export const Hero = () => {
                             <span className={"font-medium"}>Ver categorias</span>
                         </div>
                         <PromoCard
-                            img={Images.hero}
+                            image={Images.hero00}
                             className={'h-[250px] w-[200px] md:h-[300px] md:w-[250px] 2xl:h-[350px] 2xl:w-[300px]'}
                         />
                         <PromoCard
-                            img={Images.hero}
+                            image={Images.hero10}
                             className={'h-[250px] w-[200px] md:h-[300px] md:w-[250px] 2xl:h-[350px] 2xl:w-[300px]'}
                         />
                     </div>
                     <div className={"flex flex-col gap-4 h-fit relative -bottom-5"}>
                         <PromoCard
-                            img={Images.hero}
+                            image={Images.hero01}
                             className={'h-[250px] w-[200px] md:h-[300px] md:w-[250px] 2xl:h-[350px] 2xl:w-[300px]'}
                         />
                         <PromoCard
-                            img={Images.hero}
+                            image={Images.hero11}
                             className={'h-[250px] w-[200px] md:h-[300px] md:w-[250px] 2xl:h-[350px] 2xl:w-[300px]'}
                         />
                         <PromoCard
-                            img={Images.hero}
+                            image={Images.hero21}
                             className={'h-[250px] w-[200px] md:h-[300px] md:w-[250px] 2xl:h-[350px] 2xl:w-[300px]'}
                         />
                     </div>
                     <div className={"flex flex-col gap-4 h-fit py-14"}>
                         <PromoCard
-                            img={Images.hero}
+                            image={Images.hero02}
                             className={'h-[250px] w-[200px] md:h-[300px] md:w-[250px] 2xl:h-[350px] 2xl:w-[300px]'}
                         />
                         <PromoCard
-                            img={Images.hero}
+                            image={Images.hero12}
                             className={'h-[250px] w-[200px] md:h-[300px] md:w-[250px] 2xl:h-[350px] 2xl:w-[300px]'}
                         />
                     </div>

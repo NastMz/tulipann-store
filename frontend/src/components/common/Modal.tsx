@@ -124,7 +124,7 @@ export const Modal: React.FC<ModalProps> = ({
                         {icon}
                         <div className="ml-4 font-semibold text-lg leading-tight">{title}</div>
                     </div>
-                    <div className="px-4 py-4 text-gray-700">{message}</div>
+                    <div className="px-4 py-4 text-gray-700 whitespace-pre-line">{message}</div>
                     <div className="px-4 py-4 bg-gray-100 flex justify-center">
                         <button
                             className="px-4 py-2 rounded-md text-sm font-semibold bg-gray-400 hover:bg-gray-500 focus:outline-none focus:bg-gray-500"

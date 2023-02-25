@@ -21,5 +21,5 @@ export interface Article {
     banner: Image;
     date: string;
     author: string;
-    tags: string[];
+    tags: Array<{ name: string }>;
 }

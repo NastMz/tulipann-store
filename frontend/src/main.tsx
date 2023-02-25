@@ -1,10 +1,15 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import {BrowserRouter} from 'react-router-dom';
+import {Provider} from 'react-redux';
 import App from './App';
 import './index.css';
-import { store } from './redux/store/store';
+import {store} from './redux/store';
 import {createRoot} from "react-dom/client";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+
+// Create a query client to be used by the app and its components to make requests to the API and cache the responses.
+const queryClient = new QueryClient();
 
 /**
  * Renders the root React component in the DOM.
@@ -12,15 +17,18 @@ import {createRoot} from "react-dom/client";
  * @param {HTMLElement} rootElement - The root element to render the component in.
  */
 function render(rootElement: any) {
-  createRoot(rootElement).render(
-    <React.StrictMode>
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>
-    </React.StrictMode>,
-  );
+    createRoot(rootElement).render(
+        <React.StrictMode>
+            <QueryClientProvider client={queryClient}>
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <App/>
+                        <ReactQueryDevtools/>
+                    </BrowserRouter>
+                </Provider>
+            </QueryClientProvider>
+        </React.StrictMode>,
+    );
 }
 
 render(document.getElementById('root'));

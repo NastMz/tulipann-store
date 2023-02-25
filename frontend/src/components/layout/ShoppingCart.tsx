@@ -159,7 +159,7 @@ export const ShoppingCart = (props: ShoppingCartProps) => {
                                         }
                                     </div>
                                     <div className={"flex justify-between px-4 pt-4 font-medium text-lg"}>
-                                        <span className={""}>Subtotal</span>
+                                        <span className={""}>Total</span>
                                         <span className={""}>${subtotal}</span>
                                     </div>
                                     <div

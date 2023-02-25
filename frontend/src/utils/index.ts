@@ -13,6 +13,9 @@
  * @exports {object} Images - Exports a collection of image URLs.
  * @exports {function} ScrollToTop - Exports a function or component that allows scrolling to the top of the page.
  * @exports {function} scrollToSection - Exports a function that allows scrolling to a specific section of the page.
+ * @exports {function} generateSignature - Generates a random string of characters as signature for the payment.
+ * @exports {function} renameProperties - Renames the properties of an object.
+ * @exports {function} getErrors - Returns all errors from an object.
  */
 
 export {ScrollToTop} from './scrollToTop';
@@ -23,3 +26,6 @@ export {nameOf} from './getKey';
 export {getRateMean, getTotalCustomerCount, getPercentPerRate} from './rateUtils';
 export {loadCartState, saveCartState} from './localStorage';
 export {Images} from './Images';
+export {generateSignature} from './paymentUtils';
+export {renameProperties} from './renameProperty';
+export {getErrors} from './getErrors';

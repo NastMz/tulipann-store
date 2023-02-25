@@ -21,12 +21,12 @@ export const LoginOptions = () => {
             {/* Mobile layout */}
             <div className="flex flex-col gap-4 items-center text-xl pt-4 border-t border-gray-200 px-8 lg:hidden">
                 <div className="text-left w-full">
-                    <Link to={"/login"} className="hover:text-red-600">
+                    <Link to={routes.login.path} className="hover:text-red-600">
                         Iniciar sesión
                     </Link>
                 </div>
                 <div className="text-left w-full">
-                    <Link to={"/register"} className="hover:text-red-600">
+                    <Link to={routes.register.path} className="hover:text-red-600">
                         Crear cuenta
                     </Link>
                 </div>

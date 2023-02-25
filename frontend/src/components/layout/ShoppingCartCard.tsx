@@ -10,7 +10,6 @@ import {Image} from "../../models/interfaces";
  * @interface ShoppingCartCardProps
  * @property {string} id - ID of the product.
  * @property {string} name - Name of the product.
- * @property {string} [color] - Color of the product.
  * @property {number} price - Price of the product.
  * @property {Image} image - Image of the product.
  * @property {number} count - Number of units of the product in the cart.
@@ -23,7 +22,6 @@ import {Image} from "../../models/interfaces";
 interface ShoppingCartCardProps {
     id: string,
     name: string,
-    color?: string,
     price: number,
     image: Image,
     count: number,
@@ -47,9 +45,11 @@ export const ShoppingCartCard = (props: ShoppingCartCardProps) => {
 
     return (
         <div className={`relative grid grid-cols-3 gap-6 py-4 w-full ${props.className} text-black`}>
-            <div className={"h-full w-full min-w-[80px] overflow-hidden rounded-xl"}>
+            <Link to={`${routes.product.path}/${props.id}`}>
+            <div className={"h-full w-full min-w-[80px] overflow-hidden rounded-xl h-20"}>
                 <OptimizedImage image={props.image}/>
             </div>
+            </Link>
             <div className={"flex flex-col py-1 justify-between col-span-2"}>
                 <div className={"flex justify-between items-start gap-4 w-full"}>
                     <div className={"truncate"}>

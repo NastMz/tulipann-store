@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && NODE_ENV=production dotenv -e .env.production vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "docs": "typedoc --entryPointStrategy expand --tsconfig ./tsconfig.json",
     "lint": " eslint '.\\src\\**\\*.{ts,tsx}'"
@@ -14,9 +14,11 @@
     "@reduxjs/toolkit": "^1.9.0",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
+    "@tanstack/react-query": "^4.22.4",
+    "@tanstack/react-query-devtools": "^4.22.4",
     "axios": "^1.2.1",
     "blurhash": "^2.0.4",
-    "dotenv": "^16.0.3",
+    "crypto-js": "^4.1.1",
     "formik": "^2.2.9",
     "framer-motion": "^7.6.12",
     "lodash": "^4.17.21",
@@ -32,6 +34,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",

@@ -21,9 +21,9 @@ export const OrderSummaryCard = (props: OrderSummaryCardProps) => {
             </div>
             <div className={"col-span-2 flex flex-col py-1 justify-between w-full pr-2"}>
                 <div className={"flex justify-between items-start gap-2 w-full"}>
-                    <div className={"w-2/3 flex gap-2 items-center"}>
+                    <div className={"w-2/3 flex flex-col gap-2 items-start"}>
                         <Link to={`${routes.product.path}/${props.id}`} className={""}>
-                            <p className={"truncate text-xl w-full"}>{props.name}</p>
+                            <p className={"truncate text-md md:text-xl w-full"}>{props.name}</p>
                         </Link>
                         <span className={"text-md"}>x {props.count}</span>
                     </div>

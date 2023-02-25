@@ -72,7 +72,7 @@ export const shoppingCartSlice = createSlice({
          * Reducer for removing a product from the shopping cart.
          *
          * @param {ShoppingCartSliceState} state - Current state of the slice.
-         * @param {PayloadAction<number>} action - Action object with the id of the product to be removed.
+         * @param {PayloadAction<string>} action - Action object with the id of the product to be removed.
          * @returns {void}
          */
         removeProductFromCart: (state, action: PayloadAction<string>) => {
@@ -84,7 +84,7 @@ export const shoppingCartSlice = createSlice({
          * Reducer for increasing the count of a product in the shopping cart.
          *
          * @param {ShoppingCartSliceState} state - Current state of the slice.
-         * @param {PayloadAction<number>} action - Action object with the id of the product to increase the count.
+         * @param {PayloadAction<string>} action - Action object with the id of the product to increase the count.
          * @returns {void}
          */
         increaseProductCartCount: (state, action: PayloadAction<string>) => {
@@ -104,7 +104,7 @@ export const shoppingCartSlice = createSlice({
          * Reducer for decreasing the count of a product in the shopping cart.
          *
          * @param {ShoppingCartSliceState} state - Current state of the slice.
-         * @param {PayloadAction<number>} action - Action object with the id of the product to decrease the count.
+         * @param {PayloadAction<string>} action - Action object with the id of the product to decrease the count.
          * @returns {void}
          */
         decreaseProductCartCount: (state, action: PayloadAction<string>) => {

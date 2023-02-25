@@ -3,18 +3,34 @@ import {useRef, useState} from "react";
 import {ProductFeatureCard} from "./ProductFeatureCard";
 import {AnimatePresence, motion} from "framer-motion";
 
+
+/**
+ * Interface for the ProductFeatures component props.
+ *
+ * @interface ProductFeaturesProps
+ * @property {ProductSpecs} productSpecs - The product specs to display.
+ * @property {string} [className] - The class name to apply to the component.
+ */
 interface ProductFeaturesProps {
     specs: ProductSpecs,
     className?: string
 }
 
+/**
+ * ProductFeatures component.
+ *
+ * This component displays the product features.
+ *
+ * @param {ProductFeaturesProps} props - The component props.
+ * @returns {JSX.Element} - The ProductFeatures component.
+ */
 export const ProductFeatures = (props: ProductFeaturesProps) => {
 
     // Refs used to control the info cards interaction
     const featuresOptionsRef = useRef<any>(null);
 
     // State for know the actual selected option
-    const [featureOption, setFeatureOption] = useState<any>(props.specs.options[0]);
+    const [featureOption, setFeatureOption] = useState<Feature>(props.specs.options[0]);
 
     // Function used to show the feature card when an option is clicked
     const showFeatureCard = (index: number) => {

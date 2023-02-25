@@ -5,7 +5,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
  * Interface for SubcategorySlice state
  *
  * @interface SubcategorySliceState
- * @property {Subcategory[]} list - List of subcategoriesIds.
+ * @property {Subcategory[]} list - List of subcategories.
  */
 interface SubcategorySliceState {
   list: Subcategory[];
@@ -24,8 +24,8 @@ const initialState: SubcategorySliceState = {
 /**
  * Subcategory slice for the Redux store.
  *
- * This slice includes actions and reducers for handling the state of subcategoriesIds in the app,
- * including adding and removing subcategoriesIds from the list.
+ * This slice includes actions and reducers for handling the state of subcategories in the app,
+ * including adding and removing subcategories from the list.
  *
  * @constant
  * @type {Slice}
@@ -51,7 +51,7 @@ export const subcategorySlice = createSlice({
     * Action creator for removing a subcategory from the list.
     *
     * @param {SubcategorySliceState} state - Current state of the slice.
-    * @param {PayloadAction<number>} action - Action object with the id of the subcategory to be removed.
+    * @param {PayloadAction<string>} action - Action object with the id of the subcategory to be removed.
     * @returns {void}
     */
       removeSubcategory: (state, action: PayloadAction<string>) => {

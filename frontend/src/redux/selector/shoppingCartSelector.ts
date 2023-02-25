@@ -1,4 +1,4 @@
-import { store } from '../store/store';
+import { store } from '../store';
 
 /**
  * Selector to get the list of items in the cart from the Redux store.

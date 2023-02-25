@@ -12,6 +12,7 @@
  * @exports {function} ProductQuickview - ProductQuickview component.
  * @exports {function} SortMenu - SortMenu component.
  * @exports {function} WhatsAppWidget - WhatsAppWidget component.
+ * @exports {function} ReviewForm - ReviewForm component.
  */
 
 
@@ -25,3 +26,4 @@ export {ProductOverview} from './ProductOverview';
 export {ProductQuickview} from "./ProductQuickview";
 export {SortMenu} from './SortMenu';
 export {WhatsAppWidget} from './WhatsAppWidget';
+export {ReviewFormModal} from './ReviewFormModal';

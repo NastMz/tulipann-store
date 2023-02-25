@@ -93,15 +93,15 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                             exit="closed"
                             transition={{duration: 0.2}}
                             variants={modalVariants}
-                            className={`bg-white overflow-hidden min-h-fit max-h-fit  min-w-fit max-w-fit rounded-xl flex flex-col md:flex-row px-8 pt-14 pb-8 lg:p-12 2xl:p-20 gap-6 md:gap-12 2xl:gap-24 shadow-xl relative ${props.isOpen ? '' : 'pointer-events-none'} ${props.cardClassName}`}
+                            className={`bg-white overflow-hidden h-full w-[90%] rounded-xl flex flex-col md:flex-row px-8 pt-14 pb-8 lg:p-12 2xl:p-20 gap-6 md:gap-12 2xl:gap-24 shadow-xl relative ${props.isOpen ? '' : 'pointer-events-none'} ${props.cardClassName}`}
                         >
                             <AiOutlineClose
                                 size={25}
                                 className={"absolute top-4 md:top-6 right-4 md:right-6 cursor-pointer text-gray-400 hover:text-red-500"}
                                 onClick={() => closeQuickview()}
                             />
-                            <div className={"flex flex-col gap-8 w-full h-1/2 md:w-2/3 md:h-4/5"}>
-                                <div className={"overflow-hidden w-full h-full rounded-xl"}>
+                            <div className={"flex flex-col gap-8 w-full md:w-2/3 overflow-hidden"}>
+                                <div className={"overflow-hidden w-full h-full rounded-xl flex-grow"}>
                                     <OptimizedImage image={props.product.images[0]}/>
                                 </div>
                                 <div className={"hidden lg:flex items-center justify-center"}>
@@ -140,9 +140,11 @@ export const ProductQuickview = (props: ProductQuickviewProps) => {
                                             )
                                     }
                                 </div>
-                                <p className={"font-medium flex-grow "}>
-                                    {props.product.description}
-                                </p>
+                                <div className={'flex-grow'}>
+                                    <p className={"font-medium"}>
+                                        {props.product.description}
+                                    </p>
+                                </div>
                                 <div className={"flex items-center my-1 md:my-4"}>
                                     <span
                                         className={`bg-red-500 hover:bg-red-400 text-center p-3 text-white font-medium cursor-pointer flex-grow rounded-lg mt-4 lg:mt-0 ${props.product.stock > 0
