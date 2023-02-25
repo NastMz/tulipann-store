@@ -1,5 +1,6 @@
-import { NavbarMenuCard } from './NavbarMenuCard';
-import { Image } from '../../models/interfaces';
+import {NavbarMenuCard} from './NavbarMenuCard';
+import {Image} from '../../models/interfaces';
+import {NotFoundPlaceholder} from "../common";
 
 /**
  * Interface for a navigation item in the NavbarMenu component.
@@ -26,7 +27,7 @@ interface NavItem {
  * @property {string} [className] - Class name(s) to apply to the root element.
  */
 interface NavbarMenuProps {
-    items?: NavItem[];
+    items: NavItem[];
     closeMenu: () => void;
     className?: string;
 }
@@ -40,20 +41,35 @@ interface NavbarMenuProps {
  * @returns {JSX.Element} The rendered component.
  */
 export const NavbarMenu = (props: NavbarMenuProps): JSX.Element => {
-    return (
-        <div
-            className={`grid lg:grid-cols-4 gap-12 w-full px-8 py-6 ${props.className}`}
-        >
-            {props.items?.map((item) => (
-                <NavbarMenuCard
-                    img={item.img}
-                    title={item.title}
-                    subtitle={item.subtitle}
-                    to={item.to}
-                    key={item.title}
-                    closeMenu={props.closeMenu}
-                />
-            ))}
-        </div>
-    );
+
+    // Check if the items prop is defined and if it is, map it to render the cards
+    if (props.items.length > 0) {
+        return (
+            <div
+                className={`grid lg:grid-cols-4 gap-12 w-full px-8 py-6 ${props.className}`}
+            >
+                {
+                    props.items.map((item) => (
+                        <NavbarMenuCard
+                            img={item.img}
+                            title={item.title}
+                            subtitle={item.subtitle}
+                            to={item.to}
+                            key={item.title}
+                            closeMenu={props.closeMenu}
+                        />
+                    ))
+                }
+            </div>
+        )
+    } else {
+        return (
+            <div
+                className={`w-full`}
+            >
+            <NotFoundPlaceholder message={"Parece que no hay elementos para mostrar"}/>
+            </div>
+        )
+    }
+
 };

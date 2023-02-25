@@ -1,2 +1,2 @@
-export {navbarOptions} from './navbarOptions';
+export {getNavbarOptions} from './navbarOptions';
 export {sortOptions} from './sortOptions';

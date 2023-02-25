@@ -1,9 +1,7 @@
 import {Link} from "react-router-dom";
 import {BsFacebook, BsInstagram, BsTwitter, BsWhatsapp} from "react-icons/bs";
 import Logo from "../../assets/images/LogoTulipannV2.svg";
-import axios from 'axios';
 import {useState} from "react";
-import {Modal} from "../common";
 import {routes} from "../../config/routes";
 
 /**
@@ -16,40 +14,12 @@ import {routes} from "../../config/routes";
 export const Footer = () => {
     // State to show or hide the credits
     const [showCredits, setShowCredits] = useState(false);
-    // State to track whether the modal is open or closed
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    // State to store the type of modal to show (error, warning, info, or success)
-    const [modalType, setModalType] = useState<'error' | 'warning' | 'info' | 'success'>('success');
-    // State to store the title of the modal
-    const [modalTitle, setModalTitle] = useState('');
-    // State to store the message of the modal
-    const [modalMessage, setModalMessage] = useState('');
+
     // State to store the email of the user who wants to subscribe to the newsletter
     const [email, setEmail] = useState('');
 
-    /**
-     * Subscribes the user to the newsletter.
-     *
-     * Sends a request to the server to subscribe the user to the newsletter, and displays a modal with the result of the
-     * operation.
-     */
-    const subscribeToNewsletter = async () => {
-        // Make the HTTP request using axios
-        try {
-            const response = await axios.post('/api/subscribe', {email});
-            // If the request is successful, update the state of the modal
-            setModalType('success');
-            setModalTitle('¡Suscripción exitosa!');
-            setModalMessage('Te has suscrito al boletín de noticias con éxito.');
-        } catch (error) {
-            // If the request fails, update the state of the modal
-            setModalType('error');
-            setModalTitle('Error');
-            setModalMessage('Ha ocurrido un error al suscribirte al boletín de noticias. Por favor, inténtalo de nuevo.');
-        }
-        // Open the modal
-        setModalIsOpen(true);
-    };
+    // Mailchimp newsletter subscription form URL
+    const url = `https://${import.meta.env.VITE_MAILCHIMP_SERVER_PREFIX}.list-manage.com/subscribe/post`;
 
     return (
         <>
@@ -153,16 +123,17 @@ export const Footer = () => {
                         <p>Únete a nuestra lista de correo y recibe novedades de forma regular en tu bandeja de
                             entrada.</p>
                         <form
-                            onSubmit={e => {
-                                e.preventDefault();
-                                subscribeToNewsletter();
-                            }}
+                            action={url}
+                            method={'post'}
                         >
                             <div className={"flex items-center gap-4 w-full justify-center lg:justify-end"}>
+                                <input type="hidden" name="u" value={import.meta.env.VITE_MAILCHIMP_USER_ID}/>
+                                <input type="hidden" name="id" value={import.meta.env.VITE_MAILCHIMP_LIST_ID}/>
                                 <input
                                     type="email"
                                     placeholder="Ingresa tu correo electrónico"
                                     value={email}
+                                    name={'EMAIL'}
                                     onChange={e => setEmail(e.target.value)}
                                     className={"border border-slate-300 text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 py-2 px-3 rounded-full shadow-sm placeholder-slate-400 w-96"}
                                 />
@@ -190,12 +161,14 @@ export const Footer = () => {
                     </div>
 
                     {/* IMAGES CREDITS */}
-                    <div className={'text-sm flex gap-1 -ml-14 relative w-fit'} onMouseLeave={() => setShowCredits(false)}>
+                    <div className={'text-sm flex gap-1 -ml-14 relative w-fit'}
+                         onMouseLeave={() => setShowCredits(false)}>
                         <span className={'opacity-40'} onMouseEnter={() => setShowCredits(true)}>
                             Algunas imágenes fueron tomadas de <a href="https://www.freepik.es" target={'_blank'}
-                                                                    className={'text-blue-600'}>Freepik</a>.
+                                                                  className={'text-blue-600'}>Freepik</a>.
                         </span>
-                        <div className={`absolute right-0 bottom-6 flex flex-col shadow-md h-fit w-fit bg-white opacity-100 p-2 rounded-md ${showCredits ? 'block': 'hidden'}`}>
+                        <div
+                            className={`absolute right-0 bottom-6 flex flex-col shadow-md h-fit w-fit bg-white opacity-100 p-2 rounded-md ${showCredits ? 'block' : 'hidden'}`}>
                             <p><a
                                 href="https://www.freepik.com/free-vector/teamwork-concept-landing-page_5155720.htm#query=about&position=2&from_view=search&track=sph">Image
                                 by pikisuperstar</a> on Freepik</p>
@@ -231,16 +204,6 @@ export const Footer = () => {
                     </div>
                 </div>
             </footer>
-            {/* Modal for displaying messages to the user */}
-            <Modal
-                title={modalTitle}
-                message={modalMessage}
-                buttonText="Cerrar"
-                isOpen={modalIsOpen}
-                onClose={() => setModalIsOpen(false)}
-                onButtonClick={() => setModalIsOpen(false)}
-                type={modalType}
-            />
         </>
     );
 };

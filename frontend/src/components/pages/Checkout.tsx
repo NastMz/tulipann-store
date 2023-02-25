@@ -3,27 +3,12 @@ import {routes} from "../../config/routes";
 import {Navigate, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {motion} from "framer-motion";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {emptyCart} from "../../redux/actions";
 import {store} from "../../redux/store";
-
-/**
- * Interface for Order object.
- *
- * @interface Order
- * @property {Array<any>} products - List of products in the order.
- * @property {number} subtotal - Subtotal for the order.
- * @property {number} shipping - Shipping cost for the order.
- * @property {number} taxes - Tax amount for the order.
- * @property {number} total - Total cost for the order.
- */
-interface Order {
-    products: Array<any>,
-    subtotal: number,
-    shipping: number,
-    taxes: number,
-    total: number
-}
+import {Order} from "../../models/interfaces";
+import {OrderProduct} from "../../models/interfaces/Order";
+import {selectCart} from "../../redux/selector";
 
 /**
  * Interface for Order object.
@@ -52,13 +37,9 @@ export const Checkout = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [order, setOrder] = useState<Order>({
-        products: [],
-        subtotal: 0,
-        shipping: 0,
-        taxes: 0,
-        total: 0
-    });
+    const cart = useSelector(selectCart);
+
+    const [order, setOrder] = useState<Array<OrderProduct>>([]);
 
     const [orderInfo, setOrderInfo] = useState<OrderInformation>({
         contact: undefined,
@@ -75,7 +56,7 @@ export const Checkout = () => {
         }
     }, [isOrdered]);
 
-    if (store.getState().cart.list.length > 0) {
+    if (cart.length > 0) {
         return (
             <motion.div
                 initial={{ width: 0 }}
@@ -84,9 +65,10 @@ export const Checkout = () => {
                 className="h-fit lg:h-screen w-full max-w-full grid lg:grid-cols-2 gap-8 lg:gap-24 px-4 lg:px-16 py-8 lg:mb-12 overflow-hidden"
             >
                 <CheckoutResume setOrder={setOrder} />
-                <CheckoutForm setInfo={setOrderInfo} sendOrder={setIsOrdered} />
+                <CheckoutForm products={order}/>
             </motion.div>
         );
+    } else {
+        return <Navigate to={routes.catalog.path} />;
     }
-    return <Navigate to={routes.catalog.path} />;
 };

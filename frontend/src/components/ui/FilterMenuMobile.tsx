@@ -2,6 +2,7 @@ import {FilterCard} from "./FilterCard";
 import {forwardRef, Ref, useState} from "react";
 import {AiOutlineClose} from "react-icons/ai";
 import {AnimatePresence, motion} from "framer-motion";
+import {NotFoundPlaceholder} from "../common";
 
 interface Option {
     id: string,
@@ -57,27 +58,31 @@ export const FilterMenuMobile = forwardRef((props: FilterMenuProps, ref: Ref<any
                                     onClick={() => props.setActive(false)}
                                 />
                             </div>
-                            <form
-                                className={`h-full min-w-fit bg-white px-8 ${props.className}`}
-                                ref={ref}
-                            >
+
                                 {
-                                    props.filters.map((filter, index) => (
-                                        filter.options.length > 0 && <FilterCard
-                                            index={index}
-                                            title={filter.title}
-                                            options={filter.options}
-                                            key={filter.title.concat(String(filter.options.length), 'M')}
-                                            updateFilters={props.updateFilters}
-                                            activeForm={activeForm}
-                                            setActiveForm={setActiveIndex}
-                                            className={"px-2"}
-                                            activeIndexes={activeIndexes}
-                                            setActiveIndexes={setActiveIndexes}
-                                        />
-                                    ))
+                                    // Check if filters are loaded
+                                    props.filters.length > 0
+                                        ? <form
+                                            className={`h-full min-w-fit bg-white px-8 ${props.className}`}
+                                            ref={ref}
+                                        >
+                                            {props.filters.map((filter, index) => (
+                                                filter.options.length > 0 && <FilterCard
+                                                index={index}
+                                                title={filter.title}
+                                                options={filter.options}
+                                                key={filter.title}
+                                                updateFilters={props.updateFilters}
+                                                activeForm={activeForm}
+                                                setActiveForm={setActiveIndex}
+                                                className={"px-2"}
+                                                activeIndexes={activeIndexes}
+                                                setActiveIndexes={setActiveIndexes}
+                                            />
+                                        ))}
+                                        </form>
+                                        : <NotFoundPlaceholder message={"Parece que no hay filtros disponibles"}/>
                                 }
-                            </form>
                         </motion.div>
                     )
                 }

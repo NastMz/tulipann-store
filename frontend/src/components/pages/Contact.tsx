@@ -46,9 +46,11 @@ export const Contact = () => {
             exit={{width: 0}}
             className={"min-h-screen h-fit overflow-hidden w-full grid grid-cols-1 lg:grid-cols-4"}
         >
-            <div className={'p-12 flex flex-col gap-6 justify-items-start bg-gradient-to-bl from-red-500 to-red-800 w-full h-fit md:h-full text-white'}>
+            <div
+                className={'p-12 flex flex-col gap-6 justify-items-start bg-gradient-to-bl from-red-500 to-red-800 w-full h-fit md:h-full text-white'}>
                 <h3 className={'font-medium text-lg'}>Información de contacto</h3>
-                <p>Contáctanos por teléfono o correo electrónico para solucionar cualquier problema o duda (o usa el widget en la esquina inferior derecha de tu pantalla).</p>
+                <p>Contáctanos por teléfono o correo electrónico para solucionar cualquier problema o duda (o usa el
+                    widget en la esquina inferior derecha de tu pantalla).</p>
                 <span className={'flex gap-2 items-center'}><FiPhone/> +1 (555) 123-4567</span>
                 <span className={'flex gap-2 items-center'}><FiMail/> tulipannstore@gmail.com</span>
             </div>
@@ -180,12 +182,12 @@ export const Contact = () => {
                             className={"text-sm text-red-600 italic"}>{formik.touched.message && formik.errors.message ? formik.errors.message : ''}</span>
                     </div>
                     <div className={'flex items-center justify-end mt-2'}>
-                    <button
-                        type={'submit'}
-                        className={"w-1/3 p-4 bg-red-500 hover:bg-red-400 text-center text-white font-medium cursor-pointer flex-grow rounded-md"}
-                    >
-                        Enviar
-                    </button>
+                        <button
+                            type={'submit'}
+                            className={"w-1/3 p-4 bg-red-500 hover:bg-red-400 text-center text-white font-medium cursor-pointer flex-grow rounded-md"}
+                        >
+                            Enviar
+                        </button>
                     </div>
                 </form>
             </div>

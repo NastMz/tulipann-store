@@ -2,14 +2,15 @@ import {Link} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {NavbarMenu} from "./NavbarMenu";
 import Logo from "../../assets/images/LogoTulipannV2.svg";
-import {navbarOptions} from "../../config/options";
+import {getNavbarOptions} from "../../config/options";
 import {routes} from "../../config/routes";
 import {ShoppingCart} from "./ShoppingCart";
 import {SearchBar} from "./SearchBar";
 import {AnimatePresence, motion} from "framer-motion";
 import {NavbarMenuMobile} from "./NavbarMenuMobile";
 import {LoginOptions} from "./LoginOptions";
-import {index} from "typedoc/dist/lib/output/themes/default/partials";
+import {LoggedInMenu} from "./LoggedInMenu";
+import {store} from "../../redux/store";
 
 /**
  * Navbar component.
@@ -26,14 +27,22 @@ export const Navbar = () => {
     // State for show or hide the nav menu
     const [isShowingNavMenu, setIsShowingNavMenu] = useState<boolean>(false);
 
+    // State for the navbar options
+    const [navbarOptions, setNavbarOptions] = useState<any>([]);
+
     // State for know the actual selected nav option
     const [navOption, setNavOption] = useState<number>(-1);
 
     // State for control if the navbar is fixed to top screen
     const [isSticky, setIsSticky] = useState<boolean>(false);
 
-    // Event listener to set fixed position to navbar
+
     useEffect(() => {
+
+        // Get the navbar options from the config file
+        setNavbarOptions(getNavbarOptions());
+
+        // Event listener to set fixed position to navbar
         const handleScroll = () => {
             if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
                 setIsSticky(true);
@@ -93,6 +102,10 @@ export const Navbar = () => {
         }
     }, [isShowingNavMenu]);
 
+    // Subscribe to the store to get the navbar options
+    store.subscribe(() => {
+        setNavbarOptions(getNavbarOptions());
+    });
 
     return (
         <nav
@@ -135,7 +148,11 @@ export const Navbar = () => {
                     <div className={"flex lg:gap-12 md:gap-6 items-center"}>
 
                         {/*Login Menu*/}
-                        <LoginOptions/>
+                        {
+                            store.getState().user.user.id !== ''
+                                ? <LoggedInMenu/>
+                                : <LoginOptions/>
+                        }
 
                         <div className={"flex gap-6 items-center text-gray-500 h-full"}>
 
@@ -189,9 +206,11 @@ export const Navbar = () => {
                         />
                     </div>
                     {/*LOGO*/}
-                    <Link to={routes.home.path} className={"h-full w-full flex items-center justify-center"}>
-                        <img src={Logo} alt={Logo} className={`h-8 object-cover`}/>
-                    </Link>
+                    <div className={"h-full w-full flex items-center justify-center"}>
+                        <Link to={routes.home.path}>
+                            <img src={Logo} alt={Logo} className={`h-8 object-cover`}/>
+                        </Link>
+                    </div>
                     <div className={"flex justify-between items-center gap-3 h-full"}>
                         <SearchBar/>
                         <ShoppingCart/>

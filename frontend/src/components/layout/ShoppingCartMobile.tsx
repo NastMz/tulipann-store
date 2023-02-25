@@ -99,7 +99,7 @@ export const ShoppingCartMobile = (props: ShoppingCartMobileProps) => {
                                 </div>
                                 <div className={'flex-shrink h-fit'}>
                                     <div className={"flex justify-between px-4 pt-4 font-medium text-lg"}>
-                                        <span className={""}>Subtotal</span>
+                                        <span className={""}>Total</span>
                                         <span className={""}>${props.subtotal}</span>
                                     </div>
                                     <div

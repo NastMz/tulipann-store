@@ -1,22 +1,39 @@
 import './App.css';
 import {AnimatePresence} from "framer-motion";
-import {useDispatch} from "react-redux";
-import {addArticle, addCategory, addProduct, addSubcategory, addToCart} from "./redux/actions";
-import {getArticles, getCategories, getProducts, getSubcategories} from "./api/api";
-//import {getArticles, getCategories, getProducts, getSubcategories} from "./api";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    addArticle,
+    addCategory,
+    addDepartment,
+    addOrder, addOrderStatus,
+    addProduct,
+    addSubcategory,
+    addToCart,
+    setUser
+} from "./redux/actions";
+import {
+    getArticles,
+    getCategories,
+    getDepartments,
+    getOrders,
+    getOrderStatus,
+    getProducts,
+    getSubcategories
+} from "./api/data";
 import {loadCartState, saveCartState, ScrollToTop} from "./utils";
 import {routes} from "./config/routes";
-import React, {Dispatch, lazy, SetStateAction, Suspense, useEffect, useMemo, useState} from 'react';
+import React, {lazy, Suspense, useEffect} from 'react';
 import {Loader} from "./components/common";
 import {store} from "./redux/store";
-import {isEqual, throttle} from "lodash";
+import {throttle} from "lodash";
 import {Main} from "./components/templates";
 import {Route, Routes} from "react-router-dom";
-import {Article, Category, Product, Subcategory} from "./models/interfaces";
-import {ActionCreatorWithPayload} from "@reduxjs/toolkit";
-import {Test} from "./components/utils/Test";
-import {PayUButton} from "./components/utils";
+import {useQuery} from '@tanstack/react-query';
+import {selectCart, selectProducts} from "./redux/selector";
+import {getUserInfo} from "./api/client";
 
+
+// Lazy load components
 const Login = lazy(() => import('./components/pages/index').then(({Login}) => ({default: Login})));
 const NotFound = lazy(() => import('./components/pages/index').then(({NotFound}) => ({default: NotFound})));
 const ProductPage = lazy(() => import('./components/pages/index').then(({ProductPage}) => ({default: ProductPage})));
@@ -26,6 +43,7 @@ const StoreFront = lazy(() => import('./components/pages/index').then(({StoreFro
 const Checkout = lazy(() => import('./components/pages/index').then(({Checkout}) => ({default: Checkout})));
 const OrderSummary = lazy(() => import('./components/pages/index').then(({OrderSummary}) => ({default: OrderSummary})));
 const ProtectedRoute = lazy(() => import('./components/utils/index').then(({ProtectedRoute}) => ({default: ProtectedRoute})));
+const NotLoggedInRoute = lazy(() => import('./components/utils/index').then(({NotLoggedInRoute}) => ({default: NotLoggedInRoute})));
 const About = lazy(() => import('./components/pages/index').then(({About}) => ({default: About})));
 const Contact = lazy(() => import('./components/pages/index').then(({Contact}) => ({default: Contact})));
 const FAQ = lazy(() => import('./components/pages/index').then(({FAQ}) => ({default: FAQ})));
@@ -34,76 +52,103 @@ const Privacy = lazy(() => import('./components/pages/index').then(({Privacy}) =
 const Returns = lazy(() => import('./components/pages/index').then(({Returns}) => ({default: Returns})));
 const Warranty = lazy(() => import('./components/pages/index').then(({Warranty}) => ({default: Warranty})));
 const Terms = lazy(() => import('./components/pages/index').then(({Terms}) => ({default: Terms})));
+const Profile = lazy(() => import('./components/pages/index').then(({Profile}) => ({default: Profile})));
+const OrderHistory = lazy(() => import('./components/pages/index').then(({OrderHistory}) => ({default: OrderHistory})));
+const RestorePassword = lazy(() => import('./components/pages/index').then(({RestorePassword}) => ({default: RestorePassword})));
+const UserGuide = lazy(() => import('./components/pages/index').then(({UserGuide}) => ({default: UserGuide})));
 
 function App() {
-    // Load data from API
-    const products = getProducts();
-    const categories = getCategories();
-    const subcategories = getSubcategories();
-    const articles = getArticles();
-    const cart = loadCartState();
-
-    const [prevProducts, setPrevProducts] = useState<Array<Product>>(products);
-    const [prevCategories, setPrevCategories] = useState<Array<Category>>(categories);
-    const [prevSubcategories, setPrevSubcategories] = useState<Array<Subcategory>>(subcategories);
-    const [prevArticles, setPrevArticles] = useState<Array<Article>>(articles);
 
     const dispatch = useDispatch();
 
-    // Helper function to update the data and dispatch an action
-    const updateData = (
-        prevValue: Array<Product | Category | Article | Subcategory>,
-        updatedValue: Array<Product | Category | Article | Subcategory>,
-        setPrevValue: Dispatch<SetStateAction<any>>,
-        dispatchAction: ActionCreatorWithPayload<any>
-    ) => {
-        // Compare the previous value with the updated value
-        if (!isEqual(prevValue, updatedValue)) {
-            // Save the updated value as the new previous value
-            setPrevValue(updatedValue);
+    // Load data from API using React Query
+    useQuery({
+        queryKey: ['apiProducts'],
+        queryFn: getProducts,
+        onSuccess: (data) => {
+            data.forEach((product) => dispatch(addProduct(product)));
+        },
+    });
+    useQuery({
+        queryKey: ['apiCategories'],
+        queryFn: getCategories,
+        onSuccess: (data) => {
+            data.forEach((category) => dispatch(addCategory(category)));
+        },
+    });
+    useQuery({
+        queryKey: ['apiSubcategories'],
+        queryFn: getSubcategories,
+        onSuccess: (data) => {
+            data.forEach((subcategory) => dispatch(addSubcategory(subcategory)));
+        },
+    });
+    useQuery({
+        queryKey: ['apiArticles'],
+        queryFn: getArticles,
+        onSuccess: (data) => {
+            data.forEach((article) => dispatch(addArticle(article)));
+        },
+    });
+    useQuery({
+        queryKey: ['apiUser'],
+        queryFn: getUserInfo,
+        onSuccess: (data) => {
+            dispatch(setUser(data));
+        },
+    });
+    useQuery({
+        queryKey: ['apiOrders'],
+        queryFn: getOrders,
+        onSuccess: (data) => {
+            data.forEach((order) => dispatch(addOrder(order)));
+        },
+    });
+    useQuery({
+        queryKey: ['apiDepartments'],
+        queryFn: getDepartments,
+        onSuccess: (data) => {
+            data.forEach((department) => dispatch(addDepartment(department)));
+        },
+    });
+    useQuery({
+        queryKey: ['apiStates'],
+        queryFn: getOrderStatus,
+        onSuccess: (data) => {
+            data.forEach((status) => dispatch(addOrderStatus(status)));
+        },
+    });
 
-            // Dispatch the action for each item in the updated value
-            updatedValue.forEach((item) => dispatch(dispatchAction(item)));
-        }
-    };
 
-    // Hook to update the data from the API every 20 minutes
+    // Load cart data from local storage
+    const cart = loadCartState();
+
+    const productsFromStore = useSelector(selectProducts);
+
+    // Use useEffect to add items from the cart to the Redux store
     useEffect(() => {
-        const interval = setInterval(() => {
-            // Get the most updated information from the API
-            const updatedProducts = getProducts();
-            const updatedCategories = getCategories();
-            const updatedSubcategories = getSubcategories();
-            const updatedArticles = getArticles();
-
-            // Compare the most updated data with the information we already have stored in the app
-            updateData(prevProducts, updatedProducts, setPrevProducts, addProduct);
-            updateData(prevCategories, updatedCategories, setPrevCategories, addCategory);
-            updateData(prevSubcategories, updatedSubcategories, setPrevSubcategories, addSubcategory);
-            updateData(prevArticles, updatedArticles, setPrevArticles, addArticle);
-        }, 1200000); // Run the update logic every 20 minutes (1200000 milliseconds)
-
-        return () => clearInterval(interval);
-    }, []);
-
-    useMemo(() => {
-        // Add products, categories, subcategoriesIds, and articles to the Redux store
-        products.forEach((product) => dispatch(addProduct(product)));
-        categories.forEach((category) => dispatch(addCategory(category)));
-        subcategories.forEach((subcategory) => dispatch(addSubcategory(subcategory)));
-        articles.forEach((article) => dispatch(addArticle(article)));
-
-        // Add items from the cart to the Redux store
         if (cart.length > 0) {
             cart.forEach((product) => {
-                const p = {...products.filter((prod) => prod.id === product.id)[0], count: product.count};
-                dispatch(addToCart(p));
+                let productExist = true;
+
+                // Check if the product exists in the store
+                if (!productsFromStore.find(prod => prod.id === product.id)) {
+                    productExist = false;
+                }
+
+                // If the product exists, add it to the cart
+                if (productExist) {
+                    const p = {...productsFromStore.filter((prod) => prod.id === product.id)[0], count: product.count};
+                    dispatch(addToCart(p));
+                }
             });
         }
-    }, [products, categories, articles, cart]);
+    }, [cart]);
 
-    // Save cart state to local storage
+    // Use useEffect to save the cart state to local storage
     useEffect(() => {
+
+        // Save the cart state to local storage
         const saveState = () => {
             const state = store.getState().cart.list.map((product) => {
                 return {
@@ -114,8 +159,10 @@ function App() {
             saveCartState(state);
         };
 
+        // Throttle the saveState function to prevent it from being called too often
         return store.subscribe(throttle(saveState, 1000));
     }, []);
+
 
     // Render the app
     return (
@@ -134,6 +181,7 @@ function App() {
                                 />
                             }
                         />
+
                         {/* Catalog route */}
                         <Route
                             path={routes.catalog.path}
@@ -144,6 +192,7 @@ function App() {
                                 />
                             }
                         />
+
                         {/* Catalog route */}
                         <Route
                             path={`${routes.catalog.path}/:categoryId`}
@@ -154,6 +203,7 @@ function App() {
                                 />
                             }
                         />
+
                         {/* Product route */}
                         <Route
                             path={`${routes.product.path}/:productId`}
@@ -164,26 +214,33 @@ function App() {
                                 />
                             }
                         />
+
                         {/* Login route */}
                         <Route
                             path={routes.login.path}
                             element={
-                                <Main
-                                    page={<Login/>}
-                                    title={routes.login.title}
-                                />
+                                <NotLoggedInRoute>
+                                    <Main
+                                        page={<Login/>}
+                                        title={routes.login.title}
+                                    />
+                                </NotLoggedInRoute>
                             }
                         />
+
                         {/* Register route */}
                         <Route
                             path={routes.register.path}
                             element={
-                                <Main
-                                    page={<Register/>}
-                                    title={routes.register.title}
-                                />
+                                <NotLoggedInRoute>
+                                    <Main
+                                        page={<Register/>}
+                                        title={routes.register.title}
+                                    />
+                                </NotLoggedInRoute>
                             }
                         />
+
                         {/* Contact route */}
                         <Route
                             path={routes.contact.path}
@@ -194,6 +251,7 @@ function App() {
                                 />
                             }
                         />
+
                         {/* About us route */}
                         <Route
                             path={routes.about.path}
@@ -204,6 +262,7 @@ function App() {
                                 />
                             }
                         />
+
                         {/* Returns policy route */}
                         <Route
                             path={routes.return.path}
@@ -214,6 +273,7 @@ function App() {
                                 />
                             }
                         />
+
                         {/* Warranty route */}
                         <Route
                             path={routes.warranty.path}
@@ -224,6 +284,7 @@ function App() {
                                 />
                             }
                         />
+
                         {/* FAQ route */}
                         <Route
                             path={routes.faq.path}
@@ -234,6 +295,7 @@ function App() {
                                 />
                             }
                         />
+
                         {/* Payments methods route */}
                         <Route
                             path={routes.payments.path}
@@ -244,6 +306,7 @@ function App() {
                                 />
                             }
                         />
+
                         {/* Privacy politics methods route */}
                         <Route
                             path={routes.privacy.path}
@@ -254,6 +317,7 @@ function App() {
                                 />
                             }
                         />
+
                         {/* Terms and conditions route */}
                         <Route
                             path={routes.terms.path}
@@ -264,6 +328,18 @@ function App() {
                                 />
                             }
                         />
+
+                        {/* User guide route */}
+                        <Route
+                            path={routes.guide.path}
+                            element={
+                                <Main
+                                    page={<UserGuide/>}
+                                    title={routes.guide.title}
+                                />
+                            }
+                        />
+
                         {/* Checkout route */}
                         <Route
                             path={routes.checkout.path}
@@ -276,10 +352,10 @@ function App() {
                                 </ProtectedRoute>
                             }
                         />
-                        {/* Order summary route */}
 
+                        {/* Order summary route */}
                         <Route
-                            path={routes.order.path}
+                            path={`${routes.order.path}/:orderId`}
                             element={
                                 <ProtectedRoute>
                                     <Main
@@ -289,15 +365,44 @@ function App() {
                                 </ProtectedRoute>
                             }
                         />
-                        {/* Test route */}
+
+                        {/* Order List route */}
                         <Route
-                            path={"/test"}
+                            path={routes.orderHistory.path}
                             element={
-                                <Test>
-                                    <PayUButton/>
-                                </Test>
+                                <ProtectedRoute>
+                                    <Main
+                                        page={<OrderHistory/>}
+                                        title={routes.orderHistory.title}
+                                    />
+                                </ProtectedRoute>
                             }
                         />
+
+                        {/* Profile route */}
+                        <Route
+                            path={routes.profile.path}
+                            element={
+                                <ProtectedRoute>
+                                    <Main
+                                        page={<Profile/>}
+                                        title={routes.profile.title}
+                                    />
+                                </ProtectedRoute>
+                            }
+                        />
+
+                        {/* Restore Password route */}
+                        <Route
+                            path={`${routes.restore.path}/:token`}
+                            element={
+                                    <Main
+                                        page={<RestorePassword/>}
+                                        title={routes.restore.title}
+                                    />
+                            }
+                        />
+
                         {/* Not found route */}
                         <Route
                             path={"*"}

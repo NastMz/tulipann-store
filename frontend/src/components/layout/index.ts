@@ -16,6 +16,7 @@
  * @exports {function} ShoppingCartCard - ShoppingCartCard component.
  * @exports {function} ShoppingCartMobile - ShoppingCartMobile component.
  * @exports {function} WhatsAppFloatIcon - WhatsAppFloatIcon component.
+ * @exports {function} LoggedInMenu - LoggedInMenu component.
  */
 
 export {Footer} from './Footer';
@@ -32,3 +33,4 @@ export {ShoppingCart} from './ShoppingCart';
 export {ShoppingCartCard} from './ShoppingCartCard';
 export {ShoppingCartMobile} from './ShoppingCartMobile';
 export {WhatsAppFloatIcon} from './WhatsAppFloatIcon';
+export {LoggedInMenu} from './LoggedInMenu';

@@ -96,7 +96,7 @@ export const SearchBar = () => {
                             onFocus={(e) => e.persist()}
                         />
                         <div className="absolute h-full right-5 top-0 flex justify-center items-center">
-                            <BiSearch size={25} className={"text-slate-400"}/>
+                            <BiSearch className={"text-slate-400 text-xl"}/>
                         </div>
                     </div>
                     <div className={`${searchInput === '' ? 'hidden' : ''}`}>

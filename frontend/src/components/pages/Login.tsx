@@ -4,10 +4,12 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import Logo from "../../assets/images/LogoTulipann.svg";
 import {AnimatePresence, motion} from "framer-motion";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {VscEye, VscEyeClosed} from "react-icons/vsc";
-import {login} from '../../api/client';
-import { Modal } from "../common";
+import {getUserInfo, login} from '../../api/client';
+import {LoaderModal, Modal} from "../common";
+import {useDispatch} from "react-redux";
+import {setUser} from "../../redux/actions";
 
 /**
  * Login component.
@@ -17,12 +19,18 @@ import { Modal } from "../common";
  * @returns {ReactNode} The rendered component.
  */
 export const Login = () => {
+
+    const dispatch = useDispatch();
+
+    // Loading state
+    const [loading, setLoading] = useState<boolean>(false);
+
     // Formik logics
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
-            rememberMe: ''
+            rememberMe: false
         },
 
         // Validate form
@@ -33,26 +41,39 @@ export const Login = () => {
 
         // Submit form
         onSubmit: async (values) => {
-            console.log(values);
+            setLoading(true);
             try {
                 // Call the login function with the email and password from the form
-                await login(values.email, values.password);
 
-                // If the "remember me" checkbox is checked, save the email in the local storage
-                if (values.rememberMe) {
-                    localStorage.setItem("email", formik.values.email);
+                let loginResult = await login(values.email, values.password, values.rememberMe);
+
+                if (loginResult) {
+                    // If the login was successful, get the user data from the API
+                    const user = getUserInfo();
+
+
+                    // Set the user in Redux store
+                    user.then((user) => {
+                        setLoading(false);
+                        dispatch(setUser(user));
+
+                        // Show a success alert
+                        setShowSuccess(true);
+                    })
+
                 } else {
-                    // Otherwise, remove the email from the local storage
-                    localStorage.removeItem("email");
+                    setLoading(false);
+                    // Show an error alert
+                    setShowError(true);
+                    // Use the error message from the Error object
+                    setErrorMessage('Correo y/o contraseña incorrecto, intentalo de nuevo');
                 }
-
-                // Show a success alert
-                setShowSuccess(true);
             } catch (error) {
+                setLoading(false);
                 // Show an error alert
                 setShowError(true);
                 // Use the error message from the Error object
-                setErrorMessage('Ha ocurrido un error, intentalo de nuevo');
+                setErrorMessage('Ocurrio un error, intentalo de nuevo');
             }
         },
     });
@@ -62,24 +83,17 @@ export const Login = () => {
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
+    // Password visibility state.
     const [shown, setShown] = useState<boolean>(false);
 
+    // Switch the password visibility.
     const switchShown = () => setShown(!shown);
-
-    useEffect(() => {
-        // Load the email from the local storage
-        const email = localStorage.getItem("email");
-        // Set the email in the form
-        if (email) {
-            formik.setValues({ ...formik.values, email: email });
-        }
-    }, []);
 
     const navigate = useNavigate();
 
     const redirect = () => {
         setShowSuccess(false);
-        navigate('/');
+        navigate(routes.catalog.path);
     };
 
     return (
@@ -88,6 +102,9 @@ export const Login = () => {
             animate={{width: '100%'}}
             exit={{width: 0}}
         >
+            {/* Loader modal */}
+            <LoaderModal isOpen={loading}/>
+
             {/* Success alert */}
             <Modal
                 isOpen={showSuccess}
@@ -189,7 +206,7 @@ export const Login = () => {
                                 name={`rememberMe`}
                                 type="checkbox"
                                 className="h-4 w-4 rounded border-gray-300 text-red-500 focus:ring-red-500"
-                                value={formik.values.rememberMe}
+                                checked={formik.values.rememberMe}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                             />
@@ -209,5 +226,5 @@ export const Login = () => {
                 </form>
             </div>
         </motion.div>
-    )
+    );
 }

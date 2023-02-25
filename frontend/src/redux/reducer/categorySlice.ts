@@ -35,10 +35,10 @@ export const categorySlice = createSlice({
     initialState,
     reducers: {
         /**
-         * Action creator for adding a categoryId to the list.
+         * Action creator for adding a id to the list.
          *
          * @param {CategorySliceState} state - Current state of the slice.
-         * @param {PayloadAction<Category>} action - Action object with the categoryId to be added.
+         * @param {PayloadAction<Category>} action - Action object with the id to be added.
          * @returns {void}
          */
         addCategory: (state, action: PayloadAction<Category>) => {
@@ -48,10 +48,10 @@ export const categorySlice = createSlice({
                     ];
                 },
         /**
-         * Reducer for removing a categoryId from the list.
+         * Reducer for removing a id from the list.
          *
          * @param {CategorySliceState} state - Current state of the slice.
-         * @param {PayloadAction<number>} action - Action object with the id of the categoryId to be removed.
+         * @param {PayloadAction<string>} action - Action object with the id of the id to be removed.
          * @returns {void}
          */
         removeCategory: (state, action: PayloadAction<string>) => {

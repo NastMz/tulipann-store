@@ -4,17 +4,38 @@ import {Image} from "../../models/interfaces";
 import {motion} from "framer-motion";
 import {useState} from "react";
 
+
+/**
+ * Interface for ProductCard component props.
+ * @interface
+ * @property {string} id - Product id.
+ * @property {string} name - Product name.
+ * @property {Image} image - Product image.
+ * @property {number} price - Product price.
+ * @property {number} rate - Product rating.
+ * @property {number} reviews - Product reviews.
+ * @property {string} [className] - Additional class name.
+ * @property {(id: string) => void} [onClick] - Click event handler.
+ */
 interface ProductCardProps {
     id: string,
-    img: Image,
+    image: Image,
     name: string,
     price: number,
     rate: number,
     reviews: number,
     className?: string,
-    showPreview: (id: string) => void
+    onClick: (id: string) => void
 }
 
+/**
+ * Product card component.
+ *
+ * This component is used to display product information.
+ *
+ * @param {ProductCardProps} props - Component props.
+ * @returns {JSX.Element} - Product card component.
+ */
 export const ProductCard = (props: ProductCardProps) => {
 
     const [isHover, setIsHover] = useState<boolean>(false);
@@ -25,15 +46,15 @@ export const ProductCard = (props: ProductCardProps) => {
             initial={{opacity: 0}}
             exit={{opacity: 0}}
             layout
-            onClick={() => props.showPreview(props.id)}
+            onClick={() => props.onClick(props.id)}
             onMouseEnter={() => setIsHover(true)}
             onMouseLeave={() => setIsHover(false)}
-            className={'max-w-[250px] max-h-[320px] h-[320px]'}
+            className={'max-w-[250px] w-[250px] max-h-[350px] h-[350px]'}
         >
             <div
                 className={`flex flex-col gap-4 h-full w-full cursor-pointer text-center border border-gray-100 rounded-xl pb-4 overflow-hidden shadow-md ${isHover ? 'scale-110' : ''} ${props.className}`}>
-                <div className={`flex-1 overflow-hidden`}>
-                    <OptimizedImage image={props.img}/>
+                <div className={`h-1/2 overflow-hidden`}>
+                    <OptimizedImage image={props.image}/>
                 </div>
                 <div className="flex-2 flex flex-col gap-2">
                     <h1 className={`font-medium`}>{props.name}</h1>

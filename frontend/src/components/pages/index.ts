@@ -18,6 +18,10 @@
  * @exports {ReactComponent} Payments - Component for the payments methods page.
  * @exports {ReactComponent} Privacy - Component for the privacy policy page.
  * @exports {ReactComponent} Terms - Component for the terms and conditions page.
+ * @exports {ReactComponent} OrderHistory - Component for the order history page.
+ * @exports {ReactComponent} Profile - Component for the profile page.
+ * @exports {ReactComponent} RestorePassword - Component for the restore password page.
+ * @exports {ReactComponent} UserGuide - Component for the user guide page.
  */
 
 export {StoreFront} from './StoreFront';
@@ -36,3 +40,7 @@ export {FAQ} from './FAQ';
 export {Payments} from './Payments';
 export {Privacy} from './Privacy';
 export {Terms} from './Terms';
+export {OrderHistory} from './OrderHistory';
+export {Profile} from './Profile';
+export {RestorePassword} from './RestorePassword';
+export {UserGuide} from './UserGuide';

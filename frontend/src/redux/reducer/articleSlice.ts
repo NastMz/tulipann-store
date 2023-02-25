@@ -51,7 +51,7 @@ export const articleSlice = createSlice({
      * Action creator for removing an article from the list.
      *
      * @param {ArticleSliceState} state - Current state of the slice.
-     * @param {PayloadAction<number>} action - Action object with the id of the article to be removed.
+     * @param {PayloadAction<string>} action - Action object with the id of the article to be removed.
      * @returns {void}
      */
     removeArticle: (state, action: PayloadAction<string>) => {

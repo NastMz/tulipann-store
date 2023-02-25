@@ -14,12 +14,15 @@
  * @exports {function} ProductFeatureCard - ProductFeatureCard component.
  * @exports {function} ProductFeatures - ProductFeatures component.
  * @exports {function} ProductGrid - ProductGrid component.
- * @exports {function} ProductImageSelector - ProductImageSelector component.
+ * @exports {function} ProductGallery - ProductGallery component.
  * @exports {function} ProductQuickview - ProductQuickview component.
  * @exports {function} PromoCard - PromoCard component.
  * @exports {function} PromoSection - PromoSection component.
  * @exports {function} RateChart - RateChart component.
  * @exports {function} Reviews - Reviews component.
+ * @exports {function} OrderTable - OrderTable component.
+ * @exports {function} OrderCard - OrderCard component.
+ * @exports {function} StatusChart - StatusChart component.
  */
 
 export {CategoryCard} from './CategoryCard';
@@ -34,9 +37,12 @@ export {ProductCard} from './ProductCard';
 export {ProductFeatureCard} from './ProductFeatureCard';
 export {ProductFeatures} from './ProductFeatures';
 export {ProductGrid} from './ProductGrid';
-export {ProductImageSelector} from './ProductImageSelector';
+export {ProductGallery} from './ProductGallery';
 export {ProductQuickview} from '../ui/ProductQuickview';
 export {PromoCard} from './PromoCard';
 export {PromoSection} from './PromoSection';
 export {RateChart} from './RateChart';
 export {Reviews} from './Reviews';
+export {OrderTable} from './OrderTable';
+export {OrderCard} from './OrderCard';
+export {StatusChart} from './StatusChart';

@@ -48,7 +48,7 @@ export const OptimizedImage = (props: OptimizedImageProps) => {
                     resolutionX={32}
                     resolutionY={32}
                     punch={1}
-                    className={`h-full w-full absolute z-20 top-0 left-0 ${props.objectFit ?? 'object-cover'}`}
+                    className={`h-full w-full absolute z-20 inset-0 ${props.objectFit ? 'object-contain' : 'object-cover'}`}
                 />
             )}
             <LazyLoadImage

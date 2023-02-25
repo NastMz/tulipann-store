@@ -7,7 +7,7 @@ import {Stars} from "../common";
 import {addToCart} from "../../redux/actions";
 import {useDispatch} from "react-redux";
 import {store} from "../../redux/store";
-import {ProductImageSelector} from "../sections";
+import {ProductGallery} from "../sections";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {validateSession} from "../../api/client";
@@ -66,9 +66,9 @@ export const ProductOverview = (props: ProductOverviewProps) => {
             className={``}
         >
             <div
-                className={`bg-white w-full h-fit flex flex-col-reverse lg:flex-row p-12 gap-10`}
+                className={`bg-white w-full min-h-fit flex flex-col-reverse lg:flex-row p-12 gap-10`}
             >
-                <div className={"flex-grow flex flex-col gap-2"}>
+                <div className={"flex-grow flex flex-col gap-2 w-full lg:w-1/2"}>
                     <div className={"flex"}>
                         <h1 className={"text-xl md:text-4xl font-bold"}>{props.product.name}</h1>
                     </div>
@@ -118,7 +118,7 @@ export const ProductOverview = (props: ProductOverviewProps) => {
                         <span className={"text-gray-400 font-medium"}>Calidad garantizada</span>
                     </div>
                 </div>
-                <ProductImageSelector
+                <ProductGallery
                     images={props.product.images}
                     className={"w-full h-96 lg:w-1/2"}
                 />

@@ -1,4 +1,4 @@
-import { store } from "../store/store";
+import { store } from "../store";
 
 /**
  * Selector for getting the list of categories from the Redux store.

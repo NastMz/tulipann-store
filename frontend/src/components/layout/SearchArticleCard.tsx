@@ -17,7 +17,7 @@ interface ArticleCardProps {
     id: string;
     name: string;
     image: Image;
-    tags: string[];
+    tags: Array<{name:string}>;
     summary: string;
 }
 

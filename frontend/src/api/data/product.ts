@@ -8,7 +8,7 @@ import { apiRequest } from "../request";
  */
 export async function getProducts(): Promise<Product[]> {
     // Send a GET request to the '/api/products' endpoint
-    const { data } = await apiRequest("GET", "/api/products", undefined, false);
+    const {data} = await apiRequest("GET", "data/products/", undefined, false);
 
     // Return the list of products from the response data
     return data.products;

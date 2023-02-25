@@ -3,29 +3,46 @@ import {Product} from "../../models/interfaces";
 import {getRateMean, getTotalCustomerCount} from "../../utils";
 import {AnimatePresence, motion} from "framer-motion";
 
-interface ItemsGridProps {
+/**
+ * Interface for ProductGrid component props.
+ *
+ * @interface ProductGridProps
+ * @property {Product[]} products - List of products to display.
+ * @property {string} [className] - Optional class name to add to the component.
+ * @property {(id: string) => void} [onProductClick] - Optional callback to call when a product is clicked.
+ */
+interface ProductGridProps {
     products: Product[],
     className?: string,
-    openProductQuickview: (id: string) => void,
+    onProductClick: (id: string) => void,
 }
 
-export const ProductGrid = (props: ItemsGridProps) => {
+
+/**
+ * ProductGrid component.
+ *
+ * This component displays a grid of products.
+ *
+ * @param {ProductGridProps} props - Component props.
+ * @returns {JSX.Element} - ProductGrid component.
+ */
+export const ProductGrid = (props: ProductGridProps) => {
     return (
         <motion.div
             layout
-            className={`grid gap-12 place-items-center grid-cols-[repeat(auto-fit,minmax(250px,1fr))] ${props.className}`}
+            className={`z-10 grid gap-8 place-items-center grid-cols-[repeat(auto-fit,minmax(250px,350px))] w-full ${props.className}`}
         >
             <AnimatePresence>
                 {props.products.map((item) => (
                     <ProductCard
                         id={item.id}
-                        img={item.images[0]}
+                        image={item.images[0]}
                         name={item.name}
                         price={item.price}
                         rate={item.rate ?? getRateMean(item)}
                         reviews={getTotalCustomerCount(item)}
                         key={item.id}
-                        showPreview={props.openProductQuickview}
+                        onClick={props.onProductClick}
                         className={''}
                     />
                 ))}

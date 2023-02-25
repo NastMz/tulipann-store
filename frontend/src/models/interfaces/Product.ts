@@ -14,8 +14,8 @@ import { Image } from './Image';
  * @property {number} stock - Stock of the product.
  * @property {Array<Image>} images - Images of the product.
  * @property {Commentary[]} feedback - Feedback of the product.
- * @property {number} categoryId - ID of the categoryId of the product.
- * @property {Array<number>} subcategoriesIds - IDs of the subcategoriesIds of the product.
+ * @property {number} category - ID of the id of the product.
+ * @property {Array<number>} subcategories - IDs of the subcategories of the product.
  * @property {number} [rate] - Average rate of the product.
  */
 export interface Product {
@@ -27,7 +27,7 @@ export interface Product {
   stock: number;
   images: Image[];
   feedback: Commentary[];
-  categoryId: string;
-  subcategoriesIds: string[];
+  category: string;
+  subcategories: string[];
   rate?: number;
 }

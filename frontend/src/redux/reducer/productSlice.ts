@@ -51,7 +51,7 @@ export const productSlice = createSlice({
          * Reducer for removing a product from the list.
          *
          * @param {ProductSliceState} state - Current state of the slice.
-         * @param {PayloadAction<number>} action - Action object with the id of the product to be removed.
+         * @param {PayloadAction<string>} action - Action object with the id of the product to be removed.
          * @returns {void}
          */
         removeProduct: (state, action: PayloadAction<string>) => {

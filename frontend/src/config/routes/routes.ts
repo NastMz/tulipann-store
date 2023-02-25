@@ -32,6 +32,8 @@ export interface RouteProps {
 * @property {RouteProps} faq - FAQs route.
 * @property {RouteProps} payments - Payments methods route.
 * @property {RouteProps} guide - User guide routes route.
+* @property {RouteProps} profile - Profile settings route.
+* @property {RouteProps} orderHistory - Order list route.
 */
 export const routes: {
     home: RouteProps;
@@ -51,6 +53,9 @@ export const routes: {
     faq: RouteProps;
     payments: RouteProps;
     guide: RouteProps;
+    profile: RouteProps;
+    orderHistory: RouteProps;
+    restore: RouteProps;
 } = {
     home: {
         path: '/',
@@ -119,5 +124,17 @@ export const routes: {
     guide: {
         path: '/guide',
         title: 'Guía del usuario | Tulipann Store'
+    },
+    profile: {
+        path: '/profile',
+        title: 'Usuario | Tulipann Store'
+    },
+    orderHistory: {
+        path: '/orders',
+        title: 'Mis pedidos | Tulipann Store'
+    },
+    restore: {
+        path: '/password/restore',
+        title: 'Recuperar Contraseña | Tulipann Store'
     }
 }

@@ -5,6 +5,8 @@ import { decreaseCount, increaseCount, removeFromCart } from "../../redux/action
 import { ShoppingCartCard } from "../layout";
 import { Navigate } from "react-router-dom";
 import { routes } from "../../config/routes";
+import {OrderProduct} from "../../models/interfaces/Order";
+import {Product} from "../../models/interfaces";
 
 /**
  * Interface for CheckoutResume component props.
@@ -14,14 +16,19 @@ import { routes } from "../../config/routes";
  * @property {string} [className] - Optional class name for the component.
  */
 interface CheckoutResumeProps {
-  setOrder: (order: {
-      products: any[],
-      subtotal: number,
-      shipping: number,
-      taxes: number,
-      total: number,
-  }) => void;
+  setOrder: (orderProducts: OrderProduct[]) => void;
   className?: string;
+}
+
+/**
+ * Interface for add count propertie to Product interface.
+ *
+ * @interface ProductWithCount
+ * @property {number} count - Count of the product.
+ * @extends {Product} - Product interface.
+ */
+interface ProductWithCount extends Product {
+    count: number;
 }
 
 /**
@@ -38,18 +45,29 @@ export const CheckoutResume = (props: CheckoutResumeProps) => {
   const dispatch = useDispatch();
 
   // Initialize the order state with an empty array
-  const [order, setOrder] = useState<Array<any>>([]);
+  const [order, setOrder] = useState<Array<OrderProduct>>([]);
 
-  // Initialize the subtotal, taxes, shipping and total states with 0
-  const [subtotal, setSubtotal] = useState<number>(0);
-  const [taxes, setTaxes] = useState<number>(0);
-  const [shipping, setShipping] = useState<number>(0);
+  const [orderProducts, setOrderProducts] = useState<Array<ProductWithCount>>([]);
+
+  // Initialize total state with 0
   const [total, setTotal] = useState<number>(0);
+
+  // Function to update the order state
+  const setOrderAndTotal = () => {
+      let orderProducts = store.getState().cart.list.map((product) => {
+          return {
+              productId: product.id,
+              quantity: product.count
+          }
+      });
+      setOrder(orderProducts);
+      setTotal(store.getState().cart.subtotal);
+  }
 
   // Use effect to set the order and subtotal states when the component mounts
   useEffect(() => {
-    setOrder(store.getState().cart.list);
-    setSubtotal(store.getState().cart.subtotal);
+      setOrderAndTotal();
+      setOrderProducts(store.getState().cart.list);
   }, []);
 
   // Increase the count of the product with the given ID
@@ -69,34 +87,12 @@ export const CheckoutResume = (props: CheckoutResumeProps) => {
 
   // Subscribe to the store to update the order and subtotal states when the cart changes
   store.subscribe(() => {
-    setOrder(store.getState().cart.list);
-    setSubtotal(store.getState().cart.subtotal);
+      setOrderAndTotal();
   });
-
-  // Use effect to calculate the shipping cost based on the subtotal
-    useEffect(() => {
-        setShipping(Math.round(subtotal * 0.05));
-        }, [subtotal]);
-
-    // Use effect to calculate the taxes based on the subtotal
-    useEffect(() => {
-        setTaxes(Math.round(subtotal * 0.19));
-        }, [subtotal]);
-
-    // Use effect to calculate the total based on the subtotal, taxes and shipping
-    useEffect(() => {
-        setTotal(subtotal + taxes + shipping);
-        }, [taxes]);
 
     // Use effect to set the order object in the parent component
     useEffect(() => {
-        props.setOrder({
-            products: order,
-            subtotal: subtotal,
-            shipping: shipping,
-            taxes: taxes,
-            total: total,
-        });
+        props.setOrder(order);
         }, [total]);
 
     // If the cart is not empty, render the component
@@ -109,7 +105,7 @@ export const CheckoutResume = (props: CheckoutResumeProps) => {
                         className={`w-full h-fit max-h-96 lg:h-96 overflow-y-auto`}
                         >
                         <div className={`grid px-4 w-full divide-y divide-solid divide-gray-200`}>
-                            {order.map((product) => (
+                            {orderProducts.map((product) => (
                                     <ShoppingCartCard
                                         id={product.id}
                                         name={product.name}
@@ -129,18 +125,6 @@ export const CheckoutResume = (props: CheckoutResumeProps) => {
                         className={`max-w-full flex-shrink text-sm flex flex-col gap-2 divide-y divide-solid divide-gray-200`}
                         >
                         <div className={`flex flex-col gap-2`}>
-                            <div className={`flex justify-between px-4 font-medium`}>
-                                <span className={`text-gray-500`}>Subtotal</span>
-                                <span className={``}>${subtotal}</span>
-                            </div>
-                            <div className={`flex justify-between px-4 font-medium`}>
-                                <span className={`text-gray-500`}>Impuestos</span>
-                                <span className={``}>${taxes}</span>
-                            </div>
-                            <div className={`flex justify-between px-4 font-medium`}>
-                                <span className={`text-gray-500`}>Envío</span>
-                                <span className={``}>${shipping}</span>
-                            </div>
                             <div className={`flex justify-between px-4 font-medium`}>
                                 <span className={`text-gray-500 font-medium`}>Total</span>
                                 <span className={`font-medium`}>${total}</span>
