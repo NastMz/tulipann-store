@@ -1,10 +1,11 @@
 import {useState} from "react";
-import ReactPaginate from "react-paginate";
+import {SearchBar} from "./SearchBar";
+import {Paginate} from "./Paginate";
 
 /**
- * Interface for the Table component props.
+ * Interface for the EditableTable component props.
  *
- * @interface TableProps
+ * @interface EditableTableProps
  * @property {Record<string, string>} headersMap - The map of headers to display.
  * @param {any[]} data - The data for the table.
  * @param {(context: 'create' | 'edit') => void} setContext - The function to set the context for the form.
@@ -13,7 +14,7 @@ import ReactPaginate from "react-paginate";
  * @param {(record: any) => void} deleteRecord - The function to delete a record.
  * @param {number} itemsPerPage - The number of items to show per page.
  */
-export interface TableProps {
+export interface EditableTableProps {
     headersMap: Record<string, string>;
     data: any[];
     setContext: (context: 'create' | 'edit') => void;
@@ -26,20 +27,20 @@ export interface TableProps {
 }
 
 /**
- * Table component.
+ * EditableTable component.
  *
  * This component is used to render a table.
- * @param {TableProps} props - The props for the component.
+ * @param {EditableTableProps} props - The props for the component.
  */
-export const Table = ({
-                          headersMap,
-                          data,
-                          setContext,
-                          setShowForm,
-                          setSelectedRecord,
-                          deleteRecord,
-                          itemsPerPage
-                      }: TableProps) => {
+export const EditableTable = ({
+                                  headersMap,
+                                  data,
+                                  setContext,
+                                  setShowForm,
+                                  setSelectedRecord,
+                                  deleteRecord,
+                                  itemsPerPage
+                              }: EditableTableProps) => {
 
     // Function to handle the edit button click event on a record.
     const handleEdit = (record: any) => {
@@ -56,30 +57,17 @@ export const Table = ({
         setShowForm(true);
     }
 
-    //////////////////////// PAGINATION ////////////////////////
+    // State for the searched items in the table.
+    const [searchedItems, setSearchedItems] = useState<any[]>(data);
 
-    // State for pagination
-    const [itemOffset, setItemOffset] = useState(0);
-
-    // Pagination limit
-    const endOffset = itemOffset + itemsPerPage;
-
-    // Items to show in actual page
-    const currentItems = data.slice(itemOffset, endOffset);
-
-    // Number of pages for pagination
-    const pageCount = Math.ceil(data.length / itemsPerPage);
-
-    // Change active page
-    const handlePageClick = (event: { selected: number; }) => {
-        const newOffset = (event.selected * itemsPerPage) % data.length;
-        setItemOffset(newOffset);
-    };
+    // State for the current items to show in the table.
+    const [currentItems, setCurrentItems] = useState<any[]>(searchedItems);
 
     return (
         <div
-            className={'w-full h-full bg-slate-100 p-8 flex flex-col gap-6 relative'}>
-            <div className={'flex justify-end'}>
+            className={'w-full h-full bg-slate-100 p-8 flex flex-col gap-6 relative rounded-lg overflow-hidden'}>
+            <div className={'flex items-center gap-20'}>
+                <SearchBar items={data} setSearchedItems={setSearchedItems}/>
                 <button
                     className={'w-fit bg-sky-400 hover:bg-sky-500 px-4 py-2 rounded-md text-white'}
                     onClick={() => handleAdd()}
@@ -87,9 +75,9 @@ export const Table = ({
                     Añadir
                 </button>
             </div>
-            <div className={'w-full overflow-x-auto'}>
+            <div className={'w-full overflow-x-auto  rounded-md border border-slate-200 shadow-md'}>
                 <table
-                    className="min-w-full text-start table-fixed rounded-md border border-slate-200 shadow-md">
+                    className="min-w-full text-start table-fixed">
                     <colgroup>
                         {Object.keys(headersMap).map((key) => (
                             <col key={key} className="w-auto"/>
@@ -140,30 +128,11 @@ export const Table = ({
                     </tbody>
                 </table>
             </div>
-            <div className={'w-full flex justify-center'}>
-                {
-                    pageCount > 0 && (
-                        <ReactPaginate
-                            forcePage={0}
-                            breakLabel="..."
-                            nextLabel="Siguiente"
-                            onPageChange={handlePageClick}
-                            pageRangeDisplayed={3}
-                            pageCount={pageCount}
-                            previousLabel="Anterior"
-                            containerClassName={"h-fit flex gap-2 items-center justify-center px-8 font-medium text-sm text-slate-700"}
-                            pageLinkClassName={"bg-white h-4 w-4 p-4 flex items-center justify-center border-2 hover:border-red-600 rounded-md"}
-                            activeLinkClassName={"border-red-600"}
-                            previousLinkClassName={"bg-white h-4 w-fit p-4 flex items-center border-2 border-slate-200 hover:border-red-600 rounded-md"}
-                            nextLinkClassName={"bg-white h-4 w-fit p-4 flex items-center border-2 border-slate-200 hover:border-red-600 rounded-md"}
-                            breakLinkClassName={"text-sm text-slate-300"}
-                            previousClassName={"flex-1"}
-                            nextClassName={"flex-1 flex justify-end"}
-                            disabledClassName={"pointer-events-none"}
-                        />
-                    )
-                }
-            </div>
+            <Paginate
+                itemsPerPage={itemsPerPage}
+                items={searchedItems}
+                setCurrentItems={setCurrentItems}
+            />
         </div>
     )
 }
