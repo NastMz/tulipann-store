@@ -1,4 +1,4 @@
-import {LoaderModal, Modal, Table} from "../common";
+import {EditableTable, LoaderModal, Modal} from "../common";
 import {selectCategories, selectProducts, selectSubcategories} from "../../redux/selector";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {useDispatch, useSelector} from "react-redux";
@@ -7,7 +7,7 @@ import {useState} from "react";
 import {deleteProduct} from "../../api/data/product";
 import {removeAllProducts} from "../../redux/actions";
 import {ProductForm} from "../ui";
-import {getErrors} from "../../utils";
+import {formatPrice, getErrors} from "../../utils";
 
 export const ProductPage = () => {
 
@@ -103,7 +103,7 @@ export const ProductPage = () => {
             name: product.name,
             description: product.description,
             stock: product.stock,
-            price: product.price,
+            price: formatPrice(product.price),
             category: categories.find((category) => category.id === product.categoryId)?.name,
             subcategories: product.subcategories.map((subcategory) => subcategories.find((subcategoryItem) => subcategoryItem.id === subcategory.subcategoryId)?.name).join(', '),
             specifications: product.specification.features.map((specification) => specification.description).join(', '),
@@ -122,7 +122,7 @@ export const ProductPage = () => {
         <div
             className={'h-full w-full'}
         >
-            <Table
+            <EditableTable
                 headersMap={{
                     id: 'ID',
                     name: 'Producto',
