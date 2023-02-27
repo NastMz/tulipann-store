@@ -31,7 +31,7 @@ const initialState: CitySliceState = {
 * @type {Slice}
 */
 export const citySlice = createSlice({
-    name: "categories",
+    name: "cities",
     initialState,
     reducers: {
         /**

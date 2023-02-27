@@ -24,5 +24,5 @@ export { getCities } from "./city";
 export { getCategories, createCategory, deleteCategory, updateCategory } from "./category";
 export { getProducts, createProduct, deleteProduct, updateProduct } from "./product";
 export { getSubcategories, deleteSubcategory, updateSubcategory, createSubcategory } from "./subcategory";
-export { getOrders } from "./order";
+export { getOrders, updateOrder } from "./order";
 export { getOrderStatus } from "./orderStatus";

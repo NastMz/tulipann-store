@@ -12,24 +12,24 @@ interface OrderSliceState {
 }
 
 /**
-* Initial state for the OrderSlice.
-*
-* @constant
-* @type {OrderSliceState}
-*/
+ * Initial state for the OrderSlice.
+ *
+ * @constant
+ * @type {OrderSliceState}
+ */
 const initialState: OrderSliceState = {
     list: [],
 };
 
 /**
-* Order slice for the Redux store.
-*
-* This slice includes actions and reducers for handling the state of orders in the app,
-* including adding and removing orders from the list.
-*
-* @constant
-* @type {Slice}
-*/
+ * Order slice for the Redux store.
+ *
+ * This slice includes actions and reducers for handling the state of orders in the app,
+ * including adding and removing orders from the list.
+ *
+ * @constant
+ * @type {Slice}
+ */
 export const orderSlice = createSlice({
     name: "orders",
     initialState,
@@ -57,5 +57,14 @@ export const orderSlice = createSlice({
         removeOrder: (state, action: PayloadAction<string>) => {
             state.list = state.list.filter((order) => order.id !== action.payload);
         },
+        /**
+         * Reducer for clearing the list of orders.
+         *
+         * @param {OrderSliceState} state - Current state of the slice.
+         * @returns {void}
+         */
+        clearOrders: (state) => {
+            state.list = [];
+        }
     },
 });

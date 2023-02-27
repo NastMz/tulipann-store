@@ -24,10 +24,10 @@
  */
 
 export { addProduct, removeProduct, removeAllProducts } from './productActions';
-export { addCategory, removeCategory } from './categoryActions';
-export { addSubcategory, removeSubcategory } from './subcategoryActions';
+export { addCategory, removeCategory, removeAllCategories } from './categoryActions';
+export { addSubcategory, removeSubcategory, removeAllSubcategories } from './subcategoryActions';
 export { addArticle, removeArticle } from './articleActions';
-export { addOrder, removeOrder } from './orderActions';
+export { addOrder, removeOrder, clearOrders } from './orderActions';
 export { setUser, resetUser } from './userActions';
 export { addDepartment, removeDepartment } from './departmentActions';
 export {addCity, removeCity} from './cityActions';

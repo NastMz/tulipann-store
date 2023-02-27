@@ -31,6 +31,6 @@ export type {ProductSpecs} from './ProductSpecs';
 export type {Image} from './Image';
 export type {Subcategory, UpdateSubcategory, NewSubcategory} from './Subcategory';
 export type {User} from './User';
-export type {Order, NewOrder} from './Order';
+export type {Order, UpdateOrder, ShippingAddress, OrderStatus} from './Order';
 export type {Department} from './Department';
 export type {City} from './City';

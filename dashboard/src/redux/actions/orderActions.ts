@@ -8,4 +8,4 @@ import {orderSlice} from "../reducer";
  * @property {function} addOrder - Action creator for adding an order to the list.
  * @property {function} removeOrder - Action creator for removing an order from the list.
  */
-export const { addOrder, removeOrder } = orderSlice.actions;
+export const { addOrder, removeOrder, clearOrders } = orderSlice.actions;
