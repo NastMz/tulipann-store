@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics
 import uuid
-from api.models import State
+from api.models import State, Order
 from api.serializers import StateSerializer, StateCrudSerializer
 from api.utils.authorization_crud import authorization
 
@@ -186,7 +186,11 @@ class StateDelete(APIView):
         if name == 'Pendiente' or name == 'Enviado' or name == 'Finalizado' or name == 'Cancelado':
             messages.append('No se puede eliminar este estado')
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
-        
+
+        if Order.all_objects.filter(state=id).exists():
+            messages.append('Este estado está asignado a una orden. Modifique el estado de la orden y vuelva a intentarlo.')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         state = State.all_objects.get(id=id)
         state.soft_delete()
         

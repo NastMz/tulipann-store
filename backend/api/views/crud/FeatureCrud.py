@@ -255,6 +255,12 @@ class FeatureDelete(APIView):
             messages.append('Esta característica no existe')
             return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
 
+        spec = Feature.all_objects.get(id=id).specification
+
+        if Feature.all_objects.filter(specification=spec).__len__() == 1:
+            messages.append('Solo existe esta característica, prueba en editarla')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         feature = Feature.all_objects.get(id=id)
         feature.soft_delete()
         return Response({'Delete': 'Successfully'}, status=status.HTTP_200_OK)
