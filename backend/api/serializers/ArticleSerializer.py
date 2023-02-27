@@ -63,7 +63,7 @@ class ArticleSerializer(serializers.ModelSerializer):
             },
             'date': article.date,
             'content': base64.b64encode(article.content),
-            'id': article.user.id,
+            'userId': article.user.id,
             'tags': tags
         }
 
