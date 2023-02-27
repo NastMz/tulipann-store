@@ -25,6 +25,8 @@ from .OrderProductSerializer import *
 from .ProductSerializer import *
 from .ProductCrudSerializer import ProductCrudSerializer
 
+from .ProductShippingSerializer import *
+
 from .RoleSerializer import *
 from .RoleCrudSerializer import RoleCrudSerializer
 

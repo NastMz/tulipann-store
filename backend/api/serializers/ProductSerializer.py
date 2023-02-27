@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..models import Category, Product, Subcategory, Specification, Feature, Image, ProductSubcategory
+from ..models import Category, Product, Subcategory, Specification, Feature, Image, ProductSubcategory, ProductShipping
 from ..serializers import ImageSerializer, SpecificationSerializer, CommentarySerializer, ProductSubcategorySerializer
 
 
@@ -10,6 +10,13 @@ class ProductSerializer(serializers.ModelSerializer):
         feedback = CommentarySerializer.serialize_front(product=product)
         category = Category.all_objects.get(id=product.category.id)
         subcategories = ProductSubcategorySerializer.ProductSubcategorySerializer.serialize_front(product=product)
+        db_departments = list(ProductShipping.all_objects.filter(product=product))
+
+        departments = []
+        for dep in db_departments:
+            departments.append({
+                'departmentId': dep.department.id
+            })
 
         return {
             'id': product.id,
@@ -21,7 +28,8 @@ class ProductSerializer(serializers.ModelSerializer):
             'images': images,
             'feedback': feedback,
             'category': category.id,
-            'subcategories': subcategories
+            'subcategories': subcategories,
+            'departments': departments
         }
 
     def serialize_get_crud(product):
@@ -31,6 +39,14 @@ class ProductSerializer(serializers.ModelSerializer):
         for subcat in db_subcat:
             subcategories.append({
                 'subcategoryId': subcat.subcategory.id
+            })
+
+        db_departments = list(ProductShipping.all_objects.filter(product=product))
+
+        departments = []
+        for dep in db_departments:
+            departments.append({
+                'departmentId': dep.department.id
             })
 
         db_spec = Specification.all_objects.get(product=product)
@@ -75,6 +91,7 @@ class ProductSerializer(serializers.ModelSerializer):
             'price': product.price,
             'categoryId': product.category.id,
             'subcategories': subcategories,
+            'departments': departments,
             'specification': specification,
             'images': images
         }
