@@ -4,7 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics
 import uuid
-from api.models import Product, Subcategory, Specification, Image, ProductSubcategory, Feature, Category
+from api.models import Product, Subcategory, Specification, Image, ProductSubcategory, Feature, Category, Commentary, \
+    OrderProduct
 from api.serializers import ProductSerializer, ProductCrudSerializer, SpecificationCrudSerializer, \
     FeatureCrudSerializer, \
     ImageCrudSerializer, ProductSubcategorySerializer, SpecificationSerializer
@@ -494,15 +495,25 @@ class ProductDelete(APIView):
         for product_subcat in db_product_subcat:
             product_subcat.soft_delete()
 
-        spec = Specification.all_objects.get(product=product)
-        spec.soft_delete()
+        if Specification.all_objects.filter(product=product).exists():
+            spec = Specification.all_objects.get(product=product)
+            spec.soft_delete()
 
-        db_features = list(Feature.all_objects.filter(specification=spec))
-        for feature in db_features:
-            feature.soft_delete()
+            db_features = list(Feature.all_objects.filter(specification=spec))
+            for feature in db_features:
+                feature.soft_delete()
 
         db_images = list(Image.all_objects.filter(product=id))
         for image in db_images:
             image.soft_delete()
+
+        db_comments = list(Commentary.all_objects.filter(product=id))
+        for comment in db_comments:
+            comment.soft_delete()
+
+        db_order_product = list(OrderProduct.all_objects.filter(product=id))
+        for order_product in db_order_product:
+            order_product.order.soft_delete()
+            order_product.soft_delete()
 
         return Response({'Delete': 'Successfully'}, status=status.HTTP_200_OK)

@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics
-from api.models import Category
+from api.models import Category, Product, Subcategory
 from api.serializers import CategorySerializer, CategoryCrudSerializer
 from api.utils.authorization_crud import authorization
 from api.utils.image_utils import optimize_and_save_image, update_images
@@ -230,6 +230,15 @@ class CategoryDelete(APIView):
             messages.append('Esta categoría no existe')
             return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
 
+        if Product.all_objects.filter(category=id).exists():
+            messages.append('Esta categoría está asignada a un producto. Modifique la categoría de ese producto y vuelva a intentarlo.')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
+        if Subcategory.all_objects.filter(category=id).exists():
+            messages.append('Esta categoría está asignada a una subcategoría. Modifique la categoría de esa subcategoría y vuelva a intentarlo.')
+            return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
+
         category = Category.all_objects.get(id=id)
         category.soft_delete()
+
         return Response({'Delete': 'Successfully'}, status=status.HTTP_200_OK)
