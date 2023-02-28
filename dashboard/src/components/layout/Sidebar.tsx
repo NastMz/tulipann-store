@@ -1,12 +1,12 @@
 import Logo from '../../assets/images/LogoTulipannV2.svg';
-import {routes} from "../../config/routes/routes";
+import {routes} from "../../config/routes";
 import {SidebarCard} from "./SidebarCard";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {FaUserCircle} from "react-icons/all";
 
 function getRoutes() {
     let array = [];
-    for (const [key, value] of Object.entries(routes)) {
+    for (const [, value] of Object.entries(routes)) {
         array.push(value);
     }
     return array;
@@ -31,7 +31,7 @@ export const Sidebar = (props: SidebarProps) => {
     }
 
     return (
-        <aside className={`w-full h-full flex flex-col border-r border-gray-200 ${props.className}`}>
+        <aside className={`w-full h-full hidden lg:flex flex-col border-r border-gray-200 ${props.className}`}>
             <Link to={routes.home.path} className={'w-full h-fit p-8 flex-shrink'}>
                 <img src={Logo} alt={Logo} className={'h-full w-full object-fill'}/>
             </Link>
