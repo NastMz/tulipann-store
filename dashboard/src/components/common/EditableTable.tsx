@@ -65,8 +65,8 @@ export const EditableTable = ({
 
     return (
         <div
-            className={'w-full h-full bg-slate-100 p-8 flex flex-col gap-6 relative rounded-lg overflow-hidden'}>
-            <div className={'flex items-center gap-20'}>
+            className={'w-full h-full bg-slate-100 p-4 lg:p-8 flex flex-col gap-6 relative rounded-lg overflow-hidden'}>
+            <div className={'flex items-center gap-6 lg:gap-20'}>
                 <SearchBar items={data} setSearchedItems={setSearchedItems}/>
                 <button
                     className={'w-fit bg-sky-400 hover:bg-sky-500 px-4 py-2 rounded-md text-white'}

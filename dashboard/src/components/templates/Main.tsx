@@ -1,6 +1,6 @@
-import {Sidebar} from "../layout";
+import {Sidebar, SidebarMobile} from "../layout";
 import {useDispatch} from "react-redux";
-import {useIsFetching, useQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import {
     getCategories,
     getCities,
@@ -39,15 +39,8 @@ export const Main = (props: MainProps) => {
 
     const dispatch = useDispatch();
 
-    const [isLoading, setIsLoading] = useState(false);
-    const isFetching = useIsFetching();
-
-    useEffect(() => {
-        setIsLoading(isFetching > 0);
-    }, [isFetching]);
-
     // Fetch products from the API.
-    useQuery({
+    const productQuery = useQuery({
         queryKey: ['apiProducts'],
         queryFn: getProducts,
         onSuccess: (response) => {
@@ -62,7 +55,7 @@ export const Main = (props: MainProps) => {
     });
 
     // Fetch categories from the API.
-    useQuery({
+    const categoryQuery = useQuery({
         queryKey: ['apiCategories'],
         queryFn: getCategories,
         onSuccess: (response) => {
@@ -77,7 +70,7 @@ export const Main = (props: MainProps) => {
     });
 
     // Fetch subcategories from the API.
-    useQuery({
+    const subcategoryQuery = useQuery({
         queryKey: ['apiSubcategories'],
         queryFn: getSubcategories,
         onSuccess: (response) => {
@@ -92,7 +85,7 @@ export const Main = (props: MainProps) => {
     });
 
     // Fetch orders from the API.
-    useQuery({
+    const orderQuery = useQuery({
         queryKey: ['apiOrders'],
         queryFn: getOrders,
         onSuccess: (response) => {
@@ -108,7 +101,7 @@ export const Main = (props: MainProps) => {
     });
 
     // Fetch cities from the API.
-    useQuery({
+    const cityQuery = useQuery({
         queryKey: ['apiCities'],
         queryFn: getCities,
         onSuccess: (response) => {
@@ -123,7 +116,7 @@ export const Main = (props: MainProps) => {
     });
 
     // Fetch departments from the API.
-    useQuery({
+    const departmentQuery = useQuery({
         queryKey: ['apiDepartments'],
         queryFn: getDepartments,
         onSuccess: (response) => {
@@ -137,7 +130,7 @@ export const Main = (props: MainProps) => {
     });
 
     // Fetch the order status from the API.
-    useQuery({
+    const stateQuery = useQuery({
         queryKey: ['apiOrderStatus'],
         queryFn: getOrderStatus,
         onSuccess: (response) => {
@@ -149,6 +142,22 @@ export const Main = (props: MainProps) => {
             });
         },
         cacheTime: 1000 * 60 * 60 * 24 * 7 // Cache for 7 days to reduce API calls for static data.
+    });
+
+    const [isLoading, setIsLoading] = useState( true);
+
+    useEffect(() => {
+        const isLoaded = sessionStorage.getItem('loaded');
+        if (isLoaded === "true") {
+            setIsLoading(false);
+        } else if (!cityQuery.isLoading && !stateQuery.isLoading && !departmentQuery.isLoading && !productQuery.isLoading && !categoryQuery.isLoading && !subcategoryQuery.isLoading && !orderQuery.isLoading) {
+            sessionStorage.setItem("loaded", "true");
+            setIsLoading(false);
+        }
+    }, [cityQuery, stateQuery, departmentQuery, productQuery, categoryQuery, subcategoryQuery, orderQuery, sessionStorage.getItem("loaded")]);
+
+    window.addEventListener('load', () => {
+        sessionStorage.setItem("loaded", "false");
     });
 
     if (isLoading) {
@@ -167,9 +176,12 @@ export const Main = (props: MainProps) => {
                         animate={{width: '100%'}}
                         exit={{width: window.innerWidth, transition: {duration: 0.3}}}
                         key={props.pageName}
-                        className={'flex flex-col px-12 py-8 w-full h-full overflow-hidden'}
+                        className={'flex flex-col p-4 lg:px-12 lg:py-8 w-full h-full overflow-hidden'}
                     >
-                        <h2 className={'font-bold text-3xl flex-shrink mb-8'}>{props.pageName}</h2>
+                        <div className={'flex gap-4 p-2 lg:p-0 h-fit'}>
+                            <SidebarMobile/>
+                            <h2 className={'font-bold text-3xl flex-shrink mb-8'}>{props.pageName}</h2>
+                        </div>
                         <div className={'flex items-center justify-center flex-grow'}>
                             {props.page}
                         </div>

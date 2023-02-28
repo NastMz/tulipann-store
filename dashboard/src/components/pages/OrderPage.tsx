@@ -6,21 +6,23 @@ import {Order, ShippingAddress} from "../../models/interfaces";
 import {CiCircleMore} from "react-icons/all";
 import {OrderProductsModal} from "../ui";
 import {OrderForm} from "../ui/OrderForm";
-import {Modal, Paginate, SearchBar} from "../common";
+import {LoaderModal, Modal, Paginate, SearchBar} from "../common";
 
 export const OrderPage = () => {
+
+    const cities = useSelector(selectCities);
+
+    const departments = useSelector(selectDepartments);
 
     /**
      * Function to get convert the shipping address object to a string.
      * @param {ShippingAddress} shippingAddress - The shipping address object.
      */
     const getShippingAddress = (shippingAddress: ShippingAddress) => {
-        const cities = useSelector(selectCities);
         const city = cities.find((city) => city.id === shippingAddress.cityId)?.name;
 
         const address = shippingAddress.address;
 
-        const departments = useSelector(selectDepartments);
         const department = departments.find((department) => department.id === shippingAddress.departmentId)?.name;
 
         const zipCode = shippingAddress.zipCode;
@@ -142,8 +144,8 @@ export const OrderPage = () => {
             className={'h-full w-full'}
         >
             <div
-                className={'w-full h-full bg-slate-100 p-8 flex flex-col gap-6 relative rounded-lg overflow-hidden'}>
-                <div className={'flex items-center gap-20'}>
+                className={'w-full h-full bg-slate-100 p-4 lg:p-8 flex flex-col gap-6 relative rounded-lg overflow-hidden'}>
+                <div className={'flex items-center gap-6 lg:gap-20'}>
                     <SearchBar items={tableOrders} setSearchedItems={setSearchedItems}/>
                 </div>
                 <div className={'w-full overflow-x-auto rounded-md border border-slate-200 shadow-md'}>
@@ -276,6 +278,7 @@ export const OrderPage = () => {
                 type={'error'}
             />
 
+            <LoaderModal isOpen={loading}/>
 
         </div>
     )
