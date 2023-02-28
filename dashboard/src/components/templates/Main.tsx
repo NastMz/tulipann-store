@@ -167,7 +167,7 @@ export const Main = (props: MainProps) => {
     }
 
     return (
-        <div className={"h-screen max-h-screen w-screen max-w-screen flex"}>
+        <div className={"h-screen max-h-screen w-screen max-w-screen flex overflow-hidden"}>
             <Sidebar className={'flex-shrink w-64'}/>
             <AnimatePresence mode={"wait"}>
                 <div className={'w-full h-full overflow-hidden'}>
@@ -176,13 +176,13 @@ export const Main = (props: MainProps) => {
                         animate={{width: '100%'}}
                         exit={{width: window.innerWidth, transition: {duration: 0.3}}}
                         key={props.pageName}
-                        className={'flex flex-col p-4 lg:px-12 lg:py-8 w-full h-full overflow-hidden'}
+                        className={'flex flex-col p-4 lg:px-12 lg:py-8 w-full h-full overflow-hidden gap-4'}
                     >
                         <div className={'flex gap-4 p-2 lg:p-0 h-fit'}>
                             <SidebarMobile/>
-                            <h2 className={'font-bold text-3xl flex-shrink mb-8'}>{props.pageName}</h2>
+                            <h2 className={'font-bold text-3xl flex-shrink'}>{props.pageName}</h2>
                         </div>
-                        <div className={'flex items-center justify-center flex-grow'}>
+                        <div className={'flex items-center justify-center w-full h-full overflow-hidden'}>
                             {props.page}
                         </div>
                     </motion.main>

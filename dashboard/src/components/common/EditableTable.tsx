@@ -65,7 +65,7 @@ export const EditableTable = ({
 
     return (
         <div
-            className={'w-full h-full bg-slate-100 p-4 lg:p-8 flex flex-col gap-6 relative rounded-lg overflow-hidden'}>
+            className={'w-full h-full bg-gray-100 p-4 lg:p-8 flex flex-col gap-6 relative rounded-lg overflow-hidden'}>
             <div className={'flex items-center gap-6 lg:gap-20'}>
                 <SearchBar items={data} setSearchedItems={setSearchedItems}/>
                 <button
@@ -75,7 +75,7 @@ export const EditableTable = ({
                     Añadir
                 </button>
             </div>
-            <div className={'w-full overflow-x-auto  rounded-md border border-slate-200 shadow-md'}>
+            <div className={'w-full overflow-x-auto  rounded-md border border-gray-200 shadow-md'}>
                 <table
                     className="min-w-full text-start table-fixed">
                     <colgroup>
@@ -84,27 +84,27 @@ export const EditableTable = ({
                         ))}
                         <col className="w-1/6"/>
                     </colgroup>
-                    <thead className={'bg-slate-50 border-b border-slate-200'}>
+                    <thead className={'bg-gray-50 border-b border-gray-200'}>
                     <tr>
                         {
                             Object.values(headersMap).map((header, index) => {
                                 return <th key={index}
-                                           className={'px-6 py-3 text-left text-sm font-medium text-slate-900'}>{header}</th>
+                                           className={'px-6 py-3 text-left text-sm font-medium text-gray-900'}>{header}</th>
                             })
                         }
-                        <th className={'px-6 py-3 text-center text-sm font-medium text-slate-900'}>Acciones</th>
+                        <th className={'px-6 py-3 text-center text-sm font-medium text-gray-900'}>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     {
                         currentItems.map((row, index) => {
                             return (
-                                <tr key={index} className="odd:bg-white even:bg-slate-50">
+                                <tr key={index} className="odd:bg-white even:bg-gray-50">
                                     {
                                         Object.keys(headersMap).map((key, index) => {
                                             const value = row[key];
                                             return <td key={index}
-                                                       className={'px-6 py-4 whitespace-nowrap text-sm text-slate-600'}>{value}</td>
+                                                       className={'px-6 py-4 whitespace-nowrap text-sm text-gray-600'}>{value}</td>
                                         })
                                     }
                                     <td className={'flex gap-8 py-2 px-4'}>

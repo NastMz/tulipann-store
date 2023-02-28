@@ -144,11 +144,11 @@ export const OrderPage = () => {
             className={'h-full w-full'}
         >
             <div
-                className={'w-full h-full bg-slate-100 p-4 lg:p-8 flex flex-col gap-6 relative rounded-lg overflow-hidden'}>
+                className={'w-full h-full bg-gray-100 p-4 lg:p-8 flex flex-col gap-6 relative rounded-lg overflow-hidden'}>
                 <div className={'flex items-center gap-6 lg:gap-20'}>
                     <SearchBar items={tableOrders} setSearchedItems={setSearchedItems}/>
                 </div>
-                <div className={'w-full overflow-x-auto rounded-md border border-slate-200 shadow-md'}>
+                <div className={'w-full overflow-x-auto rounded-md border border-gray-200 shadow-md'}>
                     <table
                         className="min-w-full text-start table-fixed">
                         <colgroup>
@@ -158,23 +158,23 @@ export const OrderPage = () => {
                             <col className="w-1/6"/>
                             <col className="w-1/6"/>
                         </colgroup>
-                        <thead className={'bg-slate-50 border-b border-slate-200'}>
+                        <thead className={'bg-gray-50 border-b border-gray-200'}>
                         <tr>
                             {
                                 Object.values(headersMap).map((header, index) => {
                                     return <th key={index}
-                                               className={'px-6 py-3 text-left text-sm font-medium text-slate-900'}>{header}</th>
+                                               className={'px-6 py-3 text-left text-sm font-medium text-gray-900'}>{header}</th>
                                 })
                             }
-                            <th className={'px-6 py-3 text-left text-sm font-medium text-slate-900'}>Productos</th>
-                            <th className={'px-6 py-3 text-center text-sm font-medium text-slate-900'}>Acciones</th>
+                            <th className={'px-6 py-3 text-left text-sm font-medium text-gray-900'}>Productos</th>
+                            <th className={'px-6 py-3 text-center text-sm font-medium text-gray-900'}>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
                         {
                             currentItems.map((row: any, index) => {
                                 return (
-                                    <tr key={index} className="odd:bg-white even:bg-slate-50">
+                                    <tr key={index} className="odd:bg-white even:bg-gray-50">
                                         {
                                             Object.keys(headersMap).map((key, index) => {
                                                 const value = row[key];
@@ -182,7 +182,7 @@ export const OrderPage = () => {
                                                     const statusPercent = getStatusPercent(value);
                                                     return (
                                                         <td key={index}
-                                                            className={'px-6 py-4 whitespace-nowrap text-slate-600 text-sm'}>
+                                                            className={'px-6 py-4 whitespace-nowrap text-gray-600 text-sm'}>
                                                             <div
                                                                 className={`py-1 px-4 rounded-full ${getStatusColor(statusPercent)} text-white text-sm`}>
                                                                 {value}
@@ -192,7 +192,7 @@ export const OrderPage = () => {
                                                 } else {
                                                     return (
                                                         <td key={index}
-                                                            className={'px-6 py-4 whitespace-nowrap text-sm text-slate-600'}
+                                                            className={'px-6 py-4 whitespace-nowrap text-sm text-gray-600'}
                                                         >
                                                             {value}
                                                         </td>
@@ -200,7 +200,7 @@ export const OrderPage = () => {
                                                 }
                                             })
                                         }
-                                        <td className={'px-6 py-4 whitespace-nowrap text-slate-600'}>
+                                        <td className={'px-6 py-4 whitespace-nowrap text-gray-600'}>
                                             <div
                                                 className={'text-blue-500 hover:text-blue-600 cursor-pointer w-fit flex gap-2 items-center justify-center'}
                                                 onClick={() => handleViewDetails(row)}
@@ -208,7 +208,7 @@ export const OrderPage = () => {
                                                 Ver <CiCircleMore/>
                                             </div>
                                         </td>
-                                        <td className={'px-6 py-4 whitespace-nowrap text-slate-600'}>
+                                        <td className={'px-6 py-4 whitespace-nowrap text-gray-600'}>
                                             <div
                                                 className={`text-purple-500 hover:text-purple-600 cursor-pointer ${row.status === 'Finalizado' ? 'pointer-events-none text-gray-200 hover:text-gray-200' : ''}`}
                                                 onClick={() => handleEdit(row)}

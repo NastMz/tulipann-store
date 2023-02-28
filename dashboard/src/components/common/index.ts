@@ -8,3 +8,6 @@ export {OptimizedImage} from './OptimizedImage';
 export {StaticTable} from './StaticTable';
 export {SearchBar} from './SearchBar';
 export {Paginate} from './Paginate';
+export {OrderDashboardCard} from './OrderDashboardCard';
+export {BarChartInfo} from './BarChart';
+export {PieChartInfo} from './PieChart';
