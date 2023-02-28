@@ -14,7 +14,7 @@ export interface DashboardCardProps {
     count: number;
     title: string;
     bgColor: string;
-    onClick?: () => void;
+    onClick: () => void;
 }
 
 /**
@@ -44,7 +44,7 @@ export const DashboardCard = ({icon, count, title, bgColor, onClick}: DashboardC
 
     return (
         <div
-            className={'flex flex-col items-center justify-center gap-4 h-full w-36 p-6 rounded-xl shadow-xl text-white cursor-pointer hover:scale-105 transition-all duration-300 ease-in-out transform hover:shadow-2xl hover:z-10'}
+            className={'flex flex-col items-center justify-center gap-4 h-full w-40 p-6 rounded-xl shadow-xl text-white cursor-pointer border hover:border-black transition-all duration-300 ease-in-out transform hover:shadow-2xl hover:z-10'}
             style={{
                 backgroundColor: bgColor,
             }}
