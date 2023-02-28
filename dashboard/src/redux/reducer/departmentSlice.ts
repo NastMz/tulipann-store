@@ -31,7 +31,7 @@ const initialState: DepartmentSliceState = {
 * @type {Slice}
 */
 export const departmentSlice = createSlice({
-    name: "categories",
+    name: "departments",
     initialState,
     reducers: {
         /**

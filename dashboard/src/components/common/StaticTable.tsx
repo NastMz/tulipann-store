@@ -2,58 +2,43 @@ import {useState} from "react";
 import ReactPaginate from "react-paginate";
 
 /**
- * Interface for the Table component props.
+ * Interface for the EditableTable component props.
  *
- * @interface TableProps
+ * @interface StaticTableProps
  * @property {Record<string, string>} headersMap - The map of headers to display.
  * @param {any[]} data - The data for the table.
- * @param {(context: 'create' | 'edit') => void} setContext - The function to set the context for the form.
  * @param {(value: boolean) => void} setShowForm - The function to set the show form state.
  * @param {(record: any) => void} setSelectedRecord - The function to set the selected record.
- * @param {(record: any) => void} deleteRecord - The function to delete a record.
  * @param {number} itemsPerPage - The number of items to show per page.
  */
-export interface TableProps {
+export interface StaticTableProps {
     headersMap: Record<string, string>;
     data: any[];
-    setContext: (context: 'create' | 'edit') => void;
     setShowForm: (value: boolean) => void;
-
     setSelectedRecord: (record: any) => void;
-
-    deleteRecord: (record: any) => void;
     itemsPerPage: number;
 }
 
 /**
- * Table component.
+ * EditableTable component.
  *
  * This component is used to render a table.
- * @param {TableProps} props - The props for the component.
+ * @param {StaticTableProps} props - The props for the component.
  */
-export const Table = ({
+export const StaticTable = ({
                           headersMap,
                           data,
-                          setContext,
                           setShowForm,
                           setSelectedRecord,
-                          deleteRecord,
                           itemsPerPage
-                      }: TableProps) => {
+                      }: StaticTableProps) => {
 
     // Function to handle the edit button click event on a record.
     const handleEdit = (record: any) => {
         setSelectedRecord(record);
-        setContext('edit');
         setTimeout(() => {
             setShowForm(true);
         }, 500);
-    }
-
-    // Function to handle the add button click event.
-    const handleAdd = () => {
-        setContext('create');
-        setShowForm(true);
     }
 
     //////////////////////// PAGINATION ////////////////////////
@@ -78,15 +63,7 @@ export const Table = ({
 
     return (
         <div
-            className={'w-full h-full bg-slate-100 p-8 flex flex-col gap-6 relative'}>
-            <div className={'flex justify-end'}>
-                <button
-                    className={'w-fit bg-sky-400 hover:bg-sky-500 px-4 py-2 rounded-md text-white'}
-                    onClick={() => handleAdd()}
-                >
-                    Añadir
-                </button>
-            </div>
+            className={'w-full h-full bg-slate-100 p-8 flex flex-col gap-6 relative rounded-lg overflow-hidden'}>
             <div className={'w-full overflow-x-auto'}>
                 <table
                     className="min-w-full text-start table-fixed rounded-md border border-slate-200 shadow-md">
@@ -125,12 +102,6 @@ export const Table = ({
                                         onClick={() => handleEdit(row)}
                                     >
                                         Editar
-                                    </span>
-                                        <span
-                                            className={'text-red-500 hover:text-red-600 cursor-pointer'}
-                                            onClick={() => deleteRecord(row)}
-                                        >
-                                        Eliminar
                                     </span>
                                     </td>
                                 </tr>

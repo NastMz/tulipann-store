@@ -8,4 +8,4 @@ import {categorySlice} from "../reducer";
  * @property {function} addCategory - Action creator for adding a id to the list.
  * @property {function} removeCategory - Action creator for removing a id from the list.
  */
-export const { addCategory, removeCategory } = categorySlice.actions;
+export const { addCategory, removeCategory, removeAllCategories } = categorySlice.actions;

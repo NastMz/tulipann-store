@@ -13,10 +13,10 @@ import {
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {createProduct, updateProduct} from "../../api/data";
+import {createProduct, deleteCategory, updateProduct} from "../../api/data";
 import {createBlurhash, createFileFromImageUrl, getBase64FromFile, getErrors, ScrollToTop} from "../../utils";
-import {ImageUploader} from "../common";
-import {AiOutlineAppstoreAdd, BiShoppingBag, FiEdit, MdAddCircleOutline} from "react-icons/all";
+import {ImageUploader, Modal} from "../common";
+import {AiOutlineAppstoreAdd, BiShoppingBag, FiEdit, MdAddCircleOutline, MdOutlineDeleteForever} from "react-icons/all";
 import {AiOutlineCloseCircle} from "react-icons/ai";
 import {useSelector} from "react-redux";
 import {selectCategories, selectSubcategories} from "../../redux/selector";
@@ -101,6 +101,7 @@ export const ProductForm = ({
 
     const queryClient = useQueryClient();
 
+    // Mutation to create a product in the database and update the cache with the new product information.
     const addProductMutation = useMutation({
         mutationFn: createProduct,
         onSuccess: (response) => {
@@ -124,6 +125,7 @@ export const ProductForm = ({
         }
     });
 
+    // Mutation to update a product in the database and update the cache with the new product information.
     const updateProductMutation = useMutation({
         mutationFn: updateProduct,
         onSuccess: (response) => {
@@ -138,6 +140,39 @@ export const ProductForm = ({
                     setShowError(true);
                 }
                 setLoading(false)
+            });
+        },
+        onError: (error: any) => {
+            setLoading(false);
+            setShowError(true);
+            let errorMsg = getErrors(error.response.data.Errors);
+
+            if (errorMsg) {
+                setErrorMessage(errorMsg);
+            } else {
+                setErrorMessage('Ha ocurrido un error inesperado.');
+            }
+        }
+    });
+
+    // Mutation to delete a category in the database and update the cache with the new category information.
+    const deleteCategoryMutation = useMutation({
+        mutationFn: deleteCategory,
+        onSuccess: (response) => {
+            queryClient.invalidateQueries(['apiCategories']).then(r => {
+                if (response.status === 200) {
+                    setSuccessMessage('Categoría eliminada exitosamente');
+                    setShowSuccess(true);
+                } else {
+                    const errors = getErrors(response.data.Errors);
+                    setErrorMessage(errors);
+                    setShowError(true);
+                }
+                queryClient.invalidateQueries(['apiSubcategories']).then(r => {
+                    queryClient.invalidateQueries(['apiProducts']).then(
+                        r => setLoading(false)
+                    );
+                });
             });
         },
         onError: (error: any) => {
@@ -384,6 +419,21 @@ export const ProductForm = ({
         }, 500);
     }
 
+    // Delete category alert state (When the user clicks on the delete button)
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+
+    // Alert message to show in the alert modal
+    const [alertMessage, setAlertMessage] = useState('');
+
+    const [categoryToDelete, setCategoryToDelete] = useState<Category | null>(null);
+
+    // Handle delete category button click
+    const handleDeleteCategory = (category: Category) => {
+        setAlertMessage('¿Estas seguro de eliminar este registro?. Esta acción no se puede deshacer.');
+        setIsAlertOpen(true);
+        setCategoryToDelete(category);
+    }
+
     // NewCategory form is open or not (to show/hide the form)
     const [subcategoryFormIsOpen, setSubcategoryFormIsOpen] = useState(false);
 
@@ -525,11 +575,19 @@ export const ProductForm = ({
 
                                     {
                                         formik.values.category !== '' ? (
-                                                <div
-                                                    className={'hover:text-purple-500 cursor-pointer'}
-                                                    onClick={() => handleEditCategory(categories.find((category) => category.id === formik.values.category) as Category)}
-                                                >
-                                                    <FiEdit/>
+                                                <div className={'flex gap-4'}>
+                                                    <div
+                                                        className={'hover:text-purple-500 cursor-pointer'}
+                                                        onClick={() => handleEditCategory(categories.find((category) => category.id === formik.values.category) as Category)}
+                                                    >
+                                                        <FiEdit/>
+                                                    </div>
+                                                    <div
+                                                        className={'hover:text-red-500 cursor-pointer text-lg'}
+                                                        onClick={() => handleDeleteCategory(categories.find((category) => category.id === formik.values.category) as Category)}
+                                                    >
+                                                        <MdOutlineDeleteForever/>
+                                                    </div>
                                                 </div>
                                             )
                                             : (
@@ -825,6 +883,20 @@ export const ProductForm = ({
                         context={subcategoryFormContext}
                     />
                 </div>
+
+                {
+                    categoryToDelete && (
+                        <Modal
+                            title={'Atención'}
+                            message={alertMessage}
+                            buttonText={'Aceptar'}
+                            isOpen={isAlertOpen}
+                            onClose={() => setIsAlertOpen(false)}
+                            onButtonClick={() => deleteCategoryMutation.mutate(categoryToDelete?.id)}
+                            type={'warning'}
+                        />
+                    )
+                }
             </motion.div>
         </motion.div>
     );

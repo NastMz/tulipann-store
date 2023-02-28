@@ -23,3 +23,4 @@ export {nameOf} from './getKey';
 export {loadCartState, saveCartState} from './localStorage';
 export {getErrors} from './getErrors';
 export {createBlurhash, getBase64FromFile, createFileFromImageUrl} from './ImageUtils';
+export {orderUtils, getAmount, formatPrice} from './orderUtils';

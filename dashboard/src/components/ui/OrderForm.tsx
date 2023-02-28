@@ -1,14 +1,14 @@
-import {useEffect} from "react";
 import {motion} from "framer-motion";
-import {NewSubcategory, Subcategory, UpdateSubcategory} from "../../models/interfaces";
+import {Order, UpdateOrder} from "../../models/interfaces";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {BiCategoryAlt} from "react-icons/bi";
-import {createSubcategory, updateSubcategory} from "../../api/data";
+import {updateOrder} from "../../api/data";
 import {getErrors} from "../../utils";
 import {useSelector} from "react-redux";
-import {selectCategories} from "../../redux/selector";
+import {selectOrderStatus} from "../../redux/selector";
+import {useEffect} from "react";
 
 /**
  * Variants for animating the modal.
@@ -32,10 +32,10 @@ const backgroundVariants = {
 
 
 /**
- * Interface for SubcategoryForm component props.
+ * Interface for OrderForm component props.
  *
- * @interface SubcategoryFormProps
- * @property {Subcategory} subcategory - The categoryId information.
+ * @interface OrderFormProps
+ * @property {Order} order - The order information.
  * @property {boolean} isOpen - Whether the modal is open or closed.
  * @property {() => void} onClose - The function to close the modal.
  * @property {(value: boolean) => void} setLoading - The function to set the loading state.
@@ -44,8 +44,8 @@ const backgroundVariants = {
  * @property {(value: boolean) => void} setShowError - The function to set the show error state.
  * @property {(value: string) => void} setErrorMessage - The function to set the error message.
  */
-interface SubcategoryFormProps {
-    subcategory: Subcategory | null;
+interface OrderFormProps {
+    order: Order | null;
     isOpen: boolean;
     onClose: () => void;
     setLoading: (value: boolean) => void;
@@ -53,29 +53,27 @@ interface SubcategoryFormProps {
     setSuccessMessage: (value: string) => void;
     setShowError: (value: boolean) => void;
     setErrorMessage: (value: string) => void;
-    context: 'edit' | 'create';
 }
 
 
 /**
- * SubcategoryForm component.
+ * OrderForm component.
  *
  * This component displays a form to update a categoryId's information.
  *
- * @param {SubcategoryFormProps} props - Props for the component.
+ * @param {OrderFormProps} props - Props for the component.
  * @returns {ReactNode} The rendered component.
  */
-export const SubcategoryForm = ({
-                                    subcategory,
-                                    isOpen,
-                                    setLoading,
-                                    setShowSuccess,
-                                    setSuccessMessage,
-                                    setShowError,
-                                    setErrorMessage,
-                                    onClose,
-                                    context
-                                }: SubcategoryFormProps) => {
+export const OrderForm = ({
+                              order,
+                              isOpen,
+                              setLoading,
+                              setShowSuccess,
+                              setSuccessMessage,
+                              setShowError,
+                              setErrorMessage,
+                              onClose,
+                          }: OrderFormProps) => {
 
     // Handle click on cancel button
     const closeForm = () => {
@@ -85,35 +83,12 @@ export const SubcategoryForm = ({
 
     const queryClient = useQueryClient();
 
-    const addSubcategoryMutation = useMutation({
-        mutationFn: createSubcategory,
+    const updateOrderMutation = useMutation({
+        mutationFn: updateOrder,
         onSuccess: (response) => {
-            queryClient.invalidateQueries(['apiSubcategories']).then(r => {
-                if (response.status === 201) {
-                    setSuccessMessage('Subcategoria creada exitosamente');
-                    setShowSuccess(true);
-                    closeForm();
-                } else {
-                    const errors = getErrors(response.data.Errors);
-                    setErrorMessage(errors);
-                    setShowError(true);
-                }
-                setLoading(false)
-            });
-        },
-        onError: (error) => {
-            setErrorMessage('Ocurrio un error inesperado');
-            setShowError(true);
-            setLoading(false);
-        }
-    });
-
-    const updateSubcategoryMutation = useMutation({
-        mutationFn: updateSubcategory,
-        onSuccess: (response) => {
-            queryClient.invalidateQueries(['apiSubcategories']).then(r => {
+            queryClient.invalidateQueries(['apiOrders']).then(r => {
                 if (response.status === 200) {
-                    setSuccessMessage('Subcategoria actualizada exitosamente');
+                    setSuccessMessage('Orden actualizada exitosamente');
                     setShowSuccess(true);
                     closeForm();
                 } else {
@@ -140,50 +115,44 @@ export const SubcategoryForm = ({
     // Formik logics
     const formik = useFormik({
         initialValues: {
-            categoryId: '',
-            name: '',
+            stateId: '',
+            shippingValue: '',
         },
 
         // Validate form
         validationSchema: Yup.object({
-            categoryId: Yup.string().required('Por favor seleccione una categoria'),
-            name: Yup.string().required('Por favor ingrese un nombre'),
+            stateId: Yup.string().required('Por favor ingrese el estado de la orden'),
+            shippingValue: Yup.string().required('Por favor ingrese el valor del envío'),
         }),
 
         // Submit form
         onSubmit: async (values) => {
             setLoading(true);
-            if (context === 'edit' && subcategory) {
-                const updatedSubcategory: UpdateSubcategory = {
-                    name: values.name,
-                    categoryId: values.categoryId,
+            if (order) {
+                const updatedOrder: UpdateOrder = {
+                    stateId: values.stateId,
+                    shippingValue: Number(values.shippingValue),
                 };
 
-                updateSubcategoryMutation.mutate({id: subcategory.id, subcategory: updatedSubcategory});
-            } else {
-                const newSubcategory: NewSubcategory = {
-                    name: values.name,
-                    categoryId: values.categoryId,
-                };
-                addSubcategoryMutation.mutate(newSubcategory);
+                updateOrderMutation.mutate({id: order.id, order: updatedOrder});
             }
         },
     });
 
     useEffect(() => {
-        if (context === 'edit' && subcategory) {
+        if (order) {
             const setFormValues = () => {
                 formik.setValues({
-                    name: subcategory.name,
-                    categoryId: subcategory.categoryId,
+                    shippingValue: '',
+                    stateId: order.stateId,
                 });
             };
             setFormValues();
         }
-    }, [context, subcategory]);
+    }, [order]);
 
-    // Categories from redux store
-    const categories = useSelector(selectCategories);
+    // @ts-ignore
+    let states = useSelector(selectOrderStatus);
 
     return (
         <motion.div
@@ -207,7 +176,7 @@ export const SubcategoryForm = ({
                     <div className={`flex items-center px-4 py-4 text-red-500`}>
                         <BiCategoryAlt size={48}/>
                         <div className={"ml-4 font-semibold text-lg leading-tight"}>
-                            {context === 'edit' ? 'Editar categoría' : 'Crear categoría'}
+                            Actualizar orden
                         </div>
                     </div>
 
@@ -218,52 +187,52 @@ export const SubcategoryForm = ({
                             <div className={"pb-4 w-full"}>
                                 <label
                                     className={"block text-sm font-medium pb-4"}
-                                    htmlFor="name">
-                                    Nombre de la categoria
+                                    htmlFor="shippingValue">
+                                    Valor del envío
                                 </label>
                                 <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    placeholder="Cajas de cartón"
+                                    type="number"
+                                    id="shippingValue"
+                                    name="shippingValue"
+                                    placeholder="99999"
                                     className={"border border-slate-300 text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 py-2 px-3 rounded-md shadow-sm placeholder-slate-400 w-full"}
-                                    value={formik.values.name}
+                                    value={formik.values.shippingValue}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
                                 />
                                 <span className={"text-sm text-red-600 italic"}>
-                                    {formik.touched.name && formik.errors.name ? formik.errors.name : ''}
+                                    {formik.touched.shippingValue && formik.errors.shippingValue ? formik.errors.shippingValue : ''}
                                 </span>
                             </div>
 
                         </div>
 
                         <div className={'grid md:grid-cols-1 gap-x-4 lg:gap-x-8'}>
-                            {/* Category input field*/}
+                            {/* State input field*/}
 
                             <label
                                 className={"block text-sm font-medium pb-4"}
-                                htmlFor="categoryId"
+                                htmlFor="stateId"
                             >
-                                Categoria
+                                Estado de la orden
                             </label>
 
                             {
-                                categories.length > 0 ? (
+                                states.length > 0 ? (
                                         <select
-                                            id="categoryId"
-                                            name="categoryId"
+                                            id="stateId"
+                                            name="stateId"
                                             className={"border border-slate-300 text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 py-2 px-3 rounded-md shadow-sm placeholder-slate-400 w-full"}
-                                            value={formik.values.categoryId}
+                                            value={formik.values.stateId}
                                             onChange={formik.handleChange}
                                             onBlur={formik.handleBlur}
                                         >
-                                            <option value=''>Selecciona una categoria</option>
+                                            <option value=''>Selecciona un estado</option>
                                             {
-                                                categories.map((category) => {
+                                                states.map((state) => {
                                                     return (
-                                                        <option key={category.id}
-                                                                value={category.id}>{category.name}</option>
+                                                        <option key={state.id}
+                                                                value={state.id}>{state.name}</option>
                                                     )
                                                 })
                                             }
@@ -271,12 +240,12 @@ export const SubcategoryForm = ({
                                     )
                                     : (
                                         <div className={'flex gap-2 flex-wrap p-4'}>
-                                            <span className={'text-sm text-gray-500'}>No hay categorias disponibles, por favor cree una nueva</span>
+                                            <span className={'text-sm text-gray-500'}>No hay estados disponibles, por favor cree uno nuevo</span>
                                         </div>
                                     )
                             }
                             <span className={"text-sm text-red-600 italic"}>
-                                    {formik.touched.categoryId && formik.errors.categoryId ? formik.errors.categoryId : ''}
+                                    {formik.touched.stateId && formik.errors.stateId ? formik.errors.stateId : ''}
                                 </span>
                         </div>
 
@@ -292,7 +261,7 @@ export const SubcategoryForm = ({
                                 type={'submit'}
                                 className="ml-4 px-4 py-2 rounded-md text-white text-sm font-semibold bg-red-600 hover:bg-red-500 focus:outline-none focus:bg-red-500"
                             >
-                                {context === 'edit' ? 'Actualizar' : 'Crear'}
+                                Actualizar
                             </button>
                         </div>
                     </form>

@@ -135,23 +135,6 @@ export interface Order {
 }
 
 /**
- * Interface for new Order object.
- *
- * This interface is used to create a new order.
- *
- * @interface NewOrder
- * @property {string} userId - The id of the user who created the order.
- * @property {Array<any>} products - List of products in the order.
- * @property {string} total - The total price of the order.
- */
-export interface NewOrder {
-    userId: string;
-    shippingAddress: ShippingAddress,
-    products: Array<OrderProduct>,
-    total: number,
-}
-
-/**
  * Interface for Order Status.
  *
  * The status of the order is defined by the percentage of the order that has been completed.
@@ -165,4 +148,12 @@ export interface OrderStatus {
     id: string;
     name: string;
     percentage: number;
+}
+
+/**
+ * Interface for Update Order.
+ */
+export interface UpdateOrder {
+    stateId: string;
+    shippingValue: number;
 }

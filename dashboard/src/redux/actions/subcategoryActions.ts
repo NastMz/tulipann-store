@@ -7,4 +7,4 @@ import {subcategorySlice} from '../reducer';
  * @property {function} addSubcategory - Action creator to add a subcategory to the store.
  * @property {function} removeSubcategory - Action creator to remove a subcategory from the store.
  */
-export const { addSubcategory, removeSubcategory } = subcategorySlice.actions;
+export const { addSubcategory, removeSubcategory, removeAllSubcategories } = subcategorySlice.actions;
