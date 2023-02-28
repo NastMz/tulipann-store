@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics
 import uuid
-from api.models import Order, State, Product, OrderProduct, User, Department, City, ShippingAddress
+from api.models import Order, State, Product, OrderProduct, User, Department, City, ShippingAddress, ProductShipping
 from api.serializers import OrderSerializer, OrderCrudSerializer, OrderProductSerializer, ShippingAddressCrudSerializer
 from api.utils.authorization_crud import authorization
 
@@ -94,8 +94,13 @@ class OrderCreate(generics.GenericAPIView):
             if not Product.all_objects.filter(id=product['productId']).exists():
                 messages.append('El producto ' + product['productId'] + ' no existe')
                 return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
-            if Product.all_objects.get(id=product['productId']).category.name == 'Colageno' and Department.all_objects.get(id=request.data['shippingAddress']['departmentId']).name != 'Cundinamarca':
-                messages.append('El producto: ' + Product.all_objects.get(id=product['productId']).name + '\n Solo está disponible para envío en el departamento de Cundinamarca')
+
+            if ProductShipping.all_objects.filter(product=product['productId']).exists():
+                product_shipping = list(ProductShipping.all_objects.filter(product=product['productId']))
+
+                for prod_shipp in product_shipping:
+                    if prod_shipp.department != request.data['shippingAddress']['departmentId']:
+                        messages.append('El producto: \'' + prod_shipp.product.name + '\' está disponible para envío en el departamento: \'' + prod_shipp.department.name +'\'')
                 return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         data_shipping_addr = {

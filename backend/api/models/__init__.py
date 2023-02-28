@@ -10,6 +10,7 @@ from .Image import Image
 from .Order import Order
 from .OrderProduct import OrderProduct
 from .Product import Product
+from .ProductShipping import ProductShipping
 from .ProductSubcategory import ProductSubcategory
 from .Role import Role
 from .ShippingAddress import ShippingAddress

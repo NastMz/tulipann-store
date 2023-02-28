@@ -5,10 +5,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, generics
 import uuid
 from api.models import Product, Subcategory, Specification, Image, ProductSubcategory, Feature, Category, Commentary, \
-    OrderProduct
+    OrderProduct, Department, ProductShipping
 from api.serializers import ProductSerializer, ProductCrudSerializer, SpecificationCrudSerializer, \
     FeatureCrudSerializer, \
-    ImageCrudSerializer, ProductSubcategorySerializer, SpecificationSerializer
+    ImageCrudSerializer, ProductSubcategorySerializer, SpecificationSerializer, ProductShippingSerializer
 from api.utils.authorization_crud import authorization
 from api.utils.image_utils import optimize_and_save_image, delete_images
 
@@ -153,6 +153,17 @@ class ProductCreate(generics.GenericAPIView):
                 messages.append('La subcategoría ingresada no corresponde a la categoría del producto')
                 return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
+        if 'departments' in request.data:
+            departments = request.data['departments']
+            for department in departments:
+                if 'departmentId' not in department:
+                    messages.append('El id del departamento es requerido')
+                    return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+                if not Department.all_objects.filter(id=department['departmentId']).exists():
+                    messages.append('El departamento ' + department['departmentId'] + ' no existe')
+                    return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         serializer.save()
 
         new_product = Product.all_objects.get(name=request.data['name'])
@@ -167,6 +178,18 @@ class ProductCreate(generics.GenericAPIView):
             if not ProductSubcategory.all_objects.filter(product=data_product_subcategory['product'],
                                                          subcategory=data_product_subcategory['subcategory']).exists():
                 product_subcategory_serializer.create(data_product_subcategory)
+
+        # Create ProductShipping
+        if 'departments' in request.data:
+            product_shipping_serializer = ProductShippingSerializer()
+            for department in departments:
+                data_product_shipping = {
+                    'product': new_product,
+                    'department': Department.all_objects.get(id=department['departmentId'])
+                }
+                if not ProductShipping.all_objects.filter(product=data_product_shipping['product'],
+                                                          department=data_product_shipping['department']).exists():
+                    product_shipping_serializer.create(data_product_shipping)
 
         # Create specification
         specification_serializer = SpecificationCrudSerializer()
@@ -371,6 +394,17 @@ class ProductUpdate(APIView):
             messages.append('Este nombre ya está asignado a otro producto')
             return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
+        if 'departments' in request.data:
+            departments = request.data['departments']
+            for department in departments:
+                if 'departmentId' not in department:
+                    messages.append('El id del departamento es requerido')
+                    return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
+                if not Department.all_objects.filter(id=department['departmentId']).exists():
+                    messages.append('El departamento ' + department['departmentId'] + ' no existe')
+                    return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+
         serializer = ProductSerializer(product, data=request.data)
 
         if not serializer.is_valid():
@@ -394,6 +428,31 @@ class ProductUpdate(APIView):
             if not ProductSubcategory.all_objects.filter(product=data_product_subcategory['product'],
                                                          subcategory=data_product_subcategory['subcategory']).exists():
                 product_subcategory_serializer.create(data_product_subcategory)
+
+        # Update productShipping
+        if 'departments' in request.data:
+            product_shipping_serializer = ProductShippingSerializer()
+
+            refresh_product_shipping = ProductShipping.all_objects.filter(product=product)
+
+            for prod_shipp in refresh_product_shipping:
+                prod_shipp.delete()
+
+            for department in departments:
+                data_product_shipping = {
+                    'product': product,
+                    'department': Department.all_objects.get(id=department['departmentId'])
+                }
+                if not ProductShipping.all_objects.filter(product=data_product_shipping['product'],
+                                                          department=data_product_shipping['department']).exists():
+                    product_shipping_serializer.create(data_product_shipping)
+        else:
+            refresh_product_shipping = ProductShipping.all_objects.filter(product=product)
+
+            for prod_shipp in refresh_product_shipping:
+                prod_shipp.delete()
+
+            messages.append('Se eliminaron todos los departamentos de envio, ahora el producto tiene envio a nivel nacional.')
 
         # Update specification
         specification_obj = Specification.all_objects.get(product=product.id)
@@ -450,6 +509,7 @@ class ProductUpdate(APIView):
             image_serializer.create(data_image)
 
         return Response({
+            "Message": messages,
             "Product updated": {
                 "name": serializer.data['name'],
                 "description": serializer.data['description'],
@@ -494,6 +554,10 @@ class ProductDelete(APIView):
         db_product_subcat = list(ProductSubcategory.all_objects.filter(product=id))
         for product_subcat in db_product_subcat:
             product_subcat.soft_delete()
+
+        db_product_shipp = list(ProductShipping.all_objects.filter(product=id))
+        for product_shipp in db_product_shipp:
+            product_shipp.soft_delete()
 
         if Specification.all_objects.filter(product=product).exists():
             spec = Specification.all_objects.get(product=product)
