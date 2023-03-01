@@ -24,7 +24,7 @@ class CommentarySerializer(serializers.ModelSerializer):
                 'rate': commentary.rate,
                 'commentary': commentary.text,
                 'userName': user.firstName,
-                'id': user.id,
+                'userId': user.id,
             })
         return feedback
 
@@ -41,7 +41,7 @@ class CommentarySerializer(serializers.ModelSerializer):
             'rate': commentary.rate,
             'text': commentary.text,
             'productId': commentary.product.id,
-            'id': commentary.user.id
+            'UserId': commentary.user.id
         }
 
     class Meta:

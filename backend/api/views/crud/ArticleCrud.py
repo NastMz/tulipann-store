@@ -128,7 +128,7 @@ class ArticleCreate(generics.GenericAPIView):
                     'hash': new_article.hash
                 },
                 "content": base64.b64encode(new_article.content),
-                "id": new_article.user.id
+                "UserId": new_article.user.id
             }
         }, status=status.HTTP_201_CREATED
         )
@@ -266,7 +266,7 @@ class ArticleUpdate(APIView):
                     'hash': article.hash
                 },
                 "content": base64.b64encode(article.content),
-                "id": article.user.id
+                "userId": article.user.id
             }
         }, status=status.HTTP_200_OK
         )
