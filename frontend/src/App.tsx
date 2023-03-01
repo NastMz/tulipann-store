@@ -20,9 +20,9 @@ import {
     getProducts,
     getSubcategories
 } from "./api/data";
-import {loadCartState, saveCartState, ScrollToTop} from "./utils";
+import {getRateMean, loadCartState, saveCartState, ScrollToTop} from "./utils";
 import {routes} from "./config/routes";
-import React, {lazy, Suspense, useEffect} from 'react';
+import React, {lazy, Suspense, useEffect, useState} from 'react';
 import {Loader} from "./components/common";
 import {store} from "./redux/store";
 import {throttle} from "lodash";
@@ -62,56 +62,58 @@ function App() {
     const dispatch = useDispatch();
 
     // Load data from API using React Query
-    useQuery({
+    const productQuery = useQuery({
         queryKey: ['apiProducts'],
         queryFn: getProducts,
         onSuccess: (data) => {
-            data.forEach((product) => dispatch(addProduct(product)));
+            data.forEach((product) => dispatch(addProduct({...product, rate: getRateMean(product)})));
         },
     });
-    useQuery({
+    const categoryQuery = useQuery({
         queryKey: ['apiCategories'],
         queryFn: getCategories,
         onSuccess: (data) => {
             data.forEach((category) => dispatch(addCategory(category)));
         },
     });
-    useQuery({
+    const subcategoryQuery = useQuery({
         queryKey: ['apiSubcategories'],
         queryFn: getSubcategories,
         onSuccess: (data) => {
             data.forEach((subcategory) => dispatch(addSubcategory(subcategory)));
         },
     });
-    useQuery({
+    const articleQuery = useQuery({
         queryKey: ['apiArticles'],
         queryFn: getArticles,
         onSuccess: (data) => {
             data.forEach((article) => dispatch(addArticle(article)));
         },
     });
-    useQuery({
+    const userQuery = useQuery({
         queryKey: ['apiUser'],
         queryFn: getUserInfo,
         onSuccess: (data) => {
             dispatch(setUser(data));
+            // Save user data to local storage
+            localStorage.setItem('user', JSON.stringify(data));
         },
     });
-    useQuery({
+    const orderQuery = useQuery({
         queryKey: ['apiOrders'],
         queryFn: getOrders,
         onSuccess: (data) => {
             data.forEach((order) => dispatch(addOrder(order)));
         },
     });
-    useQuery({
+    const departmentQuery = useQuery({
         queryKey: ['apiDepartments'],
         queryFn: getDepartments,
         onSuccess: (data) => {
             data.forEach((department) => dispatch(addDepartment(department)));
         },
     });
-    useQuery({
+    const stateQuery = useQuery({
         queryKey: ['apiStates'],
         queryFn: getOrderStatus,
         onSuccess: (data) => {
@@ -148,6 +150,12 @@ function App() {
     // Use useEffect to save the cart state to local storage
     useEffect(() => {
 
+        // Set the user data from local storage if it exists
+        const user = localStorage.getItem('user');
+        if (user) {
+            dispatch(setUser(JSON.parse(user)));
+        }
+
         // Save the cart state to local storage
         const saveState = () => {
             const state = store.getState().cart.list.map((product) => {
@@ -162,6 +170,28 @@ function App() {
         // Throttle the saveState function to prevent it from being called too often
         return store.subscribe(throttle(saveState, 1000));
     }, []);
+
+    const [isLoading, setIsLoading] = useState( true);
+
+    useEffect(() => {
+        const isLoaded = sessionStorage.getItem('loaded');
+        if (isLoaded === "true") {
+            setIsLoading(false);
+        } else if (!stateQuery.isLoading && !departmentQuery.isLoading && !productQuery.isLoading && !categoryQuery.isLoading && !subcategoryQuery.isLoading && !orderQuery.isLoading && !articleQuery.isLoading && !userQuery.isLoading) {
+            sessionStorage.setItem("loaded", "true");
+            setIsLoading(false);
+        }
+    }, [stateQuery, departmentQuery, productQuery, categoryQuery, subcategoryQuery, orderQuery, articleQuery, userQuery,sessionStorage.getItem("loaded")]);
+
+    window.addEventListener('load', () => {
+        sessionStorage.setItem("loaded", "false");
+    });
+
+    if (isLoading) {
+        return (
+            <Loader/>
+        )
+    }
 
 
     // Render the app
