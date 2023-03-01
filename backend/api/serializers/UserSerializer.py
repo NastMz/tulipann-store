@@ -9,6 +9,7 @@ class UserSerializer(serializers.ModelSerializer):
             'lastName': user.lastName,
             'email': user.email,
             'phone': user.phone,
+            'departmentId': user.department.id,
             'cityId': user.city.id,
         }
 
@@ -20,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
             'lastName': user.lastName,
             'email': user.email,
             'phone': user.phone,
+            'departmentId': user.department.id,
             'cityId': user.city.id,
             'roleId': role.id
         }
