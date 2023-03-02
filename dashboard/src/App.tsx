@@ -3,7 +3,7 @@ import {AnimatePresence} from "framer-motion";
 import {ScrollToTop} from "./utils";
 import {Route, Routes} from "react-router-dom";
 import {Main} from "./components/templates";
-import {Dashboard, Login, NotFound, OrderPage, ProductPage} from "./components/pages";
+import {Dashboard, FeedbackPage, Login, NotFound, OrderPage, ProductPage, UserPage} from "./components/pages";
 import {routes} from "./config/routes";
 import {ProtectedRoute} from "./components/utils";
 
@@ -53,6 +53,30 @@ function App() {
                                     page={<OrderPage/>}
                                     title={routes.order.title}
                                     pageName={routes.order.name}
+                                />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path={routes.user.path}
+                        element={
+                            <ProtectedRoute>
+                                <Main
+                                    page={<UserPage/>}
+                                    title={routes.user.title}
+                                    pageName={routes.user.name}
+                                />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path={routes.comment.path}
+                        element={
+                            <ProtectedRoute>
+                                <Main
+                                    page={<FeedbackPage/>}
+                                    title={routes.comment.title}
+                                    pageName={routes.comment.name}
                                 />
                             </ProtectedRoute>
                         }

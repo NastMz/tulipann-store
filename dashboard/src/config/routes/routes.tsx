@@ -1,5 +1,4 @@
-import {AiOutlineUser, BiHome, BiShoppingBag, BsBoxSeam} from 'react-icons/all';
-import {Dashboard} from "../../components/pages";
+import {AiOutlineUser, BiHome, BiShoppingBag, BsBoxSeam, MdOutlineFeedback} from 'react-icons/all';
 
 export const routes = {
     home: {
@@ -26,5 +25,17 @@ export const routes = {
         name: 'Iniciar Sesion',
         icon: <AiOutlineUser/>
     },
+    user: {
+        path: '/user',
+        title: 'Usuarios | Tulipann Store',
+        name: 'Usuarios',
+        icon: <AiOutlineUser/>
+    },
+    comment: {
+        path: '/comment',
+        title: 'Comentarios | Tulipann Store',
+        name: 'Comentarios',
+        icon: <MdOutlineFeedback/>
+    }
 
 }

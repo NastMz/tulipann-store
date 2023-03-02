@@ -4,25 +4,31 @@ import {useQuery} from "@tanstack/react-query";
 import {
     getCategories,
     getCities,
+    getCommentaries,
     getDepartments,
     getOrders,
     getOrderStatus,
     getProducts,
-    getSubcategories
+    getSubcategories,
+    getUsers
 } from "../../api/data";
 import {Category, Order, Product, Subcategory} from "../../models/interfaces";
 import {
     addCategory,
     addCity,
+    addCommentary,
     addDepartment,
     addOrder,
     addOrderStatus,
     addProduct,
     addSubcategory,
+    addUser,
     clearOrders,
     removeAllCategories,
+    removeAllCommentaries,
     removeAllProducts,
     removeAllSubcategories,
+    removeAllUsers,
 } from "../../redux/actions";
 import {AnimatePresence, motion} from "framer-motion";
 import {useEffect, useState} from "react";
@@ -144,22 +150,57 @@ export const Main = (props: MainProps) => {
         cacheTime: 1000 * 60 * 60 * 24 * 7 // Cache for 7 days to reduce API calls for static data.
     });
 
-    const [isLoading, setIsLoading] = useState( true);
+    // Fetch the users from the API.
+    const userQuery = useQuery({
+        queryKey: ['apiUsers'],
+        queryFn: getUsers,
+        onSuccess: (response) => {
+            const users = response.data.users.sort((a: any, b: any) => {
+                return a.id > b.id
+            });
+            dispatch(removeAllUsers());
+            users.forEach((user: any) => {
+                dispatch(addUser(user));
+            });
+        }
+    });
 
+    // Fetch the commentaries from the API.
+    const commentaryQuery = useQuery({
+        queryKey: ['apiCommentaries'],
+        queryFn: getCommentaries,
+        onSuccess: (response) => {
+            dispatch(removeAllCommentaries());
+            const commentaries = response.data.commentaries.sort((a: any, b: any) => {
+                return a.id > b.id
+            });
+            commentaries.forEach((commentary: any) => {
+                dispatch(addCommentary(commentary));
+            });
+        }
+
+    });
+
+    // Show the loader until all the data is fetched.
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Check if the data is loaded for the first time or if the data is already loaded.
     useEffect(() => {
         const isLoaded = sessionStorage.getItem('loaded');
         if (isLoaded === "true") {
             setIsLoading(false);
-        } else if (!cityQuery.isLoading && !stateQuery.isLoading && !departmentQuery.isLoading && !productQuery.isLoading && !categoryQuery.isLoading && !subcategoryQuery.isLoading && !orderQuery.isLoading) {
+        } else if (!cityQuery.isLoading && !stateQuery.isLoading && !departmentQuery.isLoading && !productQuery.isLoading && !categoryQuery.isLoading && !subcategoryQuery.isLoading && !orderQuery.isLoading && !userQuery.isLoading && !commentaryQuery.isLoading) {
             sessionStorage.setItem("loaded", "true");
             setIsLoading(false);
         }
-    }, [cityQuery, stateQuery, departmentQuery, productQuery, categoryQuery, subcategoryQuery, orderQuery, sessionStorage.getItem("loaded")]);
+    }, [cityQuery, stateQuery, departmentQuery, productQuery, categoryQuery, subcategoryQuery, orderQuery, userQuery, commentaryQuery, sessionStorage.getItem("loaded")]);
 
+    // Set the loaded state to false when the page is reloaded.
     window.addEventListener('load', () => {
         sessionStorage.setItem("loaded", "false");
     });
 
+    // Show the loader until all the data is fetched.
     if (isLoading) {
         return (
             <Loader/>
