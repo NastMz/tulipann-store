@@ -37,6 +37,9 @@ export const RateChart = (props: RateChartProps) => {
 
     const user = useSelector(selectUser);
 
+    // Check if the user already reviewed the product.
+    const alreadyReviewed = props.product.feedback.some((commentary) => commentary.userId === user.id);
+
     return (
         <div className={`w-full h-fit flex flex-col gap-4 p-6 ${props.className}`}>
             <h2 className={"text-2xl font-bold"}>
@@ -60,10 +63,10 @@ export const RateChart = (props: RateChartProps) => {
                 <p className={"text-sm text-gray-500"}>Si ha usado este producto, comparta sus opiniones con otros
                     clientes</p>
                 <button
-                    className={"mt-4 p-2 flex items-center justify-center w-full border border-gray-200 rounded-md text-sm font-medium hover:bg-gray-100"}
+                    className={`mt-4 p-2 flex items-center justify-center w-full border border-gray-200 rounded-md text-sm font-medium hover:bg-gray-100 ${alreadyReviewed ? 'pointer-events-none bg-gray-100' : ''}`}
                     onClick={() => setShowReviewForm(true)}
                 >
-                    Escribe una reseña
+                    {alreadyReviewed ? 'Ya has comentado este producto' : 'Escribe una reseña'}
                 </button>
             </div>
 

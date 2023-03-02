@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {motion} from "framer-motion";
 import {User} from "../../models/interfaces";
 import {useFormik} from "formik";
@@ -143,23 +143,18 @@ export const ReviewFormModal = ({
         },
     });
 
-    if (user.id === "") {
-        const [showLoginError, setShowLoginError] = useState(true);
-        const navigate = useNavigate();
-        return (
-        <Modal
-            isOpen={showLoginError}
-            onClose={() => setShowLoginError(false)}
-            type="error"
-            title="Error"
-            message={'Para poder realizar una reseña debes iniciar sesión.'}
-            buttonText="Ir a Iniciar Sesión"
-            onButtonClick={() => navigate(routes.login.path)}
-        />
-        )
-    } else {
+    const [showLoginError, setShowLoginError] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user.id === '' && isOpen) {
+            handleClick();
+            setShowLoginError(true);
+        }
+    }, [user, isOpen]);
 
         return (
+            <>
             <motion.div
                 initial="closed"
                 animate={isOpen ? 'open' : 'closed'}
@@ -292,7 +287,16 @@ export const ReviewFormModal = ({
                     onButtonClick={() => setShowError(false)}
                 />
             </motion.div>
+                <Modal
+                    isOpen={showLoginError}
+                    onClose={() => setShowLoginError(false)}
+                    type="error"
+                    title="Error"
+                    message={'Para poder realizar una reseña debes iniciar sesión.'}
+                    buttonText="Ir a Iniciar Sesión"
+                    onButtonClick={() => navigate(routes.login.path)}
+                />
+            </>
         );
-    }
 };
 
