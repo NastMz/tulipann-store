@@ -217,7 +217,7 @@ export const Login = () => {
                                 Recordarme
                             </label>
                         </div>
-                        <Link to={"#"} className={"text-red-500 font-medium"}>Olvidaste tu contraseña?</Link>
+                        <Link to={routes.restore.path} className={"text-red-500 font-medium"}>Olvidaste tu contraseña?</Link>
                     </div>
                     <button type={'submit'}
                             className={"w-full my-1 md:my-4 bg-red-500 hover:bg-red-400 text-center p-2 text-white font-medium cursor-pointer flex-grow rounded-md"}>

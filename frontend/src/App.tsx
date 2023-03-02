@@ -55,6 +55,7 @@ const Terms = lazy(() => import('./components/pages/index').then(({Terms}) => ({
 const Profile = lazy(() => import('./components/pages/index').then(({Profile}) => ({default: Profile})));
 const OrderHistory = lazy(() => import('./components/pages/index').then(({OrderHistory}) => ({default: OrderHistory})));
 const RestorePassword = lazy(() => import('./components/pages/index').then(({RestorePassword}) => ({default: RestorePassword})));
+const RestorePasswordForm = lazy(() => import('./components/pages/index').then(({RestorePasswordForm}) => ({default: RestorePasswordForm})));
 const UserGuide = lazy(() => import('./components/pages/index').then(({UserGuide}) => ({default: UserGuide})));
 
 function App() {
@@ -419,6 +420,17 @@ function App() {
                                         title={routes.profile.title}
                                     />
                                 </ProtectedRoute>
+                            }
+                        />
+
+                        {/* Restore Password route */}
+                        <Route
+                            path={`${routes.restore.path}`}
+                            element={
+                                <Main
+                                    page={<RestorePasswordForm/>}
+                                    title={routes.restore.title}
+                                />
                             }
                         />
 
