@@ -100,59 +100,61 @@ export const SearchBar = () => {
                         </div>
                     </div>
                     <div className={`${searchInput === "" ? "hidden" : ""}`}>
-                        {searchItems.length > 0 ? (
-                            <div className={"max-h-96 overflow-y-auto"}>
-                                {searchItems.map((item: any) => {
-                                        if ("rate" in item) {
-                                            return (
-                                                <SearchProductCard
-                                                    item={{
-                                                        id: item.id,
-                                                        name: item.name,
-                                                        image: item.images[0],
-                                                        description: item.description,
-                                                        rate: item?.rate ?? 0,
-                                                    }}
-                                                    closeSearchBar={closeSearchBar}
-                                                    key={item.id}
-                                                />
-                                            )
-                                        } else {
-                                            return (
-                                                <SearchArticleCard
-                                                    item={{
-                                                        id: item.id,
-                                                        name: "title" in item ? item.title : "",
-                                                        image:
-                                                            "banner" in item
-                                                                ? item.banner
-                                                                : {src: "", hash: ""},
-                                                        summary: "summary" in item ? item.summary : "",
-                                                        tags: "tags" in item ? item.tags : [],
-                                                    }}
-                                                    closeSearchBar={closeSearchBar}
-                                                    key={item.id}
-                                                />
-                                            )
+                        {
+                            searchItems.length > 0 ? (
+                                <div className={"max-h-96 overflow-y-auto"}>
+                                    {searchItems.map((item: any) => {
+                                            if ("rate" in item) {
+                                                return (
+                                                    <SearchProductCard
+                                                        item={{
+                                                            id: item.id,
+                                                            name: item.name,
+                                                            image: item.images[0],
+                                                            description: item.description,
+                                                            rate: item?.rate ?? 0,
+                                                        }}
+                                                        closeSearchBar={closeSearchBar}
+                                                        key={item.id}
+                                                    />
+                                                )
+                                            } else {
+                                                return (
+                                                    <SearchArticleCard
+                                                        item={{
+                                                            id: item.id,
+                                                            name: "title" in item ? item.title : "",
+                                                            image:
+                                                                "banner" in item
+                                                                    ? item.banner
+                                                                    : {src: "", hash: ""},
+                                                            summary: "summary" in item ? item.summary : "",
+                                                            tags: "tags" in item ? item.tags : [],
+                                                        }}
+                                                        closeSearchBar={closeSearchBar}
+                                                        key={item.id}
+                                                    />
+                                                )
+                                            }
                                         }
+                                    )}
+                                </div>
+                            ) : (
+                                <div
+                                    className={
+                                        "h-96 bg-slate-100 flex flex-col items-center justify-center text-center p-6 gap-1"
                                     }
-                                )}
-                            </div>
-                        ) : (
-                            <div
-                                className={
-                                    "h-96 bg-slate-100 flex flex-col items-center justify-center text-center p-6 gap-1"
-                                }
-                            >
-                                <h6 className={"font-bold text-lg"}>
-                                    No se encontraron resultados
-                                </h6>
-                                <p>
-                                    No podemos encontrar nada con ese término en este momento,
-                                    intente buscar otra cosa.
-                                </p>
-                            </div>
-                        )}
+                                >
+                                    <h6 className={"font-bold text-lg"}>
+                                        No se encontraron resultados
+                                    </h6>
+                                    <p>
+                                        No podemos encontrar nada con ese término en este momento,
+                                        intente buscar otra cosa.
+                                    </p>
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
             </div>
