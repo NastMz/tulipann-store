@@ -1,12 +1,12 @@
-import {userSlice} from '../reducer';
+import {userSlice} from "../reducer";
 
 /**
  * Exported actions for the user slice of the Redux store.
  *
  * @constant
  * @type {object}
- * @property {function} setUser - Action creator for setting the user.
- * @property {function} resetUser - Action creator for resetting the user.
+ * @property {function} addUser - Action creator for adding a user to the list.
+ * @property {function} removeUser - Action creator for removing a user from the list.
+ * @property {function} removeAllUsers - Action creator for removing all users from the list.
  */
-
-export const {setUser, resetUser} = userSlice.actions;
+export const { addUser, removeUser, removeAllUsers } = userSlice.actions;

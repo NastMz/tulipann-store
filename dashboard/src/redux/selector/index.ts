@@ -11,14 +11,17 @@
  * @exports {function} selectDepartments - Selector to get the list of departments from the store.
  * @exports {function} selectCities - Selector to get the list of cities from the store.
  * @exports {function} selectOrderStatus - Selector to get the list of order statuses from the store.
+ * @exports {function} selectUsers - Selector to get the list of users from the store.
+ * @exports {function} selectCommentaries - Selector to get the list of commentaries from the store.
  */
 
 export { selectProducts } from './productSelector';
 export { selectCategories } from './categorySelector';
 export { selectSubcategories } from './subcategorySelector';
 export { selectArticles } from './articleSelector';
-export { selectUser } from './userSelector';
 export { selectOrders } from './orderSelector';
 export {selectDepartments} from './departmentSelector';
 export {selectCities} from './citySelector';
 export {selectOrderStatus} from './orderStatusSelector';
+export {selectUsers} from './userSelector';
+export {selectCommentaries} from './commentarySelector';

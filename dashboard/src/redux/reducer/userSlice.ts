@@ -1,66 +1,70 @@
-import {User} from '../../models/interfaces';
+import {User} from "../../models/interfaces";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 /**
- * Interface for UserSlice state.
+ * Interface for UserSlice state
  *
  * @interface UserSliceState
- * @property {User} user - User object.
+ * @property {User[]} list - List of users.
  */
 interface UserSliceState {
-    user: User;
+    list: User[];
 }
 
 /**
- * Initial state for the UserSlice.
- *
- * @constant
- * @type {UserSliceState}
- */
+* Initial state for the UserSlice.
+*
+* @constant
+* @type {UserSliceState}
+*/
 const initialState: UserSliceState = {
-    user: {
-        id: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        departmentId: '',
-        cityId: '',
-        address: '',
-    }
-}
+    list: [],
+};
 
 /**
- * User slice for the Redux store.
- *
- * This slice includes actions and reducers for handling the state of the user in the app,
- * including setting the user.
- *
- * @constant
- * @type {Slice}
- */
+* User slice for the Redux store.
+*
+* This slice includes actions and reducers for handling the state of users in the app,
+* including adding and removing users from the list.
+*
+* @constant
+* @type {Slice}
+*/
 export const userSlice = createSlice({
-    name: 'user',
+    name: "users",
     initialState,
     reducers: {
         /**
-         * Action creator for setting the user.
+         * Reducer for adding a user to the list.
          *
          * @param {UserSliceState} state - Current state of the slice.
-         * @param {PayloadAction<User>} action - Action object with the user to be set.
+         * @param {PayloadAction<User>} action - Action object with the user to be added.
          * @returns {void}
          */
-        setUser: (state: UserSliceState, action: PayloadAction<User>): void => {
-            state.user = action.payload;
+        addUser: (state, action: PayloadAction<User>) => {
+            // Only add the user if it doesn't exist in the list
+            if (!state.list.some((user) => user.id === action.payload.id)) {
+                state.list = [...state.list, action.payload];
+            }
         },
         /**
-         * Action creator for resetting the user.
+         * Reducer for removing a user from the list.
+         *
+         * @param {UserSliceState} state - Current state of the slice.
+         * @param {PayloadAction<string>} action - Action object with the id of the user to be removed.
+         * @returns {void}
+         */
+        removeUser: (state, action: PayloadAction<string>) => {
+            state.list = state.list.filter((user) => user.id !== action.payload);
+        },
+        /**
+         * Reducer for removing all users from the list.
          *
          * @param {UserSliceState} state - Current state of the slice.
          * @returns {void}
          */
-        resetUser: (state: UserSliceState): void => {
-            state.user = initialState.user;
+        removeAllUsers: (state) => {
+            state.list = [];
         }
-    }
+    },
 });
