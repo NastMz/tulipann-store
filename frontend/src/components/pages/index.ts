@@ -43,4 +43,5 @@ export {Terms} from './Terms';
 export {OrderHistory} from './OrderHistory';
 export {Profile} from './Profile';
 export {RestorePassword} from './RestorePassword';
+export {RestorePasswordForm} from './RestorePasswordForm';
 export {UserGuide} from './UserGuide';

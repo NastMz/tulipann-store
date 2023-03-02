@@ -21,6 +21,12 @@
  * @exports {function} removeCity - Action creator to remove a cityId from the store.
  * @exports {function} addOrderStatus - Action creator to add an order status to the store.
  * @exports {function} removeOrderStatus - Action creator to remove an order status from the store.
+ * @exports {function} addUser - Action creator to add a user to the store.
+ * @exports {function} removeUser - Action creator to remove a user from the store.
+ * @exports {function} removeAllUsers - Action creator to remove all users from the store.
+ * @exports {function} addCommentary - Action creator to add a commentary to the store.
+ * @exports {function} removeCommentary - Action creator to remove a commentary from the store.
+ * @exports {function} removeAllCommentaries - Action creator to remove all commentaries from the store.
  */
 
 export { addProduct, removeProduct, removeAllProducts } from './productActions';
@@ -28,7 +34,8 @@ export { addCategory, removeCategory, removeAllCategories } from './categoryActi
 export { addSubcategory, removeSubcategory, removeAllSubcategories } from './subcategoryActions';
 export { addArticle, removeArticle } from './articleActions';
 export { addOrder, removeOrder, clearOrders } from './orderActions';
-export { setUser, resetUser } from './userActions';
 export { addDepartment, removeDepartment } from './departmentActions';
 export {addCity, removeCity} from './cityActions';
 export {addOrderStatus, removeOrderStatus} from './orderStatusActions';
+export {addUser, removeUser, removeAllUsers} from './userActions';
+export {addCommentary, removeCommentary, removeAllCommentaries} from './commentaryActions';

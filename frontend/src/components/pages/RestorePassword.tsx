@@ -1,7 +1,7 @@
 import {apiRequest} from "../../api/request";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {AnimatePresence, motion} from "framer-motion";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {getErrors} from "../../utils";
@@ -24,10 +24,8 @@ import {resetUser} from "../../redux/actions";
  */
 async function verifyToken(token: string) {
     const response = await apiRequest('GET', `auth/token/verify/${token}`, undefined, false);
-    if (response.status === 200) {
-        return true;
-    }
-    return false;
+    return response.status === 200;
+
 }
 
 
@@ -75,7 +73,7 @@ const NotValidToken = () => {
  * @param props
  * @constructor
  */
-const RestorePasswordForm = ({token}: { token: string; }) => {
+const NewPasswordForm = ({token}: { token: string; }) => {
 
     // Show new password
     const [shown2, setShown2] = useState<boolean>(false);
@@ -125,7 +123,7 @@ const RestorePasswordForm = ({token}: { token: string; }) => {
         onSubmit: async (values) => {
             setLoading(true);
 
-            const response = await apiRequest('PUT', `auth/password/change/${token}`, {newPassword: values.newPassword}, false);
+            const response = await apiRequest('POST', `auth/password/change/${token}`, {newPassword: values.newPassword}, false);
 
             if (response.status === 200) {
                 setLoading(false);
@@ -162,9 +160,9 @@ const RestorePasswordForm = ({token}: { token: string; }) => {
 
                 {/* New Password */}
                 <label
-                    className={"block text-sm font-medium pb-1"}
+                    className={"block text-sm font-medium pb-2"}
                     htmlFor="newPassword">
-                    Contraseña nueva
+                    Nueva contraseña
                 </label>
                 <div className="w-full h-fit relative">
                     <input
@@ -198,9 +196,9 @@ const RestorePasswordForm = ({token}: { token: string; }) => {
 
                 {/* Repeat New Password */}
                 <label
-                    className={"block text-sm font-medium pb-1"}
+                    className={"block text-sm font-medium pb-2 mt-4"}
                     htmlFor="repeatPassword">
-                    Repite la contraseña nueva
+                    Repite la nueva contraseña
                 </label>
                 <div className="w-full h-fit relative">
                     <input
@@ -233,7 +231,7 @@ const RestorePasswordForm = ({token}: { token: string; }) => {
                     className={"text-sm text-red-600 italic"}>{formik.touched.repeatPassword && formik.errors.repeatPassword ? formik.errors.repeatPassword : ""}</span>
                 <button
                     type={"submit"}
-                    className={"w-full mt-2 bg-red-500 hover:bg-red-400 text-center p-2 text-white font-medium cursor-pointer flex-grow rounded-md"}
+                    className={"w-full mt-6 bg-red-500 hover:bg-red-400 text-center p-2 text-white font-medium cursor-pointer flex-grow rounded-md"}
                 >
                     Cambiar
                 </button>
@@ -276,12 +274,16 @@ const RestorePasswordForm = ({token}: { token: string; }) => {
  */
 export const RestorePassword = () => {
 
+    // State to show the loader modal.
+    const [loading, setLoading] = useState<boolean>(true);
+
     // State to show the logged alert modal when the user is logged in and tries to access this page.
     const [showLoggedAlert, setShowLoggedAlert] = useState<boolean>(false);
 
     // State to know if the user wants to delete the session and continue with the restore password process.
     const [deleteSession, setDeleteSession] = useState<boolean>(false);
 
+    // State to know if the user is logged in.
     const [isLogged, setIsLogged] = useState<boolean>(false);
 
     // Check if the user is logged in.
@@ -296,13 +298,21 @@ export const RestorePassword = () => {
     const {token} = useParams();
 
 
-    // Send the token to the server for validation
-    let isValid = false;
-    if (token !== undefined) {
-        verifyToken(token).then((response) => {
-            isValid = response;
-        });
-    }
+    // Check if the token is valid.
+
+    const [isValid, setIsValid] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (token) {
+            setLoading(true);
+            verifyToken(token).then((response) => {
+                if (response) {
+                    setIsValid(true);
+                }
+                setLoading(false);
+            });
+        }
+    }, []);
 
     const navigate = useNavigate();
 
@@ -323,7 +333,9 @@ export const RestorePassword = () => {
         setDeleteSession(true);
     }
 
-    if (!isValid) {
+    if (loading) {
+        return <LoaderModal isOpen={true}/>;
+    } else if (!isValid) {
         return (
             <div className={'min-h-screen'}>
                 <Modal
@@ -356,8 +368,8 @@ export const RestorePassword = () => {
                 />
                 {
                     isLogged
-                        ? deleteSession && <RestorePasswordForm token={token ?? ''}/>
-                        : <RestorePasswordForm token={token ?? ''}/>
+                        ? deleteSession && <NewPasswordForm token={token ?? ''}/>
+                        : <NewPasswordForm token={token ?? ''}/>
                 }
             </div>
         )

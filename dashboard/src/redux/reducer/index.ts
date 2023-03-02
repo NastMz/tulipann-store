@@ -11,14 +11,16 @@
  * @exports {Object} departmentSlice - Slice for the departments in the store.
  * @exports {Object} citySlice - Slice for the cities in the store.
  * @exports {Object} orderStatusSlice - Slice for the order statuses in the store.
+ * @exports {Object} commentarySlice - Slice for the commentaries in the store.
  */
 
 export { productSlice } from './productSlice';
 export { categorySlice } from './categorySlice';
 export { subcategorySlice } from './subcategorySlice';
 export { articleSlice } from './articleSlice';
-export { userSlice } from './userSlice';
 export { orderSlice } from './orderSlice';
 export {departmentSlice} from './departmentSlice';
 export {citySlice} from './citySlice';
 export {orderStatusSlice} from './orderStatusSlice';
+export {userSlice} from './userSlice';
+export {commentarySlice} from './commentarySlice';
