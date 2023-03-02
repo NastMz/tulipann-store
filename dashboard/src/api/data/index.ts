@@ -16,6 +16,8 @@
  * @exports {function} getSubcategories - Function to get the list of subcategories from the data source.
  * @exports {function} getOrders - Function to get the list of orders from the data source.
  * @exports {function} getOrderStatus - Function to get the list of order statuses from the data source.
+ * @exports {function} getUsers - Function to get the list of users from the data source.
+ * @exports {function} getCommentaries - Function to get the list of products feedback from the data source.
  */
 
 export { getArticles } from "./article";
@@ -26,3 +28,5 @@ export { getProducts, createProduct, deleteProduct, updateProduct } from "./prod
 export { getSubcategories, deleteSubcategory, updateSubcategory, createSubcategory } from "./subcategory";
 export { getOrders, updateOrder } from "./order";
 export { getOrderStatus } from "./orderStatus";
+export { getUsers } from "./user";
+export { getCommentaries } from "./commentary";

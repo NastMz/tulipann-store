@@ -1,7 +1,6 @@
 import {AES} from "crypto-js";
 import {apiRequest} from "../request";
 import {exchangeIdTokenForTokens} from "./token";
-import {User} from "../../models/interfaces";
 
 /**
  * Sends a login request to the server with the given email and password.
@@ -45,17 +44,4 @@ export async function login(email: string, password: string, rememberMe: boolean
     } catch (error) {
         return false;
     }
-}
-
-/**
- * This function is called to get the user data from the API.
- *
- * @returns {Promise<User>} - A promise that resolves with the user data.
- */
-export async function getUserInfo(): Promise<User> {
-    // If the login was successful, get the user data from the API
-    const {data} = await apiRequest('GET', `data/user/`);
-
-    return data
-
 }

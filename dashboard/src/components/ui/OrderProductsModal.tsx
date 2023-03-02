@@ -99,7 +99,7 @@ export const OrderProductsModal = (props: OrderProductsModalProps) => {
                 </div>
                 <span className={"font-medium"}>Productos</span>
                 <div
-                    className={"grid w-full divide-y divide-solid divide-gray-200 h-4/5 overflow-y-auto h-96 px-4 border border-gray-200 rounded-lg"}>
+                    className={"flexl flex-col w-full divide-y divide-solid divide-gray-200 h-4/5 overflow-y-auto h-96 px-4 border border-gray-200 rounded-lg"}>
                     {
                         products.map((product: any) => (
                             <OrderSummaryCard

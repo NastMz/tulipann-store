@@ -90,6 +90,7 @@ export const Dashboard = () => {
                                                 orderId={order.id}
                                                 amount={getAmount(order.products)}
                                                 className={'odd:bg-white even:bg-gray-50 rounded-md'}
+                                                key={order.id}
                                             />
                                         )
                                     }
@@ -97,12 +98,12 @@ export const Dashboard = () => {
                             }
                         </div>
                     </div>
-                    <div className={'h-96 lg:h-full col-span-2 bg-white rounded-lg shadow-lg overflow-hidden p-4'}>
+                    <div className={'h-fit lg:h-full col-span-2 bg-white rounded-lg shadow-lg overflow-hidden p-4'}>
                         <div className={'w-full py-2 border-b border-gray-100'}>
                             <span className={'font-bold text-lg'}>Gráficas</span>
                         </div>
                         <div className={'h-full overflow-auto flex flex-col lg:flex-row gap-6 pb-12 lg:p-4'}>
-                            <div className={'h-full w-full lg:w-1/2 py-2'}>
+                            <div className={'h-96 lg:h-full w-full lg:w-1/2 py-2'}>
                                 <BarChartInfo
                                     data={barChartData}
                                     barDataKey={'Ventas'}
@@ -110,7 +111,7 @@ export const Dashboard = () => {
                                     barColor={'#ef4444'}
                                 />
                             </div>
-                            <div className={'h-full w-full lg:w-1/2 py-2'}>
+                            <div className={'h-96 lg:h-full w-full lg:w-1/2 py-2'}>
                                 <PieChartInfo
                                     data={pieChartData}
                                     nameKey={'name'}
@@ -139,6 +140,13 @@ export const Dashboard = () => {
                                 title={'Ordenes'}
                                 bgColor={'#60A5FA'}
                                 onClick={() => navigate(routes.order.path)}
+                            />
+                            <DashboardCard
+                                icon={routes.user.icon}
+                                count={store.getState().users.list.length}
+                                title={'Usuarios'}
+                                bgColor={'#34D399'}
+                                onClick={() => navigate(routes.user.path)}
                             />
                         </div>
                     </div>
