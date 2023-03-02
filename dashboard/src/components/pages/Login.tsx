@@ -6,10 +6,9 @@ import Logo from "../../assets/images/LogoTulipann.svg";
 import {AnimatePresence, motion} from "framer-motion";
 import {useState} from "react";
 import {VscEye, VscEyeClosed} from "react-icons/vsc";
-import {getUserInfo, login} from '../../api/client';
+import {login} from '../../api/client';
 import {LoaderModal, Modal} from "../common";
 import {useDispatch} from "react-redux";
-import {setUser} from "../../redux/actions";
 
 /**
  * Login component.
@@ -48,19 +47,9 @@ export const Login = () => {
                 let loginResult = await login(values.email, values.password, values.rememberMe);
 
                 if (loginResult) {
-                    // If the login was successful, get the user data from the API
-                    const user = getUserInfo();
-
-
-                    // Set the user in Redux store
-                    user.then((user) => {
-                        setLoading(false);
-                        dispatch(setUser(user));
-
-                        // Show a success alert
-                        setShowSuccess(true);
-                    })
-
+                    setLoading(false);
+                    // Show a success alert
+                    setShowSuccess(true);
                 } else {
                     setLoading(false);
                     // Show an error alert

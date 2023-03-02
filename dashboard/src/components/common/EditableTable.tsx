@@ -29,8 +29,10 @@ export interface EditableTableProps {
 /**
  * EditableTable component.
  *
- * This component is used to render a table.
+ * This component is used to render a table with edit functionality.
+ *
  * @param {EditableTableProps} props - The props for the component.
+ * @returns {JSX.Element} - The component.
  */
 export const EditableTable = ({
                                   headersMap,

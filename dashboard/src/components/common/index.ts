@@ -11,3 +11,4 @@ export {Paginate} from './Paginate';
 export {OrderDashboardCard} from './OrderDashboardCard';
 export {BarChartInfo} from './BarChart';
 export {PieChartInfo} from './PieChart';
+export {Stars} from './Stars';
