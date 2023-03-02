@@ -3,12 +3,13 @@ import {
     articleSlice,
     categorySlice,
     citySlice,
+    commentarySlice,
     departmentSlice,
     orderSlice,
     orderStatusSlice,
     productSlice,
     subcategorySlice,
-    userSlice
+    userSlice,
 } from "../reducer";
 
 /**
@@ -26,10 +27,11 @@ export const store = configureStore({
         categories: categorySlice.reducer,
         subcategories: subcategorySlice.reducer,
         articles: articleSlice.reducer,
-        user: userSlice.reducer,
         orders: orderSlice.reducer,
         departments: departmentSlice.reducer,
         cities: citySlice.reducer,
-        orderStatus: orderStatusSlice.reducer
+        orderStatus: orderStatusSlice.reducer,
+        users: userSlice.reducer,
+        commentaries: commentarySlice.reducer,
     },
 });
