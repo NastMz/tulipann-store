@@ -103,6 +103,11 @@ const RestorePasswordForm = ({token}: { token: string; }) => {
         navigate(routes.login.path);
     }
 
+    const handleCancelSuccess = () => {
+        setShowSuccess(false);
+        navigate(routes.home.path);
+    }
+
     // Formik logics
     const formik = useFormik({
         initialValues: {
@@ -241,17 +246,17 @@ const RestorePasswordForm = ({token}: { token: string; }) => {
         {/* Success alert */}
         <Modal
             isOpen={showSuccess}
-            onClose={() => handleSuccess()}
+            onClose={() => handleCancelSuccess()}
             type="success"
             title="Éxito"
-            message="Contraseña actualizada correctamente"
-            buttonText="Aceptar"
+            message="Contraseña actualizada correctamente. Ahora puedes iniciar sesión con tu nueva contraseña."
+            buttonText="Iniciar sesión"
             onButtonClick={() => handleSuccess()}
         />
 
         {/* Error alert */}
         <Modal
-            isOpen={showSuccess}
+            isOpen={showError}
             onClose={() => setShowError(false)}
             type="error"
             title="Error"
