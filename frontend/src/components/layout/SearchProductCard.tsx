@@ -44,7 +44,6 @@ interface SearchProductCardProps {
  * @returns {ReactNode} The rendered component.
  */
 export const SearchProductCard = (props: SearchProductCardProps) => {
-
     return (
         <Link
             to={`${routes.product.path}/${props.item.id}`}
