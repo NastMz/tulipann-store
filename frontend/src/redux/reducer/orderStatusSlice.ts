@@ -31,7 +31,7 @@ const initialState: OrderStatusSliceState = {
 * @type {Slice}
 */
 export const orderStatusSlice = createSlice({
-    name: "categories",
+    name: "orderStatuses",
     initialState,
     reducers: {
         /**
