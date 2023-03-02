@@ -115,6 +115,7 @@ export const NavbarMenuMobile = (props: NavbarMenuMobileProps) => {
                                                 <Link
                                                     className={`min-w-fit cursor-pointer hover:text-red-600 hover:border-b-2 hover:border-red-600 p-2`}
                                                     to={routes.home.path}
+                                                    onClick={() => toggleNavMenu()}
                                                 >
                                                     Inicio
                                                 </Link>

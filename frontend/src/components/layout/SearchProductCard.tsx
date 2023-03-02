@@ -50,7 +50,7 @@ export const SearchProductCard = (props: SearchProductCardProps) => {
             className={`w-full h-fit ${props.className}`}
             onClick={() => props.closeSearchBar()}
         >
-            <div className={`relative grid grid-cols-3 gap-4 p-4 w-full h-32 border-t border-b border-gray-100`}>
+            <div className={`relative hover:bg-gray-100 grid grid-cols-3 gap-4 p-4 w-full h-32 border-t border-b border-gray-100`}>
                 <div className={"h-full w-full overflow-hidden rounded-lg"}>
                     <OptimizedImage image={props.item.image}/>
                 </div>
