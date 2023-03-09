@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from rest_framework import permissions
 from api.checkout.Payment import confirm_payment
+from api.utils.contact_email import Contact
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
@@ -43,6 +44,7 @@ urlpatterns = [
     path('api/auth/', include('api.urls.urlsAuth')),
     path('api/data/', include('api.urls.urlsData')),
     path('api/crud/', include('api.urls.urlsCrud')),
-    path('api/payment/confirmation/', confirm_payment)
+    path('api/payment/confirmation/', confirm_payment),
+    path('api/contact/', Contact.as_view(), name='contact_us'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     
