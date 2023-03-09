@@ -98,10 +98,16 @@ class OrderCreate(generics.GenericAPIView):
             if ProductShipping.all_objects.filter(product=product['productId']).exists():
                 product_shipping = list(ProductShipping.all_objects.filter(product=product['productId']))
 
+                objetos_filtrados = [prod_shipp for prod_shipp in product_shipping if prod_shipp.department.id == request.data['shippingAddress']['departmentId']]
+
+                departments_avaible_shipping = []
+
                 for prod_shipp in product_shipping:
-                    if prod_shipp.department != request.data['shippingAddress']['departmentId']:
-                        messages.append('El producto: \'' + prod_shipp.product.name + '\' está disponible para envío en el departamento: \'' + prod_shipp.department.name +'\'')
-                return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
+                    departments_avaible_shipping.append(prod_shipp.department.name)
+
+                if len(objetos_filtrados) == 0:
+                    messages.append('El producto \'' + product_shipping[0].product.name + '\' solo está disponible para envío en: \'' + ", ".join(departments_avaible_shipping) + '\'')
+                    return Response({"Errors": messages}, status=status.HTTP_400_BAD_REQUEST)
 
         data_shipping_addr = {
             "address": request.data['shippingAddress']['address'],

@@ -25,10 +25,13 @@ class ProductCrudSerializer(serializers.ModelSerializer):
         messages = []
 
         if Product.all_objects.filter(name=name).exists():
-            messages.append('Este nombre ya se encuentra registrado')
+            messages.append('Este nombre ya se encuentra registrado.')
 
-        if stock < 0 or price < 0:
-            messages.append('El precio y el stock deben ser mayores que cero')
+        if stock <= 0:
+            messages.append('El stock debe ser mayor que cero.')
+
+        if price <= 0:
+            messages.append('El precio debe ser mayor que cero.')
 
         if messages:
             raise serializers.ValidationError(messages)

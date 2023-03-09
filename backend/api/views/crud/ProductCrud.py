@@ -565,10 +565,12 @@ class ProductDelete(APIView):
 
             db_features = list(Feature.all_objects.filter(specification=spec))
             for feature in db_features:
+                delete_images(feature, 'image')
                 feature.soft_delete()
 
         db_images = list(Image.all_objects.filter(product=id))
         for image in db_images:
+            delete_images(image, 'src')
             image.soft_delete()
 
         db_comments = list(Commentary.all_objects.filter(product=id))
