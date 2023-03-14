@@ -1,7 +1,6 @@
 import uuid
-import random
 from django.db import models
-
+from django.utils import timezone
 from .ShippingAddress import ShippingAddress
 from .User import User
 from .State import State
@@ -40,8 +39,10 @@ class OrderManager(models.Manager):
         if not user and not extra_fields:
             raise ValueError('You must fill in all fields')
         id = uuid_hex()
+        now = timezone.now()
         order = self.model(id=id,
                            user=user,
+                           created=now,
                            **extra_fields)
         order.save(using=self._db)
         return order
@@ -58,6 +59,7 @@ class Order(SoftDeleteModel):
     shippingValue = models.PositiveIntegerField(db_column='shipping_value')
     online = models.BooleanField(blank=True, null=True)
     details = models.JSONField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     objects = OrderManager()
     all_objects = SoftDeleteManager()

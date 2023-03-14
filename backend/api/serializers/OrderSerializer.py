@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from django.utils import timezone
 from . import ShippingAddressSerializer
 from ..models import User, State, Order, OrderProduct
 
@@ -25,6 +25,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'products': products,
             'shippingValue': order.shippingValue,
             'online': order.online,
+            'created': timezone.localtime(order.created),
             'details': order.details
         }
 
@@ -48,6 +49,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'products': products,
             'shippingValue': order.shippingValue,
             'online': order.online,
+            'created': timezone.localtime(order.created),
             'details': order.details
         }
 
