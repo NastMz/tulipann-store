@@ -170,6 +170,7 @@ class OrderDetail(APIView):
     """
     Retrieve a order by id.
     """
+    permission_classes = (IsAuthenticated,)
 
     @staticmethod
     @action(methods=['get'], detail=True)
