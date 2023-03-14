@@ -9,7 +9,7 @@ import uuid
 from api.models import Article, Tag, ArticleTag
 from api.serializers import ArticleSerializer, ArticleCrudSerializer, ArticleTagSerializer
 from api.utils.authorization_crud import authorization
-from api.utils.image_utils import optimize_and_save_image, update_images
+from api.utils.image_utils import optimize_and_save_image, update_images, delete_images
 
 
 class ArticleList(APIView):
@@ -300,6 +300,7 @@ class ArticleDelete(APIView):
             return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
 
         article = Article.all_objects.get(id=id)
+        delete_images(article, 'banner')
         article.soft_delete()
 
         db_article_tag = list(ArticleTag.all_objects.filter(article=id))
