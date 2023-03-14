@@ -37,8 +37,8 @@ class Feature(SoftDeleteModel):
     The Feature model represents a feature of a product.
     """
     id = models.CharField(primary_key=True, max_length=10, db_column='feature_id')
-    name = models.CharField(max_length=20, db_column='feature_name')
-    title = models.CharField(max_length=20)
+    name = models.CharField(max_length=40, db_column='feature_name')
+    title = models.CharField(max_length=100)
     description = models.TextField()
     image = models.CharField(max_length=255)
     hash = models.CharField(max_length=255)
