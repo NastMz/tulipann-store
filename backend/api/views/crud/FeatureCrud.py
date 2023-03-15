@@ -8,7 +8,7 @@ from rest_framework import status, generics
 from api.models import Feature, Specification
 from api.serializers import FeatureSerializer, FeatureCrudSerializer
 from api.utils.authorization_crud import authorization
-from api.utils.image_utils import optimize_and_save_image, update_images
+from api.utils.image_utils import optimize_and_save_image, update_images, delete_images
 
 
 class FeatureList(APIView):
@@ -262,5 +262,6 @@ class FeatureDelete(APIView):
             return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
 
         feature = Feature.all_objects.get(id=id)
+        delete_images(feature, 'image')
         feature.soft_delete()
         return Response({'Delete': 'Successfully'}, status=status.HTTP_200_OK)

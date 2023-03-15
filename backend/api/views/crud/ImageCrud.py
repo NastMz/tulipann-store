@@ -7,7 +7,7 @@ import uuid
 from api.models import Image, Product
 from api.serializers import ImageSerializer, ImageCrudSerializer
 from api.utils.authorization_crud import authorization
-from api.utils.image_utils import optimize_and_save_image, update_images
+from api.utils.image_utils import optimize_and_save_image, update_images, delete_images
 
 
 class ImageList(APIView):
@@ -240,6 +240,7 @@ class ImageDelete(APIView):
             return Response({"Errors": messages}, status=status.HTTP_404_NOT_FOUND)
 
         image = Image.all_objects.get(id=id)
+        delete_images(image, 'src')
         image.soft_delete()
 
         return Response({'Delete': 'Successfully'}, status=status.HTTP_200_OK)
