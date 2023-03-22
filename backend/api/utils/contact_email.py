@@ -37,8 +37,10 @@ class Contact(APIView):
         if 'email' not in request.data:
             messages.append('El correo es requerido')
 
-        if 'phone' not in request.data:
-            messages.append('El teléfono es requerido')
+        if 'phone' in request.data:
+            phone = request.data['phone']
+        else:
+            phone = "No ingresado"
 
         if 'subject' not in request.data:
             messages.append('El asunto es requerido')
@@ -56,7 +58,7 @@ class Contact(APIView):
             'name': request.data['name'],
             'lastName': request.data['lastName'],
             'email': request.data['email'],
-            'phone': request.data['phone'],
+            'phone': phone,
             'message': request.data['message'],
         })
 
