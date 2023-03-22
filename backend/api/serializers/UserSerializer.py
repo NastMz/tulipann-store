@@ -4,6 +4,7 @@ from api.models import *
 
 class UserSerializer(serializers.ModelSerializer):
     def serialize_front(user):
+        role = Role.all_objects.get(id=user.role.id)
         return {
             'firstName': user.firstName,
             'lastName': user.lastName,
@@ -11,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
             'phone': user.phone,
             'departmentId': user.department.id,
             'cityId': user.city.id,
+            'roleId': role.id
         }
 
     def serialize_get_crud(user):
