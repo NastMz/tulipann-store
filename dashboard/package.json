@@ -14,7 +14,7 @@
     "@tailwindcss/forms": "^0.5.3",
     "formik": "^2.2.9",
     "framer-motion": "^7.6.12",
-    "react-icons": "^4.6.0",
+    "react-icons": "^4.12.0",
     "react-router-dom": "^6.4.3",
     "yup": "^0.32.11"
   },
