@@ -15,7 +15,7 @@
     "formik": "^2.2.9",
     "framer-motion": "^7.6.12",
     "react-icons": "^4.6.0",
-    "react-router-dom": "^6.4.3",
+    "react-router-dom": "^6.30.3",
     "yup": "^0.32.11"
   },
   "devDependencies": {
