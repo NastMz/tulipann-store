@@ -1,165 +1,111 @@
+# Tulipann · Gabinete de tulipanes
 
-# Tulipann Store
+Tulipann es una tienda en línea que se presenta como un **catálogo ilustrado de los de antes**: cada pieza es una lámina numerada en romanos, con su dibujo, su ficha y una nota sobre su historia. Vende una sola flor en cuatro salas —bulbos de colección, ramos, tulipaneras de loza y grabados enmarcados— y acompaña el encargo hasta la entrega.
 
-Welcome to the Tulipann Store repository! This repository contains the code for an ecommerce platform, including the frontend, dashboard, and API.
+Ninguna imagen es una fotografía: **cada lámina se dibuja a partir de una receta** (color del pétalo, forma, llamas, número de pisos de la tulipanera, semilla) y el taller puede componer láminas nuevas desde su propio libro de inventario, con vista previa en vivo.
 
-## Table of Contents
+![Portada del gabinete](docs/screenshots/01-portada.png)
 
-- [Features](#features)
-- [Frontend](#frontend)
-- [Dashboard](#dashboard)
-- [API](#api)
-- [File Structure](#file-structure)
-  - [Frontend](#frontend-1)
-  - [Dashboard](#dashboard-1)
-  - [API](#api-1)
-- [Getting Started](#getting-started)
-- [Starting the Projects](#starting-the-projects)
-- [Documentation](#documentation)
-- [Sending Requests to the API](#sending-requests-to-the-api)
+## Lo que hace
 
-## Features
+- **Catálogo por salas**, con familias, búsqueda y orden por número de lámina o precio.
+- **Láminas generadas**: espécimen botánico con bulbo y raíces, ramo en papel de estraza, tulipanera escalonada pintada en esmalte, grabado enmarcado.
+- **Encargo** (carrito) que el servidor vuelve a cotizar en cada cambio; los precios nunca salen del navegador.
+- **Pagaré simulado**: el pago no pide datos de tarjeta ni usa pasarela. Quien compra elige aprobar o rechazar, y el servidor decide si el encargo puede cambiar de estado.
+- **Seguimiento** del encargo (registrado → pagado → en preparación → despachado → entregado) con recibo sellado.
+- **Notas de jardín**: solo quien ya recibió una lámina puede reseñarla, una vez.
+- **Libro del taller** (`/admin`): resumen de ingresos, encargos por estado, existencias bajas, gestión de encargos, compositor de láminas, clientes y moderación de notas.
+- **Gaceta** con notas de cultivo e historia, y formulario para escribir al taller.
+- **Correo local**: recibos, avisos de despacho y recuperación de contraseña llegan a un buzón de pruebas (Mailpit). Nada sale de la máquina.
 
-- Responsive design
-- TypeScript support
-- TailwindCSS for styling
-- Vite for fast development
-- Django Rest Framework for the API
+## Capturas
 
-## Frontend
+| | |
+|---|---|
+| ![Catálogo](docs/screenshots/02-catalogo.png) | ![Lámina](docs/screenshots/03-lamina.png) |
+| Sala de bulbos | Página de una lámina |
+| ![Encargo](docs/screenshots/04-encargo.png) | ![Envío](docs/screenshots/05-envio.png) |
+| El encargo | Datos de envío |
+| ![Pagaré](docs/screenshots/06-pagare.png) | ![Recibo](docs/screenshots/07-recibo.png) |
+| Pagaré simulado | Recibo sellado |
+| ![Resumen del taller](docs/screenshots/08-taller-resumen.png) | ![Encargo en el taller](docs/screenshots/09-taller-encargo.png) |
+| Libro del taller | Un encargo visto por el taller |
+| ![Compositor de láminas](docs/screenshots/10-taller-lamina.png) | ![Vista móvil](docs/screenshots/11-movil.png) |
+| Compositor de láminas | Vista móvil |
 
-The frontend is a single-page application built with React, TypeScript, and TailwindCSS. It is powered by the [Vite](https://vitejs.com/) build tool.
+## Cómo ejecutarlo
 
-## Dashboard
+Requisito: Docker con Compose.
 
-The dashboard is a React-based application that provides a user interface for managing the ecommerce platform. It is also built with TypeScript and TailwindCSS, and uses Vite as the build tool.
-
-## API
-
-The API is built with Django Rest Framework and provides a RESTful interface for the frontend and dashboard to interact with the ecommerce platform's data.
-
-## File Structure
-
-Each project has a similar file structure, with a few differences depending on the specifics of the project.
-
-### Frontend
-
-The frontend project has the following file structure:
-
-```markdown
-frontend/
-├── src/
-│ ├── components/ # directory containing reusable UI components
-│ ├── pages/ # directory containing top-level pages
-│ ├── services/ # directory containing utility functions and API clients
-│ ├── `App.tsx` # root component of the application
-│ ├── `index.tsx` # entry point for the application
-│ ├── `router.tsx` # routing configuration for the application
-│ └── `types.ts` # shared type definitions for
+```bash
+docker compose up --build
 ```
 
-### Dashboard
+- Tienda: <http://localhost:8160>
+- Buzón de correo (Mailpit): <http://localhost:8161>
 
-The dashboard project has the following file structure:
+La primera vez se crean las tablas y se cargan los datos de demostración: catálogo, clientes, encargos en distintos estados, notas y gaceta. Para empezar de cero: `docker compose down -v`.
 
-```markdown
-dashboard/
-├── src/
-│ ├── components/ # directory containing reusable UI components
-│ ├── pages/ # directory containing top-level pages
-│ ├── services/ # directory containing utility functions and API clients
-│ ├── App.tsx # root component of the application
-│ ├── index.tsx # entry point for the application
-│ ├── router.tsx # routing configuration for the application
-│ └── types.ts # shared type definitions for the application
-├── public/ # directory containing static assets (e.g. images)
-├── .vite.config.js # configuration file for the Vite build tool
-└── package.json # metadata for the project and its dependencies
+### Cuentas de demostración
+
+| Rol | Correo | Contraseña |
+|---|---|---|
+| Taller (administración) | `taller@tulipann.test` | `Taller.2026` |
+| Cliente | `clara@tulipann.test` | `Cliente.2026` |
+| Cliente | `tomas@tulipann.test` | `Cliente.2026` |
+| Cliente | `ines@tulipann.test` | `Cliente.2026` |
+
+### Desarrollo sin Docker
+
+```bash
+# API (Python 3.13)
+cd backend
+python -m pip install --require-hashes -r requirements.txt -r requirements-dev.txt   # dentro de un entorno virtual
+export DJANGO_SECRET_KEY=solo-local DJANGO_DEBUG=1
+python manage.py migrate && python manage.py seed_demo
+python manage.py runserver 8000
+
+# Tienda (Node 24+)
+cd frontend
+npm ci
+npm run dev    # http://localhost:5173, con /api redirigido a :8000
 ```
 
-### API
+Sin `EMAIL_HOST`, los correos se imprimen en la consola de la API. Sin `DATABASE_URL`, se usa SQLite.
 
-The API project has the following file structure:
+## Pruebas
 
-```markdown
-api/
-│ ├── migrations/ # directory containing database migration files
-│ ├── static/ # directory containing static assets (e.g. images)
-│ ├── templates/ # directory containing HTML templates
-│ ├── apps/ # directory containing Django apps
-│ ├── config/ # directory containing project-level configuration
-│ ├── manage.py # command-line utility for interacting with the Django project
-│ ├── urls.py # URL configuration for the Django project
-│ └── wsgi.py # WSGI configuration for the Django project
-└── requirements.txt # file containing project dependencies
+```bash
+cd backend && python -m pytest        # catálogo, encargo y pago, estados, autenticación, permisos
+cd frontend && npm test               # generador de láminas, encargo, ingreso, pago simulado
+cd frontend && npm run build
 ```
 
-## Getting Started
+La integración continua (`.github/workflows/tests.yml`) ejecuta lo mismo en cada cambio.
 
-1. Install the dependencies for each project by running `npm install` or `pip install -r requirements.txt` in the root directory of the project.
-2. Follow the [Starting the Projects](#starting-the-projects) instructions to start each project.
-3. Explore the application and make any desired modifications.```
+## Arquitectura
 
-## Starting the Projects
-
-To start the projects in this repository, you will need to have Node.js and Python installed on your machine. You will also need to install the dependencies for each project by running `npm install` or `pip install -r requirements.txt` in the root directory of the project.
-
-### Frontend
-
-To start the frontend project, navigate to the `frontend` directory and run the following command:
-
-```markdown
-> cd frontend
-> npm run dev
+```
+frontend/   React + Vite + TypeScript. Una sola aplicación: tienda y libro del taller (/admin).
+  src/art/    Generador de láminas (geometría pura + render SVG).
+backend/    Django + Django REST Framework.
+  catalog/    Salas, familias, láminas y notas de jardín.
+  orders/     Departamentos, encargos y su ciclo de vida (orders/services.py).
+  accounts/   Usuarios y sesión.
+  journal/    Gaceta.   contact/  Cartas al taller.
+docker-compose.yml   PostgreSQL, API (gunicorn), nginx con la tienda y Mailpit.
 ```
 
-This will start the development server for the frontend project, and you can view the application in your web browser at `http://localhost:3000`.
+- La tienda y la API comparten origen (nginx reenvía `/api`). La sesión vive en una cookie `HttpOnly` y cada petición que modifica datos lleva el token CSRF; el navegador no guarda ningún token.
+- Todo cambio de estado de un encargo pasa por `orders/services.py`, que valida quién lo pide y qué transición está permitida. Las existencias se apartan al registrar el encargo y se devuelven si se cancela.
+- La tienda y la administración son una sola aplicación porque comparten diseño, sesión y componentes (las láminas, el sello, la línea de estados); separarlas duplicaba todo eso.
 
-### Dashboard
+## Contexto
 
-To start the dashboard project, navigate to the `dashboard` directory and run the following command:
+Tulipann fue uno de mis primeros proyectos: una tienda de comercio electrónico construida en 2022–2023 con un panel de administración aparte y una API en Django que dependía de servicios externos (pasarela de pagos, almacenamiento de imágenes, envío de correo y listas de suscripción). Esos servicios ya no existen para este proyecto, así que en 2026 lo reconstruí como una obra autocontenida: mismo propósito y mismas funciones, ahora con identidad propia, pago simulado, correo local, pruebas automáticas y un solo comando para ejecutarlo.
 
-```markdown
-> cd dashboard
-> npm run dev
-```
+La versión original la desarrollé junto con **Mateo** ([@JhMateo](https://github.com/JhMateo)), coautor de la API original en Django.
 
-This will start the development server for the dashboard project, and you can view the application in your web browser at `http://localhost:3000`.
+## Licencia
 
-### API
-
-To start the API project, navigate to the `api` directory and run the following command:
-
-```markdown
-> cd api
-> python manage.py runserver
-```
-
-This will start the development server for the API project, and you can view the API at `http://localhost:8000`.
-
-## Documentation
-
-The frontend and dashboard projects include documentation generated by the [TSDocs](https://tsdocs.org/) tool. You can find the documentation in the `docs` directories of those projects.
-
-The API's documentation, which can be found in ....
-
-## Sending Requests to the API
-
-The API in this ecommerce platform is built with Django Rest Framework and provides a RESTful interface for the frontend and dashboard to interact with the ecommerce platform's data. You can send requests to the API using any HTTP client, such as cURL or a browser extension like Postman.
-
-To send a request to the API, you will need to specify the following information:
-
-- The HTTP method (e.g. `GET`, `POST`, `PUT`, `DELETE`)
-- The endpoint (e.g. `/api/products`, `/api/orders`)
-- Any necessary request parameters or body data
-- An `Authorization` header with a valid JWT token, if the endpoint requires authentication
-
-Here is an example of a `GET` request to retrieve a list of products from the API using cURL:
-
-```markdown
-curl -X GET http://localhost:8000/api/products -H 'Authorization: Bearer <your-jwt-token>'
-```
-
-This will send a `GET` request to the `/api/products` endpoint, with an `Authorization` header containing a JWT token for authentication. The API will return a list of products in the response.
-
-You can find more information on the available endpoints and request parameters in the [API's documentation](#documentation).
+[MIT](LICENSE) © 2022–2026 Kevin Martinez.
