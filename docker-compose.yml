@@ -40,6 +40,8 @@ services:
       EMAIL_HOST: mail
       EMAIL_PORT: "1025"
       TULIPANN_SITE_URL: http://localhost:8160
+      # Demo data (catalogue, customers, the published demo accounts) is opt-in.
+      TULIPANN_SEED: "1"
 
   web:
     build: ./frontend

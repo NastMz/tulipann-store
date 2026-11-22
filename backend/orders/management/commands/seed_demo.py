@@ -1,12 +1,13 @@
 """Loads the demo cabinet: catalogue, customers, orders, reviews and gazette.
 
 Idempotent: if the catalogue already has categories, nothing is touched.
+Refuses to run when DEBUG is off and secure cookies are on (a real deployment).
 """
 from datetime import timedelta
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.test.utils import override_settings
 from django.utils import timezone
@@ -33,6 +34,10 @@ class Command(BaseCommand):
         parser.add_argument("--quiet-mail", action="store_true", help="Do not send the demo e-mails.")
 
     def handle(self, *args, **options):
+        if not settings.DEBUG and settings.SESSION_COOKIE_SECURE:
+            # Secure cookies without DEBUG means a real deployment: never create
+            # the demo accounts, whose passwords are published in the README.
+            raise CommandError("Refusing to load demo data on a production-like configuration.")
         if Category.objects.exists():
             self.stdout.write("Demo data already present; nothing to do.")
             return

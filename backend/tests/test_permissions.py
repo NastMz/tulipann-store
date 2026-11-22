@@ -1,5 +1,6 @@
 import pytest
-from django.core.management import call_command
+from django.core.management import CommandError, call_command
+from django.test import override_settings
 
 from catalog.models import Category, Product, Review
 from orders.models import Order
@@ -99,3 +100,10 @@ def test_seed_demo_loads_once():
     call_command("seed_demo", quiet_mail=True)
     assert Product.objects.count() == products
     assert Category.objects.count() == 4
+
+
+@override_settings(DEBUG=False, SESSION_COOKIE_SECURE=True)
+def test_seed_demo_refuses_production_like_settings():
+    with pytest.raises(CommandError):
+        call_command("seed_demo", quiet_mail=True)
+    assert not Product.objects.exists()
