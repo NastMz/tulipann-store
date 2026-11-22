@@ -1,16 +1,26 @@
 import pytest
 from django.core.cache import cache
+from django.core.management import call_command
 from rest_framework.test import APIClient
 
 from catalog.models import Category, Product, Subcategory
 from orders.models import City, Department
 
 
+@pytest.fixture(scope="session")
+def django_db_setup(django_db_setup, django_db_blocker):
+    # Throttle counters live in the database cache, as in production.
+    with django_db_blocker.unblock():
+        call_command("createcachetable", verbosity=0)
+
+
 @pytest.fixture(autouse=True)
-def _clear_throttle_cache():
-    cache.clear()
+def _clear_throttle_cache(django_db_setup, django_db_blocker):
+    with django_db_blocker.unblock():
+        cache.clear()
     yield
-    cache.clear()
+    with django_db_blocker.unblock():
+        cache.clear()
 
 
 @pytest.fixture

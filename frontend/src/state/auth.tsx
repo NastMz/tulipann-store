@@ -6,7 +6,9 @@ type AuthState = {
   user: User | null;
   ready: boolean;
   login: (email: string, password: string) => Promise<User>;
-  register: (data: { email: string; first_name: string; last_name: string; phone: string; password: string }) => Promise<User>;
+  /** Resolves with the server's message; the account is activated by e-mail. */
+  register: (data: { email: string; first_name: string; last_name: string; phone: string; password: string }) => Promise<string>;
+  activate: (uid: string, token: string) => Promise<User>;
   logout: () => Promise<void>;
   setUser: (user: User) => void;
 };
@@ -31,7 +33,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const register = useCallback<AuthState["register"]>(async (data) => {
-    const body = await api<{ user: User }>("/auth/register", { method: "POST", body: data });
+    const body = await api<{ detail: string }>("/auth/register", { method: "POST", body: data });
+    return body.detail;
+  }, []);
+
+  const activate = useCallback(async (uid: string, token: string) => {
+    const body = await api<{ user: User }>("/auth/activate", { method: "POST", body: { uid, token } });
     setUser(body.user);
     return body.user;
   }, []);
@@ -41,7 +48,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   }, []);
 
-  const value = useMemo(() => ({ user, ready, login, register, logout, setUser }), [user, ready, login, register, logout]);
+  const value = useMemo(
+    () => ({ user, ready, login, register, activate, logout, setUser }),
+    [user, ready, login, register, activate, logout],
+  );
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

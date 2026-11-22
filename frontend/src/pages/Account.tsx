@@ -88,12 +88,25 @@ export function Login() {
 
 export function Register() {
   const { register, user } = useAuth();
-  const navigate = useNavigate();
   const { values, bind } = useForm({ first_name: "", last_name: "", email: "", phone: "", password: "" });
   const [error, setError] = useState<ApiError | null>(null);
+  const [sent, setSent] = useState<string | null>(null);
   const { busy, run } = useBusy();
 
   if (user) return <Navigate to="/" replace />;
+
+  if (sent) {
+    return (
+      <AuthCard eyebrow="Registro de visitantes" title="Revisa tu correo">
+        <div className="notice notice--ok" role="status">
+          {sent} En la demostración, el correo llega al buzón local (Mailpit).
+        </div>
+        <p className="auth__links">
+          <Link to="/ingresar">Ingresar</Link>
+        </p>
+      </AuthCard>
+    );
+  }
 
   return (
     <AuthCard eyebrow="Registro de visitantes" title="Crear una cuenta">
@@ -102,8 +115,7 @@ export function Register() {
           event.preventDefault();
           run(async () => {
             try {
-              await register(values);
-              navigate("/catalogo");
+              setSent(await register(values));
             } catch (reason) {
               setError(reason as ApiError);
             }
@@ -144,6 +156,36 @@ export function Register() {
       <p className="auth__links">
         ¿Ya tienes cuenta? <Link to="/ingresar">Ingresar</Link>
       </p>
+    </AuthCard>
+  );
+}
+
+export function Activate() {
+  const { uid = "", token = "" } = useParams();
+  const { activate } = useAuth();
+  const navigate = useNavigate();
+  const [error, setError] = useState<ApiError | null>(null);
+  const { busy, run } = useBusy();
+  return (
+    <AuthCard eyebrow="Registro de visitantes" title="Activar la cuenta">
+      <p className="muted">Un paso más y podrás hacer encargos.</p>
+      <ErrorNotice error={error} />
+      <button
+        className="btn btn--seal btn--block"
+        disabled={busy}
+        onClick={() =>
+          run(async () => {
+            try {
+              await activate(uid, token);
+              navigate("/catalogo", { replace: true });
+            } catch (reason) {
+              setError(reason as ApiError);
+            }
+          })
+        }
+      >
+        Activar mi cuenta
+      </button>
     </AuthCard>
   );
 }

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { MemoryRouter, Route, Routes } from "react-router";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { Login } from "../pages/Account";
+import { Login, Register } from "../pages/Account";
 import { Cart } from "../pages/Cart";
 import { Payment } from "../pages/Payment";
 import { AuthProvider } from "../state/auth";
@@ -115,6 +115,27 @@ describe("login", () => {
     expect(await screen.findByText("Libro del taller")).toBeInTheDocument();
     expect(calls.filter((c) => c.url === "/api/auth/login")[1].headers["X-CSRFToken"]).toBe("test-token");
     expect(localStorage.length).toBe(1); // only the (empty) cart: no token is stored
+  });
+});
+
+describe("register", () => {
+  it("shows the server's generic answer and does not sign in", async () => {
+    const generic = "Te enviamos un correo para continuar. Abre el enlace para activar tu cuenta.";
+    const calls = mockApi((url) => {
+      if (url === "/api/auth/me") return { body: { user: null } };
+      if (url === "/api/auth/register") return { status: 202, body: { detail: generic } };
+      return { status: 404 };
+    });
+    app("/registro", <Route path="/registro" element={<Register />} />);
+    const user = userEvent.setup();
+    await user.type(await screen.findByLabelText("Nombre"), "Ana");
+    await user.type(screen.getByLabelText("Apellido"), "Ruiz");
+    await user.type(screen.getByLabelText("Correo"), "ana@example.test");
+    await user.type(screen.getByLabelText("Contraseña"), "Jardin-de-invierno-7");
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    expect(await screen.findByRole("status")).toHaveTextContent(generic);
+    expect(screen.getByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
+    expect(calls.find((c) => c.url === "/api/auth/register")!.body).toMatchObject({ email: "ana@example.test" });
   });
 });
 

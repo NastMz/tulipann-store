@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router";
 import { Layout } from "./components/Layout";
 import { RequireAuth } from "./components/bits";
-import { AccountPage, Login, Recover, RecoverConfirm, Register } from "./pages/Account";
+import { AccountPage, Activate, Login, Recover, RecoverConfirm, Register } from "./pages/Account";
 import { AdminCustomers, AdminReviews, AdminShell, AdminSummary } from "./pages/admin/AdminShell";
 import { AdminOrder, AdminOrders } from "./pages/admin/AdminOrders";
 import { AdminProducts, ProductEditor } from "./pages/admin/AdminProducts";
@@ -29,6 +29,7 @@ export function App() {
         <Route path="pedidos/:id/pago" element={<RequireAuth><Payment /></RequireAuth>} />
         <Route path="ingresar" element={<Login />} />
         <Route path="registro" element={<Register />} />
+        <Route path="activar/:uid/:token" element={<Activate />} />
         <Route path="recuperar" element={<Recover />} />
         <Route path="recuperar/:uid/:token" element={<RecoverConfirm />} />
         <Route path="cuenta" element={<RequireAuth><AccountPage /></RequireAuth>} />

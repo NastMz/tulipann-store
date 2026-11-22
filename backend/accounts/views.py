@@ -6,6 +6,7 @@ which the SPA reads from the ``csrftoken`` cookie set by ``GET /api/auth/csrf``.
 """
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -20,6 +21,7 @@ from rest_framework.views import APIView
 
 from .models import User
 from .serializers import (
+    ActivationSerializer,
     LoginSerializer,
     PasswordChangeSerializer,
     PasswordResetConfirmSerializer,
@@ -27,6 +29,7 @@ from .serializers import (
     RegisterSerializer,
     UserSerializer,
 )
+from .tokens import activation_token
 
 
 @method_decorator(csrf_protect, name="dispatch")
@@ -64,13 +67,57 @@ class MeView(APIView):
         return Response({"user": serializer.data})
 
 
+REGISTER_DETAIL = "Te enviamos un correo para continuar. Abre el enlace para activar tu cuenta."
+
+
+def _uid(user) -> str:
+    return urlsafe_base64_encode(force_bytes(user.pk))
+
+
+def _user_from_uid(uid: str):
+    try:
+        return User.objects.get(pk=force_str(urlsafe_base64_decode(uid)))
+    except (User.DoesNotExist, ValueError, TypeError, OverflowError):
+        return None
+
+
 class RegisterView(AnonymousFormView):
+    """Answers the same way whether or not the e-mail already has an account.
+
+    A new account starts inactive and is activated from the e-mailed link; if
+    the address is taken, its owner gets a "you already have an account" note.
+    Either way the visitor sees the same 202 response.
+    """
+
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        email = serializer.validated_data["email"]
+        existing = User.objects.filter(email=email).first()
+        if existing is not None:
+            # Hash anyway so both branches take about the same time.
+            make_password(serializer.validated_data["password"])
+            body = render_to_string("emails/account_exists.txt", {"link": f"{settings.SITE_URL}/recuperar"})
+            send_mail("Ya tienes una cuenta · Tulipann", body, None, [existing.email])
+        else:
+            user = serializer.save(is_active=False)
+            link = f"{settings.SITE_URL}/activar/{_uid(user)}/{activation_token.make_token(user)}"
+            body = render_to_string("emails/activate.txt", {"user": user, "link": link})
+            send_mail("Activa tu cuenta · Tulipann", body, None, [user.email])
+        return Response({"detail": REGISTER_DETAIL}, status=status.HTTP_202_ACCEPTED)
+
+
+class ActivateView(AnonymousFormView):
+    def post(self, request):
+        serializer = ActivationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = _user_from_uid(serializer.validated_data["uid"])
+        if user is None or user.is_active or not activation_token.check_token(user, serializer.validated_data["token"]):
+            return Response({"detail": "El enlace no es válido o ya se usó."}, status=status.HTTP_400_BAD_REQUEST)
+        user.is_active = True
+        user.save(update_fields=["is_active"])
         login(request, user, backend="django.contrib.auth.backends.ModelBackend")
-        return Response({"user": UserSerializer(user).data}, status=status.HTTP_201_CREATED)
+        return Response({"user": UserSerializer(user).data})
 
 
 class LoginView(AnonymousFormView):
@@ -118,9 +165,8 @@ class PasswordResetRequestView(AnonymousFormView):
         email = serializer.validated_data["email"].lower()
         user = User.objects.filter(email=email, is_active=True).first()
         if user is not None:
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = default_token_generator.make_token(user)
-            link = f"{settings.SITE_URL}/recuperar/{uid}/{token}"
+            link = f"{settings.SITE_URL}/recuperar/{_uid(user)}/{token}"
             body = render_to_string("emails/password_reset.txt", {"user": user, "link": link})
             send_mail("Restablece tu contraseña · Tulipann", body, None, [user.email])
         return Response({"detail": "Si el correo está registrado, enviamos un enlace para restablecer la contraseña."})
@@ -131,11 +177,8 @@ class PasswordResetConfirmView(AnonymousFormView):
         serializer = PasswordResetConfirmSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
-        try:
-            user = User.objects.get(pk=force_str(urlsafe_base64_decode(data["uid"])), is_active=True)
-        except (User.DoesNotExist, ValueError, TypeError, OverflowError):
-            user = None
-        if user is None or not default_token_generator.check_token(user, data["token"]):
+        user = _user_from_uid(data["uid"])
+        if user is None or not user.is_active or not default_token_generator.check_token(user, data["token"]):
             return Response({"detail": "El enlace no es válido o ya expiró."}, status=status.HTTP_400_BAD_REQUEST)
         serializer.validate_with_user(user)
         user.set_password(data["new_password"])

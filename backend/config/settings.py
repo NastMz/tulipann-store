@@ -99,7 +99,19 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
     "DEFAULT_PARSER_CLASSES": ["rest_framework.parsers.JSONParser"],
     "DEFAULT_THROTTLE_RATES": {"auth": os.environ.get("TULIPANN_AUTH_RATE", "20/min")},
+    # Exactly one trusted proxy (nginx) sits in front of the API and replaces
+    # X-Forwarded-For with the peer address, so the last hop is the client.
+    "NUM_PROXIES": int(os.environ.get("TULIPANN_NUM_PROXIES", "1")),
     "UNAUTHENTICATED_USER": "django.contrib.auth.models.AnonymousUser",
+}
+
+# Throttle counters must be shared by every gunicorn worker, so the cache
+# lives in the database (table created by ``createcachetable`` at start-up).
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "tulipann_cache",
+    }
 }
 
 # E-mail goes to a local catcher (Mailpit) under docker compose, or to the

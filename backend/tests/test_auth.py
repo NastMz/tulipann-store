@@ -5,7 +5,11 @@ from pathlib import Path
 
 import pytest
 from django.core import mail
+from django.core.cache import caches
+from django.db import connection
 from rest_framework.test import APIClient
+
+from accounts.models import User
 
 pytestmark = pytest.mark.django_db
 
@@ -25,32 +29,69 @@ def csrf_client():
     return client
 
 
-def test_register_creates_a_session_and_returns_no_token():
+def activation_link(message):
+    return re.search(r"/activar/(?P<uid>[^/]+)/(?P<token>\S+)", message.body)
+
+
+def test_register_creates_an_inactive_account_and_mails_an_activation_link():
     client = csrf_client()
     response = client.post("/api/auth/register", REGISTRATION, format="json")
-    assert response.status_code == 201
-    assert response.json()["user"]["email"] == "nueva@example.test"
-    assert response.json()["user"]["is_staff"] is False
+    assert response.status_code == 202
     assert "token" not in str(response.json()).lower()
+    user = User.objects.get(email="nueva@example.test")
+    assert user.is_active is False
+    assert client.get("/api/auth/me").json() == {"user": None}
+    link = activation_link(mail.outbox[0])
+    activated = client.post("/api/auth/activate", {"uid": link["uid"], "token": link["token"]}, format="json")
+    assert activated.status_code == 200
+    assert activated.json()["user"]["is_staff"] is False
     assert client.cookies["sessionid"]["httponly"]
+    client.credentials(HTTP_X_CSRFTOKEN=client.cookies["csrftoken"].value)
     assert client.get("/api/auth/me").json()["user"]["first_name"] == "Nueva"
+    # Single use, and never valid as a password-reset token.
+    again = client.post("/api/auth/activate", {"uid": link["uid"], "token": link["token"]}, format="json")
+    assert again.status_code == 400
+    reset = {"uid": link["uid"], "token": link["token"], "new_password": "Otra-clave-segura-9"}
+    assert client.post("/api/auth/password/reset/confirm", reset, format="json").status_code == 400
 
 
-def test_register_rejects_duplicate_email_and_weak_password(customer):
+def test_inactive_accounts_cannot_log_in():
     client = csrf_client()
+    client.post("/api/auth/register", REGISTRATION, format="json")
     response = client.post(
-        "/api/auth/register", {**REGISTRATION, "email": customer.email.upper(), "password": "12345678"}, format="json"
+        "/api/auth/login", {"email": REGISTRATION["email"], "password": REGISTRATION["password"]}, format="json"
     )
     assert response.status_code == 400
-    assert set(response.json()) >= {"email"}
+
+
+def test_register_does_not_reveal_existing_accounts(customer):
+    client = csrf_client()
+    fresh = client.post("/api/auth/register", REGISTRATION, format="json")
+    taken = client.post(
+        "/api/auth/register", {**REGISTRATION, "email": customer.email.upper()}, format="json"
+    )
+    assert taken.status_code == fresh.status_code == 202
+    assert taken.json() == fresh.json()
+    # The owner of the existing account is told, by e-mail only.
+    assert mail.outbox[1].to == [customer.email]
+    assert "ya tienes una" in mail.outbox[1].body
+    assert User.objects.filter(email=customer.email).count() == 1
+    customer.refresh_from_db()
+    assert customer.check_password("Cliente.2026")
+
+
+def test_register_still_validates_the_password(customer):
+    client = csrf_client()
     response = client.post("/api/auth/register", {**REGISTRATION, "password": "12345678"}, format="json")
+    assert response.status_code == 400
     assert "password" in response.json()
+    assert "email" not in response.json()
 
 
 def test_register_cannot_grant_staff():
     client = csrf_client()
-    body = client.post("/api/auth/register", {**REGISTRATION, "is_staff": True}, format="json").json()
-    assert body["user"]["is_staff"] is False
+    client.post("/api/auth/register", {**REGISTRATION, "is_staff": True}, format="json")
+    assert User.objects.get(email="nueva@example.test").is_staff is False
 
 
 def test_login_without_csrf_token_is_refused(customer):
@@ -125,6 +166,37 @@ def test_login_is_throttled(customer):
     ]
     assert codes[0] == 400
     assert 429 in codes
+
+
+def test_spoofed_forwarded_for_does_not_reset_the_login_limit(customer):
+    """A client-supplied X-Forwarded-For must not become the throttle identity.
+
+    Behind nginx (NUM_PROXIES = 1) only the last hop counts; here each request
+    pretends to come from a different address, as an attacker would.
+    """
+    client = csrf_client()
+    codes = [
+        client.post(
+            "/api/auth/login",
+            {"email": customer.email, "password": "wrong"},
+            format="json",
+            HTTP_X_FORWARDED_FOR=f"10.0.{i}.{i}, 203.0.113.7",
+        ).status_code
+        for i in range(30)
+    ]
+    assert codes[0] == 400
+    assert codes[-1] == 429
+    assert codes.count(400) == 20
+
+
+def test_throttle_counters_live_in_the_shared_database_cache(customer):
+    """Every gunicorn worker reads the same counters, so the limit is global."""
+    assert type(caches["default"]).__name__ == "DatabaseCache"
+    client = csrf_client()
+    client.post("/api/auth/login", {"email": customer.email, "password": "wrong"}, format="json")
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT COUNT(*) FROM tulipann_cache WHERE cache_key LIKE %s", ["%throttle_auth%"])
+        assert cursor.fetchone()[0] == 1
 
 
 def test_settings_refuse_to_start_without_a_secret_key():

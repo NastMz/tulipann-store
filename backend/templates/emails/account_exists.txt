@@ -1,0 +1,10 @@
+Hola:
+
+Alguien intentó crear una cuenta en el Gabinete Tulipann con este correo,
+pero ya tienes una. Si fuiste tú, ingresa o recupera tu contraseña aquí:
+
+{{ link }}
+
+Si no fuiste tú, no tienes que hacer nada.
+
+— Gabinete Tulipann

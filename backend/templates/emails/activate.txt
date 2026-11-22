@@ -1,0 +1,10 @@
+Hola, {{ user.first_name }}:
+
+Gracias por registrarte en el Gabinete Tulipann. Para activar tu cuenta,
+abre este enlace:
+
+{{ link }}
+
+Si no fuiste tú, ignora este mensaje: la cuenta no se activará.
+
+— Gabinete Tulipann

@@ -19,11 +19,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = ["email", "first_name", "last_name", "phone", "password"]
 
+    # The e-mail field must not run the model's unique check: telling a
+    # visitor that an address is taken would reveal who has an account.
+    email = serializers.EmailField(max_length=254)
+
     def validate_email(self, value: str) -> str:
-        value = value.lower()
-        if User.objects.filter(email=value).exists():
-            raise serializers.ValidationError("Ya existe una cuenta con este correo.")
-        return value
+        return value.lower()
 
     def validate(self, attrs):
         candidate = User(**{key: val for key, val in attrs.items() if key != "password"})
@@ -35,6 +36,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
+
+
+class ActivationSerializer(serializers.Serializer):
+    uid = serializers.CharField()
+    token = serializers.CharField()
 
 
 class LoginSerializer(serializers.Serializer):
