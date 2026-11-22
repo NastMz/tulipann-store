@@ -1,0 +1,53 @@
+# One command: docker compose up --build
+#   Tienda:  http://localhost:8160
+#   Correo:  http://localhost:8161  (Mailpit: every e-mail the store sends lands here)
+name: tulipann
+
+services:
+  db:
+    image: postgres:17.12-alpine
+    environment:
+      POSTGRES_DB: tulipann
+      POSTGRES_USER: tulipann
+      POSTGRES_PASSWORD: tulipann-dev-only
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tulipann -d tulipann"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  mail:
+    image: axllent/mailpit:v1.34.0
+    ports:
+      - "127.0.0.1:8161:8025"
+
+  api:
+    build: ./backend
+    image: tulipann-api:dev
+    depends_on:
+      db:
+        condition: service_healthy
+      mail:
+        condition: service_started
+    environment:
+      # Development-only secret, used by this compose file and nowhere else.
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-compose-dev-only-not-secret-tulipann}
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,api
+      DJANGO_CSRF_TRUSTED_ORIGINS: http://localhost:8160,http://127.0.0.1:8160
+      DATABASE_URL: postgres://tulipann:tulipann-dev-only@db:5432/tulipann
+      EMAIL_HOST: mail
+      EMAIL_PORT: "1025"
+      TULIPANN_SITE_URL: http://localhost:8160
+
+  web:
+    build: ./frontend
+    image: tulipann-web:dev
+    depends_on:
+      - api
+    ports:
+      - "127.0.0.1:8160:80"
+
+volumes:
+  pgdata:
