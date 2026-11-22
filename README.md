@@ -44,7 +44,7 @@ docker compose up --build
 - Tienda: <http://localhost:8160>
 - Buzón de correo (Mailpit): <http://localhost:8161>
 
-La primera vez se crean las tablas y se cargan los datos de demostración: catálogo, clientes, encargos en distintos estados, notas y gaceta. Para empezar de cero: `docker compose down -v`.
+La primera vez se crean las tablas y se cargan los datos de demostración: catálogo, clientes, encargos en distintos estados, notas y gaceta. Esa carga solo ocurre porque `docker-compose.yml` la activa (`TULIPANN_SEED=1`); fuera de él está apagada, y el comando se niega a correr con `DEBUG` apagado y cookies seguras. Para empezar de cero: `docker compose down -v`.
 
 ### Cuentas de demostración
 
@@ -62,7 +62,7 @@ La primera vez se crean las tablas y se cargan los datos de demostración: catá
 cd backend
 python -m pip install --require-hashes -r requirements.txt -r requirements-dev.txt   # dentro de un entorno virtual
 export DJANGO_SECRET_KEY=solo-local DJANGO_DEBUG=1
-python manage.py migrate && python manage.py seed_demo
+python manage.py migrate && python manage.py createcachetable && python manage.py seed_demo
 python manage.py runserver 8000
 
 # Tienda (Node 24+)
@@ -97,6 +97,7 @@ docker-compose.yml   PostgreSQL, API (gunicorn), nginx con la tienda y Mailpit.
 ```
 
 - La tienda y la API comparten origen (nginx reenvía `/api`). La sesión vive en una cookie `HttpOnly` y cada petición que modifica datos lleva el token CSRF; el navegador no guarda ningún token.
+- Las cuentas nuevas se activan con un enlace por correo, y el registro responde igual exista o no el correo. Ingreso, registro y recuperación tienen límite de intentos, contado en una caché compartida por todos los procesos de la API.
 - Todo cambio de estado de un encargo pasa por `orders/services.py`, que valida quién lo pide y qué transición está permitida. Las existencias se apartan al registrar el encargo y se devuelven si se cancela.
 - La tienda y la administración son una sola aplicación porque comparten diseño, sesión y componentes (las láminas, el sello, la línea de estados); separarlas duplicaba todo eso.
 
