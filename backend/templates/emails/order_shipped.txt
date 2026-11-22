@@ -1,0 +1,8 @@
+Hola, {{ order.user.first_name }}:
+
+Tu encargo {{ order.code }} salió del taller y va camino a
+{{ order.address }}, {{ order.city.name }}.
+
+Síguelo aquí: {{ site_url }}/pedidos/{{ order.id }}
+
+— Gabinete Tulipann

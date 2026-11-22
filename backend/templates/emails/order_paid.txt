@@ -1,0 +1,14 @@
+{% load money %}
+Hola, {{ order.user.first_name }}:
+
+Recibimos el pago (simulado) de tu encargo {{ order.code }}.
+Esta es una tienda de demostración: no se hizo ningún cobro real.
+
+{% for item in order.items.all %}  · {{ item.quantity }} × {{ item.product_name }}
+{% endfor %}
+Total: {{ order.total|cop }} COP
+Destino: {{ order.address }}, {{ order.city.name }} ({{ order.city.department.name }})
+
+Puedes seguir tu encargo aquí: {{ site_url }}/pedidos/{{ order.id }}
+
+— Gabinete Tulipann
