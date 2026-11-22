@@ -9,7 +9,7 @@ import re
 
 from django.core.exceptions import ValidationError
 
-HEX = re.compile(r"^#[0-9a-fA-F]{6}$")
+HEX = re.compile(r"#[0-9a-fA-F]{6}")
 SHAPES = {"cup", "lily", "parrot", "double", "fringed"}
 COLOR_KEYS = {"petal", "flame", "leaf", "glaze", "frame", "paper"}
 INT_RANGES = {"seed": (0, 2**31 - 1), "tiers": (1, 4), "stems": (3, 9)}
@@ -23,7 +23,7 @@ def validate_art(value) -> None:
     if unknown:
         raise ValidationError(f"Claves desconocidas en la lámina: {', '.join(sorted(unknown))}.")
     for key in COLOR_KEYS & set(value):
-        if value[key] is not None and not (isinstance(value[key], str) and HEX.match(value[key])):
+        if value[key] is not None and not (isinstance(value[key], str) and HEX.fullmatch(value[key])):
             raise ValidationError(f"«{key}» debe ser un color #RRGGBB.")
     for key, (low, high) in INT_RANGES.items():
         if key in value:

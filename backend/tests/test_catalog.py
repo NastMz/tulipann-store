@@ -77,6 +77,8 @@ def test_art_recipe_accepts_valid_plates(recipe):
         {"petal": "#ffffff", "tiers": 9},
         {"petal": "#ffffff", "seed": True},
         {"petal": "#ffffff", "onclick": "alert(1)"},
+        {"petal": "#ffffff\n"},
+        {"petal": "#ffffff", "glaze": "#1f3f7a\n"},
     ],
 )
 def test_art_recipe_rejects_invalid_plates(recipe):
