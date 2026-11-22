@@ -1,0 +1,19 @@
+/// <reference types="vitest/config" />
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// In development the API runs on :8000 and is proxied, so the SPA and the API
+// share one origin (the session cookie and CSRF token need that).
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 5173,
+    proxy: { "/api": { target: process.env.TULIPANN_API ?? "http://127.0.0.1:8000", changeOrigin: false } },
+  },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: ["./src/test/setup.ts"],
+    css: false,
+  },
+});

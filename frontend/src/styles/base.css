@@ -1,0 +1,360 @@
+/* Gabinete Tulipann — an engraved seed catalogue on laid paper.
+   Tokens, typography and the shared building blocks. */
+
+:root {
+  --paper: #efe4cc;
+  --paper-card: #f7f0de;
+  --paper-shade: #e3d3b0;
+  --ink: #2b1d13;
+  --ink-soft: #5e4a36;
+  --ink-faint: #8a765c;
+  --rule: #b9a27a;
+  --vermilion: #a8321f;
+  --vermilion-dark: #82230f;
+  --delft: #1f3f7a;
+  --moss: #4f6b45;
+  --gold: #a5813c;
+  --danger: #9b1c1c;
+
+  --display: "IM Fell English", "Iowan Old Style", Georgia, serif;
+  --caps: "IM Fell English SC", "IM Fell English", Georgia, serif;
+  --text: "EB Garamond", Garamond, Georgia, serif;
+
+  --measure: 66ch;
+  --page: min(1180px, calc(100vw - 32px));
+  --radius: 2px;
+  --shadow: 0 1px 0 rgba(43, 29, 19, 0.08), 0 10px 24px -14px rgba(43, 29, 19, 0.45);
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font: 400 1.125rem/1.55 var(--text);
+  background-color: var(--paper);
+  /* Laid paper: faint chain lines plus a soft vignette. */
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 250, 235, 0.65), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(120, 90, 50, 0.045) 0 1px, transparent 1px 26px),
+    radial-gradient(ellipse at 50% 120%, rgba(120, 80, 40, 0.18), transparent 60%);
+  background-attachment: fixed;
+  font-variant-numeric: oldstyle-nums proportional-nums;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--delft);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--vermilion);
+}
+
+:focus-visible {
+  outline: 2px solid var(--vermilion);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.08;
+  margin: 0 0 0.4em;
+  letter-spacing: -0.005em;
+}
+
+h1 {
+  font-size: clamp(2.3rem, 5vw, 3.6rem);
+}
+
+h2 {
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+}
+
+h3 {
+  font-size: 1.35rem;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+.caps {
+  font-family: var(--caps);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+
+.eyebrow {
+  font-family: var(--caps);
+  text-transform: lowercase;
+  letter-spacing: 0.14em;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin: 0 0 0.6rem;
+}
+
+.epithet {
+  font-family: var(--display);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.muted {
+  color: var(--ink-soft);
+}
+
+.num {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.wrap {
+  width: var(--page);
+  margin-inline: auto;
+}
+
+.fleuron {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--rule);
+  font-family: var(--display);
+  font-size: 1.4rem;
+  margin: 2.5rem 0;
+}
+
+.fleuron::before,
+.fleuron::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--rule);
+}
+
+.rule-double {
+  border: 0;
+  border-top: 3px double var(--rule);
+  margin: 2rem 0;
+}
+
+/* ---- Buttons ----------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.55rem 1.3rem 0.65rem;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  font: 1.05rem/1 var(--caps);
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 120ms, color 120ms, transform 120ms;
+}
+
+.btn:hover {
+  background: var(--ink);
+  color: var(--paper-card);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--seal {
+  background: var(--vermilion);
+  border-color: var(--vermilion-dark);
+  color: #fbf3e2;
+  box-shadow: inset 0 0 0 2px rgba(255, 240, 220, 0.18);
+}
+
+.btn--seal:hover {
+  background: var(--vermilion-dark);
+  color: #fff8ec;
+}
+
+.btn--quiet {
+  border-color: transparent;
+  color: var(--ink-soft);
+  padding-inline: 0.6rem;
+}
+
+.btn--quiet:hover {
+  background: rgba(43, 29, 19, 0.07);
+  color: var(--ink);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+/* ---- Forms -------------------------------------------------------------- */
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.field label,
+.field > span {
+  font-family: var(--caps);
+  text-transform: lowercase;
+  letter-spacing: 0.08em;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.input,
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  font: inherit;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: rgba(255, 252, 242, 0.75);
+  border: 0;
+  border-bottom: 1.5px solid var(--ink-faint);
+  border-radius: 0;
+  padding: 0.45rem 0.2rem;
+}
+
+.field textarea {
+  min-height: 8rem;
+  border: 1px solid var(--rule);
+  padding: 0.6rem;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus,
+.input:focus {
+  outline: none;
+  border-color: var(--vermilion);
+  background: #fffcf2;
+}
+
+.field-error {
+  color: var(--danger);
+  font-size: 0.95rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1.5rem;
+}
+
+.form-grid .span-2 {
+  grid-column: span 2;
+}
+
+/* ---- Notices ------------------------------------------------------------ */
+
+.notice {
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--delft);
+  background: rgba(255, 252, 242, 0.7);
+  padding: 0.8rem 1rem;
+  margin: 0 0 1.2rem;
+}
+
+.notice--error {
+  border-left-color: var(--danger);
+}
+
+.notice--ok {
+  border-left-color: var(--moss);
+}
+
+.notice--demo {
+  border-left-color: var(--vermilion);
+}
+
+.state {
+  padding: 4rem 1rem;
+  text-align: center;
+  color: var(--ink-soft);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.25rem;
+}
+
+/* ---- Paper card --------------------------------------------------------- */
+
+.sheet {
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow);
+  padding: clamp(1.2rem, 3vw, 2.2rem);
+  position: relative;
+}
+
+.sheet--framed::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid var(--rule);
+  pointer-events: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  body {
+    font-size: 1.06rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid .span-2 {
+    grid-column: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
